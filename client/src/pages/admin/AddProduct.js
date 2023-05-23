@@ -18,10 +18,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "react-bootstrap";
 
-import uploadThumb from "./../../assets/images/126477.png";
-
 import { ToastContainer, toast } from "react-toastify";
-
 import "react-toastify/dist/ReactToastify.css";
 
 function AddProduct() {
@@ -68,6 +65,23 @@ function AddProduct() {
     e.preventDefault();
     dispatch(deleteProduct(id));
     ProductDeletnotif();
+  };
+
+  // handle drag events
+  const handleDrag = function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      // handleFiles(e.dataTransfer.files);
+
+      setImages(e.dataTransfer.files);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -127,7 +141,13 @@ function AddProduct() {
         </label>
         <div className="col-span-8 sm:col-span-4">
           <label for="files">
-            <div className="w-full text-center">
+            <div
+              onDragEnter={handleDrag}
+              onDragLeave={handleDrag}
+              onDragOver={handleDrag}
+              onDrop={handleDrop}
+              className="w-full text-center"
+            >
               <div
                 for="files"
                 role="button"
