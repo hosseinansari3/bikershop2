@@ -1,0 +1,13 @@
+.swiper {
+  height: 400px;
+}
+
+.swiper.thumbs {
+  height: 100px;
+  margin-top: 25px;
+}
+
+.swiper-slide-thumb-active img {
+  border: 5px solid red;
+  transition: all 0.2s ease-out;
+}

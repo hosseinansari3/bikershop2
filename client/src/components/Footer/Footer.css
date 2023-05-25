@@ -1,0 +1,26 @@
+.Footer {
+  background-color: black;
+  color: rgb(255, 255, 255);
+
+  border: solid;
+  border-color: #c6c6c6;
+  border-width: 10px;
+}
+
+.social-media {
+  font-size: 40px !important;
+}
+
+.footer-col {
+  margin: 30px;
+}
+
+.subscribe-btn {
+  background-color: white;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 5px;
+  color: black;
+  position: absolute;
+  margin-top: 10px;
+}

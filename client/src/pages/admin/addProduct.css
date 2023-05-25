@@ -1,0 +1,15 @@
+.product-images img {
+  width: 80px;
+  height: 80px;
+}
+
+.upload-btn {
+  background-color: #5eb4ff;
+  color: white;
+}
+
+.products-list .title {
+  font-size: 15pt;
+  font-weight: 700;
+  text-overflow: ellipsis;
+}

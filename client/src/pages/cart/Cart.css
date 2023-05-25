@@ -1,0 +1,56 @@
+.page-title {
+  height: 102px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  font-size: 30pt;
+  font-weight: bold;
+}
+
+.discount-wrapper {
+  height: 46px;
+}
+
+.discount-wrapper input {
+  height: inherit;
+  width: 152px;
+}
+
+.discount-wrapper button {
+  height: inherit;
+  width: 84px;
+  background-color: black;
+  color: white;
+  border-color: black;
+}
+
+.btn-group button {
+  border-style: none;
+  padding: 10px;
+}
+
+.total {
+  border: 1px solid #ededed;
+  width: 243px;
+  padding: 10px;
+}
+
+.shipping-calculation input,
+.shipping-calculation select,
+.shipping-calculation button {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.total button {
+  width: 100%;
+  padding: 10px;
+  border-style: none;
+}
+
+.product-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-right: 10px;
+}

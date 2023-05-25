@@ -1,0 +1,55 @@
+export const CREATE = "CREATE";
+export const UPDATE = "UPDATE";
+export const DELETE = "DELETE";
+export const FETCH_ALL_PRODUCTS = "FETCH_ALL_PRODUCTS";
+export const FETCH_ALL_PRODUCTS_REQUEST = "FETCH_ALL_PRODUCTS_REQUEST";
+export const DELETE_POST_REQUEST = "DELETE_POST_REQUEST";
+export const DELETE_POST_SUCCESS = "DELETE_POST_SUCCESS";
+export const DELETE_POST_FAIL = "DELETE_POST_FAIL";
+/*
+ *
+ * Product constants
+ *
+ */
+export const PRODUCT_DETAILS_REQUEST = "PRODUCT_DETAILS_REQUEST";
+export const PRODUCT_DETAILS_SUCCESS = "PRODUCT_DETAILS_SUCCESS";
+export const PRODUCT_DETAILS_FAIL = "PRODUCT_DETAILS_FAILl";
+export const FETCH_PRODUCTS = "src/Product/FETCH_PRODUCTS";
+export const FETCH_STORE_PRODUCTS = "src/Product/FETCH_STORE_PRODUCTS";
+export const FETCH_PRODUCT = "src/Product/FETCH_PRODUCT";
+export const FETCH_STORE_PRODUCT = "src/Product/FETCH_STORE_PRODUCT";
+export const PRODUCT_CHANGE = "src/Product/PRODUCT_CHANGE";
+export const PRODUCT_EDIT_CHANGE = "src/Product/PRODUCT_EDIT_CHANGE";
+export const PRODUCT_SHOP_CHANGE = "src/Product/PRODUCT_SHOP_CHANGE";
+export const SET_PRODUCT_FORM_ERRORS = "src/Product/SET_PRODUCT_FORM_ERRORS";
+export const SET_PRODUCT_FORM_EDIT_ERRORS =
+  "src/Product/SET_PRODUCT_FORM_EDIT_ERRORS";
+export const SET_PRODUCT_SHOP_FORM_ERRORS =
+  "src/Product/SET_PRODUCT_SHOP_FORM_ERRORS";
+export const RESET_PRODUCT = "src/Product/RESET_PRODUCT";
+export const RESET_PRODUCT_SHOP = "src/Product/RESET_PRODUCT_SHOP";
+export const ADD_PRODUCT = "src/Product/ADD_PRODUCT";
+export const REMOVE_PRODUCT = "src/Product/REMOVE_PRODUCT";
+export const FETCH_PRODUCTS_SELECT = "src/Product/FETCH_PRODUCTS_SELECT";
+export const SET_PRODUCTS_LOADING = "src/Product/SET_PRODUCTS_LOADING";
+export const SET_ADVANCED_FILTERS = "src/Product/SET_ADVANCED_FILTERS";
+export const RESET_ADVANCED_FILTERS = "src/Product/RESET_ADVANCED_FILTERS";
+
+/*
+ *
+ * User constants
+ *
+ */
+
+export const USER_REGISTER_REQUEST = "USER_REGISTER_REQUEST";
+export const USER_REGISTER_SUCCESS = "USER_REGISTER_REQUEST";
+export const USER_REGISTER_FAIL = "USER_REGISTER_FAIL";
+export const USER_SIGNIN_REQUEST = "USER_SIGNIN_REQUEST";
+export const USER_SIGNIN_SUCCESS = "USER_SIGNIN_SUCCESS";
+export const USER_SIGNIN_FAIL = "USER_SIGNIN_FAIL";
+export const FETCH_ALL_USERS = "FETCH_ALL_USERS";
+
+export const USER_LOGOUT = "USER_LOGOUT";
+
+export const ADD_TO_CARD = "ADD_TO_CARD";
+export const REMOVE_FROM_CART = "REMOVE_FROM_CART";

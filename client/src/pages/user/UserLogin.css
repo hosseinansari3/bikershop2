@@ -1,0 +1,13 @@
+.login {
+  width: 300px;
+  padding: 10px;
+  margin: auto;
+}
+
+.form-container {
+  background-color: #f6fbff;
+  padding: 30px;
+  border-radius: 20px;
+  width: 423px;
+  height: 400px;
+}

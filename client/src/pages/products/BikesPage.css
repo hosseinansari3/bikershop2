@@ -1,0 +1,67 @@
+.BikesPage .product-cart {
+  background-color: #ffffff;
+
+  border-radius: 10px;
+  display: block;
+  justify-content: center;
+  margin-bottom: 40px;
+  transition: 0.5s ease-out all;
+  cursor: pointer;
+  position: relative;
+}
+
+.priceRange-inputs {
+  display: flex;
+  justify-content: space-between;
+}
+
+.priceRange-inputs input {
+  width: 50px;
+}
+
+.accordion-body label {
+  display: block;
+}
+
+.filter-button {
+  background-color: #77b9ff;
+  display: inline-flex;
+  padding: 9px;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+}
+
+.back-button {
+  font-size: 20pt;
+  text-align: center;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.filter-open {
+  left: -10px;
+}
+
+.filter-close {
+  left: -850px;
+}
+@media only screen and (max-width: 992px) {
+  .filter-products {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    height: 100%;
+    background-color: white;
+    transition: all 0.5s ease;
+    overflow: scroll;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .filter-products {
+    left: -10px;
+  }
+}

@@ -1,0 +1,9 @@
+.cart-list-tite {
+  width: 100%;
+  border-radius: 1px;
+  font-weight: bold;
+}
+
+.boxshadow {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

@@ -1,0 +1,40 @@
+.dropdown-menu {
+  left: 0;
+  display: block;
+  width: 90px;
+  position: absolute;
+  top: 68px;
+  background-color: black;
+  list-style: none;
+  text-align: start;
+}
+
+.dropdown-menu li {
+  background: #000;
+  cursor: pointer;
+  display: block;
+}
+
+.dropdown-menu li:hover {
+  background: #333;
+}
+
+.drop-menu {
+  display: none;
+}
+
+.menu-items {
+  display: grid;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+@media screen and (max-width: 1000px) {
+  .dropdown-menu {
+    width: auto;
+    position: relative;
+    top: 20px;
+    list-style: none;
+    text-align: start;
+  }
+}

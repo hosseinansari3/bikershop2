@@ -1,0 +1,26 @@
+.main-pannel {
+  float: right;
+  width: calc(100% - 240px);
+  position: relative;
+  top: 0;
+  bottom: 0;
+  background-color: aqua;
+  left: 0;
+}
+
+.add-product-input {
+  margin: 5px;
+  border-color: #000000;
+  border-width: 3px;
+  border-radius: 5px;
+}
+
+.products-list {
+  overflow: auto;
+  height: 360px;
+}
+
+.products-list img {
+  width: 90px;
+  height: 90px;
+}

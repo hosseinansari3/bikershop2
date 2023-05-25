@@ -1,0 +1,103 @@
+.product-img {
+  width: 600px;
+  height: 400px;
+  object-fit: cover;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 24px;
+}
+.price {
+  color: red;
+  font-weight: bold;
+  font-size: 20px;
+}
+.product-specification {
+  margin-top: 20px;
+  padding-top: 33px;
+  padding-left: 30px;
+  background-color: #f7f7f7;
+  border-radius: 18px;
+  height: 155px;
+}
+
+.size {
+  margin: auto;
+  width: fit-content;
+}
+.add-to-card-section {
+  margin-top: 43px;
+}
+
+.add-to-card-btn {
+  width: 160px;
+  height: 50px;
+  border: none;
+}
+
+.add-to-wish-btn {
+  width: 200px;
+  height: 50px;
+  border: none;
+}
+
+.quantity-input {
+  width: 30px;
+  height: 50px;
+  border: none;
+}
+
+.quantity-btn-group {
+  border-style: solid;
+  height: inherit;
+  display: inline-block;
+  border-color: #ebebeb;
+}
+.quantity-btn {
+  height: 50px;
+  border: none;
+}
+
+.comment-wrapper {
+  padding: 30px;
+  margin-top: 18px;
+  border-radius: 10px;
+  display: flex;
+}
+
+.text-caption {
+}
+
+.review-img {
+  width: 97px;
+  height: 97px;
+}
+
+.rating-form-style input {
+  width: 100%;
+  height: 44px;
+}
+
+.rating-form-style textarea {
+  width: 100%;
+  height: 111px;
+}
+
+.ratting-star2 svg {
+  font-size: 10pt;
+}
+
+.reviewr-name {
+  font-size: 20pt;
+  font-weight: bold;
+}
+
+.dv-star-rating {
+  font-size: 20pt;
+}
+
+.review-content .dv-star-rating {
+  font-size: 13pt;
+  margin-top: -11px;
+}
