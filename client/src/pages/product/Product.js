@@ -3,11 +3,8 @@ import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../actions/products";
 import { addToCard } from "../../actions/cart";
-import Container from "react-bootstrap/esm/Container";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
+
 import "./product.css";
-import StarIcon from "@mui/icons-material/Star";
 import Carousel from "../../components/Carousel/Carousel";
 import ProductColor from "../../components/ProductColor/ProductColor";
 
@@ -17,22 +14,17 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
-import { color } from "@mui/system";
 import { SwiperSlide } from "swiper/react";
-
-import Star from "@mui/icons-material/Star";
 
 import cross from "../../assets/images/Cross-Bike.jpg";
 import city from "../../assets/images/City-Bike.jpg";
 
 import mountain from "../../assets/images/Mountain-bike.jpg";
 import road from "../../assets/images/Road-bike.jpg";
-import { Grid, Paper } from "@mui/material";
+import { Paper } from "@mui/material";
 import CartList from "../../components/CartList/CartList";
 
 import StarRatingComponent from "react-star-rating-component";
-
-import Table from "react-bootstrap/Table";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
@@ -122,7 +114,7 @@ function Product() {
         <ToastContainer />
         {product ? (
           <div>
-            <div className="grid grid-cols-2 p-5">
+            <div className="grid grid-cols-1 lg:grid-cols-2 p-5">
               <div>
                 <Carousel style={{}} spv={1} space={20} thumb={true}>
                   <SwiperSlide>
@@ -146,7 +138,7 @@ function Product() {
                 <StarRatingComponent name="rate1" starCount={5} value={3} />
 
                 <div className="price">
-                  <div>{product.price}</div>
+                  <div>${product.price}</div>
                 </div>
                 <div className="product-specification">
                   <div>
@@ -164,41 +156,50 @@ function Product() {
                 </div>
                 <ul style={{ paddingTop: "34px", paddingLeft: "29px" }}>
                   <li>
-                    <AccountBalanceIcon /> 6 Bank Offers Available.
+                    <AccountBalanceIcon />
+                    <span className="pl-2">6 Bank Offers Available.</span>
                   </li>
                   <li>
                     <CreditScoreIcon />
-                    90 Payment Options available.
+                    <span className="pl-2">90 Payment Options available.</span>
                   </li>
                   <li>
-                    <EventRepeatIcon /> 7 Day Easy Returns on Biker.com
+                    <EventRepeatIcon />{" "}
+                    <span className="pl-2">
+                      7 Day Easy Returns on Biker.com
+                    </span>
                   </li>
                   <li>
                     <LocalShippingIcon />
-                    Free Shipping Worth ₹1,800
+                    <span className="pl-2">Free Shipping Worth $200</span>
                   </li>
                 </ul>
-                <div className="add-to-card-section">
-                  <button className="add-to-wish-btn mx-2">
-                    <FavoriteBorderIcon />
-                    ADD TO WISHLIST
-                  </button>
-                  <button
-                    className="add-to-card-btn mx-2"
-                    onClick={() => addToCardHandler(id, quantity)}
-                  >
-                    ADD TO CARD
-                  </button>
-                  <div className="quantity-btn-group">
+                <div className="h-14 my-10 mb-2">
+                  <div className="border-2 border-solid h-full border-black mx-2 px-20 transition-all hover:bg-black hover:text-white inline-flex">
+                    <button
+                      className=" "
+                      onClick={() => addToCardHandler(id, quantity)}
+                    >
+                      ADD TO CARD
+                    </button>
+                  </div>
+
+                  <div className="border-2	border-solid h-full border-black inline-flex mx-2">
                     <button onClick={decrement} className="quantity-btn">
                       -
                     </button>
-                    <span className="quantity-input">{quantity}</span>
+                    <span className="quantity-input flex justify-center items-center">
+                      {quantity}
+                    </span>
                     <button onClick={increment} className="quantity-btn">
                       +
                     </button>
                   </div>
                 </div>
+                <button className="border-2	 block border-solid  h-8 px-[88px] border-black mx-2 transition-all hover:bg-black hover:text-white">
+                  <FavoriteBorderIcon />
+                  ADD TO WISHLIST
+                </button>
               </div>
             </div>
             <div className="px-5">
@@ -312,12 +313,7 @@ function Product() {
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                   <div>
-                    <Table
-                      striped
-                      bordered
-                      hover
-                      className="product-detail-data-sheet__table"
-                    >
+                    <table className="product-detail-data-sheet__table">
                       <tbody>
                         <tr className="product-detail-data-sheet__row">
                           <td className="product-detail-data-sheet__cell product-detail-data-sheet__cell--title">
@@ -730,11 +726,11 @@ function Product() {
                           </td>
                         </tr>
                       </tbody>
-                    </Table>
+                    </table>
                   </div>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                  <div className="grid grid-cols-2">
+                  <div className="grid grid-cols-1 lg:grid-cols-2">
                     <div>
                       <Paper className="comment-wrapper" elevation={3}>
                         <div className="review-content">
@@ -858,7 +854,7 @@ function Product() {
 
       <div className="mt-5">
         <div>
-          <h3 className="title">RELATED PRODUCTS</h3>
+          <h3 className="text-center italic font-bold">RELATED PRODUCTS</h3>
         </div>
         <CartList carousel={true} Title="Apparel" />
       </div>

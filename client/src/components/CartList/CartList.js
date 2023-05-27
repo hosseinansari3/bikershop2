@@ -1,8 +1,6 @@
 import React from "react";
-import Container from "react-bootstrap/esm/Container";
 import ProductCart from "../Body/ProductCart";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
+
 import "./CartList.css";
 import Carousel from "../Carousel/Carousel";
 import { SwiperSlide } from "swiper/react";

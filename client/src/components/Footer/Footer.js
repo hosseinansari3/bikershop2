@@ -1,12 +1,7 @@
 import React from "react";
-import Container from "react-bootstrap/esm/Container";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
+
 import "./Footer.css";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import RedditIcon from "@mui/icons-material/Reddit";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import FacebookIcon from "@mui/icons-material/Facebook";
+
 import { LocationOn, Email, LocalPhone } from "@mui/icons-material";
 
 function Footer() {

@@ -1,10 +1,8 @@
 import { menuItems } from "./menuItemss";
 import MenuItems from "./MenuItems";
-import { Row } from "react-bootstrap";
 import "./ss.css";
 import useSticky from "./useSticky";
 import { useEffect, useState } from "react";
-import { SettingsInputHdmiRounded } from "@mui/icons-material";
 const Navbarr = () => {
   const [scrollDirection, setScrollDirection] = useState(null);
   const [scrollY, setScrollY] = useState(null);

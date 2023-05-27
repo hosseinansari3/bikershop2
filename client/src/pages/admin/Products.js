@@ -1,13 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, getProducts } from "../../actions/products";
-import Table from "react-bootstrap/Table";
 
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import e from "cors";
 
 function Products() {
   const apiProduct = useSelector((state) => state.products);

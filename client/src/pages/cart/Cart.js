@@ -1,67 +1,68 @@
 import React from "react";
-import { Container, Row } from "react-bootstrap";
-import Table from "react-bootstrap/Table";
-
 import "./Cart.css";
 
 function Cart() {
   const savedCartItems = JSON.parse(localStorage.getItem("cartItems"));
   var cartTotal = 0.0;
   return (
-    <Container className="px-5">
-      <Row>
-        <div className="page-title">
-          <span>your cart</span>
-        </div>
-      </Row>
-      <Row style={{ border: "1px solid #EDEDED" }}>
-        <Table hover>
-          <thead style={{ backgroundColor: "#EDEDED" }}>
+    <div className="px-5">
+      <div className="page-title">
+        <span>your cart</span>
+      </div>
+      <div className="w-full overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg ring-1 ring-black ring-opacity-5 mb-8">
+        <table className="w-full whitespace-no-wrap">
+          <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
             <tr>
-              <th>PRODUCT</th>
-              <th>COLOR</th>
-              <th>SIZE</th>
-              <th>PRICE</th>
-              <th>QUANTITY</th>
-              <th>TOTAL</th>
+              <th className="py-3">PRODUCT</th>
+              <th className="py-3">COLOR</th>
+              <th className="py-3">SIZE</th>
+              <th className="py-3">PRICE</th>
+              <th className="py-3">QUANTITY</th>
+              <th className="py-3">TOTAL</th>
             </tr>
           </thead>
-          <tbody>
-            {savedCartItems?.map((item) => {
-              let itemPrice = parseFloat(item.price.replace(/[^\d\.]*/g, ""));
-              let itemTotal = itemPrice * parseFloat(item.quantity);
-              cartTotal = itemTotal + cartTotal;
-              return (
-                <tr>
-                  <td>
-                    <img className="product-img" src={item.image} />
-                    {item.title}
-                  </td>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>{item.price}</td>
-                  <td>{item.quantity}</td>
-                  <td>{itemTotal}</td>
-                </tr>
-              );
-            })}
+          <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
+            {savedCartItems ? (
+              savedCartItems.map((item) => {
+                let itemPrice = parseFloat(item.price.replace(/[^\d\.]*/g, ""));
+                let itemTotal = itemPrice * parseFloat(item.quantity);
+                cartTotal = itemTotal + cartTotal;
+                return (
+                  <tr>
+                    <td>
+                      <img className="inline product-img" src={item.image} />
+                      {item.title}
+                    </td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>{item.price}</td>
+                    <td>{item.quantity}</td>
+                    <td>{itemTotal}</td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <span>no item</span>
+              </tr>
+            )}
           </tbody>
-        </Table>
-      </Row>
-      <div className="d-flex justify-content-between">
+        </table>
+      </div>
+      <div className="flex justify-between">
         <div className="discount-wrapper">
           <input placeholder="Discount Code" />
           <button>Apply</button>
         </div>
         <div className="btn-group">
-          <button className="me-2">continue shopping</button>
-          <button>update cart</button>
+          <button className="bg-gray-100 mr-2">continue shopping</button>
+          <button className="bg-gray-100">update cart</button>
         </div>
       </div>
-      <Row className="justify-content-end my-5">
+      <div className="justify-end my-5">
         <div className="total">
           <div className="subtotal border-bottom">
-            <div className="d-flex justify-content-between">
+            <div className="flex justify-between">
               <p>subtotal</p>
               <p>{cartTotal}$</p>
             </div>
@@ -70,8 +71,8 @@ function Cart() {
             <p>Shipping</p>
             <ul>
               <li>
-                <div className="d-flex justify-content-between">
-                  <div className="d-flex align-items-center">
+                <div className="flex justify-between">
+                  <div className="flex items-center">
                     <div>
                       <input type="radio" name="price" />
                     </div>
@@ -81,8 +82,8 @@ function Cart() {
                 </div>
               </li>
               <li>
-                <div className="d-flex justify-content-between">
-                  <div className="d-flex align-items-center">
+                <div className="flex justify-between">
+                  <div className="flex items-center">
                     <div>
                       <input type="radio" name="price" />
                     </div>
@@ -92,8 +93,8 @@ function Cart() {
                 </div>
               </li>
               <li>
-                <div className="d-flex justify-content-between">
-                  <div className="d-flex align-items-center">
+                <div className="flex justify-between">
+                  <div className="flex items-center">
                     <div>
                       <input type="radio" name="price" />
                     </div>
@@ -120,8 +121,8 @@ function Cart() {
           <p>total</p>
           <button>Procced to Checkout</button>
         </div>
-      </Row>
-    </Container>
+      </div>
+    </div>
   );
 }
 

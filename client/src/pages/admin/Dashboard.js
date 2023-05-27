@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "recharts";
 
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell } from "recharts";
 
 function Dashboard() {
   const data = [

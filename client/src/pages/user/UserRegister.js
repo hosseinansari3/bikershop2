@@ -1,9 +1,7 @@
 import { Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import Container from "react-bootstrap/esm/Container";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
+
 import { register } from "../../actions/users";
 
 function RegisterPage() {
@@ -25,6 +23,7 @@ function RegisterPage() {
   };
 
   return (
+    /*
     <Container>
       <Col>
         <Row>
@@ -60,6 +59,8 @@ function RegisterPage() {
         </Row>
       </Col>
     </Container>
+    */
+    <span>nothing yet</span>
   );
 }
 

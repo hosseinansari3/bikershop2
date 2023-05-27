@@ -1,11 +1,9 @@
 import {
   FETCH_ALL_PRODUCTS,
   CREATE,
-  DELETE,
-  UPDATE,
-  DELETE_POST_FAIL,
-  DELETE_POST_SUCCESS,
-  DELETE_POST_REQUEST,
+  DELETE_PRODUCT_FAIL,
+  DELETE_PRODUCT_SUCCESS,
+  DELETE_PRODUCT_REQUEST,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
@@ -53,15 +51,15 @@ export const createProduct = (product) => async (dispatch) => {
 
 export const deleteProduct = (id) => async (dispatch) => {
   try {
-    dispatch({ type: DELETE_POST_REQUEST });
+    dispatch({ type: DELETE_PRODUCT_REQUEST });
     const { data } = await api.deleteProduct(id);
     console.log("reeeqqqq");
     dispatch({
-      type: DELETE_POST_SUCCESS,
+      type: DELETE_PRODUCT_SUCCESS,
       payload: data._id,
     });
     console.log("reeeqqqq");
   } catch (error) {
-    dispatch({ type: DELETE_POST_FAIL, payload: error.message });
+    dispatch({ type: DELETE_PRODUCT_FAIL, payload: error.message });
   }
 };

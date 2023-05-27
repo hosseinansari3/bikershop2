@@ -1,13 +1,10 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+
 import ProductCart from "../../components/Body/ProductCart";
 import { useSelector, useDispatch } from "react-redux";
 import { getProducts } from "../../actions/products";
 
-import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -56,7 +53,7 @@ function BikesPage() {
   };
 
   return (
-    <div className="grid grid-cols-4">
+    <div className="grid md:grid-cols-3 lg:grid-cols-4">
       <div
         className={`filter-products relative w-60 ${
           filterOpen ? "filter-open" : "filter-close"
@@ -191,7 +188,7 @@ function BikesPage() {
             <span>Filter</span>
           </div>
         </div>
-        <div className="grid grid-cols-3 BikesPage">
+        <div className="grid grid-cols-2 md:grid-cols-3 BikesPage">
           {products.map((p) => {
             return (
               <ProductCart

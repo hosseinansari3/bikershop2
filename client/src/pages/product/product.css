@@ -7,11 +7,11 @@
 .title {
   font-weight: bold;
   font-size: 24px;
+  text-align: left;
 }
 .price {
-  color: red;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 30px;
 }
 .product-specification {
   margin-top: 20px;
@@ -55,7 +55,7 @@
   border-color: #ebebeb;
 }
 .quantity-btn {
-  height: 50px;
+  height: inherit;
   border: none;
 }
 
@@ -100,4 +100,10 @@
 .review-content .dv-star-rating {
   font-size: 13pt;
   margin-top: -11px;
+}
+
+.swiper img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }

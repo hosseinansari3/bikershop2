@@ -1,45 +1,8 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getProducts } from "../../actions/products";
-import Table from "react-bootstrap/Table";
-
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 
 function Categories() {
-  const apiProduct = useSelector((state) => state.products);
-  const { products } = apiProduct;
-
-  const table = (product) => {
-    return (
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Product Name</th>
-            <th>in stock</th>
-            <th>remove/edite</th>
-          </tr>
-        </thead>
-        <tbody>
-          {product.map((p) => {
-            return (
-              <tr>
-                <td>{product.indexOf(p) + 1}</td>
-                <td>{p.title}</td>
-                <td>2</td>
-                <td>
-                  <DeleteIcon /> {"      "}
-                  <EditIcon />
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-    );
-  };
-
   const dispatch = useDispatch();
 
   useEffect(() => {

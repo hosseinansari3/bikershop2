@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import {
-  Button,
-  Grid,
-  Input,
-  List,
-  ListItem,
-  ListItemButton,
-} from "@mui/material";
+
+import { Button, Grid, List, ListItem } from "@mui/material";
 import "./addProduct.css";
 import {
   createProduct,
@@ -16,7 +8,6 @@ import {
   getProducts,
 } from "../../actions/products";
 import { useDispatch, useSelector } from "react-redux";
-import { Col, Row } from "react-bootstrap";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -262,35 +253,6 @@ function AddProduct() {
           Publish Product
         </Button>
         <p>number of products: {products.length}</p>
-      </Grid>
-      <Grid item xs={12}>
-        <div className="products-list">
-          {products.length == 0 && <p>no products!</p>}
-          <List className="products-list">
-            {products.map((p) => {
-              return (
-                <div key={p._id}>
-                  <ListItem disablePadding>
-                    <Col className="col-lg-2">
-                      <img className="product-img" src={p.image} />
-                    </Col>
-
-                    <Col className="col-lg-9">
-                      <div>
-                        <span className="title">{p.title} </span>
-                      </div>
-                    </Col>
-                    <Col className="col-lg-1">
-                      <button onClick={(e) => handleDelet(e, p._id)}>
-                        delete
-                      </button>
-                    </Col>
-                  </ListItem>
-                </div>
-              );
-            })}
-          </List>
-        </div>
       </Grid>
     </div>
   );

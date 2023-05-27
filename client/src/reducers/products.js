@@ -3,10 +3,7 @@ import {
   FETCH_ALL_PRODUCTS_REQUEST,
   CREATE,
   UPDATE,
-  DELETE,
-  DELETE_POST_FAIL,
-  DELETE_POST_REQUEST,
-  DELETE_POST_SUCCESS,
+  DELETE_PRODUCT_SUCCESS,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
@@ -30,7 +27,7 @@ export const productReducer = (state = initialState, action) => {
       return state.products.map((product) =>
         product._id === action.payload._id ? action.payload : product
       );
-    case DELETE_POST_SUCCESS:
+    case DELETE_PRODUCT_SUCCESS:
       return {
         ...state,
         products: state.products.filter(

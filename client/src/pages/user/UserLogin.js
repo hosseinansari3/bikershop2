@@ -3,15 +3,12 @@ import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
 import { signin } from "../../actions/users";
-import { Button, Toast, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { TextField } from "@mui/material";
-import { toast, Slide } from "react-toastify";
 import "./UserLogin.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { ToastContainer } from "react-toastify";
+import { Slide, toast, ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -77,6 +74,7 @@ function LoginPage(props) {
   };
 
   return (
+    /*
     <Container>
       <ToastContainer />
       <Formik
@@ -150,36 +148,8 @@ function LoginPage(props) {
         </div>
       </Formik>
     </Container>
-
-    /*
-    <Container>
-      <Col>
-        <Row>
-          <div className="login">
-            <form className="form" onSubmit={submitHandler}>
-              <TextField
-                label="Email"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <TextField
-                label="Password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <Button
-                type="submit"
-                variant="outlined"
-                onClick={(e) => {
-                  console.log(password);
-                }}
-              >
-                Login
-              </Button>
-            </form>
-          </div>
-        </Row>
-      </Col>
-    </Container>
     */
+    <span>nothing yet</span>
   );
 }
 

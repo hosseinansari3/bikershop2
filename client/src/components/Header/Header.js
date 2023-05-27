@@ -3,13 +3,10 @@ import "./header.css";
 import {
   Search,
   ShoppingCart,
-  Menu,
   AccountCircle,
   Close,
-  Favorite,
   Login,
   Logout,
-  OpenInBrowser,
   FavoriteBorder,
 } from "@mui/icons-material";
 
@@ -135,7 +132,7 @@ function Header() {
                           <div className="card-item-text-wrapper">
                             <div className="card-title">{item.title}</div>
                             <div className="card-price">
-                              <span>{item.price.match(/\d/g)} </span>
+                              <span>${item.price.match(/\d/g)} </span>
                               <span>QTY: {item.quantity}</span>
                             </div>
                           </div>
@@ -152,13 +149,13 @@ function Header() {
                 </ul>
                 <div className="card-dropdown-bottom border-top">
                   <div className="d-flex justify-content-between">
-                    <span>subtotal</span>
+                    <span>subtotal:</span>
                     <span>{total}</span>
                   </div>
-                  <button>
+                  <button className="bg-gray-100">
                     <Link to="/cart">view Card</Link>
                   </button>
-                  <button>Checkout Now</button>
+                  <button className="bg-gray-100">Checkout Now</button>
                 </div>
               </div>
             )}

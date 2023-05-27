@@ -1,27 +1,14 @@
 import React, { useEffect, useState } from "react";
-import {
-  Outlet,
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  NavLink,
-  useLocation,
-} from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
+import { Outlet, Link, NavLink, useLocation } from "react-router-dom";
+
 import "./AdminPannel.css";
 
 import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import ViewInArIcon from "@mui/icons-material/ViewInAr";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
-import SettingsIcon from "@mui/icons-material/Settings";
 
-import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import LanguageIcon from "@mui/icons-material/Language";
+import ChatBubbleIcon from "@mui/icons-material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 function Panel() {
   const [sideOpen, setSideOpen] = useState(false);
@@ -29,7 +16,6 @@ function Panel() {
   const location = useLocation();
   const { pathname } = location;
   const splitLocation = pathname.split("/");
-  const [locat, setLocat] = useState();
 
   useEffect(() => {}, [location.pathname]);
 
