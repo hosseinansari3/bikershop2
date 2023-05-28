@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "https://loose-sloths-type.loca.lt";
+const baseUrl = "https://bikershop2.onrender.com";
 
 export const signIn = (email, password) =>
   axios.post(`${baseUrl}/users/signin`, { email, password });
