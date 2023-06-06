@@ -21,11 +21,11 @@ export const getProducts = () => async (dispatch) => {
   }
 };
 
-export const getProductById = (productId) => async (dispatch) => {
-  dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
+export const getProductById = (slug) => async (dispatch) => {
+  dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: slug });
 
   try {
-    const { data } = await api.fetchProductById(productId);
+    const { data } = await api.fetchProductById(slug);
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
