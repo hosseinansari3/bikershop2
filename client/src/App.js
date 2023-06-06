@@ -16,6 +16,7 @@ import Categories from "./pages/admin/Categories";
 import Orders from "./pages/admin/Orders";
 import AddProduct from "./pages/admin/AddProduct";
 import Cart from "./pages/cart/Cart";
+import Wishlist from "./pages/admin/Wishlist";
 
 function App() {
   return (
@@ -24,10 +25,11 @@ function App() {
       window.location.pathname !== "/user" ? (
         <Header />
       ) : null}
+
       <Routes>
         <Route path="bikes" element={<BikesPage />} />
 
-        <Route path="/product/:id" element={<Product />} />
+        <Route path="/product/:slug" element={<Product />} />
 
         <Route path="login" element={<LoginPage />} />
         <Route path="cart" element={<Cart />} />
@@ -35,11 +37,13 @@ function App() {
         <Route index path="/" element={<MainPage />} />
 
         <Route path="panel" element={<Panel />}>
-          <Route path="Dashboard" element={<Dashboard />} />
+          <Route index element={<Dashboard />} />
           <Route path="customers" element={<Customers />} />
           <Route path="Products" element={<Products />} />
           <Route path="Categories" element={<Categories />} />
           <Route path="Orders" element={<Orders />} />
+          <Route path="wishlist" element={<Wishlist />} />
+
           <Route path="AddProducts" element={<AddProduct />} />
         </Route>
       </Routes>

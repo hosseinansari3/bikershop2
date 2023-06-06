@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { ROLES } = require("../constants");
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -17,14 +18,18 @@ const UserSchema = new mongoose.Schema({
   },
 
   gender: { type: String },
-  nationality: { type: String },
-  birthDate: { type: String },
-  creationDate: { type: Date, default: Date.now },
-  isAdmin: { type: Boolean },
-  isSeller: { type: Boolean },
-  isCustomer: { type: Boolean },
-  isShipper: { type: Boolean },
-  isRestricted: { type: Boolean },
+
+  phoneNumber: {
+    type: String,
+  },
+  avatar: {
+    type: String,
+  },
+  role: {
+    type: String,
+    default: ROLES.Member,
+    enum: [ROLES.Admin, ROLES.Member, ROLES.Merchant],
+  },
 });
 
 module.exports = mongoose.model("user", UserSchema);

@@ -61,6 +61,7 @@ const signIn = async (req, res) => {
               lastName: user.lastName,
               email: user.email,
               gender: user.gender,
+              role: user.role,
               nationality: user.nationality,
               birthDate: user.birthDate,
               creationDate: user.creationDate,
@@ -135,4 +136,16 @@ const fetchUsers = async (req, res) => {
   }
 };
 
-module.exports = { register, signIn, verifyToken, fetchUsers };
+const deleteUser = async (req, res) => {
+  const id = req.params.id;
+  try {
+    deletedUser = await User.findByIdAndDelete(id);
+    res.status(200).json(deletedUser);
+  } catch (error) {
+    res.status(409).json({
+      message: error.message,
+    });
+  }
+};
+
+module.exports = { register, signIn, verifyToken, fetchUsers, deleteUser };

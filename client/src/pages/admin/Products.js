@@ -26,6 +26,7 @@ function Products() {
   return (
     <div className="container grid px-6 mx-auto">
       <ToastContainer />
+      {console.log("products:" + JSON.stringify(apiProduct))}
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Products
       </h1>

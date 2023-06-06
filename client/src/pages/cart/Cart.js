@@ -1,11 +1,31 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createOrder } from "../../actions/orders";
+
 import "./Cart.css";
 
 function Cart() {
   const savedCartItems = JSON.parse(localStorage.getItem("cartItems"));
+  const userId = useSelector((state) => state.usersSignin.userInfo.user.id);
+
   var cartTotal = 0.0;
+
+  const dispatch = useDispatch();
+
+  const handleOrder = (e) => {
+    e.preventDefault();
+    console.log("idd:" + userId);
+    dispatch(
+      createOrder({
+        user: userId,
+        orderItems: savedCartItems,
+      })
+    );
+  };
+
   return (
     <div className="px-5">
+      {console.log("cartItems:" + JSON.stringify(savedCartItems))}
       <div className="page-title">
         <span>your cart</span>
       </div>
@@ -119,7 +139,7 @@ function Cart() {
             </div>
           </div>
           <p>total</p>
-          <button>Procced to Checkout</button>
+          <button onClick={handleOrder}>Procced to Checkout</button>
         </div>
       </div>
     </div>

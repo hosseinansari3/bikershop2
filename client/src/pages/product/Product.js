@@ -38,6 +38,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import avatar1 from "../../assets/images/2.jpg";
 import avatar2 from "../../assets/images/1.jpg";
+import { updateWishlist } from "../../actions/wishlist";
 
 function Product() {
   const [quantity, setQuantity] = useState(1);
@@ -50,8 +51,9 @@ function Product() {
     quantity > 0 && setQuantity(Number(quantity) - 1);
   };
 
-  const { id } = useParams();
+  const { slug } = useParams();
   const productDetails = useSelector((state) => state.ProductDetails);
+  const userId = useSelector((state) => state.usersSignin.userInfo.user.id);
 
   const { product } = productDetails;
 
@@ -66,7 +68,7 @@ function Product() {
   };
 
   useEffect(() => {
-    dispatch(getProductById(id));
+    dispatch(getProductById(slug));
   }, [dispatch]);
 
   function TabPanel(props) {
@@ -108,10 +110,30 @@ function Product() {
     setValue(newValue);
   };
 
+  const handleAddToWishlist = (e) => {
+    e.preventDefault();
+
+    dispatch(
+      updateWishlist({
+        productId: product?._id,
+        userId: userId,
+      })
+    );
+  };
+
+  const sss = {
+    productId: product?._id,
+    user: userId,
+  };
+
   return (
     <>
       <div style={{ marginTop: "10px" }}>
+        {console.log("ppppRRR:" + JSON.stringify(product?._id))}
+        {console.log("slug:" + slug)}
+
         <ToastContainer />
+        {console.log("ss" + JSON.stringify(sss))}
         {product ? (
           <div>
             <div className="grid grid-cols-1 lg:grid-cols-2 p-5">
@@ -178,7 +200,7 @@ function Product() {
                   <div className="border-2 border-solid h-full border-black mx-2 px-20 transition-all hover:bg-black hover:text-white inline-flex">
                     <button
                       className=" "
-                      onClick={() => addToCardHandler(id, quantity)}
+                      onClick={() => addToCardHandler(slug, quantity)}
                     >
                       ADD TO CARD
                     </button>
@@ -196,7 +218,10 @@ function Product() {
                     </button>
                   </div>
                 </div>
-                <button className="border-2	 block border-solid  h-8 px-[88px] border-black mx-2 transition-all hover:bg-black hover:text-white">
+                <button
+                  onClick={handleAddToWishlist}
+                  className="border-2	 block border-solid  h-8 px-[88px] border-black mx-2 transition-all hover:bg-black hover:text-white"
+                >
                   <FavoriteBorderIcon />
                   ADD TO WISHLIST
                 </button>

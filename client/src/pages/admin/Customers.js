@@ -1,16 +1,25 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getProducts } from "../../actions/products";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteUser, getUsers } from "../../actions/users";
 
 function Customers() {
+  const apiUsers = useSelector((state) => state.usersRegister);
+  const { users } = apiUsers;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+    dispatch(getUsers());
+  }, [dispatch, users]);
+
+  const handleDelet = (e, id) => {
+    e.preventDefault();
+    dispatch(deleteUser(id));
+  };
 
   return (
     <div className="container grid px-6 mx-auto">
+      {console.log("users:" + JSON.stringify(apiUsers))}
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Customers
       </h1>
@@ -90,652 +99,90 @@ function Customers() {
                 <td className="px-4 py-3">
                   <input id="selectAll" name="selectAll" type="checkbox" />
                 </td>
-                <td className="px-4 py-3">ID</td>
-                <td className="px-4 py-3">ICON</td>
                 <td className="px-4 py-3">NAME</td>
-                <td className="px-4 py-3">DESCRIPTION</td>
+                <td className="px-4 py-3">PICTURE</td>
+                <td className="px-4 py-3">EMAIL</td>
                 <td className="px-4 py-3">ACTIONS</td>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400">
-              <tr>
-                <td className="px-4 py-3">
-                  <input
-                    id="6468c2128e0b0b00083ea65e"
-                    name="Test product"
-                    type="checkbox"
-                  />
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center">
-                    <div>
-                      <h2 className="text-sm font-medium">1DD4</h2>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="relative rounded-full inline-block w-8 h-8 hidden p-1 mr-2 md:block bg-gray-50 shadow-none">
-                    <img className="object-cover w-full h-full rounded-full" />
-                    <div className="absolute inset-0 rounded-full shadow-inner"></div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm font-semibold">shirt</span>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm">sadfsdf</span>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex text-right">
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-green-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                        </svg>
-                      </p>
-                    </button>
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-red-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <polyline points="3 6 5 6 21 6"></polyline>
-                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                          <line x1="10" y1="11" x2="10" y2="17"></line>
-                          <line x1="14" y1="11" x2="14" y2="17"></line>
-                        </svg>
-                      </p>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+              {users?.map((user) => {
+                return (
+                  <tr>
+                    <td className="px-4 py-3">
+                      <input
+                        id="6468c2128e0b0b00083ea65e"
+                        name="Test product"
+                        type="checkbox"
+                      />
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center">
+                        <div>
+                          <h2 className="text-sm font-medium">{user.name}</h2>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="relative rounded-full inline-block w-8 h-8 hidden p-1 mr-2 md:block bg-gray-50 shadow-none">
+                        <img className="object-cover w-full h-full rounded-full" />
+                        <div className="absolute inset-0 rounded-full shadow-inner"></div>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className="text-sm font-semibold">
+                        {user.email}
+                      </span>
+                    </td>
 
-              <tr>
-                <td className="px-4 py-3">
-                  <input
-                    id="6468c2128e0b0b00083ea65e"
-                    name="Test product"
-                    type="checkbox"
-                  />
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center">
-                    <div>
-                      <h2 className="text-sm font-medium">1DD4</h2>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="relative rounded-full inline-block w-8 h-8 hidden p-1 mr-2 md:block bg-gray-50 shadow-none">
-                    <img className="object-cover w-full h-full rounded-full" />
-                    <div className="absolute inset-0 rounded-full shadow-inner"></div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm font-semibold">shirt</span>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm">sadfsdf</span>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex text-right">
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-green-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
+                    <td className="px-4 py-3">
+                      <div className="flex text-right">
+                        <button className="p-2 cursor-pointer text-gray-400 hover:text-green-600 focus:outline-none">
+                          <p>
+                            <svg
+                              stroke="currentColor"
+                              fill="none"
+                              stroke-width="2"
+                              viewBox="0 0 24 24"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              height="1em"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                          </p>
+                        </button>
+                        <button
+                          onClick={(e) => handleDelet(e, user._id)}
+                          className="p-2 cursor-pointer text-gray-400 hover:text-red-600 focus:outline-none"
                         >
-                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                        </svg>
-                      </p>
-                    </button>
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-red-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <polyline points="3 6 5 6 21 6"></polyline>
-                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                          <line x1="10" y1="11" x2="10" y2="17"></line>
-                          <line x1="14" y1="11" x2="14" y2="17"></line>
-                        </svg>
-                      </p>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td className="px-4 py-3">
-                  <input
-                    id="6468c2128e0b0b00083ea65e"
-                    name="Test product"
-                    type="checkbox"
-                  />
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center">
-                    <div>
-                      <h2 className="text-sm font-medium">1DD4</h2>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="relative rounded-full inline-block w-8 h-8 hidden p-1 mr-2 md:block bg-gray-50 shadow-none">
-                    <img className="object-cover w-full h-full rounded-full" />
-                    <div className="absolute inset-0 rounded-full shadow-inner"></div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm font-semibold">shirt</span>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm">sadfsdf</span>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex text-right">
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-green-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                        </svg>
-                      </p>
-                    </button>
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-red-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <polyline points="3 6 5 6 21 6"></polyline>
-                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                          <line x1="10" y1="11" x2="10" y2="17"></line>
-                          <line x1="14" y1="11" x2="14" y2="17"></line>
-                        </svg>
-                      </p>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td className="px-4 py-3">
-                  <input
-                    id="6468c2128e0b0b00083ea65e"
-                    name="Test product"
-                    type="checkbox"
-                  />
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center">
-                    <div>
-                      <h2 className="text-sm font-medium">1DD4</h2>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="relative rounded-full inline-block w-8 h-8 hidden p-1 mr-2 md:block bg-gray-50 shadow-none">
-                    <img className="object-cover w-full h-full rounded-full" />
-                    <div className="absolute inset-0 rounded-full shadow-inner"></div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm font-semibold">shirt</span>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm">sadfsdf</span>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex text-right">
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-green-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                        </svg>
-                      </p>
-                    </button>
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-red-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <polyline points="3 6 5 6 21 6"></polyline>
-                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                          <line x1="10" y1="11" x2="10" y2="17"></line>
-                          <line x1="14" y1="11" x2="14" y2="17"></line>
-                        </svg>
-                      </p>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td className="px-4 py-3">
-                  <input
-                    id="6468c2128e0b0b00083ea65e"
-                    name="Test product"
-                    type="checkbox"
-                  />
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center">
-                    <div>
-                      <h2 className="text-sm font-medium">1DD4</h2>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="relative rounded-full inline-block w-8 h-8 hidden p-1 mr-2 md:block bg-gray-50 shadow-none">
-                    <img className="object-cover w-full h-full rounded-full" />
-                    <div className="absolute inset-0 rounded-full shadow-inner"></div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm font-semibold">shirt</span>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm">sadfsdf</span>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex text-right">
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-green-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                        </svg>
-                      </p>
-                    </button>
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-red-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <polyline points="3 6 5 6 21 6"></polyline>
-                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                          <line x1="10" y1="11" x2="10" y2="17"></line>
-                          <line x1="14" y1="11" x2="14" y2="17"></line>
-                        </svg>
-                      </p>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td className="px-4 py-3">
-                  <input
-                    id="6468c2128e0b0b00083ea65e"
-                    name="Test product"
-                    type="checkbox"
-                  />
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center">
-                    <div>
-                      <h2 className="text-sm font-medium">1DD4</h2>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="relative rounded-full inline-block w-8 h-8 hidden p-1 mr-2 md:block bg-gray-50 shadow-none">
-                    <img className="object-cover w-full h-full rounded-full" />
-                    <div className="absolute inset-0 rounded-full shadow-inner"></div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm font-semibold">shirt</span>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm">sadfsdf</span>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex text-right">
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-green-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                        </svg>
-                      </p>
-                    </button>
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-red-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <polyline points="3 6 5 6 21 6"></polyline>
-                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                          <line x1="10" y1="11" x2="10" y2="17"></line>
-                          <line x1="14" y1="11" x2="14" y2="17"></line>
-                        </svg>
-                      </p>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td className="px-4 py-3">
-                  <input
-                    id="6468c2128e0b0b00083ea65e"
-                    name="Test product"
-                    type="checkbox"
-                  />
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center">
-                    <div>
-                      <h2 className="text-sm font-medium">1DD4</h2>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="relative rounded-full inline-block w-8 h-8 hidden p-1 mr-2 md:block bg-gray-50 shadow-none">
-                    <img className="object-cover w-full h-full rounded-full" />
-                    <div className="absolute inset-0 rounded-full shadow-inner"></div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm font-semibold">shirt</span>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm">sadfsdf</span>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex text-right">
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-green-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                        </svg>
-                      </p>
-                    </button>
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-red-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <polyline points="3 6 5 6 21 6"></polyline>
-                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                          <line x1="10" y1="11" x2="10" y2="17"></line>
-                          <line x1="14" y1="11" x2="14" y2="17"></line>
-                        </svg>
-                      </p>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td className="px-4 py-3">
-                  <input
-                    id="6468c2128e0b0b00083ea65e"
-                    name="Test product"
-                    type="checkbox"
-                  />
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center">
-                    <div>
-                      <h2 className="text-sm font-medium">1DD4</h2>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="relative rounded-full inline-block w-8 h-8 hidden p-1 mr-2 md:block bg-gray-50 shadow-none">
-                    <img className="object-cover w-full h-full rounded-full" />
-                    <div className="absolute inset-0 rounded-full shadow-inner"></div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm font-semibold">shirt</span>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm">sadfsdf</span>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex text-right">
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-green-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                        </svg>
-                      </p>
-                    </button>
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-red-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <polyline points="3 6 5 6 21 6"></polyline>
-                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                          <line x1="10" y1="11" x2="10" y2="17"></line>
-                          <line x1="14" y1="11" x2="14" y2="17"></line>
-                        </svg>
-                      </p>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td className="px-4 py-3">
-                  <input
-                    id="6468c2128e0b0b00083ea65e"
-                    name="Test product"
-                    type="checkbox"
-                  />
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center">
-                    <div>
-                      <h2 className="text-sm font-medium">1DD4</h2>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="relative rounded-full inline-block w-8 h-8 hidden p-1 mr-2 md:block bg-gray-50 shadow-none">
-                    <img className="object-cover w-full h-full rounded-full" />
-                    <div className="absolute inset-0 rounded-full shadow-inner"></div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm font-semibold">shirt</span>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm">sadfsdf</span>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex text-right">
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-green-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                        </svg>
-                      </p>
-                    </button>
-                    <button className="p-2 cursor-pointer text-gray-400 hover:text-red-600 focus:outline-none">
-                      <p>
-                        <svg
-                          stroke="currentColor"
-                          fill="none"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          height="1em"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <polyline points="3 6 5 6 21 6"></polyline>
-                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                          <line x1="10" y1="11" x2="10" y2="17"></line>
-                          <line x1="14" y1="11" x2="14" y2="17"></line>
-                        </svg>
-                      </p>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+                          <p>
+                            <svg
+                              stroke="currentColor"
+                              fill="none"
+                              stroke-width="2"
+                              viewBox="0 0 24 24"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              height="1em"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <polyline points="3 6 5 6 21 6"></polyline>
+                              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                              <line x1="10" y1="11" x2="10" y2="17"></line>
+                              <line x1="14" y1="11" x2="14" y2="17"></line>
+                            </svg>
+                          </p>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

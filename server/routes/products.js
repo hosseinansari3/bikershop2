@@ -11,7 +11,7 @@ const upload = require("../middlewares/uploadFile");
 const router = express.Router();
 
 router.get("/", getProducts);
-router.get("/:id", getProductById);
+router.get("/:slug", getProductById);
 router.post("/", upload, createProduct);
 router.delete(`/:id`, deletProduct);
 

@@ -1,19 +1,22 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listMyOrders } from "../../actions/orders";
+import { getProductById } from "../../actions/products";
+import { fetchWishlist } from "../../actions/wishlist";
 
-function Orders() {
+function Wishlist() {
   const userId = useSelector((state) => state.usersSignin.userInfo.user.id);
-  const orderListUser = useSelector((state) => state.orderListUser);
+  const wishlist = useSelector((state) => state.wishlist);
+  const productDetails = useSelector((state) => state.ProductDetails);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(listMyOrders(userId));
+    dispatch(fetchWishlist(userId));
   }, [dispatch]);
 
   return (
     <div className="container grid px-6 mx-auto">
-      {console.log("myOrders:" + JSON.stringify(orderListUser.orders))}
+      {console.log("myWishlist:" + JSON.stringify(wishlist))}
       {console.log("myID:" + JSON.stringify(userId))}
 
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
@@ -122,27 +125,19 @@ function Orders() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
-              {orderListUser.orders.map((order) => {
+              {wishlist.wishlistItems.map((item) => {
                 return (
                   <tr>
                     <td className="px-4 py-3">
                       <span className="font-semibold uppercase text-xs">
-                        {order.createdAt}
+                        {item.product?.title}
                       </span>
                     </td>
                     <td className="px-4 py-3">
                       <span className="text-sm">May 30, 2023 9:23 AM </span>
                     </td>
                     <td className="px-4 py-3 text-xs">
-                      <span className="text-sm">
-                        {order.orderItems?.map((item) => {
-                          return (
-                            <p>
-                              {item.title} <span>{item.quantity}</span>
-                            </p>
-                          );
-                        })}
-                      </span>
+                      <span className="text-sm"></span>
                     </td>
 
                     <td className="px-4 py-3">
@@ -304,4 +299,4 @@ function Orders() {
   );
 }
 
-export default Orders;
+export default Wishlist;

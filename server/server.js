@@ -5,6 +5,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const productsRouter = require("./routes/products");
 const usersRouter = require("./routes/users");
+const ordersRouter = require("./routes/orders");
+const wishlistRouter = require("./routes/wishlist");
 
 const path = require("path");
 
@@ -22,6 +24,8 @@ app.use("/uploads", express.static("uploads"));
 
 app.use("/products", productsRouter);
 app.use("/users", usersRouter);
+app.use("/orders", ordersRouter);
+app.use("/wishlist", wishlistRouter);
 
 mogoose
   .connect(dbUri, { useNewUrlParser: true })

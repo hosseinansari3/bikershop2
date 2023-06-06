@@ -13,7 +13,7 @@ function Footer() {
       <div className=" grid grid-cols-4">
         <div className="p-5 col-span-4 md:col-span-2">
           <p>
-            Outstock is a premium Templates theme with advanced admin module.
+            BIKERSHOP is a premium Templates theme with advanced admin module.
             It’s extremely customizable, easy to use and fully responsive and
             retina ready.
           </p>

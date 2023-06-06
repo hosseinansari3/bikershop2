@@ -43,7 +43,7 @@ function Header() {
   let userName = "";
   let isLoggedin = false;
 
-  if (typeof userInfo !== "undefined" && Object.keys(userInfo).length !== 0) {
+  if (userInfo !== null && typeof userInfo !== undefined) {
     userName = userInfo.user.name;
     isLoggedin = true;
   }
@@ -78,6 +78,7 @@ function Header() {
 
   return (
     <header className="header" style={{ zIndex: "30" }}>
+      {console.log("usinf:" + JSON.stringify(userInfo))}
       <div
         className="py-8 grid grid-cols-5"
         style={{ backgroundColor: "black" }}

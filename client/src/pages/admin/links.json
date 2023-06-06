@@ -1,0 +1,27 @@
+{
+  "ROLE ADMIN": [
+    { "to": "", "name": "Account Details", "prefix": "/dashboard" },
+    {
+      "to": "Dashboard",
+      "name": "Dashboard",
+      "prefix": "/dashboard"
+    },
+    { "to": "customers", "name": "customers", "prefix": "/dashboard" },
+    { "to": "Products", "name": "Products", "prefix": "/dashboard" },
+    { "to": "Categories", "name": "Categories", "prefix": "/dashboard" },
+    { "to": "users", "name": "Users", "prefix": "/dashboard" },
+    { "to": "orders", "name": "Orders", "prefix": "/dashboard" },
+    { "to": "review", "name": "Reviews", "prefix": "/dashboard" },
+    { "to": "wishlist", "name": "WishList", "prefix": "/dashboard" }
+  ],
+  "ROLE MEMBER": [
+    { "to": "", "name": "Account Details", "prefix": "/dashboard" },
+
+    { "to": "address", "name": "Address", "prefix": "/dashboard" },
+    { "to": "orders", "name": "Orders", "prefix": "/dashboard" },
+    { "to": "wishlist", "name": "WishList", "prefix": "/dashboard" },
+    { "to": "review", "name": "Reviews", "prefix": "/dashboard" },
+
+    { "to": "support", "name": "Support" }
+  ]
+}

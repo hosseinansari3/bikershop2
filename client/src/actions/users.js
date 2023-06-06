@@ -1,4 +1,3 @@
-import * as api from "../api/index";
 import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
@@ -8,12 +7,18 @@ import {
   USER_SIGNIN_FAIL,
   FETCH_ALL_USERS,
   USER_LOGOUT,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAIL,
 } from "../constants/actionTypes";
+import * as api from "../api/index";
+
 import setAuthToken from "../utils/setAuthToken";
 
 export const getUsers = () => async (dispatch) => {
   try {
     const { data } = await api.fetchUsers();
+    console.log("data:" + data);
     dispatch({ type: FETCH_ALL_USERS, payload: data });
   } catch (error) {
     console.log(error.message);
@@ -74,4 +79,19 @@ export const register = (name, email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
+};
+
+export const deleteUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_USER_REQUEST });
+    const { data } = await api.deleteUser(id);
+    console.log("reeeqqqq");
+    dispatch({
+      type: DELETE_USER_SUCCESS,
+      payload: data._id,
+    });
+    console.log("reeeqqqq");
+  } catch (error) {
+    dispatch({ type: DELETE_USER_FAIL, payload: error.message });
+  }
 };

@@ -13,7 +13,8 @@ const getProducts = async (req, res) => {
 };
 
 const getProductById = async (req, res) => {
-  const product = await productModel.findById(req.params.id);
+  const slug = req.params.slug;
+  const product = await productModel.findOne({ slug });
   //check condition
   if (product) {
     res.send(product);

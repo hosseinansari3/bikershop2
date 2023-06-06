@@ -23,6 +23,7 @@ import "./BikesPage.css";
 
 function BikesPage() {
   const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.usersSignin.userInfo);
 
   const [priceRange, setPriceRange] = React.useState([2000, 5700]);
 
@@ -196,7 +197,7 @@ function BikesPage() {
                 price={p.price}
                 title={p.title}
                 image={p.image}
-                id={p._id}
+                slug={p.slug}
               />
             );
           })}

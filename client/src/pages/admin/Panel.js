@@ -10,7 +10,15 @@ import ViewInArIcon from "@mui/icons-material/ViewInAr";
 
 import ChatBubbleIcon from "@mui/icons-material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
+import { ROLES } from "../../constants/panelConstants";
+import Admin from "../../components/Dashboard/Managers/Admin";
+import Customer from "../../components/Dashboard/Managers/Customer";
+import { useDispatch, useSelector } from "react-redux";
+
+import dashboardLinks from "./links.json";
 function Panel() {
+  const user = useSelector((state) => state.usersSignin.userInfo.user);
+
   const [sideOpen, setSideOpen] = useState(false);
 
   const location = useLocation();
@@ -25,11 +33,12 @@ function Panel() {
   };
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900 false">
+      {/*
       <aside
         className={`absolute top-14 transition-all  z-30 flex-shrink-0 shadow-sm  overflow-y-auto bg-white dark:bg-gray-800 block lg:relative lg:top-0 ${
           !sideOpen ? "w-0" : "w-64"
         } `}
-      >
+       >
         <div className="py-4 text-gray-500 dark:text-gray-400">
           <div>
             <p className="text-center	text-3xl font-bold">BIKER-SHOP</p>
@@ -157,8 +166,25 @@ function Panel() {
           </ul>
         </div>
       </aside>
+*/}
+
+      {user.role === ROLES.Admin ? (
+        <Admin
+          user={user}
+          sideOpen={sideOpen}
+          links={dashboardLinks[ROLES.Admin]}
+        />
+      ) : (
+        <Customer
+          user={user}
+          sideOpen={sideOpen}
+          links={dashboardLinks[ROLES.Member]}
+        />
+      )}
 
       <div className="flex flex-col flex-1 w-full">
+        <p>hi</p>
+        {JSON.stringify(user)}
         <header className="z-30 py-4 bg-white shadow-sm dark:bg-gray-800">
           <div className="container flex items-center justify-between h-full px-6 mx-auto text-green-500 dark:text-green-500">
             <button onClick={sidebareToggle}>
