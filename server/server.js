@@ -7,6 +7,7 @@ const productsRouter = require("./routes/products");
 const usersRouter = require("./routes/users");
 const ordersRouter = require("./routes/orders");
 const wishlistRouter = require("./routes/wishlist");
+const reviewRouter = require("./routes/reviews");
 
 const path = require("path");
 
@@ -26,6 +27,7 @@ app.use("/products", productsRouter);
 app.use("/users", usersRouter);
 app.use("/orders", ordersRouter);
 app.use("/wishlist", wishlistRouter);
+app.use("/review", reviewRouter);
 
 mogoose
   .connect(dbUri, { useNewUrlParser: true })

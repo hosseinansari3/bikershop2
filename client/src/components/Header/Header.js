@@ -50,7 +50,6 @@ function Header() {
 
   const logoutHandler = () => {
     dispatch(logout());
-    console.log("out");
   };
 
   const savedCartItems = JSON.parse(localStorage.getItem("cartItems"));
@@ -78,7 +77,6 @@ function Header() {
 
   return (
     <header className="header" style={{ zIndex: "30" }}>
-      {console.log("usinf:" + JSON.stringify(userInfo))}
       <div
         className="py-8 grid grid-cols-5"
         style={{ backgroundColor: "black" }}

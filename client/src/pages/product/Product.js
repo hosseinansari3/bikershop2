@@ -39,6 +39,11 @@ import "react-toastify/dist/ReactToastify.css";
 import avatar1 from "../../assets/images/2.jpg";
 import avatar2 from "../../assets/images/1.jpg";
 import { updateWishlist } from "../../actions/wishlist";
+import {
+  addProductReview,
+  fetchProductReviews,
+  reviewChange,
+} from "../../actions/reviews";
 
 function Product() {
   const [quantity, setQuantity] = useState(1);
@@ -54,6 +59,7 @@ function Product() {
   const { slug } = useParams();
   const productDetails = useSelector((state) => state.ProductDetails);
   const userId = useSelector((state) => state.usersSignin.userInfo.user.id);
+  const Reviews = useSelector((state) => state.review.productReviews);
 
   const { product } = productDetails;
 
@@ -67,8 +73,19 @@ function Product() {
     ProductAddToCartNotif();
   };
 
+  const reviewChangeHandler = (name, value) => {
+    dispatch(reviewChange(name, value));
+  };
+
+  const reviewPublishHandler = (e) => {
+    e.preventDefault();
+
+    dispatch(addProductReview());
+  };
+
   useEffect(() => {
     dispatch(getProductById(slug));
+    dispatch(fetchProductReviews(slug));
   }, [dispatch]);
 
   function TabPanel(props) {
@@ -129,11 +146,9 @@ function Product() {
   return (
     <>
       <div style={{ marginTop: "10px" }}>
-        {console.log("ppppRRR:" + JSON.stringify(product?._id))}
-        {console.log("slug:" + slug)}
+        {console.log("ppppRRR:" + JSON.stringify(Reviews))}
 
         <ToastContainer />
-        {console.log("ss" + JSON.stringify(sss))}
         {product ? (
           <div>
             <div className="grid grid-cols-1 lg:grid-cols-2 p-5">
@@ -821,7 +836,10 @@ function Product() {
                       <div class="ratting-form-wrapper ps-5">
                         <h3 className="text-xl font-bold">Add a Review</h3>
                         <div class="ratting-form">
-                          <form action="#">
+                          <form
+                            onSubmit={(e) => reviewPublishHandler(e)}
+                            action="#"
+                          >
                             <div class="star-box">
                               <span className="text-lg">Your rating:</span>
                               <div className="ratting-star">
@@ -837,26 +855,31 @@ function Product() {
                                 <div className=" rating-form-style mb-10">
                                   <input
                                     className="bg-gray-100"
-                                    placeholder="Name"
+                                    placeholder="Enter Review Title"
+                                    name="title"
                                     type="text"
+                                    onChange={(e) =>
+                                      reviewChangeHandler(
+                                        e.target.name,
+                                        e.target.value
+                                      )
+                                    }
                                   />
                                 </div>
                               </div>
-                              <div className="col-md-6">
-                                <div className="rating-form-style mb-10">
-                                  <input
-                                    className="bg-gray-100"
-                                    placeholder="Email"
-                                    type="email"
-                                  />
-                                </div>
-                              </div>
+
                               <div className="col-md-12">
                                 <div className="rating-form-style form-submit">
                                   <textarea
                                     className="bg-gray-100"
-                                    name="Your Review"
-                                    placeholder="Message"
+                                    name="review"
+                                    placeholder="Write a Review"
+                                    onChange={(e) =>
+                                      reviewChangeHandler(
+                                        e.target.name,
+                                        e.target.value
+                                      )
+                                    }
                                   ></textarea>
                                   <input
                                     className="bg-gray-100"

@@ -15,7 +15,6 @@ export const userRegisterReducer = (state = {}, action) => {
       return { loading: true };
 
     case FETCH_ALL_USERS:
-      console.log("FETCH_ALL_USERS:" + action.payload);
       return { loading: false, users: [...action.payload] };
 
     case USER_REGISTER_SUCCESS:
@@ -31,7 +30,6 @@ export const userRegisterReducer = (state = {}, action) => {
 
 const getLocalUserInfo = () => {
   let userInfo = localStorage.getItem("userInfo");
-  console.log("Info:" + userInfo);
   if (userInfo !== undefined) {
     return JSON.parse(userInfo);
   } else {
@@ -55,8 +53,6 @@ export const userSigninReducer = (
         loading: true,
       };
     case USER_SIGNIN_SUCCESS:
-      console.log("SUCCESS" + getLocalUserInfo());
-
       return {
         ...state,
         userInfo: action.payload,
@@ -64,7 +60,6 @@ export const userSigninReducer = (
     case USER_SIGNIN_FAIL:
       return { loading: false, error: action.payload };
     case USER_LOGOUT:
-      console.log("LOGOUT" + getLocalUserInfo());
       return {};
 
     default:

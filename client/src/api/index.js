@@ -39,3 +39,12 @@ export const updateWishlistAPI = (item) =>
 
 export const fetchWishlistAPI = (user) =>
   axios.get(`http://localhost:5000/wishlist/${user}`);
+
+export const addReviewAPI = (santizedReview) =>
+  axios.post(`http://localhost:5000/review/add`, santizedReview);
+
+export const fetchProductReviewsAPI = (slug) =>
+  axios.get(`http://localhost:5000/review/${slug}`);
+
+export const fetchAllReviewsAPI = () =>
+  axios.get(`http://localhost:5000/review`);

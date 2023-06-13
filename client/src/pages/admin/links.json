@@ -1,27 +1,28 @@
 {
   "ROLE ADMIN": [
-    { "to": "", "name": "Account Details", "prefix": "/dashboard" },
     {
-      "to": "Dashboard",
+      "to": "",
       "name": "Dashboard",
       "prefix": "/dashboard"
     },
     { "to": "customers", "name": "customers", "prefix": "/dashboard" },
     { "to": "Products", "name": "Products", "prefix": "/dashboard" },
     { "to": "Categories", "name": "Categories", "prefix": "/dashboard" },
-    { "to": "users", "name": "Users", "prefix": "/dashboard" },
     { "to": "orders", "name": "Orders", "prefix": "/dashboard" },
-    { "to": "review", "name": "Reviews", "prefix": "/dashboard" },
-    { "to": "wishlist", "name": "WishList", "prefix": "/dashboard" }
+    { "to": "reviews", "name": "Reviews", "prefix": "/dashboard" },
+    { "to": "wishlist", "name": "WishList", "prefix": "/dashboard" },
+    {
+      "to": "acount-details",
+      "name": "Account Details",
+      "prefix": "/dashboard"
+    }
   ],
   "ROLE MEMBER": [
-    { "to": "", "name": "Account Details", "prefix": "/dashboard" },
+    { "to": "", "name": "Dashboard", "prefix": "/dashboard" },
 
     { "to": "address", "name": "Address", "prefix": "/dashboard" },
     { "to": "orders", "name": "Orders", "prefix": "/dashboard" },
     { "to": "wishlist", "name": "WishList", "prefix": "/dashboard" },
-    { "to": "review", "name": "Reviews", "prefix": "/dashboard" },
-
-    { "to": "support", "name": "Support" }
+    { "to": "reviews", "name": "Reviews", "prefix": "/dashboard" }
   ]
 }

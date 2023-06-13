@@ -21,12 +21,13 @@ export const getProducts = () => async (dispatch) => {
   }
 };
 
-export const getProductById = (slug) => async (dispatch) => {
+export const getProductById = (slug) => async (dispatch, getState) => {
   dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: slug });
 
   try {
     const { data } = await api.fetchProductById(slug);
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
+    console.log("state Treeee:" + JSON.stringify(getState().ProductDetails));
   } catch (error) {
     dispatch({
       type: PRODUCT_DETAILS_FAIL,

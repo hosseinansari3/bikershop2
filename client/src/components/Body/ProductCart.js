@@ -7,7 +7,6 @@ import StarRatingComponent from "react-star-rating-component";
 function ProductCart(props) {
   return (
     <div className={`product-cart ${props.className}`}>
-      {console.log("slug:" + props.slug)}
       <Link to={props.slug ? `/product/${props.slug}` : "#"}>
         <div>
           <img className="product-image" src={props.image} alt="ddsdfsfd" />

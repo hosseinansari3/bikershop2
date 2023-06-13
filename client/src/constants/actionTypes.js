@@ -61,5 +61,27 @@ export const ORDER_USER_LIST_SUCCESS = "ORDER_USER_LIST_SUCCESS";
 
 export const ORDER_USER_LIST_FAILURE = "ORDER_USER_LIST_FAILURE";
 
+/*
+ *
+ * Wishlist constants
+ *
+ */
 export const SET_WISHLIST_LOADING = "SET_WISHLIST_LOADING";
 export const FETCH_WISHLIST = "FETCH_WISHLIST";
+
+/*
+ *
+ * Review constants
+ *
+ */
+
+export const REVIEW_CHANGE = "REVIEW_CHANGE";
+export const SET_REVIEW_FORM_ERRORS = "SET_REVIEW_FORM_ERRORS";
+
+export const RESET_REVIEW = "export const";
+
+export const FETCH_PRODUCT_REVIEWS = "FETCH_PRODUCT_REVIEWS";
+export const ADD_REVIEW = "ADD_REVIEW";
+export const REMOVE_REVIEW = "REMOVE_REVIEW";
+export const SET_REVIEWS_LOADING = "SET_REVIEWS_LOADING";
+export const FETCH_REVIEWS = "FETCH_REVIEWS";
