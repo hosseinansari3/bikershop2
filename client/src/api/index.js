@@ -48,3 +48,6 @@ export const fetchProductReviewsAPI = (slug) =>
 
 export const fetchAllReviewsAPI = () =>
   axios.get(`http://localhost:5000/review`);
+
+export const updateProfileAPI = (profile) =>
+  axios.put(`http://localhost:5000/users`, { profile });

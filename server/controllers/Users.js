@@ -148,4 +148,24 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = { register, signIn, verifyToken, fetchUsers, deleteUser };
+const updateUser = async (req, res) => {
+  try {
+    console.log("update");
+
+    const update = req.body.profile;
+    console.log("update" + JSON.stringify(update));
+  } catch (error) {
+    res.status(400).json({
+      error: "Your request could not be processed. Please try again.",
+    });
+  }
+};
+
+module.exports = {
+  register,
+  signIn,
+  verifyToken,
+  fetchUsers,
+  deleteUser,
+  updateUser,
+};

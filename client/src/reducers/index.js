@@ -5,6 +5,7 @@ import { cartReducer } from "./cart";
 import { orderCreateReducer, orderListUserReducer } from "./orders";
 import wishListReducer from "./wishlist";
 import reviewReducer from "./reviews";
+import { accountReducer } from "./account";
 export const reducers = combineReducers({
   products: productReducer,
   ProductDetails: ProductDetailsReducer,
@@ -15,4 +16,5 @@ export const reducers = combineReducers({
   orderListUser: orderListUserReducer,
   wishlist: wishListReducer,
   review: reviewReducer,
+  account: accountReducer,
 });

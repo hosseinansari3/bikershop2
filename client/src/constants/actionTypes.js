@@ -85,3 +85,12 @@ export const ADD_REVIEW = "ADD_REVIEW";
 export const REMOVE_REVIEW = "REMOVE_REVIEW";
 export const SET_REVIEWS_LOADING = "SET_REVIEWS_LOADING";
 export const FETCH_REVIEWS = "FETCH_REVIEWS";
+
+/*
+ *
+ * Account constants
+ *
+ */
+export const FETCH_PROFILE = "FETCH_PROFILE";
+export const SET_PROFILE_LOADING = "SET_PROFILE_LOADING";
+export const ACCOUNT_INFO_CHANGE = "USER_INFO_CHANGE";

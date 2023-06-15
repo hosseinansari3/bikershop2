@@ -41,7 +41,14 @@ const getLocalUserInfo = () => {
 
 // User SignunReducer
 export const userSigninReducer = (
-  state = { userInfo: getLocalUserInfo() },
+  state = {
+    userInfo: getLocalUserInfo(),
+    userInfoFormData: {
+      title: "",
+      review: "",
+      rating: 0,
+    },
+  },
   action
 ) => {
   switch (action.type) {
@@ -57,6 +64,7 @@ export const userSigninReducer = (
         ...state,
         userInfo: action.payload,
       };
+
     case USER_SIGNIN_FAIL:
       return { loading: false, error: action.payload };
     case USER_LOGOUT:
