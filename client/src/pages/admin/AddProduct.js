@@ -85,7 +85,6 @@ function AddProduct() {
     for (let i = 0; i < images.length; i++) {
       formData.append("images", images[i]);
     }
-    //formData.append("image", images);
 
     console.log([...formData]);
 

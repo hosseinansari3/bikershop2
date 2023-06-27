@@ -30,7 +30,10 @@ export const userRegisterReducer = (state = {}, action) => {
 
 const getLocalUserInfo = () => {
   let userInfo = localStorage.getItem("userInfo");
+  console.log("userinfobef" + userInfo);
+
   if (userInfo !== undefined) {
+    console.log("userinfo" + userInfo);
     return JSON.parse(userInfo);
   } else {
     console.log("else");
