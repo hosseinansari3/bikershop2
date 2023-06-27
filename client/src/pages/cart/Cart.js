@@ -6,7 +6,6 @@ import "./Cart.css";
 
 function Cart() {
   const savedCartItems = JSON.parse(localStorage.getItem("cartItems"));
-  const userId = useSelector((state) => state.usersSignin.userInfo.user.id);
 
   var cartTotal = 0.0;
 
@@ -14,10 +13,8 @@ function Cart() {
 
   const handleOrder = (e) => {
     e.preventDefault();
-    console.log("idd:" + userId);
     dispatch(
       createOrder({
-        user: userId,
         orderItems: savedCartItems,
       })
     );

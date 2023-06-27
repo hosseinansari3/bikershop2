@@ -1,13 +1,16 @@
 const Review = require("../models/reviewModel");
 const Product = require("../models/productModel");
+
 const addReview = async (req, res) => {
   try {
     const body = req.body;
+    const user = req.user;
 
-    console.log("body:" + JSON.stringify(body));
+    console.log("user:" + JSON.stringify(user));
 
     const review = new Review({
       ...req.body,
+      user: user.id,
     });
 
     const reviewDoc = await review.save();

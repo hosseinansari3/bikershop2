@@ -15,19 +15,18 @@ import "react-toastify/dist/ReactToastify.css";
 function LoginPage(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoggedin, setisLoggedin] = useState(false);
 
   const userSignin = useSelector((state) => state.usersSignin);
   const { userInfo, loading, error } = userSignin;
 
   const dispatch = useDispatch();
 
-  let userName = "";
-  let isLoggedin = false;
-
-  if (userInfo !== null && typeof userInfo !== undefined) {
-    userName = userInfo.user.name;
-    isLoggedin = true;
-  }
+  useEffect(() => {
+    if (userInfo !== null && typeof userInfo !== undefined) {
+      setisLoggedin(true);
+    }
+  }, [dispatch, userInfo]);
 
   // handle login form submit
   const submitHandler = (e) => {

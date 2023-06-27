@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 // Load input validation
 
 const signIn = async (req, res) => {
-  const jwtSecret = "secret";
+  const jwtSecret = process.env.jwt_sec;
 
   const email = req.body.email;
   const password = req.body.password;
@@ -55,12 +55,12 @@ const signIn = async (req, res) => {
             token,
             message: "Logged in Succefully",
             user: {
-              id: user._id,
               name: user.name,
               firstName: user.firstName,
               lastName: user.lastName,
               email: user.email,
               gender: user.gender,
+              avatar: user.avatar,
               role: user.role,
               nationality: user.nationality,
               birthDate: user.birthDate,
@@ -150,10 +150,21 @@ const deleteUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    console.log("update");
+    const user = req.user.id;
+    const image = "http://localhost:5000/uploads/" + req.files[0].filename;
 
-    const update = req.body.profile;
-    console.log("update" + JSON.stringify(update));
+    const update = { ...req.body, avatar: image };
+    console.log("inaaaa:" + JSON.stringify(update));
+    const query = { _id: user };
+    const userDoc = await User.findOneAndUpdate(query, update, {
+      new: true,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Your profile is successfully updated!",
+      user: userDoc,
+    });
   } catch (error) {
     res.status(400).json({
       error: "Your request could not be processed. Please try again.",

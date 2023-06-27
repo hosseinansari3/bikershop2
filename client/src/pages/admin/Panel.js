@@ -16,7 +16,6 @@ import Customer from "../../components/Dashboard/AccountMenu/Managers/Customer";
 import { useDispatch, useSelector } from "react-redux";
 
 import dashboardLinks from "./links.json";
-import CartList from "../../components/CartList/CartList";
 function Panel() {
   const user = useSelector((state) => state.usersSignin.userInfo.user);
 
@@ -184,6 +183,7 @@ function Panel() {
       )}
 
       <div className="flex flex-col flex-1 w-full">
+        {console.log("UUZZ:" + JSON.stringify(user))}
         <header className="z-30 py-4 bg-white shadow-sm dark:bg-gray-800">
           <div className="container flex items-center justify-between h-full px-6 mx-auto text-green-500 dark:text-green-500">
             <button onClick={sidebareToggle}>
@@ -228,9 +228,11 @@ function Panel() {
                 </button>
               </li>
               <li className="relative inline-block text-left">
-                <button className="rounded-full dark:bg-gray-500 bg-green-500 text-white h-8 w-8 font-medium mx-auto focus:outline-none">
-                  <span>A</span>{" "}
-                </button>
+                <img
+                  className="inline rounded-full h-8 w-8"
+                  src={user.avatar}
+                />
+                <span>{user.firstName}</span>
               </li>
             </ul>
           </div>

@@ -8,11 +8,13 @@ const {
   updateOrderToDelivered,
 } = require("../controllers/Orders");
 
+const { protectRoute } = require("../middlewares/authMiddleware");
+
 const router = express.Router();
 
-router.get("/myOrder/:user", GetMyOrders);
+router.get("/myOrder/", protectRoute, GetMyOrders);
 
-router.post("/", addorderitems);
+router.post("/", protectRoute, addorderitems);
 router.get("/", GetOrders);
 router.get("/:id", getOrderById);
 

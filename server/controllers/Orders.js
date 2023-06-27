@@ -11,8 +11,10 @@ const addorderitems = async (req, res) => {
     throw new Error("No order items");
     return;
   } else {
+    const user = req.user;
+    console.log("user:" + JSON.stringify(user));
     const order = new Order({
-      user: req.body.user,
+      user: user.id,
       orderItems: req.body.orderItems,
     });
     const createdOrder = await order.save();
@@ -77,10 +79,11 @@ const updateOrderToDelivered = async (req, res) => {
 // @route GET /api/orders/myorders
 // @access Private
 const GetMyOrders = async (req, res) => {
+  const user = req.user;
   const orders = await Order.find({
-    user: req.params.user,
+    user: user.id,
   });
-  console.log("myOrders:" + req.params.user);
+  console.log("myOrders:" + user.id);
   res.json(orders);
 };
 

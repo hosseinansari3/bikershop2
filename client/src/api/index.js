@@ -27,21 +27,21 @@ export const deleteUser = (id) => {
   axios.delete(`http://localhost:5000/users/${id}`);
 };
 
-export const createOrderAPI = (order) => {
-  axios.post(`${baseUrl}/orders`, order);
+export const createOrderAPI = (order, config) => {
+  axios.post(`${baseUrl}/orders`, order, config);
 };
 
-export const listUserOrdersAPI = (user) =>
-  axios.get(`http://localhost:5000/orders/myOrder/${user}`);
+export const listUserOrdersAPI = (config) =>
+  axios.get(`http://localhost:5000/orders/myOrder/`, config);
 
-export const updateWishlistAPI = (item) =>
-  axios.post("http://localhost:5000/wishlist", item);
+export const updateWishlistAPI = (item, config) =>
+  axios.post("http://localhost:5000/wishlist", item, config);
 
-export const fetchWishlistAPI = (user) =>
-  axios.get(`http://localhost:5000/wishlist/${user}`);
+export const fetchWishlistAPI = (config) =>
+  axios.get(`http://localhost:5000/wishlist`, config);
 
-export const addReviewAPI = (santizedReview) =>
-  axios.post(`http://localhost:5000/review/add`, santizedReview);
+export const addReviewAPI = (santizedReview, config) =>
+  axios.post(`http://localhost:5000/review/add`, santizedReview, config);
 
 export const fetchProductReviewsAPI = (slug) =>
   axios.get(`http://localhost:5000/review/${slug}`);
@@ -49,5 +49,5 @@ export const fetchProductReviewsAPI = (slug) =>
 export const fetchAllReviewsAPI = () =>
   axios.get(`http://localhost:5000/review`);
 
-export const updateProfileAPI = (profile) =>
-  axios.put(`http://localhost:5000/users`, { profile });
+export const updateProfileAPI = (profile, config) =>
+  axios.put(`http://localhost:5000/users`, profile, config);

@@ -33,12 +33,20 @@ export const addProductReview = () => {
       const review = getState().review.reviewFormData;
       const product = getState().ProductDetails.product;
       const user = getState().usersSignin.userInfo.user;
+      const userinf = getState().usersSignin.userInfo;
 
+      console.log("token:" + userinf.token);
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userinf.token}`,
+        },
+      };
       const newReview = {
         product: product._id,
         review: review.review,
         title: review.title,
-        user: user.id,
       };
 
       const { isValid, errors } = allFieldsValidation(newReview, rules, {
@@ -51,7 +59,7 @@ export const addProductReview = () => {
       }
 
       const santizedReview = santizeFields(newReview);
-      const response = await addReviewAPI(santizedReview);
+      const response = await addReviewAPI(santizedReview, config);
 
       if (response.data.success === true) {
         dispatch(fetchProductReviews(product.slug));

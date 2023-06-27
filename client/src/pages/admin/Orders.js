@@ -3,18 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { listMyOrders } from "../../actions/orders";
 
 function Orders() {
-  const userId = useSelector((state) => state.usersSignin.userInfo.user.id);
   const orderListUser = useSelector((state) => state.orderListUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(listMyOrders(userId));
+    dispatch(listMyOrders());
   }, [dispatch]);
 
   return (
     <div className="container grid px-6 mx-auto">
       {console.log("myOrders:" + JSON.stringify(orderListUser.orders))}
-      {console.log("myID:" + JSON.stringify(userId))}
 
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Orders
@@ -122,7 +120,7 @@ function Orders() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
-              {orderListUser.orders.map((order) => {
+              {orderListUser.orders?.map((order) => {
                 return (
                   <tr>
                     <td className="px-4 py-3">

@@ -6,6 +6,8 @@ const {
   deleteUser,
   updateUser,
 } = require("../controllers/Users");
+const upload = require("../middlewares/uploadFile");
+const { protectRoute } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
@@ -15,6 +17,6 @@ router.post("/register", register);
 
 router.post("/signin", signIn);
 router.delete(`/:id`, deleteUser);
-router.put("/", updateUser);
+router.put("/", upload, protectRoute, updateUser);
 
 module.exports = router;

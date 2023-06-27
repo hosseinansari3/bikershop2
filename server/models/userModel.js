@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 const { ROLES } = require("../constants");
 
 const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-  },
-
   email: {
     type: String,
   },

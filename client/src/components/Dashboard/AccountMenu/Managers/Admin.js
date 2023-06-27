@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
@@ -26,8 +26,13 @@ function Admin(props) {
           {props.links.map((link) => {
             return (
               <li className="relative">
-                <Link
-                  className="px-6 py-4 inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-green-700 dark:hover:text-gray-200 text-green-500 dark:text-gray-100"
+                <NavLink
+                  end={link.name == "Dashboard" ? true : false}
+                  className={({ isActive, isPending }) =>
+                    isActive
+                      ? "px-6 py-4 inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 border-l-4 border-green-500 hover:text-green-700 dark:hover:text-gray-200 text-green-500 dark:text-gray-100"
+                      : "px-6 py-4 inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-green-700 dark:hover:text-gray-200 text-green-500 dark:text-gray-100"
+                  }
                   to={link.to}
                 >
                   <HomeIcon />
@@ -35,7 +40,7 @@ function Admin(props) {
                   <span className="inline-flex px-2 absolute right-4 text-xs font-medium leading-5 rounded-full text-white bg-orange-400">
                     آزمایشی
                   </span>
-                </Link>
+                </NavLink>
               </li>
             );
           })}

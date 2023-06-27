@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile, userInfoChange } from "../../actions/account";
 
 function AccountInfo() {
   const account = useSelector((state) => state.account.user);
+  const user = useSelector((state) => state.usersSignin.userInfo.user);
+
+  const [preview, setPreview] = useState([]);
+
+  useEffect(() => {
+    account.avatar && console.log("avattt:" + account.avatar);
+    if (typeof account.avatar === "object" && account.avatar !== null) {
+      account.avatar && setPreview(URL.createObjectURL(account.avatar));
+    }
+    // free memory when ever this component is unmounted
+    // return () => URL.revokeObjectURL(objectUrl);
+  }, [account]);
 
   const clickHandler = (e) => {
     e.preventDefault();
@@ -50,10 +62,11 @@ function AccountInfo() {
     <div className="px-6 pt-8 flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
       <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
         <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
-          First Name{" "}
+          First Name
         </label>
         <div className="col-span-8 sm:col-span-4">
           <input
+            defaultValue={user.firstName}
             onChange={(e) =>
               userInfoChangeHandler(e.target.name, e.target.value)
             }
@@ -72,6 +85,7 @@ function AccountInfo() {
         </label>
         <div className="col-span-8 sm:col-span-4">
           <input
+            defaultValue={user.lastName}
             onChange={(e) =>
               userInfoChangeHandler(e.target.name, e.target.value)
             }
@@ -93,11 +107,16 @@ function AccountInfo() {
                 for="files"
                 role="button"
                 tabIndex="0"
-                className="border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer px-6 pt-5 pb-6"
+                className="flex justify-center border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer px-6 pt-5 pb-6"
               >
+                {preview !== undefined && preview.length !== 0 ? (
+                  <img className="w-28 h-28" src={preview} />
+                ) : (
+                  <img className="w-28 h-28" src={user.avatar} />
+                )}
                 <input
                   onChange={(e) =>
-                    userInfoChangeHandler(e.target.name, e.target.files[0].name)
+                    userInfoChangeHandler(e.target.name, e.target.files[0])
                   }
                   id="files"
                   tabIndex="-1"
@@ -131,6 +150,7 @@ function AccountInfo() {
         <div className="col-span-8 sm:col-span-4">
           <div className="flex flex-row">
             <input
+              defaultValue={user.email}
               onChange={(e) =>
                 userInfoChangeHandler(e.target.name, e.target.value)
               }
@@ -149,6 +169,7 @@ function AccountInfo() {
         <div className="col-span-8 sm:col-span-4">
           <div className="flex flex-row">
             <input
+              defaultValue={user.phoneNumber}
               onChange={(e) =>
                 userInfoChangeHandler(e.target.name, e.target.value)
               }
@@ -160,9 +181,13 @@ function AccountInfo() {
         </div>
       </div>
 
-      <div>
-        <button onClick={clickHandler} variant="contained">
-          Publish Product
+      <div className="flex justify-center">
+        <button
+          className="bg-blue-300 p-4 text-white rounded mt-8"
+          onClick={clickHandler}
+          variant="contained"
+        >
+          Update Profile Info
         </button>
       </div>
     </div>

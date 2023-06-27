@@ -3,11 +3,10 @@ var mongoose = require("mongoose");
 
 const updateWishlist = async (req, res) => {
   try {
-    const { productId, userId } = req.body;
+    const { productId } = req.body;
+    const user = req.user;
     productObjId = mongoose.Types.ObjectId(productId);
-    userObjId = mongoose.Types.ObjectId(userId);
-    console.log("p:" + productId);
-    console.log("u:" + userId);
+    userObjId = mongoose.Types.ObjectId(user.id);
 
     const update = {
       productObjId,
@@ -28,7 +27,7 @@ const updateWishlist = async (req, res) => {
     } else {
       const wishlist = new Wishlist({
         product: productId,
-        user: userId,
+        user: user.id,
       });
 
       const wishlistDoc = await wishlist.save();
@@ -49,8 +48,8 @@ const updateWishlist = async (req, res) => {
 
 const fetchWishlist = async (req, res) => {
   try {
-    const user = req.params.user;
-    userObjId = mongoose.Types.ObjectId(user);
+    const user = req.user;
+    userObjId = mongoose.Types.ObjectId(user.id);
 
     const wishlist = await Wishlist.find({ userObjId })
       .populate({

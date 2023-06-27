@@ -58,7 +58,6 @@ function Product() {
 
   const { slug } = useParams();
   const productDetails = useSelector((state) => state.ProductDetails);
-  const userId = useSelector((state) => state.usersSignin.userInfo.user.id);
   const Reviews = useSelector((state) => state.review.productReviews);
 
   const { product } = productDetails;
@@ -133,14 +132,12 @@ function Product() {
     dispatch(
       updateWishlist({
         productId: product?._id,
-        userId: userId,
       })
     );
   };
 
   const sss = {
     productId: product?._id,
-    user: userId,
   };
 
   return (

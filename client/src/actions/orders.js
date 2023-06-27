@@ -12,7 +12,16 @@ export const createOrder = (order) => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_CREATE_REQUEST });
 
-    const { data } = await createOrderAPI(order);
+    const userinfo = getState().usersSignin.userInfo;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userinfo.token}`,
+      },
+    };
+
+    const { data } = await createOrderAPI(order, config);
 
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: data });
   } catch (error) {
@@ -26,10 +35,20 @@ export const createOrder = (order) => async (dispatch, getState) => {
   }
 };
 
-export const listMyOrders = (user) => async (dispatch, getState) => {
+export const listMyOrders = () => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_USER_LIST_REQUEST });
-    const { data } = await listUserOrdersAPI(user);
+
+    const userinfo = getState().usersSignin.userInfo;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userinfo.token}`,
+      },
+    };
+
+    const { data } = await listUserOrdersAPI(config);
 
     dispatch({ type: ORDER_USER_LIST_SUCCESS, payload: data });
     console.log("dispatch:" + JSON.stringify(data));

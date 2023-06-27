@@ -8,7 +8,7 @@ import LoginPage from "./pages/user/UserLogin";
 import RegisterPage from "./pages/user/UserRegister";
 import Panel from "./pages/admin/Panel";
 import Product from "./pages/product/Product";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Dashboard from "./pages/admin/Dashboard";
 import Customers from "./pages/admin/Customers";
 import Products from "./pages/admin/Products";
@@ -21,10 +21,13 @@ import Reviews from "./pages/admin/Reviews";
 import AccountInfo from "./pages/admin/AccountInfo";
 
 function App() {
+  const location = useLocation();
+
   return (
-    <BrowserRouter>
-      {!window.location.href.includes("panel") &&
-      window.location.pathname !== "/user" ? (
+    <>
+      {!location.pathname.includes("/panel") &&
+      location.pathname !== "/user" &&
+      location.pathname !== "/panel" ? (
         <Header />
       ) : null}
 
@@ -56,7 +59,7 @@ function App() {
       window.location.pathname !== "/user" ? (
         <Footer />
       ) : null}
-    </BrowserRouter>
+    </>
   );
 }
 

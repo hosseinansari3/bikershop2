@@ -3,11 +3,15 @@ const express = require("express");
 const mogoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const passport = require("passport");
 const productsRouter = require("./routes/products");
 const usersRouter = require("./routes/users");
+const cookieSession = require("cookie-session");
 const ordersRouter = require("./routes/orders");
 const wishlistRouter = require("./routes/wishlist");
 const reviewRouter = require("./routes/reviews");
+
+const { setupPassport } = require("./config/passport");
 
 const path = require("path");
 
@@ -28,6 +32,18 @@ app.use("/users", usersRouter);
 app.use("/orders", ordersRouter);
 app.use("/wishlist", wishlistRouter);
 app.use("/review", reviewRouter);
+
+app.use(
+  cookieSession({
+    maxAge: 1000 * 60 * 60 * 24, // 1 day
+    keys: [process.env.COOKIE_SESSION_KEY],
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+setupPassport();
 
 mogoose
   .connect(dbUri, { useNewUrlParser: true })

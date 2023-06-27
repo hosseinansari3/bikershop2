@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 //import "bootstrap/dist/css/bootstrap.css";
 
 import "./index.css";
+import { BrowserRouter } from "react-router-dom";
+
 import App from "./App";
 import { reducers } from "./reducers";
 import { Provider } from "react-redux";
@@ -15,7 +17,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

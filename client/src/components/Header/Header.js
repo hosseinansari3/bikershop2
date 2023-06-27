@@ -13,7 +13,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import Navbarr from "./Navbarr";
 import { logout } from "../../actions/users";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { removeFromCart } from "../../actions/cart";
 
 import { menuItems } from "./menuItemss";
@@ -25,31 +25,44 @@ function Header() {
 
   const dispatch = useDispatch();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [cartIsOpen, setCartIsOpen] = useState(false);
+  const [profiletIsOpen, setProfileIsOpen] = useState(false);
+
+  const [userName, setuserName] = useState("");
+
+  const [isLoggedin, setisLoggedin] = useState(false);
 
   const openCart = () => {
-    setIsOpen(true);
+    setCartIsOpen(true);
   };
   const closeCart = () => {
-    setIsOpen(false);
+    setCartIsOpen(false);
   };
-  const navigate = useNavigate();
+
+  const toggleProfile = () => {
+    setProfileIsOpen(!profiletIsOpen);
+  };
 
   const [isBurgerOpen, setBugerOpen] = useState(false);
   const burgerToggling = () => setBugerOpen(!isBurgerOpen);
 
   const { cartItems } = cart;
-  const local = localStorage.getItem("userInfo");
-  let userName = "";
-  let isLoggedin = false;
 
-  if (userInfo !== null && typeof userInfo !== undefined) {
-    userName = userInfo.user.name;
-    isLoggedin = true;
-  }
+  useEffect(() => {
+    if (userInfo !== null && userInfo !== undefined) {
+      setisLoggedin(true);
+      console.log("settrue");
+
+      setuserName(userInfo?.user.firstName);
+    } else {
+      setisLoggedin(false);
+    }
+  }, [userInfo]);
 
   const logoutHandler = () => {
     dispatch(logout());
+    setisLoggedin(false);
+    toggleProfile();
   };
 
   const savedCartItems = JSON.parse(localStorage.getItem("cartItems"));
@@ -77,6 +90,9 @@ function Header() {
 
   return (
     <header className="header" style={{ zIndex: "30" }}>
+      {console.log("render" + isLoggedin)}
+      {console.log("info" + JSON.stringify(userInfo))}
+
       <div
         className="py-8 grid grid-cols-5"
         style={{ backgroundColor: "black" }}
@@ -117,59 +133,86 @@ function Header() {
             onMouseLeave={closeCart}
           >
             <ShoppingCart fontSize="large" />
-            {isOpen && (
-              <div className="card-dropdown">
-                {savedCartItems?.length === 0 && (
-                  <p className="cart-no-items">No Items Added To Cart</p>
-                )}
-                <ul>
-                  {savedCartItems?.map((item) => {
-                    return (
-                      <li key={item.product}>
-                        <div className="card-item-wrapper">
-                          <img src={item.image}></img>
-                          <div className="card-item-text-wrapper">
-                            <div className="card-title">{item.title}</div>
-                            <div className="card-price">
-                              <span>${item.price.match(/\d/g)} </span>
-                              <span>QTY: {item.quantity}</span>
+            {cartIsOpen &&
+              savedCartItems?.length !== 0 &&
+              savedCartItems !== undefined && (
+                <div className="card-dropdown">
+                  <>
+                    <ul>
+                      {savedCartItems?.map((item) => {
+                        return (
+                          <li key={item.product}>
+                            <div className="card-item-wrapper">
+                              <img src={item.image}></img>
+                              <div className="card-item-text-wrapper">
+                                <div className="card-title">{item.title}</div>
+                                <div className="card-price">
+                                  <span>${item.price.match(/\d/g)} </span>
+                                  <span>QTY: {item.quantity}</span>
+                                </div>
+                              </div>
+                              <div
+                                className="remove-cart"
+                                onClick={() =>
+                                  removeFromCardHandler(item.product)
+                                }
+                              >
+                                <Close />
+                              </div>
                             </div>
-                          </div>
-                          <div
-                            className="remove-cart"
-                            onClick={() => removeFromCardHandler(item.product)}
-                          >
-                            <Close />
-                          </div>
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-                <div className="card-dropdown-bottom border-top">
-                  <div className="d-flex justify-content-between">
-                    <span>subtotal:</span>
-                    <span>{total}</span>
-                  </div>
-                  <button className="bg-gray-100">
-                    <Link to="/cart">view Card</Link>
-                  </button>
-                  <button className="bg-gray-100">Checkout Now</button>
-                </div>
-              </div>
-            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                    <div className="flex justify-center bg-gray-300 font-bold p-2 text-white mb-2">
+                      <span>subtotal:</span>
+                      <span>{total}</span>
+                    </div>
+                  </>
 
-            {cart ? (
+                  <div className="card-dropdown-bottom border-top">
+                    <button className="bg-gray-100">
+                      <Link to="/cart">view Card</Link>
+                    </button>
+                    <button className="bg-gray-100">Checkout Now</button>
+                  </div>
+                </div>
+              )}
+
+            {cart &&
+            savedCartItems?.length !== 0 &&
+            savedCartItems !== undefined ? (
               <span className="cart-number">{cartItems.length}</span>
             ) : null}
           </div>
 
-          {isLoggedin ? (
-            <div title={userName} className="AccountCircleIcon">
-              <AccountCircle fontSize="large" />
-              <div style={{ cursor: "pointer" }} onClick={logoutHandler}>
-                <Logout fontSize="large" />
-              </div>
+          {isLoggedin === true ? (
+            <div>
+              <button onClick={toggleProfile}>
+                <AccountCircle className=" mx-2 text-white" fontSize="large" />
+              </button>
+
+              {profiletIsOpen && (
+                <div className="text-black absolute z-50 bg-white rounded  w-28 right-16">
+                  <ul>
+                    <Link to="panel">
+                      <li className="hover:bg-gray-100 hover:rounded px-4 py-2 flex justify-between items-center cursor-pointer">
+                        <span>profile</span>
+                      </li>
+                    </Link>
+
+                    <li className="hover:bg-gray-100 hover:rounded px-4 py-2  cursor-pointer">
+                      <div
+                        onClick={logoutHandler}
+                        className="flex justify-between items-center"
+                      >
+                        <span>logout</span>
+                        <Logout fontSize="small" />
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              )}
             </div>
           ) : (
             <div className="AccountCircleIcon">

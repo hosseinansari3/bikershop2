@@ -10,7 +10,6 @@ const initialState = {
     lastName: "",
     emailAdress: "",
     phoneNumber: "",
-    avatar: "",
   },
   isLoading: false,
 };
