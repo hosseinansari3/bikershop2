@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, Link, NavLink, useLocation } from "react-router-dom";
+import {
+  Outlet,
+  Link,
+  NavLink,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 import "./AdminPannel.css";
 
@@ -16,16 +22,48 @@ import Customer from "../../components/Dashboard/AccountMenu/Managers/Customer";
 import { useDispatch, useSelector } from "react-redux";
 
 import dashboardLinks from "./links.json";
+import { Logout } from "@mui/icons-material";
+import { logout } from "../../actions/users";
+import { fetchProfile } from "../../actions/account";
 function Panel() {
-  const user = useSelector((state) => state.usersSignin.userInfo.user);
+  const user = useSelector((state) => state.account.user);
 
   const [sideOpen, setSideOpen] = useState(false);
+  const [profiletIsOpen, setProfileIsOpen] = useState(false);
+  const [avatar, setAvatar] = useState("");
+
+  const toggleProfile = () => {
+    setProfileIsOpen(!profiletIsOpen);
+  };
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    navigate("/login");
+
+    toggleProfile();
+  };
 
   const location = useLocation();
   const { pathname } = location;
   const splitLocation = pathname.split("/");
 
   useEffect(() => {}, [location.pathname]);
+  useEffect(() => {
+    dispatch(fetchProfile());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (typeof user.avatar === "object" && user.avatar !== null) {
+      setAvatar(URL.createObjectURL(user.avatar));
+      console.log("tarrrbala" + avatar);
+    } else {
+      setAvatar(user.avatar);
+      console.log("tarrrpaeen" + avatar);
+    }
+  }, [user]);
 
   const sidebareToggle = () => {
     setSideOpen(!sideOpen);
@@ -33,141 +71,6 @@ function Panel() {
   };
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900 false">
-      {/*
-      <aside
-        className={`absolute top-14 transition-all  z-30 flex-shrink-0 shadow-sm  overflow-y-auto bg-white dark:bg-gray-800 block lg:relative lg:top-0 ${
-          !sideOpen ? "w-0" : "w-64"
-        } `}
-       >
-        <div className="py-4 text-gray-500 dark:text-gray-400">
-          <div>
-            <p className="text-center	text-3xl font-bold">BIKER-SHOP</p>
-            <p className="text-center	text-lg font-bold">Admin Dashboard</p>
-          </div>
-
-          <ul className="mt-2">
-            <li className="relative">
-              <NavLink
-                onClick={() => {
-                  console.log(window.location.pathname);
-                }}
-                className="px-6 py-4 inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-green-700 dark:hover:text-gray-200 text-green-500 dark:text-gray-100"
-                to="Dashboard"
-              >
-                {splitLocation[2] == "Dashboard" && (
-                  <span className="absolute inset-y-0 left-0 w-1 bg-green-500 rounded-tr-lg rounded-br-lg"></span>
-                )}
-                <HomeIcon />
-                <span className="ml-4">Dashboard</span>
-                <span className="inline-flex px-2 absolute right-4 text-xs font-medium leading-5 rounded-full text-white bg-orange-400">
-                  آزمایشی
-                </span>
-              </NavLink>
-            </li>
-
-            <li className="relative">
-              <Link
-                className="px-6 py-4 inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-green-700 dark:hover:text-gray-200"
-                to="customers"
-              >
-                {splitLocation[2] == "customers" && (
-                  <span className="absolute inset-y-0 left-0 w-1 bg-green-500 rounded-tr-lg rounded-br-lg"></span>
-                )}
-                <PersonIcon />
-                <span className="ml-4">Customers</span>
-                <span className="inline-flex px-2 absolute right-4 text-xs font-medium leading-5 rounded-full text-white bg-orange-400">
-                  آزمایشی
-                </span>
-              </Link>
-            </li>
-
-            <li className="relative">
-              <Link
-                onClick={() => {
-                  console.log(splitLocation[2]);
-                }}
-                className="px-6 py-4 inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-green-700 dark:hover:text-gray-200"
-                to="Orders"
-              >
-                {splitLocation[2] == "Orders" && (
-                  <span className="absolute inset-y-0 left-0 w-1 bg-green-500 rounded-tr-lg rounded-br-lg"></span>
-                )}
-
-                <PersonIcon />
-                <span className="ml-4">Orders</span>
-                <span className="inline-flex px-2 absolute right-4 text-xs font-medium leading-5 rounded-full text-white bg-orange-400">
-                  آزمایشی
-                </span>
-              </Link>
-            </li>
-
-            <li className="relative">
-              <Link
-                className="px-6 py-4 inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-green-700 dark:hover:text-gray-200 "
-                to="Products"
-              >
-                {splitLocation[2] == "Products" && (
-                  <span className="absolute inset-y-0 left-0 w-1 bg-green-500 rounded-tr-lg rounded-br-lg"></span>
-                )}
-
-                <ViewInArIcon />
-                <span className="ml-4">Products</span>
-                <span className="inline-flex px-2 absolute right-4 text-xs font-medium leading-5 rounded-full text-white bg-green-400">
-                  عملیاتی
-                </span>
-              </Link>
-            </li>
-
-            <li className="relative">
-              <Link
-                className="px-6 py-4 inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-green-700 dark:hover:text-gray-200 "
-                to="Categories"
-              >
-                {splitLocation[2] == "Categories" && (
-                  <span className="absolute inset-y-0 left-0 w-1 bg-green-500 rounded-tr-lg rounded-br-lg"></span>
-                )}
-
-                <ViewInArIcon />
-                <span className="ml-4">Categories</span>
-                <span className="inline-flex px-2 absolute right-4 text-xs font-medium leading-5 rounded-full text-white bg-orange-400">
-                  آزمایشی
-                </span>
-              </Link>
-            </li>
-
-            <li className="relative">
-              <Link
-                className="px-6 py-4 inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-green-700 dark:hover:text-gray-200"
-                to="AddProducts"
-              >
-                {splitLocation[2] == "AddProducts" && (
-                  <span className="absolute inset-y-0 left-0 w-1 bg-green-500 rounded-tr-lg rounded-br-lg"></span>
-                )}
-                <AddBoxIcon />
-                <span className="ml-4">Add Product</span>
-                <span className="inline-flex px-2 absolute right-4 text-xs font-medium leading-5 rounded-full text-white bg-green-400">
-                  عملیاتی
-                </span>
-              </Link>
-            </li>
-
-            <li className="relative">
-              <Link
-                className="px-6 py-4 inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-green-700 dark:hover:text-gray-200 "
-                to="#"
-              >
-                <ChatBubbleIcon />
-                <span className="ml-4">Comments</span>
-                <span className="inline-flex px-2 absolute right-4 text-xs font-medium leading-5 rounded-full text-white bg-orange-400">
-                  آزمایشی
-                </span>
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </aside>
-*/}
-
       {user.role === ROLES.Admin ? (
         <Admin
           user={user}
@@ -183,7 +86,6 @@ function Panel() {
       )}
 
       <div className="flex flex-col flex-1 w-full">
-        {console.log("UUZZ:" + JSON.stringify(user))}
         <header className="z-30 py-4 bg-white shadow-sm dark:bg-gray-800">
           <div className="container flex items-center justify-between h-full px-6 mx-auto text-green-500 dark:text-green-500">
             <button onClick={sidebareToggle}>
@@ -228,11 +130,31 @@ function Panel() {
                 </button>
               </li>
               <li className="relative inline-block text-left">
-                <img
-                  className="inline rounded-full h-8 w-8"
-                  src={user.avatar}
-                />
-                <span>{user.firstName}</span>
+                <button onClick={toggleProfile}>
+                  <img className="inline rounded-full h-8 w-8" src={avatar} />
+                  <span>{user.firstName}</span>
+                </button>
+                {profiletIsOpen && (
+                  <div className="text-black absolute z-50 bg-white rounded  w-28 right-16">
+                    <ul>
+                      <Link to="panel">
+                        <li className="hover:bg-gray-100 hover:rounded px-4 py-2 flex justify-between items-center cursor-pointer">
+                          <span>view site</span>
+                        </li>
+                      </Link>
+
+                      <li className="hover:bg-gray-100 hover:rounded px-4 py-2  cursor-pointer">
+                        <div
+                          onClick={logoutHandler}
+                          className="flex justify-between items-center"
+                        >
+                          <span>logout</span>
+                          <Logout fontSize="small" />
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                )}
               </li>
             </ul>
           </div>

@@ -5,6 +5,7 @@ const {
   fetchUsers,
   deleteUser,
   updateUser,
+  getCurrentUser,
 } = require("../controllers/Users");
 const upload = require("../middlewares/uploadFile");
 const { protectRoute } = require("../middlewares/authMiddleware");
@@ -12,6 +13,7 @@ const { protectRoute } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
 router.get("/", fetchUsers);
+router.get("/me", protectRoute, getCurrentUser);
 
 router.post("/register", register);
 

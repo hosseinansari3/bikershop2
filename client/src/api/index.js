@@ -9,6 +9,8 @@ export const registerUser = (name, email, password) =>
   axios.post(`${baseUrl}/users/register`, { name, email, password });
 
 export const fetchUsers = () => axios.get(`${baseUrl}/users`);
+export const getCurrentUserAPI = (config) =>
+  axios.get(`${baseUrl}/users/me`, config);
 
 export const fetchProducts = () => axios.get(`${baseUrl}/products`);
 export const fetchProductById = (slug) =>

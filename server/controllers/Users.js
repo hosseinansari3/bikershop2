@@ -47,7 +47,7 @@ const signIn = async (req, res) => {
         isRestricted: user.isRestricted,
       },
       jwtSecret,
-      { expiresIn: 3600 },
+      { expiresIn: "24h" },
       (err, token) => {
         if (err) res.json({ err });
         else {
@@ -102,16 +102,6 @@ const register = async (req, res) => {
           .catch((err) => console.log(err));
       });
     });
-
-    //const createdUser = await user.save();
-
-    /* res.send({
-    _id: createdUser._id,
-    name: createdUser.name,
-    email: createdUser.email,
-    isAdmin: createdUser.isAdmin,
-  });
-  */
   }
 };
 
@@ -172,6 +162,21 @@ const updateUser = async (req, res) => {
   }
 };
 
+const getCurrentUser = async (req, res) => {
+  try {
+    const user = req.user.id;
+    const userDoc = await User.findById(user, { password: 0 });
+
+    res.status(200).json({
+      user: userDoc,
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: "Your request could not be processed. Please try again.",
+    });
+  }
+};
+
 module.exports = {
   register,
   signIn,
@@ -179,4 +184,5 @@ module.exports = {
   fetchUsers,
   deleteUser,
   updateUser,
+  getCurrentUser,
 };

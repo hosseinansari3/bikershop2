@@ -5,10 +5,16 @@ import {
 } from "../constants/actionTypes";
 
 const initialState = {
+  formData: {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+  },
   user: {
     firstName: "",
     lastName: "",
-    emailAdress: "",
+    email: "",
     phoneNumber: "",
   },
   isLoading: false,
@@ -17,12 +23,17 @@ const initialState = {
 export const accountReducer = (state = initialState, action) => {
   switch (action.type) {
     case ACCOUNT_INFO_CHANGE:
-      console.log("USER_INFO_CHANGE" + JSON.stringify(action.payload));
+      console.log("USER_INFO_CHANGE" + JSON.stringify(state.formData));
       return {
         ...state,
+        formData: {
+          ...state.formData,
+          ...state.user,
+
+          ...action.payload,
+        },
         user: {
           ...state.user,
-          ...action.payload,
         },
       };
     case FETCH_PROFILE:

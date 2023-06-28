@@ -1,64 +1,46 @@
+import { string } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProfile, userInfoChange } from "../../actions/account";
+import {
+  fetchProfile,
+  updateProfile,
+  userInfoChange,
+} from "../../actions/account";
 
 function AccountInfo() {
+  const accountFormData = useSelector((state) => state.account.formData);
   const account = useSelector((state) => state.account.user);
-  const user = useSelector((state) => state.usersSignin.userInfo.user);
 
   const [preview, setPreview] = useState([]);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    account.avatar && console.log("avattt:" + account.avatar);
-    if (typeof account.avatar === "object" && account.avatar !== null) {
-      account.avatar && setPreview(URL.createObjectURL(account.avatar));
+    accountFormData.avatar && console.log("avattt:" + accountFormData.avatar);
+    if (
+      typeof accountFormData.avatar === "object" &&
+      accountFormData.avatar !== null
+    ) {
+      accountFormData.avatar &&
+        setPreview(URL.createObjectURL(accountFormData.avatar));
     }
     // free memory when ever this component is unmounted
     // return () => URL.revokeObjectURL(objectUrl);
-  }, [account]);
+  }, [accountFormData]);
+
+  useEffect(() => {
+    dispatch(fetchProfile());
+  }, [dispatch]);
 
   const clickHandler = (e) => {
     e.preventDefault();
     dispatch(updateProfile());
   };
 
-  const dispatch = useDispatch();
   const userInfoChangeHandler = (name, value) => {
     dispatch(userInfoChange(name, value));
   };
   return (
-    /*
-    <>
-      <div>
-        <label>First Name</label>
-        <input></input>
-      </div>
-      <div>
-        <label>Last Name</label>
-        <input></input>
-      </div>
-      <div>
-        <label>Password</label>
-        <input></input>
-      </div>
-      <div>
-        <label>Phone Number</label>
-        <input></input>
-      </div>
-      <div>
-        <label>Email</label>
-        <input></input>
-      </div>
-      <div>
-        <label>Payment Method</label>
-        <input></input>
-      </div>
-      <div>
-        <label>Profile Picture</label>
-        <input type="file"></input>
-      </div>
-    </>
-    */
     <div className="px-6 pt-8 flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
       <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
         <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
@@ -66,7 +48,7 @@ function AccountInfo() {
         </label>
         <div className="col-span-8 sm:col-span-4">
           <input
-            defaultValue={user.firstName}
+            defaultValue={account.firstName}
             onChange={(e) =>
               userInfoChangeHandler(e.target.name, e.target.value)
             }
@@ -85,7 +67,7 @@ function AccountInfo() {
         </label>
         <div className="col-span-8 sm:col-span-4">
           <input
-            defaultValue={user.lastName}
+            defaultValue={account.lastName}
             onChange={(e) =>
               userInfoChangeHandler(e.target.name, e.target.value)
             }
@@ -112,7 +94,7 @@ function AccountInfo() {
                 {preview !== undefined && preview.length !== 0 ? (
                   <img className="w-28 h-28" src={preview} />
                 ) : (
-                  <img className="w-28 h-28" src={user.avatar} />
+                  <img className="w-28 h-28" src={account.avatar} />
                 )}
                 <input
                   onChange={(e) =>
@@ -150,11 +132,11 @@ function AccountInfo() {
         <div className="col-span-8 sm:col-span-4">
           <div className="flex flex-row">
             <input
-              defaultValue={user.email}
+              defaultValue={account.email}
               onChange={(e) =>
                 userInfoChangeHandler(e.target.name, e.target.value)
               }
-              name="emailAdress"
+              name="email"
               type="email"
               className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded w-full h-12 p-2 text-sm border border-gray-300 focus:bg-white focus:border-gray-300 focus:outline-none rounded-l-none"
             ></input>
@@ -169,7 +151,7 @@ function AccountInfo() {
         <div className="col-span-8 sm:col-span-4">
           <div className="flex flex-row">
             <input
-              defaultValue={user.phoneNumber}
+              defaultValue={account.phoneNumber}
               onChange={(e) =>
                 userInfoChangeHandler(e.target.name, e.target.value)
               }
@@ -183,7 +165,8 @@ function AccountInfo() {
 
       <div className="flex justify-center">
         <button
-          className="bg-blue-300 p-4 text-white rounded mt-8"
+          className="bg-blue-300 p-4 text-white rounded mt-8
+          "
           onClick={clickHandler}
           variant="contained"
         >
