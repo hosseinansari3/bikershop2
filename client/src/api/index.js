@@ -48,6 +48,9 @@ export const addReviewAPI = (santizedReview, config) =>
 export const fetchProductReviewsAPI = (slug) =>
   axios.get(`http://localhost:5000/review/${slug}`);
 
+export const fetchMyReviewsAPI = (config) =>
+  axios.get(`http://localhost:5000/review/myReviews`, config);
+
 export const fetchAllReviewsAPI = () =>
   axios.get(`http://localhost:5000/review`);
 

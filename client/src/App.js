@@ -19,12 +19,14 @@ import Cart from "./pages/cart/Cart";
 import Wishlist from "./pages/admin/Wishlist";
 import Reviews from "./pages/admin/Reviews";
 import AccountInfo from "./pages/admin/AccountInfo";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const location = useLocation();
 
   return (
     <>
+      <ToastContainer />
       {!location.pathname.includes("/panel") &&
       location.pathname !== "/user" &&
       location.pathname !== "/panel" ? (

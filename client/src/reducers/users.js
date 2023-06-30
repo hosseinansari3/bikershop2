@@ -1,12 +1,12 @@
 import {
   USER_REGISTER_REQUEST,
-  USER_REGISTER_SUCCESS,
   USER_REGISTER_FAIL,
   USER_SIGNIN_REQUEST,
   USER_SIGNIN_SUCCESS,
   USER_SIGNIN_FAIL,
   FETCH_ALL_USERS,
   USER_LOGOUT,
+  USER_REGISTER_SUCCESS,
 } from "../constants/actionTypes";
 
 export const userRegisterReducer = (state = {}, action) => {
@@ -18,9 +18,15 @@ export const userRegisterReducer = (state = {}, action) => {
       return { loading: false, users: [...action.payload] };
 
     case USER_REGISTER_SUCCESS:
-      return { loading: false, userInfo: action.payload };
+      console.log("succc");
+      return {
+        loading: false,
+        userInfo: action.payload,
+      };
 
     case USER_REGISTER_FAIL:
+      console.log("fail");
+
       return { loading: false, error: action.payload };
 
     default:

@@ -1,6 +1,8 @@
 import { Button, TextField } from "@mui/material";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 import { register } from "../../actions/users";
 
@@ -9,7 +11,11 @@ function RegisterPage() {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
+
+  const userRegister = useSelector((state) => state.usersRegister.userInfo);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const registerSuccessNotif = () => toast("Registered SUCCESSFULLY!");
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -18,7 +24,7 @@ function RegisterPage() {
       alert("password and confirm password do not match");
     } else {
       // register action here
-      dispatch(register(Username, Email, Password));
+      dispatch(register(Username, Email, Password, navigate));
     }
   };
 

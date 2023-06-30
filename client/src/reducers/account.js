@@ -2,6 +2,7 @@ import {
   FETCH_PROFILE,
   SET_PROFILE_LOADING,
   ACCOUNT_INFO_CHANGE,
+  ACCOUNT_FORMDATA_CLEAR,
 } from "../constants/actionTypes";
 
 const initialState = {
@@ -10,12 +11,14 @@ const initialState = {
     lastName: "",
     email: "",
     phoneNumber: "",
+    avatar: "",
   },
   user: {
     firstName: "",
     lastName: "",
     email: "",
     phoneNumber: "",
+    avatar: "",
   },
   isLoading: false,
 };
@@ -28,8 +31,6 @@ export const accountReducer = (state = initialState, action) => {
         ...state,
         formData: {
           ...state.formData,
-          ...state.user,
-
           ...action.payload,
         },
         user: {
@@ -48,6 +49,24 @@ export const accountReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: action.payload,
+      };
+    case ACCOUNT_FORMDATA_CLEAR:
+      return {
+        ...state,
+        formData: {
+          firstName: "",
+          lastName: "",
+          email: "",
+          phoneNumber: "",
+          avatar: "",
+        },
+        user: {
+          firstName: "",
+          lastName: "",
+          email: "",
+          phoneNumber: "",
+          avatar: "",
+        },
       };
     default:
       return state;

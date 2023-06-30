@@ -119,13 +119,18 @@ function Customers() {
                     <td className="px-4 py-3">
                       <div className="flex items-center">
                         <div>
-                          <h2 className="text-sm font-medium">{user.name}</h2>
+                          <h2 className="text-sm font-medium">
+                            {user.firstName}
+                          </h2>
                         </div>
                       </div>
                     </td>
                     <td className="px-4 py-3">
                       <div className="relative rounded-full inline-block w-8 h-8 hidden p-1 mr-2 md:block bg-gray-50 shadow-none">
-                        <img className="object-cover w-full h-full rounded-full" />
+                        <img
+                          src={user.avatar}
+                          className="object-cover w-full h-full rounded-full"
+                        />
                         <div className="absolute inset-0 rounded-full shadow-inner"></div>
                       </div>
                     </td>

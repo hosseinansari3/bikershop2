@@ -1,9 +1,11 @@
 import {
   addReviewAPI,
   fetchAllReviewsAPI,
+  fetchMyReviewsAPI,
   fetchProductReviewsAPI,
 } from "../api";
 import {
+  FETCH_MY_REVIEWS,
   FETCH_PRODUCT_REVIEWS,
   FETCH_REVIEWS,
   RESET_REVIEW,
@@ -90,6 +92,32 @@ export const fetchProductReviews = (slug) => {
   };
 };
 
+export const fetchMyReviews = () => {
+  return async (dispatch, getState) => {
+    try {
+      const userinfo = getState().usersSignin.userInfo;
+
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${userinfo.token}`,
+        },
+      };
+
+      const response = await fetchMyReviewsAPI(config);
+
+      console.log("kossianooo" + JSON.stringify(response.data));
+
+      dispatch({
+        type: FETCH_MY_REVIEWS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 // fetch reviews api
 export const fetchReviews = () => {
   return async (dispatch, getState) => {
@@ -100,6 +128,7 @@ export const fetchReviews = () => {
       const response = await fetchAllReviewsAPI();
 
       const { reviews } = response.data;
+      console.log("mossianooo");
 
       dispatch({ type: FETCH_REVIEWS, payload: reviews });
     } catch (error) {

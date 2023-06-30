@@ -1,27 +1,39 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../actions/products";
-import { fetchReviews } from "../../actions/reviews";
+import { fetchMyReviews, fetchReviews } from "../../actions/reviews";
 import { fetchWishlist } from "../../actions/wishlist";
+import { ROLES } from "../../constants/panelConstants";
 
 function Reviews() {
-  const userId = useSelector((state) => state.usersSignin.userInfo.user.id);
-  const wishlist = useSelector((state) => state.wishlist);
+  const user = useSelector((state) => state.usersSignin.userInfo.user);
   const AllReviews = useSelector((state) => state.review.reviews);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchReviews());
+    if (user.role === ROLES.Admin) {
+      dispatch(fetchReviews());
+    } else {
+      dispatch(fetchMyReviews());
+    }
   }, [dispatch]);
 
   return (
     <div className="container grid px-6 mx-auto">
       {console.log("all Reviews:" + JSON.stringify(AllReviews))}
+      {console.log("User " + JSON.stringify(user))}
 
-      <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
-        All Reviews
-      </h1>
+      {user.role === ROLES.Admin ? (
+        <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
+          All Reviews
+        </h1>
+      ) : (
+        <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
+          My Reviews
+        </h1>
+      )}
+
       <div className="min-w-0 rounded-lg ring-0 ring-black ring-opacity-4 overflow-hidden bg-white dark:bg-gray-800 min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
         <div className="p-4">
           <form>
@@ -114,14 +126,15 @@ function Reviews() {
           <table className="w-full whitespace-no-wrap">
             <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
               <tr>
-                <td className="px-4 py-3">INVOICE NO</td>
-                <td className="px-4 py-3">ORDER TIME</td>
-                <td className="px-4 py-3">Customer Name</td>
-                <td className="px-4 py-3">METHOD</td>
-                <td className="px-4 py-3">AMOUNT</td>
-                <td className="px-4 py-3">STATUS</td>
+                <td className="px-4 py-3">TITLE</td>
+                <td className="px-4 py-3">REVIEW</td>
+                <td className="px-4 py-3">PRODUCT</td>
 
-                <td className="px-4 py-3">INVOICE</td>
+                {user.role === ROLES.Admin && (
+                  <td className="px-4 py-3">CUSTOMER</td>
+                )}
+                <td className="px-4 py-3">STATUS</td>
+                <td className="px-4 py-3">ACTION</td>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
@@ -130,27 +143,26 @@ function Reviews() {
                   <tr>
                     <td className="px-4 py-3">
                       <span className="font-semibold uppercase text-xs">
-                        {item.review}
+                        {item.title}
                       </span>
                     </td>
                     <td className="px-4 py-3">
-                      <span className="text-sm">May 30, 2023 9:23 AM </span>
+                      <span className="text-sm">{item.review}</span>
                     </td>
                     <td className="px-4 py-3 text-xs">
-                      <span className="text-sm"></span>
+                      <span className="text-sm">{item.product?.title}</span>
                     </td>
 
-                    <td className="px-4 py-3">
-                      <span className="text-sm font-semibold">Cash</span>
-                    </td>
+                    {user.role === ROLES.Admin && (
+                      <td className="px-4 py-3 text-xs">
+                        <span className="text-sm">{item.user?.firstName}</span>
+                      </td>
+                    )}
 
-                    <td className="px-4 py-3">
-                      <span className="text-sm font-semibold">$91.18 </span>
-                    </td>
                     <td className="px-4 py-3 text-xs">
                       <span className="font-serif">
                         <span className="inline-flex px-2 text-xs font-medium leading-5 rounded-full text-green-500 bg-green-100 dark:bg-green-800 dark:text-green-100">
-                          Delivered
+                          approved
                         </span>
                       </span>
                     </td>

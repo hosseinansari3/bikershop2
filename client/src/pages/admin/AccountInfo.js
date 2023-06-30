@@ -12,34 +12,63 @@ function AccountInfo() {
   const account = useSelector((state) => state.account.user);
 
   const [preview, setPreview] = useState([]);
+  const [firstName, setFirstName] = useState("");
+
+  const [lastName, setLastName] = useState("");
+
+  const [avatar, setAvatar] = useState("");
+
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    accountFormData.avatar && console.log("avattt:" + accountFormData.avatar);
-    if (
-      typeof accountFormData.avatar === "object" &&
-      accountFormData.avatar !== null
-    ) {
-      accountFormData.avatar &&
-        setPreview(URL.createObjectURL(accountFormData.avatar));
+    if (account) {
+      setFirstName(account.firstName);
+      setLastName(account.lastName);
+      setAvatar(account.avatar);
+      setEmail(account.email);
+      setPhoneNumber(account.phoneNumber);
+    }
+  }, [account]);
+
+  useEffect(() => {
+    avatar && console.log("avattt:" + avatar);
+    if (typeof avatar === "object" && avatar !== null) {
+      avatar && setPreview(URL.createObjectURL(avatar));
     }
     // free memory when ever this component is unmounted
     // return () => URL.revokeObjectURL(objectUrl);
-  }, [accountFormData]);
+  }, [avatar]);
 
   useEffect(() => {
     dispatch(fetchProfile());
   }, [dispatch]);
 
-  const clickHandler = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(updateProfile());
+
+    const formData = new FormData();
+    if (typeof avatar == "string") {
+      const response = await fetch(avatar);
+      // here image is url/location of image
+      const blob = await response.blob();
+      const profileImgFile = new File([blob], "image.jpg", { type: blob.type });
+      formData.append("images", profileImgFile);
+    } else {
+      formData.append("images", avatar);
+    }
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("email", email);
+    formData.append("phoneNumber", phoneNumber);
+
+    console.log([...formData]);
+
+    dispatch(updateProfile(formData));
   };
 
-  const userInfoChangeHandler = (name, value) => {
-    dispatch(userInfoChange(name, value));
-  };
   return (
     <div className="px-6 pt-8 flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
       <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
@@ -48,10 +77,8 @@ function AccountInfo() {
         </label>
         <div className="col-span-8 sm:col-span-4">
           <input
-            defaultValue={account.firstName}
-            onChange={(e) =>
-              userInfoChangeHandler(e.target.name, e.target.value)
-            }
+            defaultValue={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
             className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
             id="outlined-basic"
             placeholder="Enter your First Name "
@@ -67,10 +94,8 @@ function AccountInfo() {
         </label>
         <div className="col-span-8 sm:col-span-4">
           <input
-            defaultValue={account.lastName}
-            onChange={(e) =>
-              userInfoChangeHandler(e.target.name, e.target.value)
-            }
+            defaultValue={lastName}
+            onChange={(e) => setLastName(e.target.value)}
             name="lastName"
             placeholder="Enter your Last Name "
             className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
@@ -94,12 +119,10 @@ function AccountInfo() {
                 {preview !== undefined && preview.length !== 0 ? (
                   <img className="w-28 h-28" src={preview} />
                 ) : (
-                  <img className="w-28 h-28" src={account.avatar} />
+                  <img className="w-28 h-28" src={avatar} />
                 )}
                 <input
-                  onChange={(e) =>
-                    userInfoChangeHandler(e.target.name, e.target.files[0])
-                  }
+                  onChange={(e) => setAvatar(e.target.files[0])}
                   id="files"
                   tabIndex="-1"
                   name="avatar"
@@ -132,10 +155,8 @@ function AccountInfo() {
         <div className="col-span-8 sm:col-span-4">
           <div className="flex flex-row">
             <input
-              defaultValue={account.email}
-              onChange={(e) =>
-                userInfoChangeHandler(e.target.name, e.target.value)
-              }
+              defaultValue={email}
+              onChange={(e) => setEmail(e.target.value)}
               name="email"
               type="email"
               className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded w-full h-12 p-2 text-sm border border-gray-300 focus:bg-white focus:border-gray-300 focus:outline-none rounded-l-none"
@@ -151,10 +172,8 @@ function AccountInfo() {
         <div className="col-span-8 sm:col-span-4">
           <div className="flex flex-row">
             <input
-              defaultValue={account.phoneNumber}
-              onChange={(e) =>
-                userInfoChangeHandler(e.target.name, e.target.value)
-              }
+              defaultValue={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
               name="phoneNumber"
               type="tel"
               className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-12 p-2 text-sm border border-gray-300 focus:bg-white focus:border-gray-300 focus:outline-none"
@@ -167,7 +186,7 @@ function AccountInfo() {
         <button
           className="bg-blue-300 p-4 text-white rounded mt-8
           "
-          onClick={clickHandler}
+          onClick={handleSubmit}
           variant="contained"
         >
           Update Profile Info

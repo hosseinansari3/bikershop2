@@ -1,5 +1,6 @@
 const Review = require("../models/reviewModel");
 const Product = require("../models/productModel");
+var mongoose = require("mongoose");
 
 const addReview = async (req, res) => {
   try {
@@ -74,7 +75,7 @@ const fetchAllReviews = async (req, res) => {
       })
       .populate({
         path: "product",
-        select: "name slug imageUrl",
+        select: "title slug imageUrl",
       });
 
     const count = await Review.countDocuments();
@@ -89,4 +90,25 @@ const fetchAllReviews = async (req, res) => {
   }
 };
 
-module.exports = { addReview, getProductReviews, fetchAllReviews };
+const fetchMyReviews = async (req, res) => {
+  const user = req.user;
+  userObjId = mongoose.Types.ObjectId(user.id);
+
+  const reviews = await Review.find({
+    user: userObjId,
+  })
+    .populate({
+      path: "product",
+      select: "title ",
+    })
+    .sort("updatedAt");
+  console.log("myReviews:" + JSON.stringify(reviews));
+  res.json(reviews);
+};
+
+module.exports = {
+  addReview,
+  getProductReviews,
+  fetchAllReviews,
+  fetchMyReviews,
+};

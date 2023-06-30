@@ -1,7 +1,6 @@
 import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
-  USER_REGISTER_SUCCESS,
   USER_SIGNIN_REQUEST,
   USER_SIGNIN_SUCCESS,
   USER_SIGNIN_FAIL,
@@ -10,10 +9,13 @@ import {
   DELETE_USER_REQUEST,
   DELETE_USER_SUCCESS,
   DELETE_USER_FAIL,
+  USER_REGISTER_SUCCESS,
+  ACCOUNT_FORMDATA_CLEAR,
 } from "../constants/actionTypes";
 import * as api from "../api/index";
 
 import setAuthToken from "../utils/setAuthToken";
+import { toast } from "react-toastify";
 
 export const getUsers = () => async (dispatch) => {
   try {
@@ -54,31 +56,35 @@ export const signin = (email, password) => async (dispatch) => {
   }
 };
 
-export const register = (name, email, password) => async (dispatch) => {
-  dispatch({ type: USER_REGISTER_REQUEST, payload: { name, email, password } });
-
-  try {
-    // use axios for http post request when user REGISTERg in
-    const { data } = api.registerUser(name, email, password);
-    // if success, dispatch success and set payload to data
-    dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-    // save data to localStorage
-    localStorage.setItem("userInfo", JSON.stringify(data));
-  } catch (error) {
-    // if error, dispatch FAIL, set payload to error message
+export const register =
+  (name, email, password, navigate) => async (dispatch) => {
     dispatch({
-      type: USER_REGISTER_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      type: USER_REGISTER_REQUEST,
+      payload: { name, email, password },
     });
-  }
-};
+
+    try {
+      // use axios for http post request when user REGISTERg in
+      const { data } = await api.registerUser(name, email, password);
+      dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+      navigate("/login");
+      toast("Registered SUCCESSFULLY!");
+    } catch (error) {
+      // if error, dispatch FAIL, set payload to error message
+      dispatch({
+        type: USER_REGISTER_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
+  dispatch({ type: ACCOUNT_FORMDATA_CLEAR });
 };
 
 export const deleteUser = (id) => async (dispatch) => {

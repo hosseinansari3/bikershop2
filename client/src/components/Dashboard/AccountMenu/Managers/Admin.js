@@ -35,11 +35,22 @@ function Admin(props) {
                   }
                   to={link.to}
                 >
-                  <HomeIcon />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-boxes"
+                    viewBox="0 0 16 16"
+                    dangerouslySetInnerHTML={{ __html: link.icon }}
+                  ></svg>
+
                   <span className="ml-4">{link.name}</span>
-                  <span className="inline-flex px-2 absolute right-4 text-xs font-medium leading-5 rounded-full text-white bg-orange-400">
-                    آزمایشی
-                  </span>
+                  {link.name === "Categories" && (
+                    <span className="inline-flex px-2 absolute right-4 text-xs font-medium leading-5 rounded-full text-white bg-orange-400">
+                      آزمایشی
+                    </span>
+                  )}
                 </NavLink>
               </li>
             );

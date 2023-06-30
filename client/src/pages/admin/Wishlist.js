@@ -20,7 +20,7 @@ function Wishlist() {
       {console.log("myID:" + JSON.stringify(userId))}
 
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
-        Orders
+        Wishlist
       </h1>
       <div className="min-w-0 rounded-lg ring-0 ring-black ring-opacity-4 overflow-hidden bg-white dark:bg-gray-800 min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
         <div className="p-4">

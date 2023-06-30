@@ -6,6 +6,7 @@
 
 import {
   ADD_REVIEW,
+  FETCH_MY_REVIEWS,
   FETCH_PRODUCT_REVIEWS,
   FETCH_REVIEWS,
   REMOVE_REVIEW,
@@ -20,6 +21,7 @@ const initialState = {
   isLoading: false,
 
   productReviews: [],
+  userReviews: [],
 
   reviewFormData: {
     title: "",
@@ -41,6 +43,11 @@ const reviewReducer = (state = initialState, action) => {
       return {
         ...state,
         productReviews: action.payload.reviews,
+      };
+    case FETCH_MY_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
       };
     case ADD_REVIEW:
       return {
