@@ -9,7 +9,7 @@ import {
 } from "../../actions/products";
 import { useDispatch, useSelector } from "react-redux";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function AddProduct() {
@@ -94,8 +94,6 @@ function AddProduct() {
 
   return (
     <div className="px-6 pt-8 flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
-      <ToastContainer />
-
       <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
         <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
           Product Title/Name
