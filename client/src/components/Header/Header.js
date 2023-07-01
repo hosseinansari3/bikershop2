@@ -166,7 +166,7 @@ function Header() {
                     </ul>
                     <div className="flex justify-center bg-gray-300 font-bold p-2 text-white mb-2">
                       <span>subtotal:</span>
-                      <span>{total}</span>
+                      <span>${total}</span>
                     </div>
                   </>
 
@@ -222,7 +222,7 @@ function Header() {
             </div>
           )}
           <div className="AccountCircleIcon">
-            <Link to="/login">
+            <Link to="/">
               <FavoriteBorder fontSize="large" />
             </Link>
           </div>

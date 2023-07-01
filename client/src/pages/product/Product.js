@@ -772,7 +772,10 @@ function Product() {
                             <div className="review-content">
                               <div className="grid grid-cols-4">
                                 <div className="review-img me-3 d-none d-lg-block">
-                                  <img src={review.user.avatar} />
+                                  <img
+                                    className="w-20 h-20 object-cover"
+                                    src={review.user.avatar}
+                                  />
                                 </div>
                                 <div className="col-span-3">
                                   <div className="reviewr-name">
@@ -845,7 +848,7 @@ function Product() {
                                     }
                                   ></textarea>
                                   <input
-                                    className="bg-gray-100"
+                                    className="bg-gray-100 hover:cursor-pointer"
                                     type="submit"
                                   />
                                 </div>

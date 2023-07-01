@@ -36,6 +36,8 @@ export const createOrderAPI = (order, config) => {
 export const listUserOrdersAPI = (config) =>
   axios.get(`http://localhost:5000/orders/myOrder/`, config);
 
+export const listAllOrdersAPI = () => axios.get(`http://localhost:5000/orders`);
+
 export const updateWishlistAPI = (item, config) =>
   axios.post("http://localhost:5000/wishlist", item, config);
 

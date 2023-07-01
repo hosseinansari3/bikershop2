@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import {
   addReviewAPI,
   fetchAllReviewsAPI,
@@ -64,6 +65,7 @@ export const addProductReview = () => {
       const response = await addReviewAPI(santizedReview, config);
 
       if (response.data.success === true) {
+        toast(response.data.message);
         dispatch(fetchProductReviews(product.slug));
         console.log(response.data.message);
 

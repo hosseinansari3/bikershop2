@@ -12,10 +12,10 @@ function Footer() {
       </div>
       <div className=" grid grid-cols-4">
         <div className="p-5 col-span-4 md:col-span-2">
-          <p>
-            BIKERSHOP is a premium Templates theme with advanced admin module.
-            It’s extremely customizable, easy to use and fully responsive and
-            retina ready.
+          <p className="pb-4">
+            BIKERSHOP Lorem ipsum dolor sit amet. Sit consequatur minima non
+            consequuntur doloremque qui itaque commodi sed quis libero et soluta
+            quae et alias ipsam ad facere omnis.
           </p>
           <div>
             <ul>
@@ -24,7 +24,7 @@ function Footer() {
                 USA.
               </li>
               <li>
-                <Email /> Email: Contact@basictheme.com
+                <Email /> Email: Contact@bikershop.com
               </li>
               <li>
                 <LocalPhone /> Phone Number: (800) 123 456 789

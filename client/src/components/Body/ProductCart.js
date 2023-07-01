@@ -14,7 +14,7 @@ function ProductCart(props) {
       </Link>
       <div className="product-title">{props.title}</div>
       <StarRatingComponent name="rate1" starCount={5} value={3} />
-      <div className="product-price">{props.price}</div>
+      <div className="product-price">${props.price}</div>
     </div>
   );
 }

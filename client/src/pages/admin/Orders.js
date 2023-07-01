@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listMyOrders } from "../../actions/orders";
+import { listAllOrders, listMyOrders } from "../../actions/orders";
+import { ROLES } from "../../constants/panelConstants";
 
 function Orders() {
+  const user = useSelector((state) => state.usersSignin.userInfo.user);
+
   const orderListUser = useSelector((state) => state.orderListUser);
   const dispatch = useDispatch();
 
-  const [orderTotal, setOrderTotal] = useState(null);
-
   useEffect(() => {
-    dispatch(listMyOrders());
+    if (user.role === ROLES.Admin) {
+      dispatch(listAllOrders());
+    } else {
+      dispatch(listMyOrders());
+    }
   }, [dispatch]);
 
   return (
     <div className="container grid px-6 mx-auto">
-      {console.log("myOrders:" + JSON.stringify(orderListUser.orders))}
-
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Orders
       </h1>
@@ -113,7 +116,7 @@ function Orders() {
               <tr>
                 <td className="px-4 py-3">ORDER DATE</td>
                 <td className="px-4 py-3">ORDER ITEMS</td>
-                <td className="px-4 py-3">METHOD</td>
+                <td className="px-4 py-3">CUSTOMER</td>
                 <td className="px-4 py-3">AMOUNT</td>
                 <td className="px-4 py-3">STATUS</td>
 
@@ -153,7 +156,9 @@ function Orders() {
                     </td>
 
                     <td className="px-4 py-3">
-                      <span className="text-sm font-semibold">Cash</span>
+                      <span className="text-sm font-semibold">
+                        {order.user?.firstName}
+                      </span>
                     </td>
 
                     <td className="px-4 py-3">

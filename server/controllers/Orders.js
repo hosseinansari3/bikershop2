@@ -80,10 +80,15 @@ const updateOrderToDelivered = async (req, res) => {
 // @access Private
 const GetMyOrders = async (req, res) => {
   const user = req.user;
+  userObjId = mongoose.Types.ObjectId(user.id);
+
   const orders = await Order.find({
-    user: user.id,
+    user: userObjId,
+  }).populate({
+    path: "user",
+    select: "firstName",
   });
-  console.log("myOrders:" + user.id);
+  console.log("myOrders:" + orders);
   res.json(orders);
 };
 
@@ -91,7 +96,14 @@ const GetMyOrders = async (req, res) => {
 // @route GET /api/admin/orders
 // @access Private/admin
 const GetOrders = async (req, res) => {
-  const orders = await Order.find({}).populate("user", "id name");
+  const orders = await Order.find({})
+    .populate({
+      path: "user",
+      select: "firstName",
+    })
+    .sort("-created");
+  console.log("ALLOrders:" + JSON.stringify(orders));
+
   res.json(orders);
 };
 
