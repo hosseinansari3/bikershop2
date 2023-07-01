@@ -1,23 +1,28 @@
-import { FETCH_WISHLIST, SET_WISHLIST_LOADING } from "../constants/actionTypes";
+import {
+  FETCH_WISHLIST,
+  FETCH_WISHLIST_REQUEST,
+  SET_WISHLIST_LOADING,
+} from "../constants/actionTypes";
 
 const initialState = {
   wishlistItems: [],
-  isLoading: false,
+  loading: false,
   wishlistForm: {},
 };
 
 const wishListReducer = (state = initialState, action) => {
   switch (action.type) {
+    case FETCH_WISHLIST_REQUEST:
+      return {
+        loading: true,
+      };
     case FETCH_WISHLIST:
       return {
         ...state,
         wishlistItems: action.payload,
+        loading: false,
       };
-    case SET_WISHLIST_LOADING:
-      return {
-        ...state,
-        isLoading: action.payload,
-      };
+
     default:
       return state;
   }

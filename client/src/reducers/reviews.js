@@ -9,6 +9,7 @@ import {
   FETCH_MY_REVIEWS,
   FETCH_PRODUCT_REVIEWS,
   FETCH_REVIEWS,
+  FETCH_REVIEWS_REQUEST,
   REMOVE_REVIEW,
   RESET_REVIEW,
   REVIEW_CHANGE,
@@ -33,21 +34,30 @@ const initialState = {
 
 const reviewReducer = (state = initialState, action) => {
   switch (action.type) {
+    case FETCH_REVIEWS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
     case FETCH_REVIEWS:
       return {
         ...state,
         reviews: action.payload,
+        loading: false,
       };
 
     case FETCH_PRODUCT_REVIEWS:
       return {
         ...state,
         productReviews: action.payload.reviews,
+        loading: false,
       };
     case FETCH_MY_REVIEWS:
       return {
         ...state,
         reviews: action.payload,
+        loading: false,
       };
     case ADD_REVIEW:
       return {
@@ -72,11 +82,7 @@ const reviewReducer = (state = initialState, action) => {
           ...action.payload,
         },
       };
-    case SET_REVIEWS_LOADING:
-      return {
-        ...state,
-        isLoading: action.payload,
-      };
+
     case RESET_REVIEW:
       return {
         ...state,

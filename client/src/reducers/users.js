@@ -7,15 +7,25 @@ import {
   FETCH_ALL_USERS,
   USER_LOGOUT,
   USER_REGISTER_SUCCESS,
+  FETCH_ALL_USERS_REQUEST,
+  DELETE_USER_SUCCESS,
 } from "../constants/actionTypes";
 
 export const userRegisterReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_REGISTER_REQUEST:
       return { loading: true };
+    case FETCH_ALL_USERS_REQUEST:
+      return { loading: true };
 
     case FETCH_ALL_USERS:
       return { loading: false, users: [...action.payload] };
+
+    case DELETE_USER_SUCCESS:
+      return {
+        ...state,
+        users: state.users.filter((user) => user._id !== action.payload),
+      };
 
     case USER_REGISTER_SUCCESS:
       console.log("succc");

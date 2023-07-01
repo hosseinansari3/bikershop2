@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listAllOrders, listMyOrders } from "../../actions/orders";
+import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 import { ROLES } from "../../constants/panelConstants";
 
 function Orders() {
   const user = useSelector((state) => state.usersSignin.userInfo.user);
 
   const orderListUser = useSelector((state) => state.orderListUser);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,6 +24,7 @@ function Orders() {
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Orders
       </h1>
+      {orderListUser.loading && <LoadingIndicator />}
       <div className="min-w-0 rounded-lg ring-0 ring-black ring-opacity-4 overflow-hidden bg-white dark:bg-gray-800 min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
         <div className="p-4">
           <form>

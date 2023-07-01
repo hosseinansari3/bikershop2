@@ -4,16 +4,17 @@ import { deleteProduct, getProducts } from "../../actions/products";
 
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 
 function Products() {
   const apiProduct = useSelector((state) => state.products);
-  const { products } = apiProduct;
+  const { loading, products } = apiProduct;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getProducts());
-  }, [dispatch, products]);
+  }, [dispatch]);
 
   const ProductDeletnotif = () => toast("PRODUCT DELETED SUCCESSFULLY!");
 
@@ -25,7 +26,7 @@ function Products() {
 
   return (
     <div className="container grid px-6 mx-auto">
-      <ToastContainer />
+      {loading && <LoadingIndicator />}
       {console.log("products:" + JSON.stringify(apiProduct))}
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Products

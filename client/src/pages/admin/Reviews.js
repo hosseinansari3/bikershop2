@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../actions/products";
 import { fetchMyReviews, fetchReviews } from "../../actions/reviews";
 import { fetchWishlist } from "../../actions/wishlist";
+import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 import { ROLES } from "../../constants/panelConstants";
 
 function Reviews() {
   const user = useSelector((state) => state.usersSignin.userInfo.user);
-  const AllReviews = useSelector((state) => state.review.reviews);
+  const AllReviews = useSelector((state) => state.review);
+  const { reviews, loading } = AllReviews;
 
   const dispatch = useDispatch();
 
@@ -36,6 +38,7 @@ function Reviews() {
 
       <div className="w-full overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg ring-1 ring-black ring-opacity-5 mb-8 dark:bg-gray-900">
         <div className="w-full overflow-x-auto">
+          {loading && <LoadingIndicator />}
           <table className="w-full whitespace-no-wrap">
             <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
               <tr>
@@ -51,7 +54,7 @@ function Reviews() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
-              {AllReviews?.map((item) => {
+              {reviews?.map((item) => {
                 return (
                   <tr>
                     <td className="px-4 py-3">

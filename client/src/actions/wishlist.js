@@ -1,5 +1,8 @@
 import { fetchWishlistAPI, updateWishlistAPI } from "../api";
-import { FETCH_WISHLIST, SET_WISHLIST_LOADING } from "../constants/actionTypes";
+import {
+  FETCH_WISHLIST,
+  FETCH_WISHLIST_REQUEST,
+} from "../constants/actionTypes";
 
 export const updateWishlist = (item) => {
   const { productId } = item;
@@ -28,7 +31,7 @@ export const updateWishlist = (item) => {
 export const fetchWishlist = () => {
   return async (dispatch, getState) => {
     try {
-      dispatch({ type: SET_WISHLIST_LOADING, payload: true });
+      dispatch({ type: FETCH_WISHLIST_REQUEST });
       const userinfo = getState().usersSignin.userInfo;
 
       const config = {
@@ -44,8 +47,6 @@ export const fetchWishlist = () => {
       dispatch({ type: FETCH_WISHLIST, payload: response.data.wishlist });
     } catch (error) {
       console.log(error);
-    } finally {
-      dispatch({ type: SET_WISHLIST_LOADING, payload: false });
     }
   };
 };

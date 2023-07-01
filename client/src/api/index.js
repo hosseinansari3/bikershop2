@@ -21,13 +21,12 @@ export const createProduct = (newProduct) =>
   });
 export const updateProduct = (id, updatedProduct) =>
   axios.patch(`${baseUrl}/products/${id}`, updatedProduct);
-export const deleteProduct = (id) => {
-  axios.delete(`http://localhost:5000/products/${id}`);
-};
 
-export const deleteUser = (id) => {
+export const deleteProductAPI = (id) =>
+  axios.delete(`http://localhost:5000/products/${id}`);
+
+export const deleteUser = (id) =>
   axios.delete(`http://localhost:5000/users/${id}`);
-};
 
 export const createOrderAPI = (order, config) => {
   axios.post(`${baseUrl}/orders`, order, config);

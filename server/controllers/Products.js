@@ -47,6 +47,7 @@ const deletProduct = async (req, res) => {
   const id = req.params.id;
   try {
     deletedProduct = await productModel.findByIdAndDelete(id);
+    console.log(JSON.stringify("deleted:" + deletedProduct));
     res.status(200).json(deletedProduct);
   } catch (error) {
     res.status(409).json({

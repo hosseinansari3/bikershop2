@@ -11,6 +11,7 @@ import {
   DELETE_USER_FAIL,
   USER_REGISTER_SUCCESS,
   ACCOUNT_FORMDATA_CLEAR,
+  FETCH_ALL_USERS_REQUEST,
 } from "../constants/actionTypes";
 import * as api from "../api/index";
 
@@ -18,6 +19,8 @@ import setAuthToken from "../utils/setAuthToken";
 import { toast } from "react-toastify";
 
 export const getUsers = () => async (dispatch) => {
+  dispatch({ type: FETCH_ALL_USERS_REQUEST });
+
   try {
     const { data } = await api.fetchUsers();
     console.log("data:" + data);
@@ -91,12 +94,11 @@ export const deleteUser = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_USER_REQUEST });
     const { data } = await api.deleteUser(id);
-    console.log("reeeqqqq");
     dispatch({
       type: DELETE_USER_SUCCESS,
       payload: data._id,
     });
-    console.log("reeeqqqq");
+    console.log("reeeqqqq" + JSON.stringify(data));
   } catch (error) {
     dispatch({ type: DELETE_USER_FAIL, payload: error.message });
   }

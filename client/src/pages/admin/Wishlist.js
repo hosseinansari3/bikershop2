@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../actions/products";
 import { fetchWishlist } from "../../actions/wishlist";
+import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 
 function Wishlist() {
   const userId = useSelector((state) => state.usersSignin.userInfo.user.id);
@@ -22,7 +23,7 @@ function Wishlist() {
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Wishlist
       </h1>
-
+      {wishlist.loading && <LoadingIndicator />}
       <div className="w-full overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg ring-1 ring-black ring-opacity-5 mb-8 dark:bg-gray-900">
         <div className="w-full overflow-x-auto">
           <table className="w-full whitespace-no-wrap">
@@ -36,7 +37,7 @@ function Wishlist() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
-              {wishlist.wishlistItems.map((item) => {
+              {wishlist.wishlistItems?.map((item) => {
                 return (
                   <tr>
                     <td className="px-4 py-3">

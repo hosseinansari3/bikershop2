@@ -9,6 +9,7 @@ import {
   FETCH_MY_REVIEWS,
   FETCH_PRODUCT_REVIEWS,
   FETCH_REVIEWS,
+  FETCH_REVIEWS_REQUEST,
   RESET_REVIEW,
   REVIEW_CHANGE,
   SET_REVIEWS_LOADING,
@@ -96,6 +97,7 @@ export const fetchProductReviews = (slug) => {
 
 export const fetchMyReviews = () => {
   return async (dispatch, getState) => {
+    dispatch({ type: FETCH_REVIEWS_REQUEST });
     try {
       const userinfo = getState().usersSignin.userInfo;
 
@@ -123,6 +125,8 @@ export const fetchMyReviews = () => {
 // fetch reviews api
 export const fetchReviews = () => {
   return async (dispatch, getState) => {
+    dispatch({ type: FETCH_REVIEWS_REQUEST });
+
     try {
       dispatch({ type: SET_REVIEWS_LOADING, payload: true });
       console.log("SET_REVIEWS_LOADING");

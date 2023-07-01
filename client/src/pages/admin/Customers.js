@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUser, getUsers } from "../../actions/users";
+import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 
 function Customers() {
   const apiUsers = useSelector((state) => state.usersRegister);
-  const { users } = apiUsers;
+  const { loading, users } = apiUsers;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUsers());
-  }, [dispatch, users]);
+  }, [dispatch]);
 
   const handleDelet = (e, id) => {
     e.preventDefault();
@@ -23,6 +24,7 @@ function Customers() {
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Customers
       </h1>
+      {loading && <LoadingIndicator />}
       <div className="min-w-0 rounded-lg ring-1 ring-black ring-opacity-4 overflow-hidden bg-white dark:bg-gray-800 min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
         <div className="p-4">
           <form className="py-3 md:pb-0 grid gap-4 lg:gap-6 xl:gap-6  xl:flex">

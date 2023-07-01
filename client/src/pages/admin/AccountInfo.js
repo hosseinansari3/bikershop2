@@ -6,6 +6,7 @@ import {
   updateProfile,
   userInfoChange,
 } from "../../actions/account";
+import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 
 function AccountInfo() {
   const accountFormData = useSelector((state) => state.account.formData);

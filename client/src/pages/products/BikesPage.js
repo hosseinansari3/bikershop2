@@ -20,6 +20,7 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import "./BikesPage.css";
+import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 
 function BikesPage() {
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ function BikesPage() {
 
   return (
     <div className="grid md:grid-cols-3 lg:grid-cols-4">
+      {loading && <LoadingIndicator />}
       <div
         className={`filter-products relative w-60 ${
           filterOpen ? "filter-open" : "filter-close"
