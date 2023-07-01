@@ -145,7 +145,6 @@ function Product() {
       <div style={{ marginTop: "10px" }}>
         {console.log("ppppRRR:" + JSON.stringify(Reviews))}
 
-        <ToastContainer />
         {product ? (
           <div>
             <div className="grid grid-cols-1 lg:grid-cols-2 p-5">
@@ -209,14 +208,12 @@ function Product() {
                   </li>
                 </ul>
                 <div className="h-14 my-10 mb-2">
-                  <div className="border-2 border-solid h-full border-black mx-2 px-20 transition-all hover:bg-black hover:text-white inline-flex">
-                    <button
-                      className=" "
-                      onClick={() => addToCardHandler(slug, quantity)}
-                    >
-                      ADD TO CARD
-                    </button>
-                  </div>
+                  <button
+                    className="inline-block border-2 border-solid h-full border-black mx-2 px-20 transition-all hover:bg-black hover:text-white"
+                    onClick={() => addToCardHandler(slug, quantity)}
+                  >
+                    ADD TO CARD
+                  </button>
 
                   <div className="border-2	border-solid h-full border-black inline-flex mx-2">
                     <button onClick={decrement} className="quantity-btn">
@@ -769,65 +766,34 @@ function Product() {
                 <TabPanel value={value} index={2}>
                   <div className="grid grid-cols-1 lg:grid-cols-2">
                     <div>
-                      <Paper className="comment-wrapper" elevation={3}>
-                        <div className="review-content">
-                          <div className="grid grid-cols-4">
-                            <div className="review-img me-3 d-none d-lg-block">
-                              <img src={avatar1} />
-                            </div>
-                            <div className="col-span-3">
-                              <div className="reviewr-name">Rafiqul Islam</div>
-                              <div className="ratting-star2 d-flex">
-                                <StarRatingComponent
-                                  name="rate1"
-                                  starCount={5}
-                                  value={3}
-                                />
+                      {Reviews.map((review) => {
+                        return (
+                          <Paper className="comment-wrapper" elevation={3}>
+                            <div className="review-content">
+                              <div className="grid grid-cols-4">
+                                <div className="review-img me-3 d-none d-lg-block">
+                                  <img src={review.user.avatar} />
+                                </div>
+                                <div className="col-span-3">
+                                  <div className="reviewr-name">
+                                    {review.user.firstName}
+                                  </div>
+                                  <div className="ratting-star2 d-flex">
+                                    <StarRatingComponent
+                                      name="rate1"
+                                      starCount={5}
+                                      value={3}
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <p>{review.review}</p>
                               </div>
                             </div>
-                          </div>
-                          <div>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting industry. Lorem Ipsum has been the
-                              industry's standard dummy text ever since the redi
-                              1500s, when an unknown printer took a galley of
-                              type and scrambled it to make a type specimen
-                              book. It has survived not only five centuries but
-                              also the on leap into electronic typesetting,
-                              remaining
-                            </p>
-                          </div>
-                        </div>
-                      </Paper>
-                      <Paper className="comment-wrapper" elevation={3}>
-                        <div className="review-content">
-                          <div className="grid grid-cols-4">
-                            <div className="review-img me-3 d-none d-lg-block">
-                              <img src={avatar2} />
-                            </div>
-                            <div className="col-span-3">
-                              <div className="reviewr-name">Rafiqul Islam</div>
-                              <div className="ratting-star2 d-flex">
-                                <StarRatingComponent
-                                  name="rate1"
-                                  starCount={5}
-                                  value={3}
-                                />
-                              </div>
-                            </div>
-                          </div>
-
-                          <div>
-                            <p>
-                              Vestibulum ante ipsum primis aucibus orci
-                              luctustrices posuere cubilia Curae Suspendisse
-                              viverra ed viverra. Mauris ullarper euismod
-                              vehicula. Phasellus quam nisi, congue id nulla.
-                            </p>
-                          </div>
-                        </div>
-                      </Paper>
+                          </Paper>
+                        );
+                      })}
                     </div>
                     <div>
                       <div class="ratting-form-wrapper ps-5">

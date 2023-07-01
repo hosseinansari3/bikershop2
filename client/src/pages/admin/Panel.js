@@ -131,13 +131,16 @@ function Panel() {
               </li>
               <li className="relative inline-block text-left">
                 <button onClick={toggleProfile}>
-                  <img className="inline rounded-full h-8 w-8" src={avatar} />
+                  <img
+                    className="mx-2 inline rounded-full h-8 w-8"
+                    src={avatar}
+                  />
                   <span>{user.firstName}</span>
                 </button>
                 {profiletIsOpen && (
                   <div className="text-black absolute z-50 bg-white rounded  w-28 right-16">
                     <ul>
-                      <Link to="panel">
+                      <Link to="/">
                         <li className="hover:bg-gray-100 hover:rounded px-4 py-2 flex justify-between items-center cursor-pointer">
                           <span>view site</span>
                         </li>

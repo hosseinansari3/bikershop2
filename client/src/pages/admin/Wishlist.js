@@ -11,7 +11,7 @@ function Wishlist() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchWishlist(userId));
+    dispatch(fetchWishlist());
   }, [dispatch]);
 
   return (
@@ -22,106 +22,17 @@ function Wishlist() {
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Wishlist
       </h1>
-      <div className="min-w-0 rounded-lg ring-0 ring-black ring-opacity-4 overflow-hidden bg-white dark:bg-gray-800 min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
-        <div className="p-4">
-          <form>
-            <div className="grid gap-4 lg:gap-6 xl:gap-6 lg:grid-cols-3 xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 py-2">
-              <div>
-                <input
-                  type="search"
-                  name="search"
-                  placeholder="Search by Customer Name"
-                  className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-                />
-              </div>
-              <div>
-                <select className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white">
-                  <option value="Status" hidden>
-                    Status
-                  </option>
-                  <option value="Status">Sfghtatus</option>
-                  <option value="Status">Stfghfgatus</option>
-                </select>
-              </div>
-              <div>
-                <select className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white">
-                  <option value="Status" hidden>
-                    Order limits
-                  </option>
-                  <option value="Status">Sfghtatus</option>
-                  <option value="Status">Stfghfgatus</option>
-                </select>
-              </div>
-            </div>
-            <div className="grid gap-4 lg:gap-6 xl:gap-6 lg:grid-cols-3 xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 py-2">
-              <div>
-                <label className="block text-sm text-gray-700 dark:text-gray-400">
-                  Start Date
-                </label>
-                <input
-                  type="date"
-                  className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-                ></input>
-              </div>
-              <div>
-                <label className="block text-sm text-gray-700 dark:text-gray-400">
-                  End Date
-                </label>
-                <input
-                  type="date"
-                  className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-                ></input>
-              </div>
-              <div>
-                <label
-                  className="block text-sm text-gray-700 dark:text-gray-400"
-                  style={{ visibility: "hidden" }}
-                >
-                  Download
-                </label>
-                <button
-                  type="button"
-                  className="false flex items-center justify-center text-sm leading-5 h-12 w-full text-center transition-colors duration-150 font-medium focus:outline-none px-6 py-2 rounded-md text-white bg-green-500 border border-transparent active:bg-green-600 hover:bg-green-600 focus:ring focus:ring-purple-300"
-                >
-                  Download All Orders
-                  <span className="ml-2 text-base">
-                    <svg
-                      stroke="currentColor"
-                      fill="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 512 512"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="32"
-                        d="M320 336h76c55 0 100-21.21 100-75.6s-53-73.47-96-75.6C391.11 99.74 329 48 256 48c-69 0-113.44 45.79-128 91.2-60 5.7-112 35.88-112 98.4S70 336 136 336h56m0 64.1l64 63.9 64-63.9M256 224v224.03"
-                      ></path>
-                    </svg>
-                  </span>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
+
       <div className="w-full overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg ring-1 ring-black ring-opacity-5 mb-8 dark:bg-gray-900">
         <div className="w-full overflow-x-auto">
           <table className="w-full whitespace-no-wrap">
             <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
               <tr>
-                <td className="px-4 py-3">INVOICE NO</td>
-                <td className="px-4 py-3">ORDER TIME</td>
-                <td className="px-4 py-3">Customer Name</td>
-                <td className="px-4 py-3">METHOD</td>
-                <td className="px-4 py-3">AMOUNT</td>
-                <td className="px-4 py-3">STATUS</td>
+                <td className="px-4 py-3">PRODUCT TITLE</td>
+                <td className="px-4 py-3">PRODUCT IMAGE</td>
+                <td className="px-4 py-3">WISHLIST DATE</td>
 
-                <td className="px-4 py-3">INVOICE</td>
+                <td className="px-4 py-3">ACTION</td>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
@@ -134,26 +45,15 @@ function Wishlist() {
                       </span>
                     </td>
                     <td className="px-4 py-3">
-                      <span className="text-sm">May 30, 2023 9:23 AM </span>
+                      <img
+                        className="w-12 h-12 object-contain"
+                        src={item.product?.image}
+                      />
                     </td>
                     <td className="px-4 py-3 text-xs">
-                      <span className="text-sm"></span>
+                      <span className="text-sm">{item.created}</span>
                     </td>
 
-                    <td className="px-4 py-3">
-                      <span className="text-sm font-semibold">Cash</span>
-                    </td>
-
-                    <td className="px-4 py-3">
-                      <span className="text-sm font-semibold">$91.18 </span>
-                    </td>
-                    <td className="px-4 py-3 text-xs">
-                      <span className="font-serif">
-                        <span className="inline-flex px-2 text-xs font-medium leading-5 rounded-full text-green-500 bg-green-100 dark:bg-green-800 dark:text-green-100">
-                          Delivered
-                        </span>
-                      </span>
-                    </td>
                     <td className="px-4 py-3 text-right flex">
                       <div className="flex justify-between items-center">
                         <button

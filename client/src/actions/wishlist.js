@@ -39,6 +39,7 @@ export const fetchWishlist = () => {
       };
 
       const response = await fetchWishlistAPI(config);
+      console.log("wiwhhh" + JSON.stringify(response.data));
 
       dispatch({ type: FETCH_WISHLIST, payload: response.data.wishlist });
     } catch (error) {

@@ -48,7 +48,7 @@ const getProductReviews = async (req, res) => {
     })
       .populate({
         path: "user",
-        select: "firstName",
+        select: "firstName avatar",
       })
       .sort("-created");
 

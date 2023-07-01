@@ -51,7 +51,9 @@ const fetchWishlist = async (req, res) => {
     const user = req.user;
     userObjId = mongoose.Types.ObjectId(user.id);
 
-    const wishlist = await Wishlist.find({ userObjId })
+    console.log("ID: " + user.id);
+
+    const wishlist = await Wishlist.find({ user: userObjId })
       .populate({
         path: "product",
         select: "title price image",

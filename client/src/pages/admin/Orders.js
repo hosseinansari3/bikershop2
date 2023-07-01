@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listMyOrders } from "../../actions/orders";
 
 function Orders() {
   const orderListUser = useSelector((state) => state.orderListUser);
   const dispatch = useDispatch();
+
+  const [orderTotal, setOrderTotal] = useState(null);
 
   useEffect(() => {
     dispatch(listMyOrders());
@@ -109,9 +111,8 @@ function Orders() {
           <table className="w-full whitespace-no-wrap">
             <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
               <tr>
-                <td className="px-4 py-3">INVOICE NO</td>
-                <td className="px-4 py-3">ORDER TIME</td>
-                <td className="px-4 py-3">Customer Name</td>
+                <td className="px-4 py-3">ORDER DATE</td>
+                <td className="px-4 py-3">ORDER ITEMS</td>
                 <td className="px-4 py-3">METHOD</td>
                 <td className="px-4 py-3">AMOUNT</td>
                 <td className="px-4 py-3">STATUS</td>
@@ -121,6 +122,18 @@ function Orders() {
             </thead>
             <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
               {orderListUser.orders?.map((order) => {
+                let total = 0;
+                order.orderItems?.map((item) => {
+                  let itemPrice = parseFloat(
+                    item.price.replace(/[^\d\.]*/g, "")
+                  );
+                  let itemTotal = itemPrice * parseFloat(item.quantity);
+
+                  total = itemTotal + total;
+
+                  return null;
+                });
+
                 return (
                   <tr>
                     <td className="px-4 py-3">
@@ -129,18 +142,14 @@ function Orders() {
                       </span>
                     </td>
                     <td className="px-4 py-3">
-                      <span className="text-sm">May 30, 2023 9:23 AM </span>
-                    </td>
-                    <td className="px-4 py-3 text-xs">
-                      <span className="text-sm">
-                        {order.orderItems?.map((item) => {
-                          return (
-                            <p>
-                              {item.title} <span>{item.quantity}</span>
-                            </p>
-                          );
-                        })}
-                      </span>
+                      {order.orderItems.map((item) => {
+                        return (
+                          <img
+                            className="w-12 h-12 object-contain	inline-block"
+                            src={item.image}
+                          />
+                        );
+                      })}
                     </td>
 
                     <td className="px-4 py-3">
@@ -148,7 +157,8 @@ function Orders() {
                     </td>
 
                     <td className="px-4 py-3">
-                      <span className="text-sm font-semibold">$91.18 </span>
+                      {}
+                      <span className="text-sm font-semibold">${total}</span>
                     </td>
                     <td className="px-4 py-3 text-xs">
                       <span className="font-serif">

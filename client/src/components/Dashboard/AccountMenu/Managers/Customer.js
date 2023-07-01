@@ -37,9 +37,6 @@ function Customer(props) {
                 >
                   <HomeIcon />
                   <span className="ml-4">{link.name}</span>
-                  <span className="inline-flex px-2 absolute right-4 text-xs font-medium leading-5 rounded-full text-white bg-orange-400">
-                    آزمایشی
-                  </span>
                 </NavLink>
               </li>
             );
