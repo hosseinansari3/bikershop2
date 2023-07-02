@@ -44,7 +44,7 @@
     "eject": "react-scripts eject",
     "install-server": "cd server && npm install --force",
     "start-server": "cd server && node app.js",
-    "install-client": "npm install",
+    "install-client": "npm install --force",
     "build-client": "npm run build",
     "start-client": "npm run start"
   },
