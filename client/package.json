@@ -38,14 +38,14 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts start ",
+    "build": "react-scripts build --force",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install-server": "cd server && npm install",
     "start-server": "cd server && node app.js",
-    "install-client": "cd client && npm install",
-    "build-client": "cd client && npm run build",
+    "install-client": "cd client && npm install --force",
+    "build-client": "cd client && npm run build --force",
     "start-client": "cd client && npm run start"
   },
   "eslintConfig": {
