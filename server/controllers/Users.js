@@ -141,7 +141,8 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const user = req.user.id;
-    const image = "http://localhost:5000/uploads/" + req.files[0].filename;
+    const image =
+      "https://bikershop2.onrender.com/uploads/" + req.files[0].filename;
 
     const update = { ...req.body, avatar: image };
     console.log("inaaaa:" + JSON.stringify(update));
