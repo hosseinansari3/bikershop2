@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductById } from "../../actions/products";
 import { fetchMyReviews, fetchReviews } from "../../actions/reviews";
-import { fetchWishlist } from "../../actions/wishlist";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 import { ROLES } from "../../constants/panelConstants";
 
@@ -23,9 +21,6 @@ function Reviews() {
 
   return (
     <div className="container grid px-6 mx-auto">
-      {console.log("all Reviews:" + JSON.stringify(AllReviews))}
-      {console.log("User " + JSON.stringify(user))}
-
       {user.role === ROLES.Admin ? (
         <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
           All Reviews

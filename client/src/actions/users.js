@@ -23,7 +23,6 @@ export const getUsers = () => async (dispatch) => {
 
   try {
     const { data } = await api.fetchUsers();
-    console.log("data:" + data);
     dispatch({ type: FETCH_ALL_USERS, payload: data });
   } catch (error) {
     console.log(error.message);
@@ -98,7 +97,6 @@ export const deleteUser = (id) => async (dispatch) => {
       type: DELETE_USER_SUCCESS,
       payload: data._id,
     });
-    console.log("reeeqqqq" + JSON.stringify(data));
   } catch (error) {
     dispatch({ type: DELETE_USER_FAIL, payload: error.message });
   }

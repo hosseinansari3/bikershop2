@@ -8,7 +8,7 @@ import LoginPage from "./pages/user/UserLogin";
 import RegisterPage from "./pages/user/UserRegister";
 import Panel from "./pages/admin/Panel";
 import Product from "./pages/product/Product";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Dashboard from "./pages/admin/Dashboard";
 import Customers from "./pages/admin/Customers";
 import Products from "./pages/admin/Products";

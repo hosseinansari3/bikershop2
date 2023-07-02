@@ -12,7 +12,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 function Admin(props) {
   return (
     <aside
-      className={`absolute top-14 transition-all  z-30 flex-shrink-0 shadow-sm  overflow-y-auto bg-white dark:bg-gray-800 block lg:relative lg:top-0 ${
+      className={`absolute h-full top-14 transition-all  z-30 flex-shrink-0 shadow-sm  overflow-y-auto bg-white dark:bg-gray-800 block lg:relative lg:top-0 ${
         !props.sideOpen ? "w-0" : "w-64"
       } `}
     >

@@ -108,14 +108,14 @@ function MainPage() {
           <ProductCart
             className="shadow-lg hover:shadow-none"
             image={bike1}
-            price="5.000,00 €"
+            price="5.000,00"
             title="Specialized Enduro Comp 2023"
           />
 
           <ProductCart
             className="shadow-lg hover:shadow-none"
             image={bike2}
-            price="6.999,00 €"
+            price="6.999,00"
             title="
               KONA Hei Hei CR/DL metallic"
           />
@@ -123,14 +123,14 @@ function MainPage() {
           <ProductCart
             className="shadow-lg hover:shadow-none"
             image={bike3}
-            price="3.863,00 €"
+            price="3.863,00"
             title="Orbea Occam M30 LT 2023"
           />
 
           <ProductCart
             className="shadow-lg hover:shadow-none"
             image={bike4}
-            price="3.999,00 €"
+            price="3.999,00"
             title="KONA Hei Hei CR 2023"
           />
         </div>

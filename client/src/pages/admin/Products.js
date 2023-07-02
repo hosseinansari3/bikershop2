@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, getProducts } from "../../actions/products";
 
 import { Link } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 
 function Products() {
@@ -27,7 +27,6 @@ function Products() {
   return (
     <div className="container grid px-6 mx-auto">
       {loading && <LoadingIndicator />}
-      {console.log("products:" + JSON.stringify(apiProduct))}
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Products
       </h1>

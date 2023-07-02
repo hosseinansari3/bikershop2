@@ -20,7 +20,6 @@ function Customers() {
 
   return (
     <div className="container grid px-6 mx-auto">
-      {console.log("users:" + JSON.stringify(apiUsers))}
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Customers
       </h1>

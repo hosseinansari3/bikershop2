@@ -51,7 +51,6 @@ function Header() {
   useEffect(() => {
     if (userInfo !== null && userInfo !== undefined) {
       setisLoggedin(true);
-      console.log("settrue");
 
       setuserName(userInfo?.user.firstName);
     } else {
@@ -90,9 +89,6 @@ function Header() {
 
   return (
     <header className="header" style={{ zIndex: "30" }}>
-      {console.log("render" + isLoggedin)}
-      {console.log("info" + JSON.stringify(userInfo))}
-
       <div
         className="py-8 grid grid-cols-5"
         style={{ backgroundColor: "black" }}

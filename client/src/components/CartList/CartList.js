@@ -4,7 +4,11 @@ import ProductCart from "../Body/ProductCart";
 import "./CartList.css";
 import Carousel from "../Carousel/Carousel";
 import { SwiperSlide } from "swiper/react";
-import img from "../../assets/images/falkenjagd-aristos-r-speed-gravel-01-1326784.jpg";
+import img from "../../assets/images/teammachine-slr-01-three-turquoise-black-1285874.jpg";
+import img1 from "../../assets/images/cross-race-c68x-te-liquidblue-flashyellow-1422220.jpg";
+import img2 from "../../assets/images/twostroke-01-four-red-blk-blk-1078586.jpg";
+import img3 from "../../assets/images/bmc-teammachine-alr-two-sil-blk-red-1078691.jpg";
+import img4 from "../../assets/images/roadmachine-01-four-coral-red-black-1285467.jpg";
 
 function CartList(props) {
   if (props.carousel) {
@@ -33,7 +37,7 @@ function CartList(props) {
           <ProductCart
             className="hover:shadow-xl m-2"
             image={img}
-            price=" €39.99"
+            price=" 3990.99"
             title=" Endura Hummvee Cycling Trousers II"
           />
         </SwiperSlide>
@@ -41,34 +45,34 @@ function CartList(props) {
         <SwiperSlide>
           <ProductCart
             className="hover:shadow-xl m-2"
-            image={img}
-            price=" €39.99"
-            title=" Endura Hummvee Cycling Trousers II"
+            image={img1}
+            price=" 2590.99"
+            title="Radon Skeen Trail 9.0"
           />
         </SwiperSlide>
 
         <SwiperSlide>
           <ProductCart
             className="hover:shadow-xl m-2"
-            image={img}
-            price=" €39.99"
-            title=" Endura Hummvee Cycling Trousers II"
+            image={img2}
+            price=" 3999.99"
+            title="Cube Stereo Hybrid 140 HPC"
           />
         </SwiperSlide>
         <SwiperSlide>
           <ProductCart
             className="hover:shadow-xl m-2"
-            image={img}
-            price=" €39.99"
-            title=" Endura Hummvee Cycling Trousers II"
+            image={img3}
+            price=" 4290.99"
+            title="Radon Spire Disc 9.0"
           />
         </SwiperSlide>
         <SwiperSlide>
           <ProductCart
             className="hover:shadow-xl m-2"
-            image={img}
-            price=" €39.99"
-            title=" Endura Hummvee Cycling Trousers II"
+            image={img4}
+            price="3,196.77"
+            title="Cube Reaction Hybrid SL 750"
           />
         </SwiperSlide>
       </Carousel>
@@ -81,15 +85,11 @@ function CartList(props) {
         price=" €39.99"
         title=" Endura Hummvee Cycling Trousers II"
       />
-      <ProductCart
-        image={img}
-        price="€33.95"
-        title=" Fox Clothing Dirtpaw Long Finger MTB Cycling Gloves"
-      />
+      <ProductCart image={img1} price="€33.95" title="Radon Skeen Trail 9.0" />
       <ProductCart
         image={img}
         price="€373.72"
-        title=" Castelli Arenberg Gel 2 Mits / Short Finger Cycling Gloves"
+        title="Cube Stereo Hybrid 140 HPC Actionteam"
       />
       <ProductCart
         image={img}

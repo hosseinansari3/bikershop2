@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { getCurrentUserAPI, updateProfileAPI } from "../api";
-import { ACCOUNT_INFO_CHANGE, FETCH_PROFILE } from "../constants/actionTypes";
+import { FETCH_PROFILE } from "../constants/actionTypes";
 
 export const updateProfile = (formData) => {
   return async (dispatch, getState) => {
@@ -37,7 +37,6 @@ export const fetchProfile = () => {
       };
 
       const response = await getCurrentUserAPI(config);
-      console.log("CUSER:" + JSON.stringify(response.data.user));
 
       dispatch({ type: FETCH_PROFILE, payload: response.data.user });
     } catch (error) {

@@ -1,12 +1,6 @@
-import { string } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchProfile,
-  updateProfile,
-  userInfoChange,
-} from "../../actions/account";
-import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
+import { fetchProfile, updateProfile } from "../../actions/account";
 
 function AccountInfo() {
   const accountFormData = useSelector((state) => state.account.formData);
@@ -35,7 +29,6 @@ function AccountInfo() {
   }, [account]);
 
   useEffect(() => {
-    avatar && console.log("avattt:" + avatar);
     if (typeof avatar === "object" && avatar !== null) {
       avatar && setPreview(URL.createObjectURL(avatar));
     }
@@ -64,8 +57,6 @@ function AccountInfo() {
     formData.append("lastName", lastName);
     formData.append("email", email);
     formData.append("phoneNumber", phoneNumber);
-
-    console.log([...formData]);
 
     dispatch(updateProfile(formData));
   };

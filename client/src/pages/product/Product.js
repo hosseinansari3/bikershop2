@@ -143,8 +143,6 @@ function Product() {
   return (
     <>
       <div style={{ marginTop: "10px" }}>
-        {console.log("ppppRRR:" + JSON.stringify(Reviews))}
-
         {product ? (
           <div>
             <div className="grid grid-cols-1 lg:grid-cols-2 p-5">

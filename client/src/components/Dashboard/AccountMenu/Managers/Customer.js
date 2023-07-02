@@ -12,7 +12,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 function Customer(props) {
   return (
     <aside
-      className={`absolute top-14 transition-all  z-30 flex-shrink-0 shadow-sm  overflow-y-auto bg-white dark:bg-gray-800 block lg:relative lg:top-0 ${
+      className={`absolute h-full top-14 transition-all  z-30 flex-shrink-0 shadow-sm  overflow-y-auto bg-white dark:bg-gray-800 block lg:relative lg:top-0 ${
         !props.sideOpen ? "w-0" : "w-64"
       } `}
     >
@@ -35,7 +35,15 @@ function Customer(props) {
                   }
                   to={link.to}
                 >
-                  <HomeIcon />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-boxes"
+                    viewBox="0 0 16 16"
+                    dangerouslySetInnerHTML={{ __html: link.icon }}
+                  ></svg>{" "}
                   <span className="ml-4">{link.name}</span>
                 </NavLink>
               </li>

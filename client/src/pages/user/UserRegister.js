@@ -1,7 +1,7 @@
-import { Button, TextField } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { register } from "../../actions/users";
@@ -143,12 +143,12 @@ function RegisterPage() {
               </button>
               <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
-                <a
-                  href="#"
+                <Link
+                  to="/login"
                   class="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Login here
-                </a>
+                </Link>
               </p>
             </form>
           </div>

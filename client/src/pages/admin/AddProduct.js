@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Button, Grid, List, ListItem } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import "./addProduct.css";
 import {
   createProduct,
@@ -31,8 +31,6 @@ function AddProduct() {
     for (let i = 0; i < images.length; i++) {
       imagess.push(URL.createObjectURL(images[i]));
     }
-
-    console.log(images);
 
     setPreview(imagess);
 
@@ -85,8 +83,6 @@ function AddProduct() {
     for (let i = 0; i < images.length; i++) {
       formData.append("images", images[i]);
     }
-
-    console.log([...formData]);
 
     dispatch(createProduct(formData));
     ProductAddnotif();

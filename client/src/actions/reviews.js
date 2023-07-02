@@ -36,10 +36,7 @@ export const addProductReview = () => {
 
       const review = getState().review.reviewFormData;
       const product = getState().ProductDetails.product;
-      const user = getState().usersSignin.userInfo.user;
       const userinf = getState().usersSignin.userInfo;
-
-      console.log("token:" + userinf.token);
 
       const config = {
         headers: {
@@ -110,8 +107,6 @@ export const fetchMyReviews = () => {
 
       const response = await fetchMyReviewsAPI(config);
 
-      console.log("kossianooo" + JSON.stringify(response.data));
-
       dispatch({
         type: FETCH_MY_REVIEWS,
         payload: response.data,
@@ -129,12 +124,10 @@ export const fetchReviews = () => {
 
     try {
       dispatch({ type: SET_REVIEWS_LOADING, payload: true });
-      console.log("SET_REVIEWS_LOADING");
 
       const response = await fetchAllReviewsAPI();
 
       const { reviews } = response.data;
-      console.log("mossianooo");
 
       dispatch({ type: FETCH_REVIEWS, payload: reviews });
     } catch (error) {

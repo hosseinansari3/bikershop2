@@ -1,13 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductById } from "../../actions/products";
 import { fetchWishlist } from "../../actions/wishlist";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 
 function Wishlist() {
   const userId = useSelector((state) => state.usersSignin.userInfo.user.id);
   const wishlist = useSelector((state) => state.wishlist);
-  const productDetails = useSelector((state) => state.ProductDetails);
 
   const dispatch = useDispatch();
 
@@ -17,9 +15,6 @@ function Wishlist() {
 
   return (
     <div className="container grid px-6 mx-auto">
-      {console.log("myWishlist:" + JSON.stringify(wishlist))}
-      {console.log("myID:" + JSON.stringify(userId))}
-
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Wishlist
       </h1>

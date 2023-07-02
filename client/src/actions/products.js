@@ -27,7 +27,6 @@ export const getProductById = (slug) => async (dispatch, getState) => {
   try {
     const { data } = await api.fetchProductById(slug);
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
-    console.log("state Treeee:" + JSON.stringify(getState().ProductDetails));
   } catch (error) {
     dispatch({
       type: PRODUCT_DETAILS_FAIL,
@@ -42,7 +41,6 @@ export const getProductById = (slug) => async (dispatch, getState) => {
 export const createProduct = (product) => async (dispatch) => {
   try {
     const { data } = await api.createProduct(product);
-    console.log(product);
 
     dispatch({ type: CREATE, payload: data });
   } catch (error) {
@@ -52,20 +50,13 @@ export const createProduct = (product) => async (dispatch) => {
 
 export const deleteProduct = (id) => async (dispatch) => {
   try {
-    console.log("deleted:");
-
     dispatch({ type: DELETE_PRODUCT_REQUEST });
     const { data } = await api.deleteProductAPI(id);
-    console.log("deleted:xxxxx");
 
-    console.log("deleted:" + data);
     dispatch({
       type: DELETE_PRODUCT_SUCCESS,
       payload: data._id,
     });
-    console.log("deleted:" + JSON.stringify(data));
-
-    console.log("reeeqqqq");
   } catch (error) {
     dispatch({ type: DELETE_PRODUCT_FAIL, payload: error.message });
   }

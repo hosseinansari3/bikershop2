@@ -27,14 +27,11 @@ const setupPassport = () => {
       User.findById(payload.id)
         .then((user) => {
           if (user) {
-            console.log("bala");
             return done(null, user);
           }
-          console.log("paeen");
           return done(null, false);
         })
         .catch((err) => {
-          console.log("paeentar");
           return done(err, false);
         });
     })

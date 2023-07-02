@@ -1,20 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  Outlet,
-  Link,
-  NavLink,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 
 import "./AdminPannel.css";
 
-import HomeIcon from "@mui/icons-material/Home";
-import PersonIcon from "@mui/icons-material/Person";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import ViewInArIcon from "@mui/icons-material/ViewInAr";
-
-import ChatBubbleIcon from "@mui/icons-material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import { ROLES } from "../../constants/panelConstants";
 import Admin from "../../components/Dashboard/AccountMenu/Managers/Admin";
@@ -58,16 +46,13 @@ function Panel() {
   useEffect(() => {
     if (typeof user.avatar === "object" && user.avatar !== null) {
       setAvatar(URL.createObjectURL(user.avatar));
-      console.log("tarrrbala" + avatar);
     } else {
       setAvatar(user.avatar);
-      console.log("tarrrpaeen" + avatar);
     }
   }, [user]);
 
   const sidebareToggle = () => {
     setSideOpen(!sideOpen);
-    console.log("sideToggle" + sideOpen);
   };
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900 false">

@@ -52,7 +52,6 @@ export const listMyOrders = () => async (dispatch, getState) => {
     const { data } = await listUserOrdersAPI(config);
 
     dispatch({ type: ORDER_USER_LIST_SUCCESS, payload: data });
-    console.log("dispatch:" + JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: ORDER_LIST_FAILURE,
@@ -71,7 +70,6 @@ export const listAllOrders = () => async (dispatch, getState) => {
     const { data } = await listAllOrdersAPI();
 
     dispatch({ type: ORDER_ALL_LIST_SUCCESS, payload: data });
-    console.log("ALL ORDERS:" + JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: ORDER_LIST_FAILURE,

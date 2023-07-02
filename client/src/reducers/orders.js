@@ -36,13 +36,11 @@ export const orderCreateReducer = (state = {}, action) => {
 export const orderListUserReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
     case ORDER_LIST_REQUEST:
-      console.log("req");
       return {
         ...state,
         loading: true,
       };
     case ORDER_USER_LIST_SUCCESS:
-      console.log("success");
       return {
         loading: false,
         orders: action.payload,
@@ -53,7 +51,6 @@ export const orderListUserReducer = (state = { orders: [] }, action) => {
         orders: action.payload,
       };
     case ORDER_LIST_FAILURE:
-      console.log("fail");
       return {
         loading: false,
         error: action.payload,

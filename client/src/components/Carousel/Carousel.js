@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigation, Pagination } from "swiper";
+import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Thumbs } from "swiper";
 

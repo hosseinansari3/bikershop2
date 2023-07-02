@@ -28,15 +28,12 @@ export const userRegisterReducer = (state = {}, action) => {
       };
 
     case USER_REGISTER_SUCCESS:
-      console.log("succc");
       return {
         loading: false,
         userInfo: action.payload,
       };
 
     case USER_REGISTER_FAIL:
-      console.log("fail");
-
       return { loading: false, error: action.payload };
 
     default:
@@ -46,14 +43,10 @@ export const userRegisterReducer = (state = {}, action) => {
 
 const getLocalUserInfo = () => {
   let userInfo = localStorage.getItem("userInfo");
-  console.log("userinfobef" + userInfo);
 
   if (userInfo !== undefined) {
-    console.log("userinfo" + userInfo);
     return JSON.parse(userInfo);
   } else {
-    console.log("else");
-
     return {};
   }
 };
@@ -72,8 +65,6 @@ export const userSigninReducer = (
 ) => {
   switch (action.type) {
     case USER_SIGNIN_REQUEST:
-      console.log("req" + getLocalUserInfo());
-
       return {
         ...state,
         loading: true,

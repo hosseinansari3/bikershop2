@@ -22,7 +22,6 @@ function Cart() {
 
   return (
     <div className="px-5">
-      {console.log("cartItems:" + JSON.stringify(savedCartItems))}
       <div className="page-title">
         <span>your cart</span>
       </div>
