@@ -42,7 +42,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "install-server": "cd server && npm install",
+    "install-server": "cd server && npm install --force",
     "start-server": "cd server && node app.js",
     "install-client": "cd client && npm install --force",
     "build-client": "cd client && npm run build --force",
