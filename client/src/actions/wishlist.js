@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { fetchWishlistAPI, updateWishlistAPI } from "../api";
 import {
   FETCH_WISHLIST,
@@ -19,6 +20,7 @@ export const updateWishlist = (item) => {
       const response = await updateWishlistAPI(item, config);
       if (response.data.success === true) {
         dispatch(fetchWishlist());
+        toast("Your Wishlist Updated!");
       }
       console.log(response.data.message);
     } catch (error) {

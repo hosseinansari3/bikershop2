@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { createOrderAPI, listAllOrdersAPI, listUserOrdersAPI } from "../api";
 import {
   ORDER_ALL_LIST_SUCCESS,
@@ -25,6 +26,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
     const { data } = await createOrderAPI(order, config);
 
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: data });
+    toast("Your Order Submitted!");
   } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAILURE,

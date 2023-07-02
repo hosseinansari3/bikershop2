@@ -77,12 +77,7 @@ function Cart() {
       </div>
       <div className="justify-end my-5">
         <div className="total">
-          <div className="subtotal border-bottom">
-            <div className="flex justify-between">
-              <p>subtotal</p>
-              <p>{cartTotal}$</p>
-            </div>
-          </div>
+          <div className="subtotal border-bottom"></div>
           <div className="Shipping">
             <p>Shipping</p>
             <ul>
@@ -134,8 +129,11 @@ function Cart() {
               <button>Update Cart</button>
             </div>
           </div>
-          <p>total</p>
-          <button onClick={handleOrder}>Procced to Checkout</button>
+          <div className="flex justify-between">
+            <p>subtotal</p>
+            <p>{cartTotal}$</p>
+          </div>
+          <button onClick={handleOrder}>Submit Your Order</button>
         </div>
       </div>
     </div>

@@ -28,9 +28,8 @@ export const deleteProductAPI = (id) =>
 export const deleteUser = (id) =>
   axios.delete(`http://localhost:5000/users/${id}`);
 
-export const createOrderAPI = (order, config) => {
+export const createOrderAPI = (order, config) =>
   axios.post(`${baseUrl}/orders`, order, config);
-};
 
 export const listUserOrdersAPI = (config) =>
   axios.get(`http://localhost:5000/orders/myOrder/`, config);

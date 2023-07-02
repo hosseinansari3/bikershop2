@@ -168,9 +168,8 @@ function Header() {
 
                   <div className="card-dropdown-bottom border-top">
                     <button className="bg-gray-100">
-                      <Link to="/cart">view Card</Link>
+                      <Link to="/cart">view Cart</Link>
                     </button>
-                    <button className="bg-gray-100">Checkout Now</button>
                   </div>
                 </div>
               )}
