@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfile, updateProfile } from "../../actions/account";
+import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 
 function AccountInfo() {
-  const accountFormData = useSelector((state) => state.account.formData);
-  const account = useSelector((state) => state.account.user);
-
+  const account = useSelector((state) => state.account);
+  const { user, loading } = account;
   const [preview, setPreview] = useState([]);
   const [firstName, setFirstName] = useState("");
 
@@ -19,14 +19,14 @@ function AccountInfo() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (account) {
-      setFirstName(account.firstName);
-      setLastName(account.lastName);
-      setAvatar(account.avatar);
-      setEmail(account.email);
-      setPhoneNumber(account.phoneNumber);
+    if (user) {
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
+      setAvatar(user.avatar);
+      setEmail(user.email);
+      setPhoneNumber(user.phoneNumber);
     }
-  }, [account]);
+  }, [user]);
 
   useEffect(() => {
     if (typeof avatar === "object" && avatar !== null) {
@@ -67,6 +67,9 @@ function AccountInfo() {
         <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
           First Name
         </label>
+
+        {console.log("loading: " + loading)}
+        {loading && <LoadingIndicator />}
         <div className="col-span-8 sm:col-span-4">
           <input
             defaultValue={firstName}

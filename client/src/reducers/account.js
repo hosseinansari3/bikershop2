@@ -1,18 +1,6 @@
-import {
-  FETCH_PROFILE,
-  SET_PROFILE_LOADING,
-  ACCOUNT_INFO_CHANGE,
-  ACCOUNT_FORMDATA_CLEAR,
-} from "../constants/actionTypes";
+import { FETCH_PROFILE, FETCH_PROFILE_REQUEST } from "../constants/actionTypes";
 
 const initialState = {
-  formData: {
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: "",
-    avatar: "",
-  },
   user: {
     firstName: "",
     lastName: "",
@@ -20,23 +8,11 @@ const initialState = {
     phoneNumber: "",
     avatar: "",
   },
-  isLoading: false,
+  loading: false,
 };
 
 export const accountReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ACCOUNT_INFO_CHANGE:
-      console.log("USER_INFO_CHANGE" + JSON.stringify(state.formData));
-      return {
-        ...state,
-        formData: {
-          ...state.formData,
-          ...action.payload,
-        },
-        user: {
-          ...state.user,
-        },
-      };
     case FETCH_PROFILE:
       return {
         ...state,
@@ -44,30 +20,17 @@ export const accountReducer = (state = initialState, action) => {
           ...state.user,
           ...action.payload,
         },
+        loading: false,
       };
-    case SET_PROFILE_LOADING:
+    case FETCH_PROFILE_REQUEST:
       return {
         ...state,
-        isLoading: action.payload,
-      };
-    case ACCOUNT_FORMDATA_CLEAR:
-      return {
-        ...state,
-        formData: {
-          firstName: "",
-          lastName: "",
-          email: "",
-          phoneNumber: "",
-          avatar: "",
-        },
         user: {
-          firstName: "",
-          lastName: "",
-          email: "",
-          phoneNumber: "",
-          avatar: "",
+          ...state.user,
         },
+        loading: true,
       };
+
     default:
       return state;
   }

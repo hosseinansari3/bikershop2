@@ -73,6 +73,7 @@ export const userSigninReducer = (
       return {
         ...state,
         userInfo: action.payload,
+        loading: false,
       };
 
     case USER_SIGNIN_FAIL:

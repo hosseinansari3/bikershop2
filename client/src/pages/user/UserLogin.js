@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { Slide, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
+import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 
 function LoginPage(props) {
   const [email, setEmail] = useState("");
@@ -79,6 +80,7 @@ function LoginPage(props) {
             <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in to your account
             </h1>
+            {loading && <LoadingIndicator />}
             <form class="space-y-4 md:space-y-6" action="#">
               <div>
                 <label

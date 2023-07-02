@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { register } from "../../actions/users";
+import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 
 function RegisterPage() {
   const [Username, setUsername] = useState("");
@@ -12,10 +13,9 @@ function RegisterPage() {
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
 
-  const userRegister = useSelector((state) => state.usersRegister.userInfo);
+  const userRegister = useSelector((state) => state.usersRegister);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const registerSuccessNotif = () => toast("Registered SUCCESSFULLY!");
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -36,6 +36,7 @@ function RegisterPage() {
             <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create and account
             </h1>
+            {userRegister.loading && <LoadingIndicator />}
             <form
               onSubmit={submitHandler}
               class="space-y-4 md:space-y-6"

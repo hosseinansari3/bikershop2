@@ -56,7 +56,7 @@ function Panel() {
   };
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900 false">
-      {user.role === ROLES.Admin ? (
+      {user.role !== undefined && user.role === ROLES.Admin ? (
         <Admin
           user={user}
           sideOpen={sideOpen}
@@ -71,6 +71,7 @@ function Panel() {
       )}
 
       <div className="flex flex-col flex-1 w-full">
+        {console.log("user: " + JSON.stringify(user))}
         <header className="z-30 py-4 bg-white shadow-sm dark:bg-gray-800">
           <div className="container flex items-center justify-between h-full px-6 mx-auto text-green-500 dark:text-green-500">
             <button onClick={sidebareToggle}>
