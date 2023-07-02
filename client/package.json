@@ -1,5 +1,5 @@
 {
-  "name": "bikershop2",
+  "name": "bikershop2", 
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -42,11 +42,11 @@
     "build": "react-scripts build --force",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "install-server": "cd server && npm install",
+    "install-server": "cd server && npm install --force",
     "start-server": "cd server && node app.js",
     "install-client": "cd client && npm install --force",
     "build-client": "cd client && npm run build --force",
-    "start-client": "cd client && npm run start"
+    "start-client": "cd client && npm run start --force"
   },
   "eslintConfig": {
     "extends": [
