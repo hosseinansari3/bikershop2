@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:5000";
+const baseUrl = "https://bikershop2.onrender.com";
 
 export const signIn = (email, password) =>
   axios.post(`${baseUrl}/users/signin`, { email, password });
@@ -23,36 +23,34 @@ export const updateProduct = (id, updatedProduct) =>
   axios.patch(`${baseUrl}/products/${id}`, updatedProduct);
 
 export const deleteProductAPI = (id) =>
-  axios.delete(`http://localhost:5000/products/${id}`);
+  axios.delete(`${baseUrl}/products/${id}`);
 
-export const deleteUser = (id) =>
-  axios.delete(`http://localhost:5000/users/${id}`);
+export const deleteUser = (id) => axios.delete(`${baseUrl}/users/${id}`);
 
 export const createOrderAPI = (order, config) =>
   axios.post(`${baseUrl}/orders`, order, config);
 
 export const listUserOrdersAPI = (config) =>
-  axios.get(`http://localhost:5000/orders/myOrder/`, config);
+  axios.get(`${baseUrl}/orders/myOrder/`, config);
 
-export const listAllOrdersAPI = () => axios.get(`http://localhost:5000/orders`);
+export const listAllOrdersAPI = () => axios.get(`${baseUrl}/orders`);
 
 export const updateWishlistAPI = (item, config) =>
-  axios.post("http://localhost:5000/wishlist", item, config);
+  axios.post(`${baseUrl}/wishlist`, item, config);
 
 export const fetchWishlistAPI = (config) =>
-  axios.get(`http://localhost:5000/wishlist`, config);
+  axios.get(`${baseUrl}/wishlist`, config);
 
 export const addReviewAPI = (santizedReview, config) =>
-  axios.post(`http://localhost:5000/review/add`, santizedReview, config);
+  axios.post(`${baseUrl}/review/add`, santizedReview, config);
 
 export const fetchProductReviewsAPI = (slug) =>
-  axios.get(`http://localhost:5000/review/${slug}`);
+  axios.get(`${baseUrl}/review/${slug}`);
 
 export const fetchMyReviewsAPI = (config) =>
-  axios.get(`http://localhost:5000/review/myReviews`, config);
+  axios.get(`${baseUrl}/review/myReviews`, config);
 
-export const fetchAllReviewsAPI = () =>
-  axios.get(`http://localhost:5000/review`);
+export const fetchAllReviewsAPI = () => axios.get(`${baseUrl}/review`);
 
 export const updateProfileAPI = (profile, config) =>
-  axios.put(`http://localhost:5000/users`, profile, config);
+  axios.put(`${baseUrl}/users`, profile, config);
