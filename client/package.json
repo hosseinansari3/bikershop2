@@ -44,9 +44,9 @@
     "eject": "react-scripts eject",
     "install-server": "cd server && npm install --force",
     "start-server": "cd server && node app.js",
-    "install-client": "npm install --force",
-    "build-client": "npm run build --force",
-    "start-client": "npm run start --force"
+    "install-client": "npm install",
+    "build-client": "npm run build",
+    "start-client": "npm run start"
   },
   "eslintConfig": {
     "extends": [
