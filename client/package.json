@@ -1,5 +1,5 @@
 {
-  "name": "bikershop2", 
+  "name": "bikershop2",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,9 +12,11 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.1.3",
+    "build-client": "^1.0.12",
     "create-react-app": "^5.0.1",
     "dompurify": "^3.0.3",
     "formik": "^2.2.9",
+    "npm": "^9.7.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-charts": "^3.0.0-beta.54",
@@ -32,6 +34,7 @@
     "redux": "^4.2.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.4.1",
+    "run": "^1.4.0",
     "swiper": "^8.4.6",
     "validatorjs": "^3.22.1",
     "web-vitals": "^2.1.4",
@@ -44,9 +47,9 @@
     "eject": "react-scripts eject",
     "install-server": "cd server && npm install --force",
     "start-server": "cd server && node app.js",
-    "install-client": "cd client && npm install --force",
-    "build-client": "cd client && npm run build --force",
-    "start-client": "cd client && npm run start --force"
+    "install-client": "npm install",
+    "build-client": "npm run build",
+    "start-client": "npm run start"
   },
   "eslintConfig": {
     "extends": [
