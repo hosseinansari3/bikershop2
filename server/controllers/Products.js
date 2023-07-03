@@ -29,7 +29,7 @@ const createProduct = async (req, res) => {
     const price = req.body.price;
     const category = req.body.category;
     const image =
-      "https://bikershop2.onrender.com/uploads/" + req.files[0].filename;
+      "http://bikershop.ap-1.evennode.com/uploads/" + req.files[0].filename;
 
     console.log(image);
 
