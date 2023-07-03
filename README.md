@@ -9,21 +9,22 @@ in this project:
 <li>users can update their profile information</li>
 </ul>
 
-<h3>tools used in this project</h3>
-<ul>
-  <li>
-  react
-</li>
-  
-  <li>
-  redux
-</li>
-
-  <li>
-  mongoose
-</li>
-
-  <li>
-  express
-</li>
+<h4>features:</h4>
+<ul> 
+<li>Node provides the backend environment for this application</li>
+<li>Express middleware is used to handle requests, routes, isAuthenticatedUser</li>
+<li>Mongoose schemas to model the application data</li>
+<li>React for displaying UI components</li>
+<li>Redux to manage application's state</li>
+<li>Redux Thunk middleware to handle asynchronous redux actions</li>
 </ul>
+
+## Languages & tools
+
+- [Node](https://nodejs.org/en/)
+
+- [Express](https://expressjs.com/)
+
+- [Mongoose](https://mongoosejs.com/)
+
+- [React](https://reactjs.org/)
