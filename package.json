@@ -25,7 +25,7 @@
   "scripts": {
     "dev": "nodemon server/server.js",
     "install-server": "cd server && npm install",
-    "start-server": "node server/server.js",
+    "start": "node server/server.js",
     "install-client": "cd client && npm install --force",
     "build-client": "cd client && npm run build --force",
     "start-client": "cd client && npm run start --force"
