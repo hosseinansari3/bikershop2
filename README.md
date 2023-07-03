@@ -21,6 +21,7 @@ in this project:
 <li>React for displaying UI components</li>
 <li>Redux to manage application's state</li>
 <li>Redux Thunk middleware to handle asynchronous redux actions</li>
+  <li>Tailwind CSS for styling components</li>
 </ul>
 
 ## Languages & tools
