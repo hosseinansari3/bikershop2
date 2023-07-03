@@ -9,6 +9,10 @@ in this project:
 <li>users can update their profile information</li>
 </ul>
 
+![homepage](https://github.com/hosseinansari3/bikershop2/blob/master/client/src/assets/images/screen2.jpg)
+
+![adminDashboard](https://github.com/hosseinansari3/bikershop2/blob/master/client/src/assets/images/sreen1.jpg)
+
 <h4>features:</h4>
 <ul> 
 <li>Node provides the backend environment for this application</li>
