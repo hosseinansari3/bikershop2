@@ -9,6 +9,8 @@ import {
   USER_REGISTER_SUCCESS,
   FETCH_ALL_USERS_REQUEST,
   DELETE_USER_SUCCESS,
+  SET_SIGNUP_FORM_ERRORS,
+  SET_LOGIN_FORM_ERRORS,
 } from "../constants/actionTypes";
 
 export const userRegisterReducer = (state = {}, action) => {
@@ -20,6 +22,12 @@ export const userRegisterReducer = (state = {}, action) => {
 
     case FETCH_ALL_USERS:
       return { loading: false, users: [...action.payload] };
+    case SET_SIGNUP_FORM_ERRORS:
+      return {
+        ...state,
+        formErrors: action.payload,
+        loading: false,
+      };
 
     case DELETE_USER_SUCCESS:
       return {
@@ -68,6 +76,12 @@ export const userSigninReducer = (
       return {
         ...state,
         loading: true,
+      };
+    case SET_LOGIN_FORM_ERRORS:
+      return {
+        ...state,
+        formErrors: action.payload,
+        loading: false,
       };
     case USER_SIGNIN_SUCCESS:
       return {

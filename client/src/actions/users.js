@@ -12,11 +12,14 @@ import {
   USER_REGISTER_SUCCESS,
   ACCOUNT_FORMDATA_CLEAR,
   FETCH_ALL_USERS_REQUEST,
+  SET_SIGNUP_FORM_ERRORS,
+  SET_LOGIN_FORM_ERRORS,
 } from "../constants/actionTypes";
 import * as api from "../api/index";
 
 import setAuthToken from "../utils/setAuthToken";
 import { toast } from "react-toastify";
+import { allFieldsValidation } from "../utils/validation";
 
 export const getUsers = () => async (dispatch) => {
   dispatch({ type: FETCH_ALL_USERS_REQUEST });
@@ -33,6 +36,26 @@ export const signin = (email, password) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
 
   try {
+    const rules = {
+      email: "required|email",
+      password: "required|min:6",
+    };
+
+    const user = {
+      email: email,
+      password: password,
+    };
+    const { isValid, errors } = allFieldsValidation(user, rules, {
+      "required.email": "Email is required.",
+      "email.email": "Email format is invalid.",
+      "required.password": "Password is required.",
+      "min.password": "Password must be at least 6 characters.",
+    });
+
+    if (!isValid) {
+      return dispatch({ type: SET_LOGIN_FORM_ERRORS, payload: errors });
+    }
+
     // use axios for http post request when user signing in
     const { data } = await api.signIn(email, password);
     const token = data.token;
@@ -48,6 +71,7 @@ export const signin = (email, password) => async (dispatch) => {
     // save data to localStorage
   } catch (error) {
     // if error, dispatch FAIL, set payload to error message
+    toast(error.response.data.error);
     dispatch({
       type: USER_SIGNIN_FAIL,
       payload:
@@ -66,12 +90,34 @@ export const register =
     });
 
     try {
-      // use axios for http post request when user REGISTERg in
+      const newUser = {
+        name: name,
+        email: email,
+        password: password,
+      };
+      const rules = {
+        email: "required|email",
+        password: "required|min:6",
+        name: "required",
+      };
+
+      const { isValid, errors } = allFieldsValidation(newUser, rules, {
+        "required.email": "Email is required.",
+        "required.password": "Password is required.",
+        "required.name": "name is required.",
+      });
+
+      if (!isValid) {
+        return dispatch({ type: SET_SIGNUP_FORM_ERRORS, payload: errors });
+      }
+
       const { data } = await api.registerUser(name, email, password);
       dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
       navigate("/login");
       toast("Registered SUCCESSFULLY!");
     } catch (error) {
+      toast(error.response.data.error);
+
       // if error, dispatch FAIL, set payload to error message
       dispatch({
         type: USER_REGISTER_FAIL,

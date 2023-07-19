@@ -16,7 +16,7 @@ const signIn = async (req, res) => {
   //check if there is user with given email
 
   if (!user) {
-    res.status(400).json({ message: "Invalid username" });
+    res.status(400).json({ error: "No user found for this email address" });
   } else {
     comparePassword(user);
   }
@@ -26,7 +26,7 @@ const signIn = async (req, res) => {
       // if the password doesn't match, return a message
       if (!isMatch) {
         return res.status(400).json({
-          message: "Invalid password",
+          error: "Invalid password",
         });
         // if it matches generate a new token and send everything is json
       } else {
@@ -81,7 +81,7 @@ const signIn = async (req, res) => {
 const register = async (req, res) => {
   const existUser = await User.findOne({ email: req.body.email });
   if (existUser) {
-    return res.status(400).json({ email: "Email already exists" });
+    return res.status(400).json({ error: "Email already exists" });
   } else {
     const newUser = new User({
       name: req.body.name,
@@ -141,8 +141,7 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const user = req.user.id;
-    const image =
-      "https://bikershop2.onrender.com/uploads/" + req.files[0].filename;
+    const image = "http://localhost:5000/uploads/" + req.files[0].filename;
 
     const update = { ...req.body, avatar: image };
     console.log("inaaaa:" + JSON.stringify(update));

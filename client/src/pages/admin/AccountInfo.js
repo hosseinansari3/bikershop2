@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfile, updateProfile } from "../../actions/account";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
+import defaultAvatar from "../../assets/images/Circle-icons-profile.svg.png";
 
 function AccountInfo() {
   const account = useSelector((state) => state.account);
@@ -113,9 +114,12 @@ function AccountInfo() {
               >
                 {preview !== undefined && preview.length !== 0 ? (
                   <img className="w-28 h-28" src={preview} />
-                ) : (
+                ) : avatar !== "" ? (
                   <img className="w-28 h-28" src={avatar} />
+                ) : (
+                  <img className="w-28 h-28" src={defaultAvatar} />
                 )}
+                {console.log("avat:" + avatar)}
                 <input
                   onChange={(e) => setAvatar(e.target.files[0])}
                   id="files"

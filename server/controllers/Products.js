@@ -28,8 +28,7 @@ const createProduct = async (req, res) => {
     const title = req.body.title;
     const price = req.body.price;
     const category = req.body.category;
-    const image =
-      "https://bikershop2.onrender.com/uploads/" + req.files[0].filename;
+    const image = "http://localhost:5000/uploads/" + req.files[0].filename;
 
     console.log(image);
 
@@ -57,4 +56,35 @@ const deletProduct = async (req, res) => {
   }
 };
 
-module.exports = { getProducts, getProductById, createProduct, deletProduct };
+const searchProduct = async (req, res) => {
+  try {
+    const name = req.params.name;
+
+    const productDoc = await Product.find(
+      { name: { $regex: new RegExp(name), $options: "is" }, isActive: true },
+      { name: 1, slug: 1, imageUrl: 1, price: 1, _id: 0 }
+    );
+
+    if (productDoc.length < 0) {
+      return res.status(404).json({
+        message: "No product found.",
+      });
+    }
+
+    res.status(200).json({
+      products: productDoc,
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: "Your request could not be processed. Please try again.",
+    });
+  }
+};
+
+module.exports = {
+  getProducts,
+  getProductById,
+  createProduct,
+  deletProduct,
+  searchProduct,
+};

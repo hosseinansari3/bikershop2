@@ -18,7 +18,7 @@ function LoginPage(props) {
   const [isLoggedin, setisLoggedin] = useState(false);
 
   const userSignin = useSelector((state) => state.usersSignin);
-  const { userInfo, loading, error } = userSignin;
+  const { userInfo, loading, formErrors } = userSignin;
 
   const dispatch = useDispatch();
 
@@ -98,6 +98,9 @@ function LoginPage(props) {
                   placeholder="name@company.com"
                   required=""
                 />
+                <span className="text-red-400">
+                  {formErrors && formErrors.email}
+                </span>
               </div>
               <div>
                 <label
@@ -115,6 +118,9 @@ function LoginPage(props) {
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required=""
                 />
+                <span className="text-red-400">
+                  {formErrors && formErrors.password}
+                </span>
               </div>
               <div class="flex items-center justify-between">
                 <div class="flex items-start">
@@ -146,7 +152,7 @@ function LoginPage(props) {
               <button
                 onClick={submitHandler}
                 type="submit"
-                class="w-full text-white bg-gray-100 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                class="w-full text-white bg-blue-300 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
                 Sign in
               </button>

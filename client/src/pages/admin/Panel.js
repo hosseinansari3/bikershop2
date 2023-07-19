@@ -13,6 +13,7 @@ import dashboardLinks from "./links.json";
 import { Logout } from "@mui/icons-material";
 import { logout } from "../../actions/users";
 import { fetchProfile } from "../../actions/account";
+import defaultAvatar from "../../assets/images/Circle-icons-profile.svg.png";
 function Panel() {
   const user = useSelector((state) => state.account.user);
 
@@ -119,7 +120,7 @@ function Panel() {
                 <button onClick={toggleProfile}>
                   <img
                     className="mx-2 inline rounded-full h-8 w-8"
-                    src={avatar}
+                    src={avatar ? avatar : defaultAvatar}
                   />
                   <span>{user.firstName}</span>
                 </button>
