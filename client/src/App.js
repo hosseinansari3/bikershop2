@@ -34,14 +34,14 @@ function App() {
       ) : null}
 
       <Routes>
-        <Route path="bikes" element={<BikesPage />} />
+        <Route exact path="/product/:slug" element={<Product />} />
 
-        <Route path="/product/:slug" element={<Product />} />
+        <Route path="bikes" element={<BikesPage />} />
 
         <Route path="login" element={<LoginPage />} />
         <Route path="cart" element={<Cart />} />
         <Route path="register" element={<RegisterPage />} />
-        <Route index path="/" element={<MainPage />} />
+        <Route exact index path="/" element={<MainPage />} />
 
         <Route path="panel" element={<Panel />}>
           <Route index element={<Dashboard />} />

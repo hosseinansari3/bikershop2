@@ -8,6 +8,10 @@ import {
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
   FETCH_ALL_PRODUCTS_REQUEST,
+  PRODUCT_SUGGESTIONS_CLEAR_REQUEST,
+  PRODUCT_SUGGESTIONS_FETCH_REQUEST,
+  PRODUCT_SEARCH_CHANGE,
+  PRODUCT_SEARCH_SUCCESS,
 } from "../constants/actionTypes";
 import * as api from "../api/index";
 
@@ -60,4 +64,58 @@ export const deleteProduct = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: DELETE_PRODUCT_FAIL, payload: error.message });
   }
+};
+
+export const onProductSearch = (value) => {
+  const inputValue = value.value.trim().toLowerCase();
+
+  return async (dispatch, getState) => {
+    try {
+      if (inputValue && inputValue.length % 3 === 0) {
+        const response = await api.searchProductAPI(inputValue);
+
+        dispatch({
+          type: PRODUCT_SEARCH_SUCCESS,
+          payload: response.data.products,
+        });
+      } else if (inputValue === "") {
+        dispatch(getProducts());
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const onProductSuggestionsSearch = (v) => {
+  return {
+    type: PRODUCT_SEARCH_CHANGE,
+    payload: v,
+  };
+};
+
+export const onProductSuggestionsFetchRequested = (value) => {
+  const inputValue = value.value.trim().toLowerCase();
+
+  return async (dispatch, getState) => {
+    try {
+      if (inputValue && inputValue.length % 3 === 0) {
+        const response = await api.searchProductAPI(inputValue);
+
+        dispatch({
+          type: PRODUCT_SUGGESTIONS_FETCH_REQUEST,
+          payload: response.data.products,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const onProductSuggestionsClearRequested = (dispatch, getState) => {
+  dispatch({
+    type: PRODUCT_SUGGESTIONS_CLEAR_REQUEST,
+    payload: [],
+  });
 };

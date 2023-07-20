@@ -135,8 +135,6 @@
   border: 1px solid lightgray;
   display: flex;
   align-items: center;
-
-  padding: 5px;
 }
 
 .SearchContainer input {
@@ -335,4 +333,10 @@ li.menu-wrapper:hover {
 .remove-cart {
   right: 20px;
   position: absolute;
+}
+
+.react-autosuggest__suggestions-list {
+  position: absolute;
+    z-index: 10000;
+    width: 100%;
 }

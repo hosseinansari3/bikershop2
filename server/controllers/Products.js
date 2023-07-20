@@ -60,9 +60,9 @@ const searchProduct = async (req, res) => {
   try {
     const name = req.params.name;
 
-    const productDoc = await Product.find(
-      { name: { $regex: new RegExp(name), $options: "is" }, isActive: true },
-      { name: 1, slug: 1, imageUrl: 1, price: 1, _id: 0 }
+    const productDoc = await productModel.find(
+      { title: { $regex: new RegExp(name), $options: "is" } },
+      { title: 1, slug: 1, image: 1, price: 1, _id: 0 }
     );
 
     if (productDoc.length < 0) {

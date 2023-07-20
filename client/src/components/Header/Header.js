@@ -13,16 +13,23 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import Navbarr from "./Navbarr";
 import { logout } from "../../actions/users";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { removeFromCart } from "../../actions/cart";
 
 import { menuItems } from "./menuItemss";
 import MenuItems from "./MenuItems";
+import Autosuggest from "react-autosuggest";
+import {
+  onProductSuggestionsSearch,
+  onProductSuggestionsClearRequested,
+  onProductSuggestionsFetchRequested,
+} from "../../actions/products";
 
 function Header() {
   const userInfo = useSelector((state) => state.usersSignin.userInfo);
   const cart = useSelector((state) => state.cart);
-
+  const suggestions = useSelector((state) => state.products.searchSuggestions);
+  const searchValue = useSelector((state) => state.products.searchValue);
   const dispatch = useDispatch();
 
   const [cartIsOpen, setCartIsOpen] = useState(false);
@@ -87,6 +94,43 @@ function Header() {
     handleTotalChange();
   }, [savedCartItems]);
 
+  const ProductSuggestionsFetchRequested = (value) => {
+    dispatch(onProductSuggestionsFetchRequested(value));
+  };
+  const ProductSuggestionsClearRequested = () => {
+    dispatch(onProductSuggestionsClearRequested);
+  };
+
+  const getSuggestionValue = (suggestion) => {
+    return suggestion.title;
+  };
+
+  const renderSuggestion = (suggestion) => (
+    <div className="rounded bg-white hover:cursor-pointer hover:bg-gray-200 w-full p-[5px]">
+      <img className="inline w-20 h-20" src={suggestion.image} />
+      {suggestion.title}
+    </div>
+  );
+
+  // const onChange = (e, { newValue }) => {
+  //  dispatch(onChange(newValue));
+  // };
+
+  const inputProps = {
+    className: "w-full",
+    placeholder: "Search Products",
+    value: searchValue,
+    onChange: (e, { newValue }) => {
+      dispatch(onProductSuggestionsSearch(newValue));
+    },
+  };
+
+  const containerProps = {
+    className: "w-full",
+  };
+
+  const navigate = useNavigate();
+
   return (
     <header className="header" style={{ zIndex: "30" }}>
       <div
@@ -115,7 +159,18 @@ function Header() {
 
         <div className="hidden md:flex  justify-center items-center col-span-2 lg:col-span-3">
           <div className="SearchContainer">
-            <input />
+            <Autosuggest
+              suggestions={suggestions}
+              onSuggestionsFetchRequested={ProductSuggestionsFetchRequested}
+              onSuggestionsClearRequested={ProductSuggestionsClearRequested}
+              getSuggestionValue={getSuggestionValue}
+              renderSuggestion={renderSuggestion}
+              inputProps={inputProps}
+              containerProps={containerProps}
+              onSuggestionSelected={(_, item) => {
+                window.location.replace(`/product/${item.suggestion.slug}`);
+              }}
+            />{" "}
             <div className="search-icon">
               <Search />
             </div>

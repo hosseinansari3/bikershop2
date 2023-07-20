@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct, getProducts } from "../../actions/products";
+import {
+  deleteProduct,
+  getProducts,
+  onProductSearch,
+} from "../../actions/products";
 
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -22,6 +26,10 @@ function Products() {
     e.preventDefault();
     dispatch(deleteProduct(id));
     ProductDeletnotif();
+  };
+
+  const searchChangeHandler = (value) => {
+    dispatch(onProductSearch(value));
   };
 
   return (
@@ -169,6 +177,7 @@ function Products() {
           <form className="py-3 grid gap-4 lg:gap-6 xl:gap-6 md:flex xl:flex">
             <div className="flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
               <input
+                onChange={(e) => searchChangeHandler(e.target)}
                 type="search"
                 name="search"
                 placeholder="search product"

@@ -7,11 +7,17 @@ import {
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
+  PRODUCT_SEARCH_CHANGE,
+  PRODUCT_SUGGESTIONS_FETCH_REQUEST,
+  PRODUCT_SUGGESTIONS_CLEAR_REQUEST,
+  PRODUCT_SEARCH_SUCCESS,
 } from "../constants/actionTypes";
 
 const initialState = {
   products: [],
   loading: false,
+  searchValue: "",
+  searchSuggestions: [],
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -19,6 +25,9 @@ export const productReducer = (state = initialState, action) => {
     case FETCH_ALL_PRODUCTS_REQUEST:
       return { ...state, loading: true };
     case FETCH_ALL_PRODUCTS:
+      return { ...state, loading: false, products: [...action.payload] };
+
+    case PRODUCT_SEARCH_SUCCESS:
       return { ...state, loading: false, products: [...action.payload] };
 
     case CREATE:
@@ -33,6 +42,21 @@ export const productReducer = (state = initialState, action) => {
         products: state.products.filter(
           (product) => product._id !== action.payload
         ),
+      };
+    case PRODUCT_SEARCH_CHANGE:
+      return {
+        ...state,
+        searchValue: action.payload,
+      };
+    case PRODUCT_SUGGESTIONS_FETCH_REQUEST:
+      return {
+        ...state,
+        searchSuggestions: action.payload,
+      };
+    case PRODUCT_SUGGESTIONS_CLEAR_REQUEST:
+      return {
+        ...state,
+        searchSuggestions: action.payload,
       };
 
     default:

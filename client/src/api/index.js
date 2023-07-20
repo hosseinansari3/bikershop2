@@ -25,6 +25,9 @@ export const updateProduct = (id, updatedProduct) =>
 export const deleteProductAPI = (id) =>
   axios.delete(`${baseUrl}/products/${id}`);
 
+export const searchProductAPI = (inputValue) =>
+  axios.get(`${baseUrl}/products/list/search/${inputValue}`);
+
 export const deleteUser = (id) => axios.delete(`${baseUrl}/users/${id}`);
 
 export const createOrderAPI = (order, config) =>
