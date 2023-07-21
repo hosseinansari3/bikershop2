@@ -14,6 +14,7 @@ import {
   FETCH_ALL_USERS_REQUEST,
   SET_SIGNUP_FORM_ERRORS,
   SET_LOGIN_FORM_ERRORS,
+  USER_SEARCH_SUCCESS,
 } from "../constants/actionTypes";
 import * as api from "../api/index";
 
@@ -146,4 +147,27 @@ export const deleteUser = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: DELETE_USER_FAIL, payload: error.message });
   }
+};
+
+export const onUsersSearch = (value) => {
+  const inputValue = value.value.trim().toLowerCase();
+
+  return async (dispatch, getState) => {
+    try {
+      if (inputValue && inputValue.length % 3 === 0) {
+        const response = await api.searchUserAPI(inputValue);
+
+        dispatch({
+          type: USER_SEARCH_SUCCESS,
+          payload: response.data.users,
+        });
+
+        console.log("users: " + response.data.users);
+      } else if (inputValue === "") {
+        dispatch(getUsers());
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };

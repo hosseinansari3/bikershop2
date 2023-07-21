@@ -177,7 +177,38 @@ const getCurrentUser = async (req, res) => {
   }
 };
 
+const searchUser = async (req, res) => {
+  try {
+    const name = req.params.name;
+
+    const productDoc = await User.find(
+      {
+        $or: [
+          { email: { $regex: new RegExp(name), $options: "is" } },
+          { firstName: { $regex: new RegExp(name), $options: "is" } },
+        ],
+      },
+      { email: 1, firstName: 1, avatar: 1, _id: 0 }
+    );
+
+    if (productDoc.length < 0) {
+      return res.status(404).json({
+        message: "No user found.",
+      });
+    }
+
+    res.status(200).json({
+      users: productDoc,
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: "Your request could not be processed. Please try again.",
+    });
+  }
+};
+
 module.exports = {
+  searchUser,
   register,
   signIn,
   verifyToken,

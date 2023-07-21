@@ -11,6 +11,7 @@ import {
   DELETE_USER_SUCCESS,
   SET_SIGNUP_FORM_ERRORS,
   SET_LOGIN_FORM_ERRORS,
+  USER_SEARCH_SUCCESS,
 } from "../constants/actionTypes";
 
 export const userRegisterReducer = (state = {}, action) => {
@@ -22,6 +23,9 @@ export const userRegisterReducer = (state = {}, action) => {
 
     case FETCH_ALL_USERS:
       return { loading: false, users: [...action.payload] };
+    case USER_SEARCH_SUCCESS:
+      return { loading: false, users: [...action.payload] };
+
     case SET_SIGNUP_FORM_ERRORS:
       return {
         ...state,

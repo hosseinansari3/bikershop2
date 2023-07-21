@@ -30,6 +30,9 @@ export const searchProductAPI = (inputValue) =>
 
 export const deleteUser = (id) => axios.delete(`${baseUrl}/users/${id}`);
 
+export const searchUserAPI = (inputValue) =>
+  axios.get(`${baseUrl}/users/list/search/${inputValue}`);
+
 export const createOrderAPI = (order, config) =>
   axios.post(`${baseUrl}/orders`, order, config);
 

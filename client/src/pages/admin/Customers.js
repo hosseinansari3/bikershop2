@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUser, getUsers } from "../../actions/users";
+import { deleteUser, getUsers, onUsersSearch } from "../../actions/users";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 
 function Customers() {
@@ -16,6 +16,10 @@ function Customers() {
   const handleDelet = (e, id) => {
     e.preventDefault();
     dispatch(deleteUser(id));
+  };
+
+  const userSearchHandler = (value) => {
+    dispatch(onUsersSearch(value));
   };
 
   return (
@@ -83,6 +87,7 @@ function Customers() {
           <form className="py-3 grid gap-4 lg:gap-6 xl:gap-6 md:flex xl:flex">
             <div className="flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
               <input
+                onChange={(e) => userSearchHandler(e.target)}
                 type="search"
                 name="search"
                 placeholder="search by name/Email/phone"
