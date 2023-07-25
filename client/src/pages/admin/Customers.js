@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUser, getUsers, onUsersSearch } from "../../actions/users";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
@@ -6,6 +6,9 @@ import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator
 function Customers() {
   const apiUsers = useSelector((state) => state.usersRegister);
   const { loading, users } = apiUsers;
+
+  const [isCheckAll, setIsCheckAll] = useState(false);
+  const [isCheck, setIsCheck] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -20,6 +23,24 @@ function Customers() {
 
   const userSearchHandler = (value) => {
     dispatch(onUsersSearch(value));
+  };
+
+  const handleSelectAll = (e) => {
+    setIsCheckAll(!isCheckAll);
+    setIsCheck(users.map((user) => user._id));
+    if (isCheckAll) {
+      setIsCheck([]);
+    }
+  };
+
+  const handleClick = (e) => {
+    const { id, checked } = e.target;
+    setIsCheck([...isCheck, id]);
+    if (!checked) {
+      setIsCheck(isCheck.filter((item) => item !== id));
+    }
+    console.log("isCheck :" + isCheck);
+    console.log("id :" + id);
   };
 
   return (
@@ -79,6 +100,65 @@ function Customers() {
                 </div>
               </div>
             </div>
+            <div className="lg:flex  md:flex xl:justify-end xl:w-1/2  md:w-full md:justify-start flex-grow-0">
+              <div className="w-full md:w-40 lg:w-40 xl:w-40 mr-3 mb-3 lg:mb-0">
+                <button
+                  disabled
+                  type="button"
+                  className="align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none px-4 py-2 rounded-lg text-sm text-white bg-green-500 border border-transparent opacity-50 cursor-not-allowed w-full rounded-md h-12 btn-gray text-gray-600 sm:mb-3"
+                >
+                  <span className="mr-2">
+                    <svg
+                      stroke="currentColor"
+                      fill="none"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      height="1em"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                  </span>
+                  Bulk Action
+                </button>
+              </div>
+              <div className="w-full md:w-32 lg:w-32 xl:w-32 mr-3 mb-3 lg:mb-0">
+                <button
+                  onClick={(e) => handleDelet(e, isCheck)}
+                  disabled={isCheck.length === 0 ? true : false}
+                  type="button"
+                  className={`align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none px-4 py-2 rounded-lg text-sm text-white border border-transparent cursor-not-allowed w-full rounded-md h-12 ${
+                    isCheck.length == 0
+                      ? "bg-red-300 opacity-50 disabled"
+                      : "bg-red-600"
+                  } btn-red`}
+                >
+                  <span className="mr-2">
+                    <svg
+                      stroke="currentColor"
+                      fill="none"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      height="1em"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                      <line x1="10" y1="11" x2="10" y2="17"></line>
+                      <line x1="14" y1="11" x2="14" y2="17"></line>
+                    </svg>
+                  </span>
+                  Delete
+                </button>
+              </div>
+            </div>
           </form>
         </div>
       </div>
@@ -103,7 +183,13 @@ function Customers() {
             <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
               <tr>
                 <td className="px-4 py-3">
-                  <input id="selectAll" name="selectAll" type="checkbox" />
+                  <input
+                    onChange={handleSelectAll}
+                    checked={isCheckAll}
+                    id="selectAll"
+                    name="selectAll"
+                    type="checkbox"
+                  />
                 </td>
                 <td className="px-4 py-3">NAME</td>
                 <td className="px-4 py-3">PICTURE</td>
@@ -117,8 +203,11 @@ function Customers() {
                   <tr>
                     <td className="px-4 py-3">
                       <input
-                        id="6468c2128e0b0b00083ea65e"
-                        name="Test product"
+                        checked={isCheck.includes(user._id)}
+                        id={user._id}
+                        key={user._id}
+                        onChange={handleClick}
+                        name={user.title}
                         type="checkbox"
                       />
                     </td>
@@ -167,7 +256,7 @@ function Customers() {
                           </p>
                         </button>
                         <button
-                          onClick={(e) => handleDelet(e, user._id)}
+                          onClick={(e) => handleDelet(e, [user._id])}
                           className="p-2 cursor-pointer text-gray-400 hover:text-red-600 focus:outline-none"
                         >
                           <p>

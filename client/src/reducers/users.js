@@ -36,7 +36,7 @@ export const userRegisterReducer = (state = {}, action) => {
     case DELETE_USER_SUCCESS:
       return {
         ...state,
-        users: state.users.filter((user) => user._id !== action.payload),
+        users: state.users.filter((user) => !action.payload.includes(user._id)),
       };
 
     case USER_REGISTER_SUCCESS:

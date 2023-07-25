@@ -44,11 +44,17 @@ const createProduct = async (req, res) => {
 };
 
 const deletProduct = async (req, res) => {
-  const id = req.params.id;
+  const ids = req.params.id;
+  console.log(ids);
+
+  var idsArr = ids.split(",");
+
+  console.log(idsArr);
+
   try {
-    deletedProduct = await productModel.findByIdAndDelete(id);
+    deletedProduct = await productModel.deleteMany({ _id: { $in: idsArr } });
     console.log(JSON.stringify("deleted:" + deletedProduct));
-    res.status(200).json(deletedProduct);
+    return res.status(200).json(idsArr);
   } catch (error) {
     res.status(409).json({
       message: error.message,
@@ -62,7 +68,7 @@ const searchProduct = async (req, res) => {
 
     const productDoc = await productModel.find(
       { title: { $regex: new RegExp(name), $options: "is" } },
-      { title: 1, slug: 1, image: 1, price: 1, _id: 0 }
+      { title: 1, slug: 1, image: 1, price: 1, _id: 1 }
     );
 
     if (productDoc.length < 0) {

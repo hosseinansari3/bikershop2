@@ -127,10 +127,12 @@ const fetchUsers = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  const id = req.params.id;
+  const ids = req.params.id;
+  var idsArr = ids.split(",");
+
   try {
-    deletedUser = await User.findByIdAndDelete(id);
-    res.status(200).json(deletedUser);
+    deletedUser = await User.deleteMany({ _id: { $in: idsArr } });
+    res.status(200).json(idsArr);
   } catch (error) {
     res.status(409).json({
       message: error.message,

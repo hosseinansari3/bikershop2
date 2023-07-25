@@ -142,7 +142,7 @@ export const deleteUser = (id) => async (dispatch) => {
     const { data } = await api.deleteUser(id);
     dispatch({
       type: DELETE_USER_SUCCESS,
-      payload: data._id,
+      payload: data,
     });
   } catch (error) {
     dispatch({ type: DELETE_USER_FAIL, payload: error.message });

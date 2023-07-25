@@ -40,7 +40,7 @@ export const productReducer = (state = initialState, action) => {
       return {
         ...state,
         products: state.products.filter(
-          (product) => product._id !== action.payload
+          (product) => !action.payload.includes(product._id)
         ),
       };
     case PRODUCT_SEARCH_CHANGE:

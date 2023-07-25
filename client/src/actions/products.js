@@ -56,10 +56,11 @@ export const deleteProduct = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_PRODUCT_REQUEST });
     const { data } = await api.deleteProductAPI(id);
+    console.log("deleted: " + JSON.stringify(data));
 
     dispatch({
       type: DELETE_PRODUCT_SUCCESS,
-      payload: data._id,
+      payload: data,
     });
   } catch (error) {
     dispatch({ type: DELETE_PRODUCT_FAIL, payload: error.message });

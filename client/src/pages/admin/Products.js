@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteProduct,
@@ -13,6 +13,8 @@ import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator
 function Products() {
   const apiProduct = useSelector((state) => state.products);
   const { loading, products } = apiProduct;
+  const [isCheckAll, setIsCheckAll] = useState(false);
+  const [isCheck, setIsCheck] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -30,6 +32,24 @@ function Products() {
 
   const searchChangeHandler = (value) => {
     dispatch(onProductSearch(value));
+  };
+
+  const handleSelectAll = (e) => {
+    setIsCheckAll(!isCheckAll);
+    setIsCheck(products.map((p) => p._id));
+    if (isCheckAll) {
+      setIsCheck([]);
+    }
+  };
+
+  const handleClick = (e) => {
+    const { id, checked } = e.target;
+    setIsCheck([...isCheck, id]);
+    if (!checked) {
+      setIsCheck(isCheck.filter((item) => item !== id));
+    }
+    console.log("isCheck :" + isCheck);
+    console.log("id :" + id);
   };
 
   return (
@@ -117,9 +137,14 @@ function Products() {
               </div>
               <div className="w-full md:w-32 lg:w-32 xl:w-32 mr-3 mb-3 lg:mb-0">
                 <button
-                  disabled
+                  onClick={(e) => handleDelet(e, isCheck)}
+                  disabled={isCheck.length === 0 ? true : false}
                   type="button"
-                  className="align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none px-4 py-2 rounded-lg text-sm text-white bg-green-500 border border-transparent opacity-50 cursor-not-allowed w-full rounded-md h-12 bg-red-300 disabled btn-red"
+                  className={`align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none px-4 py-2 rounded-lg text-sm text-white border border-transparent cursor-not-allowed w-full rounded-md h-12 ${
+                    isCheck.length == 0
+                      ? "bg-red-300 opacity-50 disabled"
+                      : "bg-red-600"
+                  } btn-red`}
                 >
                   <span className="mr-2">
                     <svg
@@ -203,7 +228,13 @@ function Products() {
             <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
               <tr>
                 <td className="px-4 py-3">
-                  <input id="selectAll" name="selectAll" type="checkbox" />
+                  <input
+                    onChange={handleSelectAll}
+                    id="selectAll"
+                    name="selectAll"
+                    type="checkbox"
+                    checked={isCheckAll}
+                  />
                 </td>
                 <td className="px-4 py-3">PRODUCT NAME</td>
                 <td className="px-4 py-3">CATEGORY</td>
@@ -222,8 +253,11 @@ function Products() {
                   <tr>
                     <td className="px-4 py-3">
                       <input
-                        id="6468c2128e0b0b00083ea65e"
-                        name="Test product"
+                        checked={isCheck.includes(p._id)}
+                        id={p._id}
+                        key={p._id}
+                        onChange={handleClick}
+                        name={p.title}
                         type="checkbox"
                       />
                     </td>
@@ -301,7 +335,7 @@ function Products() {
                           </p>
                         </button>
                         <button
-                          onClick={(e) => handleDelet(e, p._id)}
+                          onClick={(e) => handleDelet(e, [p._id])}
                           className="p-2 cursor-pointer text-gray-400 hover:text-red-600 focus:outline-none"
                         >
                           <p>
