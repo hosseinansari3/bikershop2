@@ -22,12 +22,13 @@ import setAuthToken from "../utils/setAuthToken";
 import { toast } from "react-toastify";
 import { allFieldsValidation } from "../utils/validation";
 
-export const getUsers = () => async (dispatch) => {
+export const getUsers = (page) => async (dispatch) => {
   dispatch({ type: FETCH_ALL_USERS_REQUEST });
 
   try {
-    const { data } = await api.fetchUsers();
-    dispatch({ type: FETCH_ALL_USERS, payload: data });
+    const response = await api.fetchUsers(page);
+    console.log("data" + JSON.stringify(response.data));
+    dispatch({ type: FETCH_ALL_USERS, payload: response.data });
   } catch (error) {
     console.log(error.message);
   }
@@ -149,17 +150,18 @@ export const deleteUser = (id) => async (dispatch) => {
   }
 };
 
-export const onUsersSearch = (value) => {
-  const inputValue = value.value.trim().toLowerCase();
+export const onUsersSearch = (value, page) => {
+  const inputValue = value.trim().toLowerCase();
 
   return async (dispatch, getState) => {
     try {
-      if (inputValue && inputValue.length % 3 === 0) {
-        const response = await api.searchUserAPI(inputValue);
+      if (inputValue) {
+        const response = await api.searchUserAPI(inputValue, page);
+        console.log("inputValue: " + inputValue);
 
         dispatch({
           type: USER_SEARCH_SUCCESS,
-          payload: response.data.users,
+          payload: response.data,
         });
 
         console.log("users: " + response.data.users);

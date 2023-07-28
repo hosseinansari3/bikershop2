@@ -22,9 +22,21 @@ export const userRegisterReducer = (state = {}, action) => {
       return { loading: true };
 
     case FETCH_ALL_USERS:
-      return { loading: false, users: [...action.payload] };
+      return {
+        loading: false,
+        users: [...action.payload.users],
+        totalPages: action.payload.pages,
+        pageSize: action.payload.pageSize,
+        totalUsers: action.payload.totalUsers,
+      };
     case USER_SEARCH_SUCCESS:
-      return { loading: false, users: [...action.payload] };
+      return {
+        loading: false,
+        users: [...action.payload.users],
+        totalPages: action.payload.pages,
+        pageSize: action.payload.pageSize,
+        totalUsers: action.payload.totalUsers,
+      };
 
     case SET_SIGNUP_FORM_ERRORS:
       return {

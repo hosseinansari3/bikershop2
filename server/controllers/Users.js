@@ -119,10 +119,39 @@ const verifyToken = (req, res, next) => {
 
 const fetchUsers = async (req, res) => {
   try {
-    const users = await User.find();
-    res.status(200).json(users);
-  } catch {
-    res.status(404).json({ message: error.message });
+    let query = User.find();
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.limit) || 4;
+    const skip = (page - 1) * pageSize;
+    const total = await User.countDocuments();
+
+    const pages = Math.ceil(total / pageSize);
+
+    query = query.skip(skip).limit(pageSize);
+    if (page > pages) {
+      return res.status(404).json({
+        status: "fail",
+        message: "No page found",
+      });
+    }
+
+    const result = await query;
+
+    res.status(200).json({
+      status: "success",
+      count: result.length,
+      page,
+      pages,
+      pageSize,
+      totalUsers: total,
+      users: result,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "error",
+      message: "Server Error",
+    });
   }
 };
 
@@ -183,7 +212,7 @@ const searchUser = async (req, res) => {
   try {
     const name = req.params.name;
 
-    const productDoc = await User.find(
+    let query = User.find(
       {
         $or: [
           { email: { $regex: new RegExp(name), $options: "is" } },
@@ -193,18 +222,37 @@ const searchUser = async (req, res) => {
       { email: 1, firstName: 1, avatar: 1, _id: 0 }
     );
 
-    if (productDoc.length < 0) {
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.limit) || 4;
+    const skip = (page - 1) * pageSize;
+    const total = (await query).length;
+
+    const pages = Math.ceil(total / pageSize);
+
+    query = query.skip(skip).limit(pageSize);
+    if (page > pages) {
       return res.status(404).json({
-        message: "No user found.",
+        status: "fail",
+        message: "No page found",
       });
     }
 
+    const result = await query.clone();
+
     res.status(200).json({
-      users: productDoc,
+      status: "success",
+      count: result.length,
+      page,
+      pages,
+      pageSize,
+      totalUsers: total,
+      users: result,
     });
   } catch (error) {
-    res.status(400).json({
-      error: "Your request could not be processed. Please try again.",
+    console.log(error);
+    res.status(500).json({
+      status: "error",
+      message: "Server Error",
     });
   }
 };

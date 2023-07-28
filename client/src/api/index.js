@@ -8,7 +8,7 @@ export const signIn = (email, password) =>
 export const registerUser = (name, email, password) =>
   axios.post(`${baseUrl}/users/register`, { name, email, password });
 
-export const fetchUsers = () => axios.get(`${baseUrl}/users`);
+export const fetchUsers = (page) => axios.get(`${baseUrl}/users?page=${page}`);
 export const getCurrentUserAPI = (config) =>
   axios.get(`${baseUrl}/users/me`, config);
 
@@ -30,8 +30,8 @@ export const searchProductAPI = (inputValue) =>
 
 export const deleteUser = (id) => axios.delete(`${baseUrl}/users/${id}`);
 
-export const searchUserAPI = (inputValue) =>
-  axios.get(`${baseUrl}/users/list/search/${inputValue}`);
+export const searchUserAPI = (inputValue, page) =>
+  axios.get(`${baseUrl}/users/list/search/${inputValue}?page=${page}`);
 
 export const createOrderAPI = (order, config) =>
   axios.post(`${baseUrl}/orders`, order, config);
