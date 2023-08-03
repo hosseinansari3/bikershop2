@@ -15,11 +15,13 @@ import {
 } from "../constants/actionTypes";
 import * as api from "../api/index";
 
-export const getProducts = () => async (dispatch) => {
+export const getProducts = (page) => async (dispatch) => {
   try {
     dispatch({ type: FETCH_ALL_PRODUCTS_REQUEST });
-    const { data } = await api.fetchProducts();
-    dispatch({ type: FETCH_ALL_PRODUCTS, payload: data });
+    const response = await api.fetchProducts(page);
+    console.log("DATAAAA: " + JSON.stringify(response.data));
+
+    dispatch({ type: FETCH_ALL_PRODUCTS, payload: response.data });
   } catch (error) {
     console.log(error.message);
   }
@@ -67,17 +69,17 @@ export const deleteProduct = (id) => async (dispatch) => {
   }
 };
 
-export const onProductSearch = (value) => {
-  const inputValue = value.value.trim().toLowerCase();
+export const onProductSearch = (value, page) => {
+  const inputValue = value.trim().toLowerCase();
 
   return async (dispatch, getState) => {
     try {
-      if (inputValue && inputValue.length % 3 === 0) {
-        const response = await api.searchProductAPI(inputValue);
+      if (inputValue) {
+        const response = await api.searchProductAPI(inputValue, page);
 
         dispatch({
           type: PRODUCT_SEARCH_SUCCESS,
-          payload: response.data.products,
+          payload: response.data,
         });
       } else if (inputValue === "") {
         dispatch(getProducts());
@@ -100,8 +102,8 @@ export const onProductSuggestionsFetchRequested = (value) => {
 
   return async (dispatch, getState) => {
     try {
-      if (inputValue && inputValue.length % 3 === 0) {
-        const response = await api.searchProductAPI(inputValue);
+      if (inputValue) {
+        const response = await api.searchProductAPI(inputValue, 1);
 
         dispatch({
           type: PRODUCT_SUGGESTIONS_FETCH_REQUEST,

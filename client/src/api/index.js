@@ -12,7 +12,8 @@ export const fetchUsers = (page) => axios.get(`${baseUrl}/users?page=${page}`);
 export const getCurrentUserAPI = (config) =>
   axios.get(`${baseUrl}/users/me`, config);
 
-export const fetchProducts = () => axios.get(`${baseUrl}/products`);
+export const fetchProducts = (page) =>
+  axios.get(`${baseUrl}/products?page=${page}`);
 export const fetchProductById = (slug) =>
   axios.get(`${baseUrl}/products/${slug}`);
 export const createProduct = (newProduct) =>
@@ -25,8 +26,8 @@ export const updateProduct = (id, updatedProduct) =>
 export const deleteProductAPI = (id) =>
   axios.delete(`${baseUrl}/products/${id}`);
 
-export const searchProductAPI = (inputValue) =>
-  axios.get(`${baseUrl}/products/list/search/${inputValue}`);
+export const searchProductAPI = (inputValue, page) =>
+  axios.get(`${baseUrl}/products/list/search/${inputValue}?page=${page}`);
 
 export const deleteUser = (id) => axios.delete(`${baseUrl}/users/${id}`);
 
@@ -39,7 +40,8 @@ export const createOrderAPI = (order, config) =>
 export const listUserOrdersAPI = (config) =>
   axios.get(`${baseUrl}/orders/myOrder/`, config);
 
-export const listAllOrdersAPI = () => axios.get(`${baseUrl}/orders`);
+export const listAllOrdersAPI = (limit) =>
+  axios.get(`${baseUrl}/orders?limit=${limit}`);
 
 export const updateWishlistAPI = (item, config) =>
   axios.post(`${baseUrl}/wishlist`, item, config);
@@ -56,7 +58,8 @@ export const fetchProductReviewsAPI = (slug) =>
 export const fetchMyReviewsAPI = (config) =>
   axios.get(`${baseUrl}/review/myReviews`, config);
 
-export const fetchAllReviewsAPI = () => axios.get(`${baseUrl}/review`);
+export const fetchAllReviewsAPI = (limit) =>
+  axios.get(`${baseUrl}/review?limit=${limit}`);
 
 export const updateProfileAPI = (profile, config) =>
   axios.put(`${baseUrl}/users`, profile, config);

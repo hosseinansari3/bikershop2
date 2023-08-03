@@ -33,7 +33,7 @@ function BikesPage() {
   };
 
   useEffect(() => {
-    dispatch(getProducts());
+    dispatch(getProducts(1));
   }, [dispatch]);
 
   const product = useSelector((state) => state.products);

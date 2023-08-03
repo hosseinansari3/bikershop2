@@ -118,14 +118,14 @@ export const fetchMyReviews = () => {
 };
 
 // fetch reviews api
-export const fetchReviews = () => {
+export const fetchReviews = (limit) => {
   return async (dispatch, getState) => {
     dispatch({ type: FETCH_REVIEWS_REQUEST });
 
     try {
       dispatch({ type: SET_REVIEWS_LOADING, payload: true });
 
-      const response = await fetchAllReviewsAPI();
+      const response = await fetchAllReviewsAPI(limit);
 
       const { reviews } = response.data;
 

@@ -25,10 +25,24 @@ export const productReducer = (state = initialState, action) => {
     case FETCH_ALL_PRODUCTS_REQUEST:
       return { ...state, loading: true };
     case FETCH_ALL_PRODUCTS:
-      return { ...state, loading: false, products: [...action.payload] };
+      return {
+        loading: false,
+        products: [...action.payload.products],
+        totalPages: action.payload.pages,
+        pageSize: action.payload.pageSize,
+        totalProducts: action.payload.totalProducts,
+        searchSuggestions: ["sss"],
+        searchValue: "",
+      };
 
     case PRODUCT_SEARCH_SUCCESS:
-      return { ...state, loading: false, products: [...action.payload] };
+      return {
+        loading: false,
+        products: [...action.payload.products],
+        totalPages: action.payload.pages,
+        pageSize: action.payload.pageSize,
+        totalProducts: action.payload.totalProducts,
+      };
 
     case CREATE:
       return { ...state, products: [...action.payload] };

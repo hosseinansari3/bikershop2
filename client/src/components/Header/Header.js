@@ -160,7 +160,7 @@ function Header() {
         <div className="hidden md:flex  justify-center items-center col-span-2 lg:col-span-3">
           <div className="SearchContainer">
             <Autosuggest
-              suggestions={suggestions}
+              suggestions={suggestions ? suggestions : null}
               onSuggestionsFetchRequested={ProductSuggestionsFetchRequested}
               onSuggestionsClearRequested={ProductSuggestionsClearRequested}
               getSuggestionValue={getSuggestionValue}

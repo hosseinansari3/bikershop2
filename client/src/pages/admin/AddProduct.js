@@ -41,7 +41,7 @@ function AddProduct() {
   const dispatch = useDispatch();
 
   const apiProduct = useSelector((state) => state.products);
-  const { products } = apiProduct;
+  const { products, totalProducts } = apiProduct;
 
   useEffect(() => {
     dispatch(getProducts());
@@ -245,7 +245,7 @@ function AddProduct() {
         <Button onClick={handleSubmit} variant="contained">
           Publish Product
         </Button>
-        <p>number of products: {products.length}</p>
+        <p>number of products: {totalProducts}</p>
       </Grid>
     </div>
   );

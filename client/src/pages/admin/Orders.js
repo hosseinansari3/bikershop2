@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listAllOrders, listMyOrders } from "../../actions/orders";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
@@ -8,23 +8,37 @@ function Orders() {
   const user = useSelector((state) => state.usersSignin.userInfo.user);
 
   const orderListUser = useSelector((state) => state.orderListUser);
+  const { orders, loading } = orderListUser;
 
   const dispatch = useDispatch();
 
+  const [Limit, setLimit] = useState(4);
+  const [Orders, setOrders] = useState([]);
+
   useEffect(() => {
     if (user.role === ROLES.Admin) {
-      dispatch(listAllOrders());
+      dispatch(listAllOrders(Limit));
     } else {
       dispatch(listMyOrders());
     }
-  }, [dispatch]);
+  }, [Limit]);
+
+  useEffect(() => {
+    if (user.role === ROLES.Admin) {
+      setOrders(orders);
+    }
+  }, [orders]);
+
+  const onLoadMore = () => {
+    setLimit(Limit + 4);
+  };
 
   return (
     <div className="container grid px-6 mx-auto">
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Orders
       </h1>
-      {orderListUser.loading && <LoadingIndicator />}
+      {loading && <LoadingIndicator />}
       <div className="min-w-0 rounded-lg ring-0 ring-black ring-opacity-4 overflow-hidden bg-white dark:bg-gray-800 min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
         <div className="p-4">
           <form>
@@ -127,7 +141,7 @@ function Orders() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
-              {orderListUser.orders?.map((order) => {
+              {orders?.map((order) => {
                 let total = 0;
                 order.orderItems?.map((item) => {
                   let itemPrice = parseFloat(
@@ -233,87 +247,19 @@ function Orders() {
               })}
             </tbody>
           </table>
-        </div>
-        <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-white text-gray-500 dark:text-gray-400 dark:bg-gray-800">
-          <div className="flex flex-col justify-between text-xs sm:flex-row text-gray-600 dark:text-gray-400">
-            <span className="flex items-center font-semibold tracking-wide uppercase">
-              SHOWING 1-20 OF 328
-            </span>
-            <div className="flex mt-2 sm:mt-auto sm:justify-end">
-              <nav>
-                <ul className="inline-flex items-center">
-                  <li>
-                    <button className="align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none p-2 rounded-md text-gray-600 dark:text-gray-400 focus:outline-none border border-transparent opacity-50 cursor-not-allowed">
-                      <svg
-                        class="h-3 w-3"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                          clip-rule="evenodd"
-                          fill-rule="evenodd"
-                        ></path>
-                      </svg>
-                    </button>
-                  </li>
-
-                  <li>
-                    <button className="align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none px-3 py-1 rounded-md text-xs text-white bg-green-500 border border-transparent active:bg-green-600 hover:bg-green-600 focus:ring focus:ring-purple-300">
-                      1
-                    </button>
-                  </li>
-
-                  <li>
-                    <button className="align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none px-3 py-1 rounded-md text-xs text-gray-600 dark:text-gray-400 focus:outline-none border border-transparent active:bg-transparent hover:bg-gray-100 focus:ring focus:ring-gray-300 dark:hover:bg-gray-500 dark:hover:text-gray-300 dark:hover:bg-opacity-10">
-                      2
-                    </button>
-                  </li>
-
-                  <li>
-                    <button className="align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none px-3 py-1 rounded-md text-xs text-gray-600 dark:text-gray-400 focus:outline-none border border-transparent active:bg-transparent hover:bg-gray-100 focus:ring focus:ring-gray-300 dark:hover:bg-gray-500 dark:hover:text-gray-300 dark:hover:bg-opacity-10">
-                      3
-                    </button>
-                  </li>
-
-                  <li>
-                    <button className="align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none px-3 py-1 rounded-md text-xs text-gray-600 dark:text-gray-400 focus:outline-none border border-transparent active:bg-transparent hover:bg-gray-100 focus:ring focus:ring-gray-300 dark:hover:bg-gray-500 dark:hover:text-gray-300 dark:hover:bg-opacity-10">
-                      4
-                    </button>
-                  </li>
-
-                  <li>
-                    <button className="align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none px-3 py-1 rounded-md text-xs text-gray-600 dark:text-gray-400 focus:outline-none border border-transparent active:bg-transparent hover:bg-gray-100 focus:ring focus:ring-gray-300 dark:hover:bg-gray-500 dark:hover:text-gray-300 dark:hover:bg-opacity-10">
-                      5
-                    </button>
-                  </li>
-
-                  <li>
-                    <button className="align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none px-3 py-1 rounded-md text-xs text-gray-600 dark:text-gray-400 focus:outline-none border border-transparent active:bg-transparent hover:bg-gray-100 focus:ring focus:ring-gray-300 dark:hover:bg-gray-500 dark:hover:text-gray-300 dark:hover:bg-opacity-10">
-                      6
-                    </button>
-                  </li>
-                  <li>
-                    <button className="align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none p-2 rounded-md text-gray-600 dark:text-gray-400 focus:outline-none border border-transparent active:bg-transparent hover:bg-gray-100 focus:ring focus:ring-gray-300 dark:hover:bg-gray-500 dark:hover:text-gray-300 dark:hover:bg-opacity-10">
-                      <svg
-                        class="h-3 w-3"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                          clip-rule="evenodd"
-                          fill-rule="evenodd"
-                        ></path>
-                      </svg>
-                    </button>
-                  </li>
-                </ul>
-              </nav>
+          {Orders.length >= Limit && (
+            <div className="flex justify-center">
+              <button onClick={onLoadMore}>load more</button>
             </div>
-          </div>
+          )}
+
+          {Orders?.length === 0 && (
+            <div className="flex justify-center">
+              <p className="text-3xl p-10 text-gray-400	">
+                THERE IS NOTHING HERE YET!
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

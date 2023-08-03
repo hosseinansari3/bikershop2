@@ -96,12 +96,15 @@ const GetMyOrders = async (req, res) => {
 // @route GET /api/admin/orders
 // @access Private/admin
 const GetOrders = async (req, res) => {
+  let limit = req.query.limit ? parseInt(req.query.limit) : 100;
+
   const orders = await Order.find({})
     .populate({
       path: "user",
       select: "firstName",
     })
-    .sort("-created");
+    .sort("-created")
+    .limit(limit);
   console.log("ALLOrders:" + JSON.stringify(orders));
 
   res.json(orders);

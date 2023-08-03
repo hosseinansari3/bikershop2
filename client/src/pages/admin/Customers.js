@@ -41,7 +41,6 @@ function Customers() {
     }
 
     dispatch(onUsersSearch(searchValue, 1));
-
   }, [searchValue]);
 
   const handleDelet = (e, id) => {
@@ -321,6 +320,13 @@ function Customers() {
               })}
             </tbody>
           </table>
+          {users?.length === 0 && (
+            <div className="flex justify-center">
+              <p className="text-3xl p-10 text-gray-400	">
+                THERE IS NOTHING HERE YET!
+              </p>
+            </div>
+          )}
         </div>
         <Pagination
           totalUsers={totalUsers}

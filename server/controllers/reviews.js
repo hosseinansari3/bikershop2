@@ -65,7 +65,7 @@ const getProductReviews = async (req, res) => {
 // fetch all reviews api
 const fetchAllReviews = async (req, res) => {
   try {
-    console.log("fetch started");
+    let limit = req.query.limit ? parseInt(req.query.limit) : 100;
 
     const reviews = await Review.find()
       .sort("-created")
@@ -76,7 +76,8 @@ const fetchAllReviews = async (req, res) => {
       .populate({
         path: "product",
         select: "title slug imageUrl",
-      });
+      })
+      .limit(limit);
 
     const count = await Review.countDocuments();
 
