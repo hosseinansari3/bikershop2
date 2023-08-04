@@ -110,6 +110,29 @@ const GetOrders = async (req, res) => {
   res.json(orders);
 };
 
+const searchOrder = async (req, res) => {
+  try {
+    const name = req.params.searchValue;
+    let limit = req.query.limit ? parseInt(req.query.limit) : 100;
+
+    const orders = await Order.find()
+      .populate({
+        path: "user",
+      })
+      .exec();
+
+    const resp = orders.filter((order) => order.user.firstName.includes(name));
+
+    res.status(200).json(resp);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "error",
+      message: "Server Error",
+    });
+  }
+};
+
 module.exports = {
   addorderitems,
   getOrderById,
@@ -117,4 +140,5 @@ module.exports = {
   GetMyOrders,
   GetOrders,
   updateOrderToDelivered,
+  searchOrder,
 };

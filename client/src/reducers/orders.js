@@ -5,6 +5,7 @@ import {
   ORDER_CREATE_SUCCESS,
   ORDER_LIST_FAILURE,
   ORDER_LIST_REQUEST,
+  ORDER_SEARCH_SUCCESS,
   ORDER_USER_LIST_SUCCESS,
 } from "../constants/actionTypes";
 
@@ -50,6 +51,12 @@ export const orderListUserReducer = (state = { orders: [] }, action) => {
         loading: false,
         orders: action.payload,
       };
+    case ORDER_SEARCH_SUCCESS:
+      return {
+        loading: false,
+        orders: action.payload,
+      };
+
     case ORDER_LIST_FAILURE:
       return {
         loading: false,

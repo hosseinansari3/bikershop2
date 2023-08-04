@@ -404,7 +404,7 @@ function Products() {
           )}
         </div>
         <Pagination
-          totalUsers={totalProducts}
+          totalItems={totalProducts}
           pageSize={pageSize}
           page={page}
           pages={pages}

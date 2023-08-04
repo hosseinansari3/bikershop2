@@ -1,5 +1,10 @@
 import { toast } from "react-toastify";
-import { createOrderAPI, listAllOrdersAPI, listUserOrdersAPI } from "../api";
+import {
+  createOrderAPI,
+  listAllOrdersAPI,
+  listUserOrdersAPI,
+  searchOrderAPI,
+} from "../api";
 import {
   ORDER_ALL_LIST_SUCCESS,
   ORDER_CREATE_FAILURE,
@@ -7,7 +12,9 @@ import {
   ORDER_CREATE_SUCCESS,
   ORDER_LIST_FAILURE,
   ORDER_LIST_REQUEST,
+  ORDER_SEARCH_SUCCESS,
   ORDER_USER_LIST_SUCCESS,
+  PRODUCT_SEARCH_SUCCESS,
 } from "../constants/actionTypes";
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -81,4 +88,27 @@ export const listAllOrders = (limit) => async (dispatch, getState) => {
           : error.message,
     });
   }
+};
+
+export const onOrderSearch = (value) => {
+  const inputValue = value.trim().toLowerCase();
+
+  return async (dispatch, getState) => {
+    try {
+      if (inputValue) {
+        const response = await searchOrderAPI(inputValue);
+
+        console.log("res:" + JSON.stringify(response.data));
+
+        dispatch({
+          type: ORDER_SEARCH_SUCCESS,
+          payload: response.data,
+        });
+      } else if (inputValue === "") {
+        dispatch(listAllOrders());
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };

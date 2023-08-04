@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listAllOrders, listMyOrders } from "../../actions/orders";
+import {
+  listAllOrders,
+  listMyOrders,
+  onOrderSearch,
+} from "../../actions/orders";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 import { ROLES } from "../../constants/panelConstants";
 
@@ -29,6 +33,10 @@ function Orders() {
     }
   }, [orders]);
 
+  const searchHandler = (value) => {
+    dispatch(onOrderSearch(value));
+  };
+
   const onLoadMore = () => {
     setLimit(Limit + 4);
   };
@@ -45,6 +53,7 @@ function Orders() {
             <div className="grid gap-4 lg:gap-6 xl:gap-6 lg:grid-cols-3 xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 py-2">
               <div>
                 <input
+                  onChange={(e) => searchHandler(e.target.value)}
                   type="search"
                   name="search"
                   placeholder="Search by Customer Name"
@@ -68,59 +77,6 @@ function Orders() {
                   <option value="Status">Sfghtatus</option>
                   <option value="Status">Stfghfgatus</option>
                 </select>
-              </div>
-            </div>
-            <div className="grid gap-4 lg:gap-6 xl:gap-6 lg:grid-cols-3 xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 py-2">
-              <div>
-                <label className="block text-sm text-gray-700 dark:text-gray-400">
-                  Start Date
-                </label>
-                <input
-                  type="date"
-                  className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-                ></input>
-              </div>
-              <div>
-                <label className="block text-sm text-gray-700 dark:text-gray-400">
-                  End Date
-                </label>
-                <input
-                  type="date"
-                  className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-                ></input>
-              </div>
-              <div>
-                <label
-                  className="block text-sm text-gray-700 dark:text-gray-400"
-                  style={{ visibility: "hidden" }}
-                >
-                  Download
-                </label>
-                <button
-                  type="button"
-                  className="false flex items-center justify-center text-sm leading-5 h-12 w-full text-center transition-colors duration-150 font-medium focus:outline-none px-6 py-2 rounded-md text-white bg-green-500 border border-transparent active:bg-green-600 hover:bg-green-600 focus:ring focus:ring-purple-300"
-                >
-                  Download All Orders
-                  <span className="ml-2 text-base">
-                    <svg
-                      stroke="currentColor"
-                      fill="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 512 512"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="32"
-                        d="M320 336h76c55 0 100-21.21 100-75.6s-53-73.47-96-75.6C391.11 99.74 329 48 256 48c-69 0-113.44 45.79-128 91.2-60 5.7-112 35.88-112 98.4S70 336 136 336h56m0 64.1l64 63.9 64-63.9M256 224v224.03"
-                      ></path>
-                    </svg>
-                  </span>
-                </button>
               </div>
             </div>
           </form>

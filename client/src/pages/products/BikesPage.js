@@ -21,6 +21,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import "./BikesPage.css";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
+import Pagination from "../../components/Pagination/Pagination";
 
 function BikesPage() {
   const dispatch = useDispatch();
@@ -32,15 +33,24 @@ function BikesPage() {
     setPriceRange(newValue);
   };
 
-  useEffect(() => {
-    dispatch(getProducts(1));
-  }, [dispatch]);
-
   const product = useSelector((state) => state.products);
-  const { products, loading } = product;
+  const { loading, products, totalPages, pageSize, totalProducts } = product;
+
+  const pageNumber = 1;
 
   const [filterStyle, setFilterStyle] = useState();
   const [filterOpen, setFilterOpen] = useState();
+  const [page, setPage] = useState(pageNumber);
+  const [pages, setPages] = useState();
+
+  useEffect(() => {
+    dispatch(getProducts(page));
+    window.scrollTo({ top: 120, left: 0, behavior: "smooth" });
+  }, [dispatch, page]);
+
+  useEffect(() => {
+    setPages(totalPages);
+  }, [totalPages]);
 
   const fliterClickHandler = () => {
     setFilterStyle({ left: "-10px" });
@@ -204,6 +214,13 @@ function BikesPage() {
             );
           })}
         </div>
+        <Pagination
+          totalItems={totalProducts}
+          pageSize={pageSize}
+          page={page}
+          pages={pages}
+          changePage={setPage}
+        />
       </div>
     </div>
   );

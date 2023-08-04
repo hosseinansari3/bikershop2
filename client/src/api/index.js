@@ -29,6 +29,9 @@ export const deleteProductAPI = (id) =>
 export const searchProductAPI = (inputValue, page) =>
   axios.get(`${baseUrl}/products/list/search/${inputValue}?page=${page}`);
 
+export const searchOrderAPI = (inputValue) =>
+  axios.get(`${baseUrl}/orders/list/search/${inputValue}`);
+
 export const deleteUser = (id) => axios.delete(`${baseUrl}/users/${id}`);
 
 export const searchUserAPI = (inputValue, page) =>

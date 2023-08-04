@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const Pagination = ({ page, pages, changePage, pageSize, totalUsers }) => {
+const Pagination = ({ page, pages, changePage, pageSize, totalItems }) => {
   let middlePagination;
 
   const [totalpages, setTotalpages] = useState();
@@ -154,11 +154,11 @@ const Pagination = ({ page, pages, changePage, pageSize, totalUsers }) => {
           <span className="flex items-center font-semibold tracking-wide uppercase">
             SHOWING {pageSize * page - pageSize + 1}-
             {page === pages
-              ? (pages - 1) * pageSize + totalUsers - (pages - 1) * pageSize
+              ? (pages - 1) * pageSize + totalItems - (pages - 1) * pageSize
               : pageSize * page}{" "}
-            OF {totalUsers}
+            OF {totalItems}
             {console.log("pagessss: " + pages)}
-            {console.log("totalUsers: " + totalUsers)}
+            {console.log("totalUsers: " + totalItems)}
           </span>
           <div className="flex mt-2 sm:mt-auto sm:justify-end">
             <nav>
