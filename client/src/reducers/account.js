@@ -1,4 +1,8 @@
-import { FETCH_PROFILE, FETCH_PROFILE_REQUEST } from "../constants/actionTypes";
+import {
+  DELET_PROFILE_INFO,
+  FETCH_PROFILE,
+  FETCH_PROFILE_REQUEST,
+} from "../constants/actionTypes";
 
 const initialState = {
   user: {
@@ -20,6 +24,11 @@ export const accountReducer = (state = initialState, action) => {
           ...state.user,
           ...action.payload,
         },
+        loading: false,
+      };
+    case DELET_PROFILE_INFO:
+      return {
+        user: [],
         loading: false,
       };
     case FETCH_PROFILE_REQUEST:

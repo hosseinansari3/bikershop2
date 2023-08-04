@@ -15,12 +15,14 @@ import {
   SET_SIGNUP_FORM_ERRORS,
   SET_LOGIN_FORM_ERRORS,
   USER_SEARCH_SUCCESS,
+  DELET_PROFILE_INFO,
 } from "../constants/actionTypes";
 import * as api from "../api/index";
 
 import setAuthToken from "../utils/setAuthToken";
 import { toast } from "react-toastify";
 import { allFieldsValidation } from "../utils/validation";
+import { fetchProfile } from "./account";
 
 export const getUsers = (page) => async (dispatch) => {
   dispatch({ type: FETCH_ALL_USERS_REQUEST });
@@ -134,7 +136,7 @@ export const register =
 export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
-  dispatch({ type: ACCOUNT_FORMDATA_CLEAR });
+  dispatch({ type: DELET_PROFILE_INFO });
 };
 
 export const deleteUser = (id) => async (dispatch) => {
