@@ -6,7 +6,7 @@ const getProducts = async (req, res) => {
   try {
     let query = productModel.find();
     const page = parseInt(req.query.page) || 1;
-    const pageSize = parseInt(req.query.limit) || 4;
+    const pageSize = parseInt(req.query.limit) || 6;
     const skip = (page - 1) * pageSize;
     const total = await productModel.countDocuments();
 
@@ -100,7 +100,7 @@ const searchProduct = async (req, res) => {
     );
 
     const page = parseInt(req.query.page) || 1;
-    const pageSize = parseInt(req.query.limit) || 4;
+    const pageSize = parseInt(req.query.limit) || 6;
     const skip = (page - 1) * pageSize;
     const total = (await query).length;
 
