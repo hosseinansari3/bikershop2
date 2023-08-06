@@ -28,9 +28,7 @@ function Orders() {
   }, [Limit]);
 
   useEffect(() => {
-    if (user.role === ROLES.Admin) {
-      setOrders(orders);
-    }
+    setOrders(orders);
   }, [orders]);
 
   const searchHandler = (value) => {

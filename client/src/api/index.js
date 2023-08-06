@@ -58,8 +58,8 @@ export const addReviewAPI = (santizedReview, config) =>
 export const fetchProductReviewsAPI = (slug) =>
   axios.get(`${baseUrl}/review/${slug}`);
 
-export const fetchMyReviewsAPI = (config) =>
-  axios.get(`${baseUrl}/review/myReviews`, config);
+export const fetchMyReviewsAPI = (config, limit) =>
+  axios.get(`${baseUrl}/review/myReviews?limit=${limit}`, config);
 
 export const fetchAllReviewsAPI = (limit) =>
   axios.get(`${baseUrl}/review?limit=${limit}`);

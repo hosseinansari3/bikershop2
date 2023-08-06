@@ -95,6 +95,8 @@ const fetchMyReviews = async (req, res) => {
   const user = req.user;
   userObjId = mongoose.Types.ObjectId(user.id);
 
+  let limit = req.query.limit ? parseInt(req.query.limit) : 100;
+
   const reviews = await Review.find({
     user: userObjId,
   })
@@ -102,7 +104,8 @@ const fetchMyReviews = async (req, res) => {
       path: "product",
       select: "title ",
     })
-    .sort("updatedAt");
+    .sort("updatedAt")
+    .limit(limit);
   console.log("myReviews:" + JSON.stringify(reviews));
   res.json(reviews);
 };

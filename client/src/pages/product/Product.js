@@ -772,12 +772,14 @@ function Product() {
                                 <div className="review-img me-3 d-none d-lg-block">
                                   <img
                                     className="w-20 h-20 object-cover"
-                                    src={review.user.avatar}
+                                    src={
+                                      review.user ? review.user.avatar : null
+                                    }
                                   />
                                 </div>
                                 <div className="col-span-3">
                                   <div className="reviewr-name">
-                                    {review.user.firstName}
+                                    {review.user ? review.user.firstName : null}
                                   </div>
                                   <div className="ratting-star2 d-flex">
                                     <StarRatingComponent
@@ -795,6 +797,11 @@ function Product() {
                           </Paper>
                         );
                       })}
+                      {Reviews.length == 0 && (
+                        <span className="font-bold">
+                          there is no reviews yet!
+                        </span>
+                      )}
                     </div>
                     <div>
                       <div class="ratting-form-wrapper ps-5">

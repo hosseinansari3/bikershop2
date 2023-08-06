@@ -15,6 +15,8 @@ function Reviews() {
     console.log("dispatch");
     if (user.role === ROLES.Admin) {
       dispatch(fetchReviews(Limit));
+    } else {
+      dispatch(fetchMyReviews(Limit));
     }
   }, [Limit]);
 
@@ -23,9 +25,7 @@ function Reviews() {
   const { reviews, loading } = AllReviews;
 
   useEffect(() => {
-    if (user.role === ROLES.Admin) {
-      setReviews(reviews);
-    }
+    setReviews(reviews);
   }, [reviews]);
 
   const user = useSelector((state) => state.usersSignin.userInfo.user);

@@ -92,7 +92,7 @@ export const fetchProductReviews = (slug) => {
   };
 };
 
-export const fetchMyReviews = () => {
+export const fetchMyReviews = (limit) => {
   return async (dispatch, getState) => {
     dispatch({ type: FETCH_REVIEWS_REQUEST });
     try {
@@ -105,7 +105,7 @@ export const fetchMyReviews = () => {
         },
       };
 
-      const response = await fetchMyReviewsAPI(config);
+      const response = await fetchMyReviewsAPI(config, limit);
 
       dispatch({
         type: FETCH_MY_REVIEWS,

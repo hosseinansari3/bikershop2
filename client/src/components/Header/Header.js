@@ -106,9 +106,9 @@ function Header() {
   };
 
   const renderSuggestion = (suggestion) => (
-    <div className="rounded bg-white hover:cursor-pointer hover:bg-gray-200 w-full p-[5px]">
-      <img className="inline w-20 h-20" src={suggestion.image} />
-      {suggestion.title}
+    <div className=" bg-white hover:cursor-pointer hover:text-red-400 w-full p-[5px]">
+      <img className="inline w-24 h-16 object-contain" src={suggestion.image} />
+      <span className="font-bold p-2.5">{suggestion.title}</span>
     </div>
   );
 
@@ -222,9 +222,9 @@ function Header() {
                   </>
 
                   <div className="card-dropdown-bottom border-top">
-                    <button className="bg-gray-100">
-                      <Link to="/cart">view Cart</Link>
-                    </button>
+                    <Link to="/cart">
+                      <button className="bg-gray-100">view Cart</button>
+                    </Link>
                   </div>
                 </div>
               )}
