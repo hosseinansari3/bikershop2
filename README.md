@@ -24,6 +24,8 @@ in this project:
   <li>Tailwind CSS for styling components</li>
 </ul>
 
+ [DEMO VIDEO](https://aparat.com/v/Yalch)
+
 ## Languages & tools
 
 - [Node](https://nodejs.org/en/)
