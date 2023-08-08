@@ -1,10 +1,7 @@
 import axios from "axios";
 
-<<<<<<< HEAD
-const baseUrl = "http://hosseinadev.ir";
-=======
+
 const baseUrl = "https://hosseinadev.ir";
->>>>>>> 00e7dde9f2ab01b2543422aa70dc001fa4d99e4f
 
 export const signIn = (email, password) =>
   axios.post(`${baseUrl}/users/signin`, { email, password });
