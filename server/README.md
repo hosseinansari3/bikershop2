@@ -9,6 +9,9 @@ in this project:
 <li>users can update their profile information</li>
 </ul>
 
+ [DEMO VIDEO](https://aparat.com/v/Yalch)
+
+
 ![homepage](https://github.com/hosseinansari3/bikershop2/blob/master/client/src/assets/images/screen2.jpg)
 
 ![adminDashboard](https://github.com/hosseinansari3/bikershop2/blob/master/client/src/assets/images/sreen1.jpg)
@@ -23,6 +26,7 @@ in this project:
 <li>Redux Thunk middleware to handle asynchronous redux actions</li>
   <li>Tailwind CSS for styling components</li>
 </ul>
+
 
 ## Languages & tools
 
