@@ -56,7 +56,7 @@ const createProduct = async (req, res) => {
     const title = req.body.title;
     const price = req.body.price;
     const category = req.body.category;
-    const image = "http://localhost:5000/uploads/" + req.files[0].filename;
+    const image = "https://hosseinadev.ir/uploads/" + req.files[0].filename;
 
     console.log(image);
 
