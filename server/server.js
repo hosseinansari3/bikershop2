@@ -15,8 +15,6 @@ const { setupPassport } = require("./config/passport");
 
 const path = require("path");
 
-const path1 = path.join("__dirname", "../client/public/images");
-
 const dbUri = process.env.REACT_APP_DB_URI;
 
 const app = express();
@@ -52,5 +50,4 @@ mogoose
 
 app.listen(port, () => {
   console.log(`Started up at port ${port}`);
-  console.log(path1);
 });

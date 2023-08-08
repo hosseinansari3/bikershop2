@@ -36,11 +36,8 @@ function LoginPage(props) {
   };
   const navigate = useNavigate();
 
-  const loginSuccessNotif = () => toast("LOGGED IN SUCCESSFULLY!");
-
   useEffect(() => {
     if (isLoggedin) {
-      loginSuccessNotif();
       navigate("/");
       console.log("logged in!");
     }

@@ -23,6 +23,7 @@ import setAuthToken from "../utils/setAuthToken";
 import { toast } from "react-toastify";
 import { allFieldsValidation } from "../utils/validation";
 import { fetchProfile } from "./account";
+import { useNavigate } from "react-router";
 
 export const getUsers = (page) => async (dispatch) => {
   dispatch({ type: FETCH_ALL_USERS_REQUEST });
@@ -70,7 +71,7 @@ export const signin = (email, password) => async (dispatch) => {
     // if success, dispatch success and set payload to data
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
     const patse = localStorage.getItem("userInfo");
-    console.log(patse);
+    toast("LOGGED IN SUCCESSFULLY!");
 
     // save data to localStorage
   } catch (error) {
