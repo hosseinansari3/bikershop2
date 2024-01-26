@@ -1,10 +1,6 @@
 import axios from "axios";
 
-<<<<<<< HEAD
-const baseUrl = "http://hosseinadev.ir";
-=======
-const baseUrl = "https://hosseinadev.ir";
->>>>>>> 00e7dde9f2ab01b2543422aa70dc001fa4d99e4f
+const baseUrl = "http://localhost:5000";
 
 export const signIn = (email, password) =>
   axios.post(`${baseUrl}/users/signin`, { email, password });
@@ -70,3 +66,11 @@ export const fetchAllReviewsAPI = (limit) =>
 
 export const updateProfileAPI = (profile, config) =>
   axios.put(`${baseUrl}/users`, profile, config);
+
+export const createCategoryAPI = (category) =>
+  axios.post(`${baseUrl}/categories/add`, category);
+
+export const fetchCategoriesAPI = () => axios.get(`${baseUrl}/categories`);
+
+export const deleteCategoryAPI = (id) =>
+  axios.delete(`${baseUrl}/categories/${id}`);

@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 
 import { Button, Grid } from "@mui/material";
+import { useParams } from "react-router";
+
 import "./addProduct.css";
 import {
   createProduct,
   deleteProduct,
+  getProductById,
   getProducts,
 } from "../../actions/products";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +16,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { fetchCategories } from "../../actions/categories";
 
-function AddProduct() {
+function EditeProduct() {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [suspention, setSuspention] = useState("");
@@ -23,12 +26,33 @@ function AddProduct() {
   const [category, setCategory] = useState("");
   const [images, setImages] = useState([]);
 
+  const { slug } = useParams();
+  const productDetails = useSelector((state) => state.ProductDetails);
+
+  const { product } = productDetails;
+
   const [preview, setPreview] = useState([]);
 
   const dispatch = useDispatch();
 
   const allCategories = useSelector((state) => state.categories);
   const { categories } = allCategories;
+  useEffect(() => {
+    dispatch(getProductById(slug));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (product) {
+      setTitle(product.title);
+      setBrand(product.brand);
+      setCategory(product.category);
+      setMaterial(product.material);
+      setPrice(product.price);
+      setSize(product.size);
+      setPreview(product.images);
+      console.log("PRW", preview);
+    }
+  }, [product]);
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -113,6 +137,7 @@ function AddProduct() {
         </label>
         <div className="col-span-8 sm:col-span-4">
           <input
+            defaultValue={title}
             className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
             id="outlined-basic"
             placeholder="Product Title/Name"
@@ -168,7 +193,7 @@ function AddProduct() {
                   style={{ display: "none" }}
                 />
 
-                {images.length == 0 ? (
+                {preview.length == 0 ? (
                   <>
                     <span className="mx-auto flex justify-center">
                       <svg
@@ -195,7 +220,13 @@ function AddProduct() {
                   <div className="grid gap-4 md:grid-cols-4 xl:grid-cols-4">
                     {preview?.map((image, i) => {
                       while (i < 4) {
-                        return <img key={i} src={image} />;
+                        return (
+                          <img
+                            className="h-[165px] w-36 object-cover"
+                            key={i}
+                            src={image}
+                          />
+                        );
                       }
                     })}
                   </div>
@@ -216,7 +247,11 @@ function AddProduct() {
             className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
           >
             {categories?.map((cat) => {
-              return <option value={cat._id}>{cat.name}</option>;
+              return (
+                <option selected={cat._id == product?.category} value={cat._id}>
+                  {cat.name}
+                </option>
+              );
             })}
           </select>
         </div>
@@ -232,8 +267,14 @@ function AddProduct() {
             }
             className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
           >
-            <option>Dual Suspension</option>;<option>Hardtail</option>;
-            <option>Rigid</option>;
+            <option selected={product?.suspention === "Dual Suspension"}>
+              Dual Suspension
+            </option>
+            ;
+            <option selected={product?.suspention === "Hardtail"}>
+              Hardtail
+            </option>
+            ;<option selected={product?.suspention === "Rigid"}>Rigid</option>;
           </select>
         </div>
       </div>
@@ -340,4 +381,4 @@ function AddProduct() {
   );
 }
 
-export default AddProduct;
+export default EditeProduct;

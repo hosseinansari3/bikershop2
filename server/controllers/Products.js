@@ -56,11 +56,29 @@ const createProduct = async (req, res) => {
     const title = req.body.title;
     const price = req.body.price;
     const category = req.body.category;
-    const image = "https://hosseinadev.ir/uploads/" + req.files[0].filename;
+    const suspention = req.body.suspention;
+    const material = req.body.material;
+    const brand = req.body.brand;
+    const size = req.body.size;
 
-    console.log(image);
+    const images = [];
 
-    const newProduct = new productModel({ title, price, category, image });
+    for (let i = 0; i < req.files.length; i++) {
+      images.push("http://localhost:5000/uploads/" + req.files[i].filename);
+    }
+
+    console.log(images);
+
+    const newProduct = new productModel({
+      title,
+      price,
+      category,
+      images,
+      suspention,
+      material,
+      brand,
+      size,
+    });
 
     const savedProduct = await newProduct.save();
     res.status(201).json(savedProduct);
@@ -80,7 +98,9 @@ const deletProduct = async (req, res) => {
   console.log(idsArr);
 
   try {
-    deletedProduct = await productModel.deleteMany({ _id: { $in: idsArr } });
+    const deletedProduct = await productModel.deleteMany({
+      _id: { $in: idsArr },
+    });
     console.log(JSON.stringify("deleted:" + deletedProduct));
     return res.status(200).json(idsArr);
   } catch (error) {
@@ -130,6 +150,29 @@ const searchProduct = async (req, res) => {
     res.status(500).json({
       status: "error",
       message: "Server Error",
+    });
+  }
+};
+
+const updateProduct = async (req, res) => {
+  try {
+    const product = req.productId;
+    const updatedProduct = req.updated;
+    const update = { ...req.body, avatar: image };
+    console.log("inaaaa:" + JSON.stringify(update));
+    const query = { _id: user };
+    const userDoc = await User.findOneAndUpdate(query, update, {
+      new: true,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Your profile is successfully updated!",
+      user: userDoc,
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: "Your request could not be processed. Please try again.",
     });
   }
 };

@@ -6,6 +6,8 @@ const cors = require("cors");
 const passport = require("passport");
 const productsRouter = require("./routes/products");
 const usersRouter = require("./routes/users");
+const categoryRouter = require("./routes/categories");
+
 const cookieSession = require("cookie-session");
 const ordersRouter = require("./routes/orders");
 const wishlistRouter = require("./routes/wishlist");
@@ -26,6 +28,8 @@ app.use(cors());
 app.use("/uploads", express.static("uploads"));
 
 app.use("/products", productsRouter);
+app.use("/categories", categoryRouter);
+
 app.use("/users", usersRouter);
 app.use("/orders", ordersRouter);
 app.use("/wishlist", wishlistRouter);

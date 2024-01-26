@@ -1,0 +1,19 @@
+.speech-bubble {
+  background: #f0f0f0;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 60px;
+}
+
+.speech-bubble:after {
+  content: "";
+  border-top: 10px solid #f0f0f0;
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
+  position: absolute;
+  right: 50px;
+  top: -8px;
+  transform: rotate(180deg);
+}

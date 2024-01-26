@@ -15,6 +15,7 @@ import Products from "./pages/admin/Products";
 import Categories from "./pages/admin/Categories";
 import Orders from "./pages/admin/Orders";
 import AddProduct from "./pages/admin/AddProduct";
+import EditeProduct from "./pages/admin/EditeProduct";
 import Cart from "./pages/cart/Cart";
 import Wishlist from "./pages/admin/Wishlist";
 import Reviews from "./pages/admin/Reviews";
@@ -54,6 +55,7 @@ function App() {
           <Route path="account-info" element={<AccountInfo />} />
 
           <Route path="AddProducts" element={<AddProduct />} />
+          <Route path="EditeProduct/:slug" element={<EditeProduct />} />
         </Route>
       </Routes>
 
