@@ -9,6 +9,7 @@ import {
   deleteProduct,
   getProductById,
   getProducts,
+  updateProduct,
 } from "../../actions/products";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -51,6 +52,7 @@ function EditeProduct() {
       setSize(product.size);
       setPreview(product.images);
       console.log("PRW", preview);
+      console.log("title", title);
     }
   }, [product]);
 
@@ -121,12 +123,15 @@ function EditeProduct() {
     formData.append("material", material);
     formData.append("brand", brand);
     formData.append("size", size);
-    for (let i = 0; i < images.length; i++) {
-      formData.append("images", images[i]);
+    if (images.length > 0) {
+      for (let i = 0; i < images.length; i++) {
+        formData.append("images", images[i]);
+      }
     }
 
-    dispatch(createProduct(formData));
-    ProductAddnotif();
+    const object = Object.fromEntries(formData.entries());
+    console.log("UPPPPP", JSON.stringify(object));
+    dispatch(updateProduct(product._id, formData));
   };
 
   return (
@@ -183,6 +188,7 @@ function EditeProduct() {
                 <input
                   onChange={(e) => {
                     e.target.files.length != 0 && setImages(e.target.files);
+                    console.log("IMG", images.length);
                   }}
                   id="files"
                   tabIndex="-1"
@@ -222,6 +228,7 @@ function EditeProduct() {
                       while (i < 4) {
                         return (
                           <img
+                            onClick={() => console.log("IMG", images.length)}
                             className="h-[165px] w-36 object-cover"
                             key={i}
                             src={image}
@@ -290,8 +297,11 @@ function EditeProduct() {
             }
             className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
           >
-            <option>Carbon</option>;<option>Aluminium</option>;
-            <option>Other</option>;
+            <option selected={product?.material === "Carbon"}>Carbon</option>;
+            <option selected={product?.material === "Aluminium"}>
+              Aluminium
+            </option>
+            ;<option selected={product?.material === "Other"}>Other</option>;
           </select>
         </div>
       </div>
@@ -307,9 +317,14 @@ function EditeProduct() {
             }
             className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
           >
-            <option>BIANCHI</option>;<option>CIPOLLINI</option>;
-            <option>FUJI</option>;<option>GT</option>;<option>KTM</option>;
-            <option>SCOTT</option>;
+            <option selected={product?.material === "BIANCHI"}>BIANCHI</option>;
+            <option selected={product?.material === "CIPOLLINI"}>
+              CIPOLLINI
+            </option>
+            ;<option selected={product?.material === "FUJI"}>FUJI</option>;
+            <option selected={product?.material === "GT"}>GT</option>;
+            <option selected={product?.material === "KTM"}>KTM</option>;
+            <option selected={product?.material === "SCOTT"}>SCOTT</option>;
           </select>
         </div>
       </div>
@@ -372,7 +387,7 @@ function EditeProduct() {
 
       <Grid item xs={12}></Grid>
       <Grid item xs={12}>
-        <Button onClick={handleSubmit} variant="contained">
+        <Button onClick={(e) => handleSubmit(e)} variant="contained">
           Publish Product
         </Button>
         <p>number of products: {totalProducts}</p>
