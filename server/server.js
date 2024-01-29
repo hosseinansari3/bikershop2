@@ -1,6 +1,6 @@
 require("dotenv").config();
 const express = require("express");
-const mogoose = require("mongoose");
+const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const passport = require("passport");
@@ -47,7 +47,7 @@ app.use(passport.session());
 
 setupPassport();
 
-mogoose
+mongoose
   .connect(dbUri, { useNewUrlParser: true })
   .then(() => console.log("database connected successfully!"))
   .catch((err) => console.log("Failed to connect to MongoDB", err));

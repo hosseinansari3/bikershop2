@@ -12,6 +12,7 @@ import {
   PRODUCT_SUGGESTIONS_FETCH_REQUEST,
   PRODUCT_SEARCH_CHANGE,
   PRODUCT_SEARCH_SUCCESS,
+  UPDATE,
 } from "../constants/actionTypes";
 import * as api from "../api/index";
 
@@ -49,6 +50,16 @@ export const createProduct = (product) => async (dispatch) => {
     const { data } = await api.createProduct(product);
 
     dispatch({ type: CREATE, payload: data });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const updateProduct = (id, formData) => async (dispatch) => {
+  try {
+    const { data } = await api.updateProduct(id, formData);
+    console.log("update action");
+    dispatch({ type: UPDATE, payload: data });
   } catch (error) {
     console.log(error.message);
   }

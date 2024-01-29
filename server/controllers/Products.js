@@ -156,19 +156,33 @@ const searchProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-    const product = req.productId;
-    const updatedProduct = req.updated;
-    const update = { ...req.body, avatar: image };
-    console.log("inaaaa:" + JSON.stringify(update));
-    const query = { _id: user };
-    const userDoc = await User.findOneAndUpdate(query, update, {
-      new: true,
-    });
+    const productId = req.params.id;
+    const formData = req.body;
+    let images = [];
+    let updated = {};
+
+    if (req.files.length > 0) {
+      for (let i = 0; i < req.files.length; i++) {
+        images.push("http://localhost:5000/uploads/" + req.files[i].filename);
+      }
+      updated = { ...formData, images };
+    } else {
+      updated = formData;
+    }
+
+    console.log("UPdated", updated);
+
+    const updatedProduct = await productModel.findOneAndUpdate(
+      { _id: productId },
+      { $set: updated }
+    );
+
+    console.log("updated");
 
     res.status(200).json({
       success: true,
-      message: "Your profile is successfully updated!",
-      user: userDoc,
+      message: "product updated!",
+      product: updatedProduct,
     });
   } catch (error) {
     res.status(400).json({
@@ -183,4 +197,5 @@ module.exports = {
   createProduct,
   deletProduct,
   searchProduct,
+  updateProduct,
 };

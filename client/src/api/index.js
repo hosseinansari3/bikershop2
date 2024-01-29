@@ -20,8 +20,10 @@ export const createProduct = (newProduct) =>
   axios.post(`${baseUrl}/products`, newProduct, {
     headers: { "Content-Type": "multipart/form-data" },
   });
-export const updateProduct = (id, updatedProduct) =>
-  axios.patch(`${baseUrl}/products/${id}`, updatedProduct);
+export const updateProduct = (id, formData) =>
+  axios.put(`${baseUrl}/products/${id}`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 
 export const deleteProductAPI = (id) =>
   axios.delete(`${baseUrl}/products/${id}`);
