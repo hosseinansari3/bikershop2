@@ -4,7 +4,9 @@ const productModel = require("../models/productModel");
 
 const getProducts = async (req, res) => {
   try {
-    let query = productModel.find();
+    let query = productModel.find().populate({
+      path: "category",
+    });
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.limit) || 6;
     const skip = (page - 1) * pageSize;
@@ -60,14 +62,14 @@ const createProduct = async (req, res) => {
     const material = req.body.material;
     const brand = req.body.brand;
     const size = req.body.size;
-
+    const quantity = req.body.quantity;
     const images = [];
 
     for (let i = 0; i < req.files.length; i++) {
       images.push("http://localhost:5000/uploads/" + req.files[i].filename);
     }
 
-    console.log(images);
+    console.log("body", req.body);
 
     const newProduct = new productModel({
       title,
@@ -75,12 +77,14 @@ const createProduct = async (req, res) => {
       category,
       images,
       suspention,
+      quantity,
       material,
       brand,
       size,
     });
 
     const savedProduct = await newProduct.save();
+    console.log("product created!");
     res.status(201).json(savedProduct);
   } catch (error) {
     res.status(409).json({
