@@ -20,6 +20,7 @@ function AddProduct() {
   const [material, setMaterial] = useState("");
   const [brand, setBrand] = useState("");
   const [size, setSize] = useState("");
+  const [quantity, setQuantity] = useState("");
   const [category, setCategory] = useState("");
   const [images, setImages] = useState([]);
 
@@ -96,13 +97,13 @@ function AddProduct() {
     formData.append("suspention", suspention);
     formData.append("material", material);
     formData.append("brand", brand);
+    formData.append("quantity", quantity);
     formData.append("size", size);
     for (let i = 0; i < images.length; i++) {
       formData.append("images", images[i]);
     }
 
     dispatch(createProduct(formData));
-    ProductAddnotif();
   };
 
   return (
@@ -314,8 +315,9 @@ function AddProduct() {
         <div className="col-span-8 sm:col-span-4">
           <div className="flex flex-row">
             <input
+              defaultValue={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
               type="number"
-              value="0"
               className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-12 p-2 text-sm border border-gray-300 focus:bg-white focus:border-gray-300 focus:outline-none"
             ></input>
           </div>

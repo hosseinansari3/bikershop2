@@ -45,7 +45,8 @@ export const productReducer = (state = initialState, action) => {
       };
 
     case CREATE:
-      return { ...state, products: [...action.payload] };
+      console.log("payload", action.payload);
+      return { ...state, products: [...state.products, action.payload] };
     case UPDATE:
       return state.products.map((product) =>
         product._id === action.payload._id ? action.payload : product

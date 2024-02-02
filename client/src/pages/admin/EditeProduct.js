@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Button, Grid } from "@mui/material";
 import { useParams } from "react-router";
+import { useSearchParams } from "react-router-dom";
 
 import "./addProduct.css";
 import {
@@ -25,9 +26,13 @@ function EditeProduct() {
   const [brand, setBrand] = useState("");
   const [size, setSize] = useState("");
   const [category, setCategory] = useState("");
+  const [quantity, setQuantity] = useState("");
+
   const [images, setImages] = useState([]);
 
   const { slug } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const productDetails = useSelector((state) => state.ProductDetails);
 
   const { product } = productDetails;
@@ -49,6 +54,7 @@ function EditeProduct() {
       setCategory(product.category);
       setMaterial(product.material);
       setPrice(product.price);
+      setQuantity(product.quantity);
       setSize(product.size);
       setPreview(product.images);
       console.log("PRW", preview);
@@ -123,6 +129,7 @@ function EditeProduct() {
     formData.append("material", material);
     formData.append("brand", brand);
     formData.append("size", size);
+    formData.append("quantity", quantity);
     if (images.length > 0) {
       for (let i = 0; i < images.length; i++) {
         formData.append("images", images[i]);
@@ -228,7 +235,6 @@ function EditeProduct() {
                       while (i < 4) {
                         return (
                           <img
-                            onClick={() => console.log("IMG", images.length)}
                             className="h-[165px] w-36 object-cover"
                             key={i}
                             src={image}
@@ -317,14 +323,12 @@ function EditeProduct() {
             }
             className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
           >
-            <option selected={product?.material === "BIANCHI"}>BIANCHI</option>;
-            <option selected={product?.material === "CIPOLLINI"}>
-              CIPOLLINI
-            </option>
-            ;<option selected={product?.material === "FUJI"}>FUJI</option>;
-            <option selected={product?.material === "GT"}>GT</option>;
-            <option selected={product?.material === "KTM"}>KTM</option>;
-            <option selected={product?.material === "SCOTT"}>SCOTT</option>;
+            <option selected={product?.brand === "BIANCHI"}>BIANCHI</option>;
+            <option selected={product?.brand === "CIPOLLINI"}>CIPOLLINI</option>
+            ;<option selected={product?.brand === "FUJI"}>FUJI</option>;
+            <option selected={product?.brand === "GT"}>GT</option>;
+            <option selected={product?.brand === "KTM"}>KTM</option>;
+            <option selected={product?.brand === "SCOTT"}>SCOTT</option>;
           </select>
         </div>
       </div>
@@ -339,8 +343,11 @@ function EditeProduct() {
             }
             className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
           >
-            <option>28C</option>;<option>25C</option>;<option>30C</option>;
-            <option>32C</option>;<option>35C</option>;
+            <option selected={product?.size === "28C"}>28C</option>;
+            <option selected={product?.size === "25C"}>25C</option>;
+            <option selected={product?.size === "30C"}>30C</option>;
+            <option selected={product?.size === "32C"}>32C</option>;
+            <option selected={product?.size === "35C"}>35C</option>;
           </select>
         </div>
       </div>
@@ -355,6 +362,7 @@ function EditeProduct() {
               $
             </span>
             <input
+              defaultValue={price}
               onChange={(e) => setPrice(e.target.value)}
               type="number"
               className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded w-full h-12 p-2 text-sm border border-gray-300 focus:bg-white focus:border-gray-300 focus:outline-none rounded-l-none"
@@ -370,8 +378,9 @@ function EditeProduct() {
         <div className="col-span-8 sm:col-span-4">
           <div className="flex flex-row">
             <input
+              defaultValue={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
               type="number"
-              value="0"
               className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-12 p-2 text-sm border border-gray-300 focus:bg-white focus:border-gray-300 focus:outline-none"
             ></input>
           </div>

@@ -39,6 +39,12 @@ function Products() {
   }, [dispatch, page]);
 
   useEffect(() => {
+    if (products.length == 0) {
+      dispatch(getProducts(page));
+    }
+  }, [products]);
+
+  useEffect(() => {
     setPages(totalPages);
   }, [totalPages]);
 
@@ -270,7 +276,7 @@ function Products() {
                 <td className="px-4 py-3">PRODUCT NAME</td>
                 <td className="px-4 py-3">CATEGORY</td>
                 <td className="px-4 py-3">price</td>
-                <td className="px-4 py-3">Sale Price</td>
+
                 <td className="px-4 py-3">STOCK</td>
                 <td className="px-4 py-3">STATUS</td>
                 <td className="px-4 py-3 text-center">View</td>
@@ -307,14 +313,12 @@ function Products() {
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <span className="text-sm">Category</span>
+                      <span className="text-sm">{p.category?.name}</span>
                     </td>
                     <td className="px-4 py-3">
                       <span className="text-sm font-semibold">${p.price}</span>
                     </td>
-                    <td className="px-4 py-3">
-                      <span className="text-sm font-semibold">${p.price}</span>
-                    </td>
+
                     <td className="px-4 py-3">
                       <span className="text-sm">N/A</span>
                     </td>

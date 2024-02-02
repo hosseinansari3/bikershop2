@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const slug = require("mongoose-slug-generator");
+const slug = require("mongoose-slug-updater");
 
 const options = {
   separator: "-",
@@ -9,7 +9,7 @@ const options = {
   truncate: 120,
 };
 
-mongoose.plugin(slug, options);
+mongoose.plugin(slug);
 
 const ProductSchema = new mongoose.Schema({
   category: {
@@ -40,6 +40,11 @@ const ProductSchema = new mongoose.Schema({
   },
   brand: {
     type: String,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+    min: 0,
   },
   size: {
     type: String,

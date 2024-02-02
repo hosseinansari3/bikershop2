@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import { updateProduct } from "./products";
 import {
   createOrderAPI,
   listAllOrdersAPI,
@@ -29,6 +30,8 @@ export const createOrder = (order) => async (dispatch, getState) => {
         Authorization: `Bearer ${userinfo.token}`,
       },
     };
+
+    console.log("order", order);
 
     const { data } = await createOrderAPI(order, config);
 

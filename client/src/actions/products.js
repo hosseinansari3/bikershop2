@@ -15,6 +15,7 @@ import {
   UPDATE,
 } from "../constants/actionTypes";
 import * as api from "../api/index";
+import { toast } from "react-toastify";
 
 export const getProducts = (page) => async (dispatch) => {
   try {
@@ -50,6 +51,7 @@ export const createProduct = (product) => async (dispatch) => {
     const { data } = await api.createProduct(product);
 
     dispatch({ type: CREATE, payload: data });
+    toast("product created");
   } catch (error) {
     console.log(error.message);
   }
@@ -60,6 +62,7 @@ export const updateProduct = (id, formData) => async (dispatch) => {
     const { data } = await api.updateProduct(id, formData);
     console.log("update action");
     dispatch({ type: UPDATE, payload: data });
+    toast("product updated");
   } catch (error) {
     console.log(error.message);
   }

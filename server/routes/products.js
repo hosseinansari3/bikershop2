@@ -12,10 +12,10 @@ const upload = require("../middlewares/uploadFile");
 
 const router = express.Router();
 
-router.get("/", getProducts);
-router.get("/:slug", getProductById);
-router.get("/list/search/:name", searchProduct);
 router.post("/", upload, createProduct);
+router.get("/list/search/:name", searchProduct);
+router.get("/:slug", getProductById);
+router.get("/", getProducts);
 router.put(`/:id`, upload, updateProduct);
 router.delete(`/:id`, deletProduct);
 

@@ -16,8 +16,8 @@ export const fetchProducts = (page) =>
   axios.get(`${baseUrl}/products?page=${page}`);
 export const fetchProductById = (slug) =>
   axios.get(`${baseUrl}/products/${slug}`);
-export const createProduct = (newProduct) =>
-  axios.post(`${baseUrl}/products`, newProduct, {
+export const createProduct = (formData) =>
+  axios.post(`${baseUrl}/products`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 export const updateProduct = (id, formData) =>

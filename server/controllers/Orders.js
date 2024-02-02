@@ -1,4 +1,6 @@
 const Order = require("../models/orderModel");
+const productModel = require("../models/productModel");
+
 const mongoose = require("mongoose");
 
 // @desc Create new order
@@ -9,7 +11,6 @@ const addorderitems = async (req, res) => {
   if (req.body.orderItems && req.body.orderItems.length === 0) {
     res.status(400);
     throw new Error("No order items");
-    return;
   } else {
     const user = req.user;
     console.log("user:" + JSON.stringify(user));
@@ -17,8 +18,31 @@ const addorderitems = async (req, res) => {
       user: user.id,
       orderItems: req.body.orderItems,
     });
+
     const createdOrder = await order.save();
+
     console.log("ordered!" + JSON.stringify(req.body.orderItems));
+
+    const updatePromises = [];
+    console.log("Length", req.body.orderItems.length);
+    for (const item of req.body.orderItems) {
+      try {
+        console.log(item.quantity);
+
+        const updatePromise = await productModel.findOneAndUpdate(
+          { _id: mongoose.Types.ObjectId(item.product) },
+          { $inc: { quantity: -item.quantity } },
+          { new: true }
+        );
+        updatePromises.push(updatePromise);
+      } catch (error) {
+        console.error(
+          `Error updating product ${item.product}: ${error.message}`
+        );
+      }
+    }
+
+    await Promise.all(updatePromises);
 
     res.status(201).json(createdOrder);
   }
