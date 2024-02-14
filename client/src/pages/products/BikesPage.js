@@ -208,7 +208,7 @@ function BikesPage() {
                 key={p._id}
                 price={p.price}
                 title={p.title}
-                image={p.image}
+                image={p.images[0]}
                 slug={p.slug}
               />
             );

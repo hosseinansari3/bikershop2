@@ -24,6 +24,7 @@
     "react-dom": "^18.2.0",
     "react-loading": "^2.0.3",
     "react-loading-skeleton": "^3.3.1",
+    "react-quill": "^2.0.0",
     "react-redux": "^8.0.4",
     "react-router": "^6.4.3",
     "react-router-dom": "^6.4.5",

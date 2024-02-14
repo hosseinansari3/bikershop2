@@ -53,12 +53,24 @@ const getProductById = async (req, res) => {
   }
 };
 
+const imageUpload = async (req, res) => {
+  try {
+    const url = "http://localhost:5000/uploads/" + req.files[0].filename;
+
+    res.status(201).json({ imageUrl: url });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 const createProduct = async (req, res) => {
   try {
     const title = req.body.title;
     const price = req.body.price;
     const category = req.body.category;
     const suspention = req.body.suspention;
+    const section = req.body.section;
+    const content = req.body.content;
     const material = req.body.material;
     const brand = req.body.brand;
     const size = req.body.size;
@@ -74,8 +86,10 @@ const createProduct = async (req, res) => {
     const newProduct = new productModel({
       title,
       price,
+      content,
       category,
       images,
+      section,
       suspention,
       quantity,
       material,
@@ -158,6 +172,28 @@ const searchProduct = async (req, res) => {
   }
 };
 
+const getProductsBySection = async (req, res) => {
+  try {
+    const section = req.params.section;
+    console.log(section);
+    const products = await productModel.find(
+      { section: section },
+      { title: 1, slug: 1, images: 1, price: 1, _id: 1 }
+    );
+    res.status(200).json({
+      status: "success",
+
+      products: products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "error",
+      message: "Server Error",
+    });
+  }
+};
+
 const updateProduct = async (req, res) => {
   try {
     const productId = req.params.id;
@@ -197,7 +233,9 @@ const updateProduct = async (req, res) => {
 
 module.exports = {
   getProducts,
+  imageUpload,
   getProductById,
+  getProductsBySection,
   createProduct,
   deletProduct,
   searchProduct,

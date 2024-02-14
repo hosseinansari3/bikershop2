@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { Button, Grid } from "@mui/material";
 import "./addProduct.css";
 import {
@@ -12,29 +13,99 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { fetchCategories } from "../../actions/categories";
+import { imageUpload } from "../../api";
+import { SECTIONS } from "../../constants/panelConstants";
 
 function AddProduct() {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [suspention, setSuspention] = useState("");
+  const [section, setSection] = useState("");
   const [material, setMaterial] = useState("");
   const [brand, setBrand] = useState("");
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState("");
   const [category, setCategory] = useState("");
   const [images, setImages] = useState([]);
-
+  const [value, setValue] = useState("");
   const [preview, setPreview] = useState([]);
 
   const dispatch = useDispatch();
+  const quillRef = useRef(null);
 
   const allCategories = useSelector((state) => state.categories);
   const { categories } = allCategories;
+
+  const imageHandler = () => {
+    // create an input element
+    const input = document.createElement("input");
+    // set the type and accept attributes
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    // trigger the click event
+    input.click();
+    // listen for the change event
+    input.onchange = async () => {
+      // get the selected file
+      const file = input.files[0];
+      // create a form data object
+      const formData = new FormData();
+      // append the file to the form data
+      formData.append("images", file);
+      // send the form data to the server or cloud service using an API
+      // for example, using axios
+      const response = await imageUpload(formData);
+      // get the image URL from the response
+      const url = response?.data?.imageUrl;
+      // get the editor instance from the ref
+      const editor = quillRef?.current?.getEditor();
+      // get the current cursor position
+      const range = editor?.getSelection();
+      // insert the image URL at the cursor position
+      editor.insertEmbed(range.index, "image", url);
+    };
+  };
+
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          // other toolbar options
+          ["bold", "italic", "underline", "strike"], // toggled buttons
+          ["blockquote", "code-block"],
+
+          [{ header: 1 }, { header: 2 }], // custom button values
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ script: "sub" }, { script: "super" }], // superscript/subscript
+          [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+          [{ direction: "rtl" }], // text direction
+
+          [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+          [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+          [{ font: [] }],
+          [{ align: [] }],
+
+          ["clean"],
+          ["image"], // image button
+        ],
+        handlers: {
+          image: imageHandler, // custom handler function
+        },
+      },
+    }),
+    []
+  );
 
   useEffect(() => {
     dispatch(fetchCategories());
     console.log("catss", categories);
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log("section", section);
+  }, [section]);
 
   useEffect(() => {
     if (!images) {
@@ -60,6 +131,10 @@ function AddProduct() {
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch, products]);
+
+  useEffect(() => {
+    console.log(value);
+  }, [value]);
 
   const ProductAddnotif = () => toast("NEW PRODUCT ADDED SUCCESSFULLY!");
   const ProductDeletnotif = () => toast("PRODUCT DELETED SUCCESSFULLY!");
@@ -92,9 +167,11 @@ function AddProduct() {
 
     const formData = new FormData();
     formData.append("title", title);
+    formData.append("content", value);
     formData.append("price", price);
     formData.append("category", category);
     formData.append("suspention", suspention);
+    formData.append("section", section);
     formData.append("material", material);
     formData.append("brand", brand);
     formData.append("quantity", quantity);
@@ -130,10 +207,13 @@ function AddProduct() {
           Product Description
         </label>
         <div className="col-span-8 sm:col-span-4">
-          <textarea
-            placeholder="Product Description"
-            className="block w-full text-sm dark:text-gray-300 rounded-md focus:outline-none form-textarea focus:border-purple-400 border-gray-300 dark:border-gray-600 dark:focus:border-gray-600 dark:bg-gray-700 dark:focus:ring-gray-300 focus:ring focus:ring-purple-300 border text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-          ></textarea>
+          <ReactQuill
+            ref={quillRef}
+            modules={modules}
+            theme="snow"
+            value={value}
+            onChange={setValue}
+          />
         </div>
       </div>
 
@@ -219,6 +299,28 @@ function AddProduct() {
             {categories?.map((cat) => {
               return <option value={cat._id}>{cat.name}</option>;
             })}
+          </select>
+        </div>
+      </div>
+      <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+        <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
+          Section
+        </label>
+        <div className="col-span-8 sm:col-span-4">
+          <select
+            onChange={(e) =>
+              setSection(e.target.options[e.target.selectedIndex].value)
+            }
+            className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+          >
+            <option value={SECTIONS.Best_Seller}>{SECTIONS.Best_Seller}</option>
+            ;
+            <option value={SECTIONS.Hot_Discount}>
+              {SECTIONS.Hot_Discount}
+            </option>
+            ;
+            <option value={SECTIONS.New_Arrival}>{SECTIONS.New_Arrival}</option>
+            ;<option value={SECTIONS.Our_Offer}>{SECTIONS.Our_Offer}</option>
           </select>
         </div>
       </div>

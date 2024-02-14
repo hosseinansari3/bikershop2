@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import CartList from "../../components/CartList/CartList";
 
@@ -29,8 +29,46 @@ import {
   StorefrontOutlined,
 } from "@mui/icons-material";
 import { SwiperSlide } from "swiper/react";
+import { fetchProductBySection } from "../../api";
+import { SECTIONS } from "../../constants/panelConstants";
+import { Axios } from "axios";
+import axios from "axios";
 
 function MainPage() {
+  const [hotDiscount, setHotDiscount] = useState(null);
+  const [bestSeller, setBestSeller] = useState(null);
+  const [newArrival, setNewArrival] = useState(null);
+  const [ourOffer, setOurOffer] = useState(null);
+
+  useEffect(() => {
+    fetchProductBySection(SECTIONS.Hot_Discount)
+      .then((response) => {
+        console.log("HotDiscount", response.data.products);
+        setHotDiscount(response.data.products);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    fetchProductBySection(SECTIONS.Best_Seller)
+      .then((response) => {
+        console.log("BestSeller", response.data.products);
+        setBestSeller(response.data.products);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    fetchProductBySection(SECTIONS.New_Arrival)
+      .then((response) => {
+        console.log("newArrival", response.data.products);
+        setNewArrival(response.data.products);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <>
       <div className="main-carousel">
@@ -105,34 +143,16 @@ function MainPage() {
           className=" justify-center grid  grid-cols-2 md:grid-cols-4 gap-4
         "
         >
-          <ProductCart
-            className="shadow-lg hover:shadow-none"
-            image={bike1}
-            price="5.000,00"
-            title="Specialized Enduro Comp 2023"
-          />
-
-          <ProductCart
-            className="shadow-lg hover:shadow-none"
-            image={bike2}
-            price="6.999,00"
-            title="
-              KONA Hei Hei CR/DL metallic"
-          />
-
-          <ProductCart
-            className="shadow-lg hover:shadow-none"
-            image={bike3}
-            price="3.863,00"
-            title="Orbea Occam M30 LT 2023"
-          />
-
-          <ProductCart
-            className="shadow-lg hover:shadow-none"
-            image={bike4}
-            price="3.999,00"
-            title="KONA Hei Hei CR 2023"
-          />
+          {hotDiscount?.map((product) => {
+            return (
+              <ProductCart
+                className="shadow-lg hover:shadow-none"
+                image={product.images[0]}
+                price={product.price}
+                title={product.title}
+              />
+            );
+          })}
         </div>
       </div>
 
@@ -143,41 +163,15 @@ function MainPage() {
         <div className="left lg:col-span-2">
           <h3 className="title">BEST SELLER!</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            <ProductCart
-              image={part1}
-              price="245,10 €"
-              title="Shimano Ultegra FC-R800"
-            />
-
-            <ProductCart
-              image={part2}
-              price="64,90 €"
-              title="Praxis Works eCrank"
-            />
-
-            <ProductCart
-              image={bike5}
-              price="1.979,00 €"
-              title="Surly Wednesday 2023"
-            />
-
-            <ProductCart
-              image={part3}
-              price="176,00 €"
-              title="SRAM G2 Ultimate carbon"
-            />
-
-            <ProductCart
-              image={part4}
-              price="225,90 €"
-              title="Magura MT5 Pro Bundle"
-            />
-
-            <ProductCart
-              image={img}
-              price=" €39.99"
-              title=" Endura Hummvee Cycling"
-            />
+            {bestSeller?.map((product) => {
+              return (
+                <ProductCart
+                  image={product.images[0]}
+                  price={product.price}
+                  title={product.title}
+                />
+              );
+            })}
           </div>
         </div>
         <div className="rightt">
@@ -206,46 +200,20 @@ function MainPage() {
               },
             }}
           >
-            <SwiperSlide>
-              <div className="big-card-wrapper">
-                <ProductCart
-                  image={img}
-                  class="big-card"
-                  price=" €39.99"
-                  title=" Endura Hummvee Cycling Trousers II"
-                />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="big-card-wrapper">
-                <ProductCart
-                  image={img}
-                  class="big-card"
-                  price=" €39.99"
-                  title=" Endura Hummvee Cycling Trousers II"
-                />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="big-card-wrapper">
-                <ProductCart
-                  image={img}
-                  class="big-card"
-                  price=" €39.99"
-                  title=" Endura Hummvee Cycling Trousers II"
-                />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="big-card-wrapper">
-                <ProductCart
-                  image={img}
-                  class="big-card"
-                  price=" €39.99"
-                  title=" Endura Hummvee Cycling Trousers II"
-                />
-              </div>
-            </SwiperSlide>
+            {newArrival?.map((product) => {
+              return (
+                <SwiperSlide>
+                  <div className="big-card-wrapper">
+                    <ProductCart
+                      image={product.images[0]}
+                      class="big-card"
+                      price={product.price}
+                      title={product.title}
+                    />
+                  </div>
+                </SwiperSlide>
+              );
+            })}
           </Carousel>
         </div>
       </div>

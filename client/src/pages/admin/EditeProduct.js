@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { Button, Grid } from "@mui/material";
 import { useParams } from "react-router";
@@ -17,6 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { fetchCategories } from "../../actions/categories";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { imageUpload } from "../../api";
 
 function EditeProduct() {
   const [title, setTitle] = useState("");
@@ -27,6 +30,7 @@ function EditeProduct() {
   const [size, setSize] = useState("");
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [content, setContent] = useState("");
 
   const [images, setImages] = useState([]);
 
@@ -43,6 +47,70 @@ function EditeProduct() {
 
   const allCategories = useSelector((state) => state.categories);
   const { categories } = allCategories;
+  const quillRef = useRef(null);
+
+  const imageHandler = () => {
+    // create an input element
+    const input = document.createElement("input");
+    // set the type and accept attributes
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    // trigger the click event
+    input.click();
+    // listen for the change event
+    input.onchange = async () => {
+      // get the selected file
+      const file = input.files[0];
+      // create a form data object
+      const formData = new FormData();
+      // append the file to the form data
+      formData.append("images", file);
+      // send the form data to the server or cloud service using an API
+      // for example, using axios
+      const response = await imageUpload(formData);
+      // get the image URL from the response
+      const url = response?.data?.imageUrl;
+      // get the editor instance from the ref
+      const editor = quillRef?.current?.getEditor();
+      // get the current cursor position
+      const range = editor?.getSelection();
+      // insert the image URL at the cursor position
+      editor.insertEmbed(range.index, "image", url);
+    };
+  };
+
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          // other toolbar options
+          ["bold", "italic", "underline", "strike"], // toggled buttons
+          ["blockquote", "code-block"],
+
+          [{ header: 1 }, { header: 2 }], // custom button values
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ script: "sub" }, { script: "super" }], // superscript/subscript
+          [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+          [{ direction: "rtl" }], // text direction
+
+          [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+          [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+          [{ font: [] }],
+          [{ align: [] }],
+
+          ["clean"],
+          ["image"], // image button
+        ],
+        handlers: {
+          image: imageHandler, // custom handler function
+        },
+      },
+    }),
+    []
+  );
+
   useEffect(() => {
     dispatch(getProductById(slug));
   }, [dispatch]);
@@ -54,6 +122,7 @@ function EditeProduct() {
       setCategory(product.category);
       setMaterial(product.material);
       setPrice(product.price);
+      setContent(product.content);
       setQuantity(product.quantity);
       setSize(product.size);
       setPreview(product.images);
@@ -128,6 +197,7 @@ function EditeProduct() {
     formData.append("suspention", suspention);
     formData.append("material", material);
     formData.append("brand", brand);
+    formData.append("content", content);
     formData.append("size", size);
     formData.append("quantity", quantity);
     if (images.length > 0) {
@@ -166,10 +236,13 @@ function EditeProduct() {
           Product Description
         </label>
         <div className="col-span-8 sm:col-span-4">
-          <textarea
-            placeholder="Product Description"
-            className="block w-full text-sm dark:text-gray-300 rounded-md focus:outline-none form-textarea focus:border-purple-400 border-gray-300 dark:border-gray-600 dark:focus:border-gray-600 dark:bg-gray-700 dark:focus:ring-gray-300 focus:ring focus:ring-purple-300 border text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-          ></textarea>
+          <ReactQuill
+            ref={quillRef}
+            modules={modules}
+            theme="snow"
+            value={content}
+            onChange={setContent}
+          />
         </div>
       </div>
 

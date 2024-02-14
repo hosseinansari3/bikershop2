@@ -16,10 +16,18 @@ export const fetchProducts = (page) =>
   axios.get(`${baseUrl}/products?page=${page}`);
 export const fetchProductById = (slug) =>
   axios.get(`${baseUrl}/products/${slug}`);
+export const fetchProductBySection = (section) =>
+  axios.get(`${baseUrl}/products/sections/${section}`);
 export const createProduct = (formData) =>
   axios.post(`${baseUrl}/products`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
+
+export const imageUpload = (formData) =>
+  axios.post(`${baseUrl}/products/imageUpload`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+
 export const updateProduct = (id, formData) =>
   axios.put(`${baseUrl}/products/${id}`, formData, {
     headers: { "Content-Type": "multipart/form-data" },

@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const slug = require("mongoose-slug-updater");
+const { ROLES, SECTIONS } = require("../constants");
 
 const options = {
   separator: "-",
@@ -17,6 +18,9 @@ const ProductSchema = new mongoose.Schema({
     ref: "Category",
   },
   title: {
+    type: String,
+  },
+  content: {
     type: String,
   },
   slug: {
@@ -48,6 +52,15 @@ const ProductSchema = new mongoose.Schema({
   },
   size: {
     type: String,
+  },
+  section: {
+    type: String,
+    enum: [
+      SECTIONS.Best_Seller,
+      SECTIONS.Hot_Discount,
+      SECTIONS.New_Arrival,
+      SECTIONS.Our_Offer,
+    ],
   },
 });
 

@@ -21,7 +21,6 @@ export const getProducts = (page) => async (dispatch) => {
   try {
     dispatch({ type: FETCH_ALL_PRODUCTS_REQUEST });
     const response = await api.fetchProducts(page);
-    console.log("DATAAAA: " + JSON.stringify(response.data));
 
     dispatch({ type: FETCH_ALL_PRODUCTS, payload: response.data });
   } catch (error) {

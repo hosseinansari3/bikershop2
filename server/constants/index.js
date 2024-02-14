@@ -29,3 +29,10 @@ exports.EMAIL_PROVIDER = {
   Google: "Google",
   Facebook: "Facebook",
 };
+
+exports.SECTIONS = {
+  Hot_Discount: "Hot Discount",
+  Best_Seller: "Best Seller",
+  New_Arrival: "New Arrival",
+  Our_Offer: "Our Offer",
+};
