@@ -18,6 +18,12 @@ export const fetchProductById = (slug) =>
   axios.get(`${baseUrl}/products/${slug}`);
 export const fetchProductBySection = (section) =>
   axios.get(`${baseUrl}/products/sections/${section}`);
+
+export const fetchProductsByFilters = (filters) =>
+  axios.get(
+    `${baseUrl}/products/getByFilters?filters=${JSON.stringify(filters)}`
+  );
+
 export const createProduct = (formData) =>
   axios.post(`${baseUrl}/products`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
