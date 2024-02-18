@@ -67,6 +67,17 @@ function MainPage() {
       .catch((error) => {
         console.log(error);
       });
+
+    fetchProductBySection(SECTIONS.Our_Offer)
+      .then((response) => {
+        console.log("ourOffer", response.data.products);
+        setOurOffer(response.data.products);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    const myObj = { first: "sss", second: "bbb" };
   }, []);
 
   return (
@@ -221,7 +232,39 @@ function MainPage() {
         <div>
           <h3 className="title">OUR OFFER!</h3>
         </div>
-        <CartList carousel={true} Title="Apparel" />
+        <Carousel
+          style={{ height: "464px" }}
+          responsive
+          breakpoints={{
+            // when window width is >= 480px
+            480: {
+              slidesPerView: 2,
+              //spaceBetween: 40,
+            },
+            // when window width is >= 640px
+            768: {
+              slidesPerView: 3,
+              //spaceBetween: 100,
+            },
+            992: {
+              slidesPerView: 4,
+              // spaceBetween: 40,
+            },
+          }}
+        >
+          {ourOffer?.map((product) => {
+            return (
+              <SwiperSlide>
+                <ProductCart
+                  className="hover:shadow-xl m-2"
+                  image={product.images[0]}
+                  price={product.price}
+                  title={product.title}
+                />
+              </SwiperSlide>
+            );
+          })}
+        </Carousel>
       </div>
     </>
   );

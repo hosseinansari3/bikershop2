@@ -20,6 +20,7 @@ import { fetchCategories } from "../../actions/categories";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { imageUpload } from "../../api";
+import { SECTIONS } from "../../constants/panelConstants";
 
 function EditeProduct() {
   const [title, setTitle] = useState("");
@@ -31,7 +32,7 @@ function EditeProduct() {
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState("");
   const [content, setContent] = useState("");
-
+  const [section, setSection] = useState("");
   const [images, setImages] = useState([]);
 
   const { slug } = useParams();
@@ -342,6 +343,50 @@ function EditeProduct() {
           </select>
         </div>
       </div>
+
+      <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+        <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
+          Section
+        </label>
+        <div className="col-span-8 sm:col-span-4">
+          <select
+            def
+            onChange={(e) =>
+              setSection(e.target.options[e.target.selectedIndex].value)
+            }
+            className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+          >
+            <option
+              selected={product?.section === SECTIONS.Best_Seller}
+              value={SECTIONS.Best_Seller}
+            >
+              {SECTIONS.Best_Seller}
+            </option>
+            ;
+            <option
+              selected={product?.section === SECTIONS.Hot_Discount}
+              value={SECTIONS.Hot_Discount}
+            >
+              {SECTIONS.Hot_Discount}
+            </option>
+            ;
+            <option
+              selected={product?.section === SECTIONS.New_Arrival}
+              value={SECTIONS.New_Arrival}
+            >
+              {SECTIONS.New_Arrival}
+            </option>
+            ;
+            <option
+              selected={product?.section === SECTIONS.Our_Offer}
+              value={SECTIONS.Our_Offer}
+            >
+              {SECTIONS.Our_Offer}
+            </option>
+          </select>
+        </div>
+      </div>
+
       <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
         <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
           Suspention

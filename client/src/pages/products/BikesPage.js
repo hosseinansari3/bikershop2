@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import ProductCart from "../../components/Body/ProductCart";
 import { useSelector, useDispatch } from "react-redux";
-import { getProducts } from "../../actions/products";
+import { getProducts, getProductsByFilter } from "../../actions/products";
 
 import Slider from "@mui/material/Slider";
 import FormGroup from "@mui/material/FormGroup";
@@ -22,6 +22,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "./BikesPage.css";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 import Pagination from "../../components/Pagination/Pagination";
+import axios from "axios";
 
 function BikesPage() {
   const dispatch = useDispatch();
@@ -30,7 +31,11 @@ function BikesPage() {
   const [priceRange, setPriceRange] = React.useState([2000, 5700]);
 
   const handlePriceChange = (event, newValue) => {
+    console.log("range", newValue);
     setPriceRange(newValue);
+    dispatch(
+      getProductsByFilter({ priceMin: newValue[0], priceMax: newValue[1] })
+    );
   };
 
   const product = useSelector((state) => state.products);

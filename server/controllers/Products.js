@@ -7,32 +7,34 @@ const getProducts = async (req, res) => {
     let query = productModel.find().populate({
       path: "category",
     });
-    const page = parseInt(req.query.page) || 1;
-    const pageSize = parseInt(req.query.limit) || 6;
-    const skip = (page - 1) * pageSize;
-    const total = await productModel.countDocuments();
+    let page = req.query.page;
 
-    const pages = Math.ceil(total / pageSize);
+    if (page) {
+      page = parseInt(req.query.page) || 1;
+      const pageSize = parseInt(req.query.limit) || 6;
+      const skip = (page - 1) * pageSize;
+      const total = await productModel.countDocuments();
+      const pages = Math.ceil(total / pageSize);
+      query = query.skip(skip).limit(pageSize);
+      if (page > pages) {
+        return res.status(404).json({
+          status: "fail",
+          message: "No page found",
+        });
+      }
 
-    query = query.skip(skip).limit(pageSize);
-    if (page > pages) {
-      return res.status(404).json({
-        status: "fail",
-        message: "No page found",
+      const result = await query;
+
+      res.status(200).json({
+        status: "success",
+        count: result.length,
+        page,
+        pages,
+        pageSize,
+        totalProducts: total,
+        products: result,
       });
     }
-
-    const result = await query;
-
-    res.status(200).json({
-      status: "success",
-      count: result.length,
-      page,
-      pages,
-      pageSize,
-      totalProducts: total,
-      products: result,
-    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -172,6 +174,25 @@ const searchProduct = async (req, res) => {
   }
 };
 
+const getProductsByFilters = async (req, res) => {
+  try {
+    const filters = JSON.parse(req.query.filters);
+    console.log("min", filters.priceMin);
+    console.log("max", filters.priceMax);
+
+    let query = {};
+
+    query.price = { $gte: filters.priceMin, $lte: filters.priceMax };
+
+    const products = await productModel.find(query);
+    res.status(200).json({
+      status: "success",
+      products: products,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 const getProductsBySection = async (req, res) => {
   try {
     const section = req.params.section;
@@ -238,6 +259,7 @@ module.exports = {
   getProductsBySection,
   createProduct,
   deletProduct,
+  getProductsByFilters,
   searchProduct,
   updateProduct,
 };

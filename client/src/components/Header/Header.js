@@ -117,7 +117,7 @@ function Header() {
   // };
 
   const inputProps = {
-    className: "w-full",
+    className: "w-full pl-2",
     placeholder: "Search Products",
     value: searchValue,
     onChange: (e, { newValue }) => {

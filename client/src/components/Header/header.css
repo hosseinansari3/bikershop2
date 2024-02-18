@@ -151,7 +151,7 @@
 
 .search-icon {
   position: absolute;
-  right: 5%;
+  right: 15px;
 }
 
 .lower-header {
@@ -337,6 +337,6 @@ li.menu-wrapper:hover {
 
 .react-autosuggest__suggestions-list {
   position: absolute;
-    z-index: 10000;
-    width: 100%;
+  z-index: 10000;
+  width: 100%;
 }

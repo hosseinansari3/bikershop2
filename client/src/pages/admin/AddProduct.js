@@ -17,24 +17,31 @@ import { imageUpload } from "../../api";
 import { SECTIONS } from "../../constants/panelConstants";
 
 function AddProduct() {
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [suspention, setSuspention] = useState("");
-  const [section, setSection] = useState("");
-  const [material, setMaterial] = useState("");
-  const [brand, setBrand] = useState("");
-  const [size, setSize] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [category, setCategory] = useState("");
-  const [images, setImages] = useState([]);
-  const [value, setValue] = useState("");
-  const [preview, setPreview] = useState([]);
-
   const dispatch = useDispatch();
   const quillRef = useRef(null);
 
   const allCategories = useSelector((state) => state.categories);
   const { categories } = allCategories;
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+    console.log("catss", categories);
+  }, [dispatch]);
+
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [suspention, setSuspention] = useState("Dual Suspension");
+  const [section, setSection] = useState("");
+  const [material, setMaterial] = useState("Carbon");
+  const [brand, setBrand] = useState("BIANCHI");
+  const [size, setSize] = useState("28C");
+  const [quantity, setQuantity] = useState("");
+  const [category, setCategory] = useState(
+    categories?.length > 0 ? categories[0]._id : ""
+  );
+  const [images, setImages] = useState([]);
+  const [value, setValue] = useState("");
+  const [preview, setPreview] = useState([]);
 
   const imageHandler = () => {
     // create an input element
@@ -97,11 +104,6 @@ function AddProduct() {
     }),
     []
   );
-
-  useEffect(() => {
-    dispatch(fetchCategories());
-    console.log("catss", categories);
-  }, [dispatch]);
 
   useEffect(() => {
     console.log("section", section);
@@ -335,8 +337,9 @@ function AddProduct() {
             }
             className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
           >
-            <option>Dual Suspension</option>;<option>Hardtail</option>;
-            <option>Rigid</option>;
+            <option value={"Dual Suspension"}>Dual Suspension</option>;
+            <option value={"Hardtail"}>Hardtail</option>;
+            <option value={"Rigid"}>Rigid</option>;
           </select>
         </div>
       </div>
@@ -352,8 +355,9 @@ function AddProduct() {
             }
             className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
           >
-            <option>Carbon</option>;<option>Aluminium</option>;
-            <option>Other</option>;
+            <option value={"Carbon"}>Carbon</option>;
+            <option value={"Aluminium"}>Aluminium</option>;
+            <option value={"Other"}>Other</option>;
           </select>
         </div>
       </div>
@@ -369,9 +373,11 @@ function AddProduct() {
             }
             className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
           >
-            <option>BIANCHI</option>;<option>CIPOLLINI</option>;
-            <option>FUJI</option>;<option>GT</option>;<option>KTM</option>;
-            <option>SCOTT</option>;
+            <option value={"BIANCHI"}>BIANCHI</option>;
+            <option value={"CIPOLLINI"}>CIPOLLINI</option>;
+            <option value={"FUJI"}>FUJI</option>;
+            <option value={"GT"}>GT</option>;<option value={"KTM"}>KTM</option>;
+            <option value={"SCOTT"}>SCOTT</option>;
           </select>
         </div>
       </div>
@@ -386,8 +392,11 @@ function AddProduct() {
             }
             className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
           >
-            <option>28C</option>;<option>25C</option>;<option>30C</option>;
-            <option>32C</option>;<option>35C</option>;
+            <option value={"28C"}>28C</option>;
+            <option value={"25C"}>25C</option>;
+            <option value={"30C"}>30C</option>;
+            <option value={"32C"}>32C</option>;
+            <option value={"35C"}>35C</option>;
           </select>
         </div>
       </div>
