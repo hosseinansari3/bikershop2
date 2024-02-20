@@ -31,6 +31,10 @@ function BikesPage() {
 
   const [priceRange, setPriceRange] = React.useState([2000, 5700]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedSuspentions, setSelectedSuspentions] = useState([]);
+  const [selectedMaterials, setSelectedMaterials] = useState([]);
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedSizes, setSelectedSizes] = useState([]);
   const [filters, setFilters] = useState({});
 
   const allCategories = useSelector((state) => state.categories);
@@ -42,7 +46,7 @@ function BikesPage() {
     setFilters({ ...filters, priceMin: newValue[0], priceMax: newValue[1] });
   };
 
-  const handleCheckboxChange = (e) => {
+  const handleCategoryChange = (e) => {
     const isChecked = e.target.checked;
     if (isChecked) {
       setSelectedCategories([...selectedCategories, e.target.value]);
@@ -50,6 +54,50 @@ function BikesPage() {
       setSelectedCategories(
         selectedCategories.filter((category) => category !== e.target.value)
       );
+    }
+  };
+
+  const handleSuspentionChange = (e) => {
+    const isChecked = e.target.checked;
+    if (isChecked) {
+      setSelectedSuspentions([...selectedSuspentions, e.target.value]);
+    } else if (!isChecked) {
+      setSelectedSuspentions(
+        selectedSuspentions.filter(
+          (suspention) => suspention !== e.target.value
+        )
+      );
+    }
+  };
+
+  const handleMaterialChange = (e) => {
+    const isChecked = e.target.checked;
+    if (isChecked) {
+      setSelectedMaterials([...selectedMaterials, e.target.value]);
+    } else if (!isChecked) {
+      setSelectedMaterials(
+        selectedMaterials.filter((material) => material !== e.target.value)
+      );
+    }
+  };
+
+  const handleBrandChange = (e) => {
+    const isChecked = e.target.checked;
+    if (isChecked) {
+      setSelectedBrands([...selectedBrands, e.target.value]);
+    } else if (!isChecked) {
+      setSelectedBrands(
+        selectedBrands.filter((brand) => brand !== e.target.value)
+      );
+    }
+  };
+
+  const handleSizeChange = (e) => {
+    const isChecked = e.target.checked;
+    if (isChecked) {
+      setSelectedSizes([...selectedSizes, e.target.value]);
+    } else if (!isChecked) {
+      setSelectedSizes(selectedSizes.filter((size) => size !== e.target.value));
     }
   };
 
@@ -61,8 +109,36 @@ function BikesPage() {
   }, [selectedCategories]);
 
   useEffect(() => {
+    if (selectedSuspentions.length !== 0) {
+      console.log("selectedSuspentions", selectedSuspentions);
+      setFilters({ ...filters, suspentions: selectedSuspentions });
+    }
+  }, [selectedSuspentions]);
+
+  useEffect(() => {
+    if (selectedMaterials.length !== 0) {
+      console.log("selectedMaterials", selectedMaterials);
+      setFilters({ ...filters, materials: selectedMaterials });
+    }
+  }, [selectedMaterials]);
+
+  useEffect(() => {
+    if (selectedBrands.length !== 0) {
+      console.log("selectedBrands", selectedBrands);
+      setFilters({ ...filters, brands: selectedBrands });
+    }
+  }, [selectedBrands]);
+
+  useEffect(() => {
+    if (selectedSizes.length !== 0) {
+      console.log("selectedSizes", selectedSizes);
+      setFilters({ ...filters, sizes: selectedSizes });
+    }
+  }, [selectedSizes]);
+
+  useEffect(() => {
     console.log("filters", filters);
-    dispatch(getProductsByFilter(filters));
+    //dispatch(getProductsByFilter(filters));
   }, [filters]);
 
   const product = useSelector((state) => state.products);
@@ -160,7 +236,7 @@ function BikesPage() {
                       <Checkbox
                         id={category.id}
                         value={category.name}
-                        onChange={(e) => handleCheckboxChange(e)}
+                        onChange={(e) => handleCategoryChange(e)}
                       />
                     }
                     label={category.name}
@@ -179,9 +255,33 @@ function BikesPage() {
             <Typography>Suspension</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <FormControlLabel control={<Checkbox />} label="Dual Suspension" />
-            <FormControlLabel control={<Checkbox />} label="Hardtail" />
-            <FormControlLabel control={<Checkbox />} label="Rigid" />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  onChange={(e) => handleSuspentionChange(e)}
+                  value="Dual Suspension"
+                />
+              }
+              label="Dual Suspension"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  onChange={(e) => handleSuspentionChange(e)}
+                  value="Hardtail"
+                />
+              }
+              label="Hardtail"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  onChange={(e) => handleSuspentionChange(e)}
+                  value="Rigid"
+                />
+              }
+              label="Rigid"
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -193,9 +293,33 @@ function BikesPage() {
             <Typography>Material</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <FormControlLabel control={<Checkbox />} label="Carbon" />
-            <FormControlLabel control={<Checkbox />} label="Aluminium" />
-            <FormControlLabel control={<Checkbox />} label="Other" />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  onChange={(e) => handleMaterialChange(e)}
+                  value="Carbon"
+                />
+              }
+              label="Carbon"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  onChange={(e) => handleMaterialChange(e)}
+                  value="Aluminium"
+                />
+              }
+              label="Aluminium"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  onChange={(e) => handleMaterialChange(e)}
+                  value="Other"
+                />
+              }
+              label="Other"
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -207,12 +331,51 @@ function BikesPage() {
             <Typography>Brands</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <FormControlLabel control={<Checkbox />} label="BIANCHI" />
-            <FormControlLabel control={<Checkbox />} label="CIPOLLINI" />
-            <FormControlLabel control={<Checkbox />} label="FUJI" />
-            <FormControlLabel control={<Checkbox />} label="GT" />
-            <FormControlLabel control={<Checkbox />} label="KTM" />
-            <FormControlLabel control={<Checkbox />} label="SCOTT" />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  onChange={(e) => handleBrandChange(e)}
+                  value="BIANCHI"
+                />
+              }
+              label="BIANCHI"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  onChange={(e) => handleBrandChange(e)}
+                  value="CIPOLLINI"
+                />
+              }
+              label="CIPOLLINI"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox onChange={(e) => handleBrandChange(e)} value="FUJI" />
+              }
+              label="FUJI"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox onChange={(e) => handleBrandChange(e)} value="GT" />
+              }
+              label="GT"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox onChange={(e) => handleBrandChange(e)} value="KTM" />
+              }
+              label="KTM"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  onChange={(e) => handleBrandChange(e)}
+                  value="SCOTT"
+                />
+              }
+              label="SCOTT"
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -224,11 +387,36 @@ function BikesPage() {
             <Typography>Size</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <FormControlLabel control={<Checkbox />} label="28C" />
-            <FormControlLabel control={<Checkbox />} label="25C" />
-            <FormControlLabel control={<Checkbox />} label="30C" />
-            <FormControlLabel control={<Checkbox />} label="32C" />
-            <FormControlLabel control={<Checkbox />} label="35C" />
+            <FormControlLabel
+              control={
+                <Checkbox onChange={(e) => handleSizeChange(e)} value="28C" />
+              }
+              label="28C"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox onChange={(e) => handleSizeChange(e)} value="25C" />
+              }
+              label="25C"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox onChange={(e) => handleSizeChange(e)} value="30C" />
+              }
+              label="30C"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox onChange={(e) => handleSizeChange(e)} value="32C" />
+              }
+              label="32C"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox onChange={(e) => handleSizeChange(e)} value="35C" />
+              }
+              label="35C"
+            />
           </AccordionDetails>
         </Accordion>
       </div>
