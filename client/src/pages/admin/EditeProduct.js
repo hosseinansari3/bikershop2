@@ -121,6 +121,7 @@ function EditeProduct() {
       setTitle(product.title);
       setBrand(product.brand);
       setCategory(product.category);
+      setSection(product.section);
       setSuspention(product.suspention);
       setMaterial(product.material);
       setPrice(product.price);
@@ -198,6 +199,7 @@ function EditeProduct() {
     formData.append("category", category);
     formData.append("suspention", suspention);
     formData.append("material", material);
+    formData.append("section", section);
     formData.append("brand", brand);
     formData.append("content", content);
     formData.append("size", size);

@@ -2,18 +2,20 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Button, Grid } from "@mui/material";
+import axios from "axios";
 import "./addProduct.css";
 import {
   createProduct,
   deleteProduct,
   getProducts,
+  getProductsByFilter,
 } from "../../actions/products";
 import { useDispatch, useSelector } from "react-redux";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { fetchCategories } from "../../actions/categories";
-import { imageUpload } from "../../api";
+import { fetchProductBySection, imageUpload } from "../../api";
 import { SECTIONS } from "../../constants/panelConstants";
 
 function AddProduct() {
@@ -42,6 +44,51 @@ function AddProduct() {
   const [images, setImages] = useState([]);
   const [value, setValue] = useState("");
   const [preview, setPreview] = useState([]);
+
+  const [hotDiscount, setHotDiscount] = useState(null);
+  const [bestSeller, setBestSeller] = useState(null);
+  const [newArrival, setNewArrival] = useState(null);
+  const [ourOffer, setOurOffer] = useState(null);
+
+  useEffect(() => {
+    fetchProductBySection(SECTIONS.Hot_Discount)
+      .then((response) => {
+        console.log("HotDiscount", response.data.products);
+        setHotDiscount(response.data.products);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    fetchProductBySection(SECTIONS.Best_Seller)
+      .then((response) => {
+        console.log("BestSeller", response.data.products);
+        setBestSeller(response.data.products);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    fetchProductBySection(SECTIONS.New_Arrival)
+      .then((response) => {
+        console.log("newArrival", response.data.products);
+        setNewArrival(response.data.products);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    fetchProductBySection(SECTIONS.Our_Offer)
+      .then((response) => {
+        console.log("ourOffer", response.data.products);
+        setOurOffer(response.data.products);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    const myObj = { first: "sss", second: "bbb" };
+  }, []);
 
   const imageHandler = () => {
     // create an input element
@@ -127,12 +174,8 @@ function AddProduct() {
     // return () => URL.revokeObjectURL(objectUrl);
   }, [images]);
 
-  const apiProduct = useSelector((state) => state.products);
-  const { products, totalProducts } = apiProduct;
-
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch, products]);
+  //const apiProduct = useSelector((state) => state.products);
+  //const { products, totalProducts } = apiProduct;
 
   useEffect(() => {
     console.log(value);
@@ -315,14 +358,25 @@ function AddProduct() {
             }
             className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
           >
-            <option value={SECTIONS.Best_Seller}>{SECTIONS.Best_Seller}</option>
+            <option
+              disabled={bestSeller?.length >= 6}
+              value={SECTIONS.Best_Seller}
+            >
+              {SECTIONS.Best_Seller}
+            </option>
             ;
-            <option value={SECTIONS.Hot_Discount}>
+            <option
+              disabled={hotDiscount?.length >= 4}
+              value={SECTIONS.Hot_Discount}
+            >
               {SECTIONS.Hot_Discount}
             </option>
             ;
             <option value={SECTIONS.New_Arrival}>{SECTIONS.New_Arrival}</option>
-            ;<option value={SECTIONS.Our_Offer}>{SECTIONS.Our_Offer}</option>
+            ;
+            <option disabled={ourOffer?.length >= 4} value={SECTIONS.Our_Offer}>
+              {SECTIONS.Our_Offer}
+            </option>
           </select>
         </div>
       </div>
@@ -447,7 +501,6 @@ function AddProduct() {
         <Button onClick={handleSubmit} variant="contained">
           Publish Product
         </Button>
-        <p>number of products: {totalProducts}</p>
       </Grid>
     </div>
   );

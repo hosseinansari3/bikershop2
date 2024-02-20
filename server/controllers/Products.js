@@ -189,6 +189,10 @@ const getProductsByFilters = async (req, res) => {
       query.suspention = { $in: filters.suspentions };
     }
 
+    if (filters.section) {
+      query.section = filters.section;
+    }
+
     if (filters.materials) {
       query.material = { $in: filters.materials };
     }
