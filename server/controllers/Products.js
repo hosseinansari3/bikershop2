@@ -185,6 +185,21 @@ const getProductsByFilters = async (req, res) => {
     if (filters.priceMin || filters.priceMax) {
       query.price = { $gte: filters.priceMin, $lte: filters.priceMax };
     }
+    if (filters.suspentions) {
+      query.suspention = { $in: filters.suspentions };
+    }
+
+    if (filters.materials) {
+      query.material = { $in: filters.materials };
+    }
+
+    if (filters.brands) {
+      query.brand = { $in: filters.brands };
+    }
+
+    if (filters.sizes) {
+      query.size = { $in: filters.sizes };
+    }
 
     if (filters.categories) {
       console.log("categories", filters.categories);

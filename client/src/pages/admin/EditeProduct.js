@@ -121,6 +121,7 @@ function EditeProduct() {
       setTitle(product.title);
       setBrand(product.brand);
       setCategory(product.category);
+      setSuspention(product.suspention);
       setMaterial(product.material);
       setPrice(product.price);
       setContent(product.content);
@@ -401,11 +402,11 @@ function EditeProduct() {
             <option selected={product?.suspention === "Dual Suspension"}>
               Dual Suspension
             </option>
-            ;
+
             <option selected={product?.suspention === "Hardtail"}>
               Hardtail
             </option>
-            ;<option selected={product?.suspention === "Rigid"}>Rigid</option>;
+            <option selected={product?.suspention === "Rigid"}>Rigid</option>
           </select>
         </div>
       </div>

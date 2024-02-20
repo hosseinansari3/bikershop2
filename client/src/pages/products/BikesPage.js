@@ -105,6 +105,10 @@ function BikesPage() {
     if (selectedCategories.length !== 0) {
       console.log("selectedCats", selectedCategories);
       setFilters({ ...filters, categories: selectedCategories });
+    } else {
+      console.log("selectedCategories", selectedCategories);
+      delete filters.categories;
+      setFilters({ ...filters });
     }
   }, [selectedCategories]);
 
@@ -112,6 +116,10 @@ function BikesPage() {
     if (selectedSuspentions.length !== 0) {
       console.log("selectedSuspentions", selectedSuspentions);
       setFilters({ ...filters, suspentions: selectedSuspentions });
+    } else {
+      console.log("selectedSuspentions", selectedSuspentions);
+      delete filters.suspentions;
+      setFilters({ ...filters });
     }
   }, [selectedSuspentions]);
 
@@ -119,6 +127,10 @@ function BikesPage() {
     if (selectedMaterials.length !== 0) {
       console.log("selectedMaterials", selectedMaterials);
       setFilters({ ...filters, materials: selectedMaterials });
+    } else {
+      console.log("selectedMaterials", selectedMaterials);
+      delete filters.materials;
+      setFilters({ ...filters });
     }
   }, [selectedMaterials]);
 
@@ -126,6 +138,10 @@ function BikesPage() {
     if (selectedBrands.length !== 0) {
       console.log("selectedBrands", selectedBrands);
       setFilters({ ...filters, brands: selectedBrands });
+    } else {
+      console.log("selectedBrands", selectedBrands);
+      delete filters.brands;
+      setFilters({ ...filters });
     }
   }, [selectedBrands]);
 
@@ -133,12 +149,16 @@ function BikesPage() {
     if (selectedSizes.length !== 0) {
       console.log("selectedSizes", selectedSizes);
       setFilters({ ...filters, sizes: selectedSizes });
+    } else {
+      console.log("selectedSizes", selectedSizes);
+      delete filters.sizes;
+      setFilters({ ...filters });
     }
   }, [selectedSizes]);
 
   useEffect(() => {
     console.log("filters", filters);
-    //dispatch(getProductsByFilter(filters));
+    dispatch(getProductsByFilter(filters));
   }, [filters]);
 
   const product = useSelector((state) => state.products);
