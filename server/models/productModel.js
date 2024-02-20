@@ -14,6 +14,7 @@ mongoose.plugin(slug);
 
 const ProductSchema = new mongoose.Schema({
   category: {
+    slug: false,
     type: Schema.Types.ObjectId,
     ref: "Category",
   },

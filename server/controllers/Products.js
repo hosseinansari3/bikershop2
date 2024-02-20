@@ -1,6 +1,7 @@
 const { Express } = require("express");
 const mongoose = require("mongoose");
 const productModel = require("../models/productModel");
+const categoryModel = require("../models/categoryModel");
 
 const getProducts = async (req, res) => {
   try {
@@ -177,14 +178,42 @@ const searchProduct = async (req, res) => {
 const getProductsByFilters = async (req, res) => {
   try {
     const filters = JSON.parse(req.query.filters);
-    console.log("min", filters.priceMin);
-    console.log("max", filters.priceMax);
 
     let query = {};
+    let match = {};
 
-    query.price = { $gte: filters.priceMin, $lte: filters.priceMax };
+    if (filters.priceMin || filters.priceMax) {
+      query.price = { $gte: filters.priceMin, $lte: filters.priceMax };
+    }
 
-    const products = await productModel.find(query);
+    if (filters.categories) {
+      console.log("categories", filters.categories);
+      console.log("filters", filters);
+      match = { "category.name": { $in: filters.categories } };
+    } else match = {};
+
+    const products = await productModel.aggregate([
+      {
+        $match: query,
+      },
+      {
+        $lookup: {
+          from: categoryModel.collection.collectionName, // Replace with the actual name of your reservations collection
+          localField: "category", // Replace with the field that connects reservations to listings
+          foreignField: "_id", // Replace with the field that connects reservations to listings
+          as: "category",
+        },
+      },
+      {
+        $match: match,
+      },
+    ]);
+
+    //  const products = await productModel.find(query).populate({
+    //   path: "category",
+    //   match: match,
+    // });
+
     res.status(200).json({
       status: "success",
       products: products,

@@ -34,6 +34,7 @@ export const getProductsByFilter = (filters) => async (dispatch) => {
     console.log("action started");
 
     const response = await api.fetchProductsByFilters(filters);
+    console.log("res", response.data);
 
     dispatch({ type: FETCH_ALL_PRODUCTS, payload: response.data });
   } catch (error) {

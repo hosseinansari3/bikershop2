@@ -23,20 +23,47 @@ import "./BikesPage.css";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 import Pagination from "../../components/Pagination/Pagination";
 import axios from "axios";
+import { fetchCategories } from "../../actions/categories";
 
 function BikesPage() {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.usersSignin.userInfo);
 
   const [priceRange, setPriceRange] = React.useState([2000, 5700]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [filters, setFilters] = useState({});
+
+  const allCategories = useSelector((state) => state.categories);
+  const { categories } = allCategories;
 
   const handlePriceChange = (event, newValue) => {
     console.log("range", newValue);
     setPriceRange(newValue);
-    dispatch(
-      getProductsByFilter({ priceMin: newValue[0], priceMax: newValue[1] })
-    );
+    setFilters({ ...filters, priceMin: newValue[0], priceMax: newValue[1] });
   };
+
+  const handleCheckboxChange = (e) => {
+    const isChecked = e.target.checked;
+    if (isChecked) {
+      setSelectedCategories([...selectedCategories, e.target.value]);
+    } else if (!isChecked) {
+      setSelectedCategories(
+        selectedCategories.filter((category) => category !== e.target.value)
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (selectedCategories.length !== 0) {
+      console.log("selectedCats", selectedCategories);
+      setFilters({ ...filters, categories: selectedCategories });
+    }
+  }, [selectedCategories]);
+
+  useEffect(() => {
+    console.log("filters", filters);
+    dispatch(getProductsByFilter(filters));
+  }, [filters]);
 
   const product = useSelector((state) => state.products);
   const { loading, products, totalPages, pageSize, totalProducts } = product;
@@ -56,6 +83,10 @@ function BikesPage() {
   useEffect(() => {
     setPages(totalPages);
   }, [totalPages]);
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
 
   const fliterClickHandler = () => {
     setFilterStyle({ left: "-10px" });
@@ -122,18 +153,20 @@ function BikesPage() {
           </AccordionSummary>
           <AccordionDetails>
             <FormGroup>
-              <FormControlLabel
-                control={<Checkbox defaultChecked />}
-                label="E-Bikes"
-              />
-              <FormControlLabel control={<Checkbox />} label="Junior Bikes" />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Ladies Specific"
-              />
-              <FormControlLabel control={<Checkbox />} label="Mountain Bikes" />
-              <FormControlLabel control={<Checkbox />} label="Other" />
-              <FormControlLabel control={<Checkbox />} label="Road Bikes" />
+              {categories?.map((category, index) => {
+                return (
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        id={category.id}
+                        value={category.name}
+                        onChange={(e) => handleCheckboxChange(e)}
+                      />
+                    }
+                    label={category.name}
+                  />
+                );
+              })}
             </FormGroup>
           </AccordionDetails>
         </Accordion>
