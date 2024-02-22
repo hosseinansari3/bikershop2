@@ -19,7 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { fetchCategories } from "../../actions/categories";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { imageUpload } from "../../api";
+import { fetchProductBySection, imageUpload } from "../../api";
 import { SECTIONS } from "../../constants/panelConstants";
 
 function EditeProduct() {
@@ -37,6 +37,49 @@ function EditeProduct() {
 
   const { slug } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const [hotDiscount, setHotDiscount] = useState(null);
+  const [bestSeller, setBestSeller] = useState(null);
+  const [newArrival, setNewArrival] = useState(null);
+  const [ourOffer, setOurOffer] = useState(null);
+
+  useEffect(() => {
+    fetchProductBySection(SECTIONS.Hot_Discount)
+      .then((response) => {
+        console.log("HotDiscount", response.data.products);
+        setHotDiscount(response.data.products);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    fetchProductBySection(SECTIONS.Best_Seller)
+      .then((response) => {
+        console.log("BestSeller", response.data.products);
+        setBestSeller(response.data.products);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    fetchProductBySection(SECTIONS.New_Arrival)
+      .then((response) => {
+        console.log("newArrival", response.data.products);
+        setNewArrival(response.data.products);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    fetchProductBySection(SECTIONS.Our_Offer)
+      .then((response) => {
+        console.log("ourOffer", response.data.products);
+        setOurOffer(response.data.products);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const productDetails = useSelector((state) => state.ProductDetails);
 
@@ -360,6 +403,7 @@ function EditeProduct() {
             className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
           >
             <option
+              disabled={bestSeller?.length >= 6}
               selected={product?.section === SECTIONS.Best_Seller}
               value={SECTIONS.Best_Seller}
             >
@@ -367,6 +411,7 @@ function EditeProduct() {
             </option>
             ;
             <option
+              disabled={hotDiscount?.length >= 4}
               selected={product?.section === SECTIONS.Hot_Discount}
               value={SECTIONS.Hot_Discount}
             >
@@ -381,6 +426,7 @@ function EditeProduct() {
             </option>
             ;
             <option
+              disabled={ourOffer?.length >= 4}
               selected={product?.section === SECTIONS.Our_Offer}
               value={SECTIONS.Our_Offer}
             >
