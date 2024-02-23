@@ -463,9 +463,13 @@ function AddProduct() {
           >
             <option value={"BIANCHI"}>BIANCHI</option>;
             <option value={"CIPOLLINI"}>CIPOLLINI</option>;
-            <option value={"FUJI"}>FUJI</option>;
-            <option value={"GT"}>GT</option>;<option value={"KTM"}>KTM</option>;
-            <option value={"SCOTT"}>SCOTT</option>;
+            <option value={"FUJI"}>FUJI</option>
+            <option value={"GT"}>GT</option>
+            <option value={"KTM"}>KTM</option>
+            <option value={"SCOTT"}>SCOTT</option>
+            <option value={"CUBE"}>CUBE</option>
+            <option value={"Cannondale"}>Cannondale</option>
+            <option value={"BMC"}>BMC</option>
           </select>
         </div>
       </div>

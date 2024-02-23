@@ -32,6 +32,7 @@ function Categories() {
   const handleCreateCategory = (e, category) => {
     e.preventDefault();
     dispatch(createCategory(category));
+    setInputValue("");
   };
 
   const handleDelet = (e, id) => {
@@ -214,6 +215,7 @@ function Categories() {
                 onChange={(e) => {
                   setInputValue(e.target.value);
                 }}
+                value={inputValue}
                 className="w-[90%] mr-2 p-0.5 w-4/5 rounded-lg ring-1 ring-black ring-opacity-4 h-full"
                 type="text"
               />

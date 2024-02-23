@@ -10,12 +10,14 @@ import {
   CATEGORY_DELETE_FAILURE,
 } from "../constants/actionTypes";
 import * as api from "../api/index";
+import { toast } from "react-toastify";
 
 export const createCategory = (category) => async (dispatch) => {
   try {
     dispatch({ type: CATEGORY_CREATE_REQUEST });
     const { data } = await api.createCategoryAPI(category);
     dispatch({ type: CATEGORY_CREATE_SUCCESS, payload: data });
+    toast("Category Added");
   } catch (error) {
     dispatch({ type: CATEGORY_CREATE_FAILURE, payload: error.message });
   }
@@ -42,6 +44,7 @@ export const deleteCategory = (id) => async (dispatch) => {
       type: CATEGORY_DELETE_SUCCESS,
       payload: data,
     });
+    toast("Category Deleted");
   } catch (error) {
     dispatch({ type: CATEGORY_DELETE_FAILURE, payload: error.message });
   }

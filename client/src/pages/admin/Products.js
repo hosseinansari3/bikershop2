@@ -300,14 +300,11 @@ function Products() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center">
-                        <div className="relative rounded-full inline-block w-8 h-8 hidden p-1 mr-2 md:block bg-gray-50 shadow-none">
-                          <img
-                            src={p.image}
-                            className="object-cover w-full h-full rounded-full"
-                          />
-                          <div className="absolute inset-0 rounded-full shadow-inner"></div>
-                        </div>
-                        <div>
+                        <img
+                          src={p.images[0]}
+                          className="w-24 h-16 object-cover"
+                        />
+                        <div className="w-60 ml-2.5">
                           <h2 className="text-sm font-medium">{p.title}</h2>
                         </div>
                       </div>

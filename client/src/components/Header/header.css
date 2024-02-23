@@ -332,7 +332,7 @@ li.menu-wrapper:hover {
 
 .remove-cart {
   right: 20px;
-  position: absolute;
+  position: relative;
 }
 
 .react-autosuggest__suggestions-list {

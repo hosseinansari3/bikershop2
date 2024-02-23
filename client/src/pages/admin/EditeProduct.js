@@ -492,10 +492,15 @@ function EditeProduct() {
           >
             <option selected={product?.brand === "BIANCHI"}>BIANCHI</option>;
             <option selected={product?.brand === "CIPOLLINI"}>CIPOLLINI</option>
-            ;<option selected={product?.brand === "FUJI"}>FUJI</option>;
-            <option selected={product?.brand === "GT"}>GT</option>;
-            <option selected={product?.brand === "KTM"}>KTM</option>;
-            <option selected={product?.brand === "SCOTT"}>SCOTT</option>;
+            ;<option selected={product?.brand === "FUJI"}>FUJI</option>
+            <option selected={product?.brand === "GT"}>GT</option>
+            <option selected={product?.brand === "KTM"}>KTM</option>
+            <option selected={product?.brand === "SCOTT"}>SCOTT</option>
+            <option selected={product?.brand === "CUBE"}>CUBE</option>
+            <option selected={product?.brand === "Cannondale"}>
+              Cannondale
+            </option>
+            <option selected={product?.brand === "Cannondale"}>BMC</option>
           </select>
         </div>
       </div>

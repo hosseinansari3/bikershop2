@@ -50,16 +50,28 @@ function Carousel(props) {
           className="thumbs"
         >
           <SwiperSlide>
-            <img className="Image" src={CrossBike} />
+            <img
+              className="Image"
+              src={props?.images?.length > 0 ? props.images[0] : null}
+            />
           </SwiperSlide>
           <SwiperSlide>
-            <img className="Image" src={CityBike} />
+            <img
+              className="Image"
+              src={props?.images?.length > 0 ? props.images[1] : null}
+            />
           </SwiperSlide>
           <SwiperSlide>
-            <img className="Image" src={MountainBike} />
+            <img
+              className="Image"
+              src={props?.images?.length > 0 ? props.images[2] : null}
+            />
           </SwiperSlide>
           <SwiperSlide>
-            <img className="Image" src={RoadBike} />
+            <img
+              className="Image"
+              src={props?.images?.length > 0 ? props.images[3] : null}
+            />
           </SwiperSlide>
         </Swiper>
       ) : null}

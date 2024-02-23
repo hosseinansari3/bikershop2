@@ -98,9 +98,7 @@ function Orders() {
               {orders?.map((order) => {
                 let total = 0;
                 order.orderItems?.map((item) => {
-                  let itemPrice = parseFloat(
-                    item.price.replace(/[^\d\.]*/g, "")
-                  );
+                  let itemPrice = parseFloat(item.price);
                   let itemTotal = itemPrice * parseFloat(item.quantity);
 
                   total = itemTotal + total;

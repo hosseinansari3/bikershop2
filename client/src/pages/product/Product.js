@@ -154,7 +154,13 @@ function Product() {
         <div>
           <div className="grid grid-cols-1 lg:grid-cols-2 p-5">
             <div>
-              <Carousel style={{}} spv={1} space={20} thumb={true}>
+              <Carousel
+                style={{}}
+                spv={1}
+                space={20}
+                thumb={true}
+                images={images}
+              >
                 <SwiperSlide>
                   <img
                     className="Image"

@@ -82,7 +82,7 @@ function Header() {
   const handleTotalChange = () => {
     let total = 0.0;
     savedCartItems?.map((item) => {
-      let itemPrice = parseFloat(item.price.replace(/[^\d\.]*/g, ""));
+      let itemPrice = parseFloat(item?.price?.replace(/[^\d\.]*/g, ""));
       let itemTotal = itemPrice * parseFloat(item.quantity);
       total = itemTotal + total;
     });
@@ -91,7 +91,14 @@ function Header() {
   };
 
   useEffect(() => {
-    handleTotalChange();
+    let total = 0.0;
+    savedCartItems?.map((item) => {
+      let itemPrice = parseFloat(item.price);
+      let itemTotal = itemPrice * parseFloat(item.quantity);
+      total = itemTotal + total;
+    });
+
+    setTotal(total);
   }, [savedCartItems]);
 
   const ProductSuggestionsFetchRequested = (value) => {
@@ -181,34 +188,36 @@ function Header() {
           <div
             className="ShoppingCartIcon"
             onMouseEnter={openCart}
-            onMouseLeave={closeCart}
+            //onMouseLeave={closeCart}
           >
             <ShoppingCart fontSize="large" />
             {cartIsOpen &&
               savedCartItems?.length !== 0 &&
               savedCartItems !== undefined && (
-                <div className="card-dropdown">
+                <div className="card-dropdown shadow-xl">
                   <>
                     <ul>
                       {savedCartItems?.map((item) => {
                         return (
                           <li key={item.product}>
-                            <div className="card-item-wrapper">
+                            <div className="card-item-wrapper p-2.5">
                               <img src={item.image}></img>
-                              <div className="card-item-text-wrapper">
-                                <div className="card-title">{item.title}</div>
+                              <div className="card-item-text-wrapper w-[215px]">
+                                <div className="card-title contents">
+                                  <p>{item.title}</p>
+                                </div>
                                 <div className="card-price">
-                                  <span>${item.price.match(/\d/g)} </span>
+                                  <span>${item.price} </span>
                                   <span>QTY: {item.quantity}</span>
                                 </div>
                               </div>
                               <div
-                                className="remove-cart"
+                                className="remove-cart relative ml-4"
                                 onClick={() =>
                                   removeFromCardHandler(item.product)
                                 }
                               >
-                                <Close />
+                                <Close className="absolute" />
                               </div>
                             </div>
                           </li>

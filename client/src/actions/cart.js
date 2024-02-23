@@ -9,7 +9,7 @@ export const addToCard = (productId, qty) => async (dispatch, getState) => {
       type: ADD_TO_CARD,
       payload: {
         title: data.title,
-        image: data.image,
+        image: data.images[0],
         price: data.price,
         product: data._id,
         quantity: qty,

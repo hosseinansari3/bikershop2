@@ -40,7 +40,7 @@ function Cart() {
           <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
             {savedCartItems ? (
               savedCartItems.map((item) => {
-                let itemPrice = parseFloat(item.price.replace(/[^\d\.]*/g, ""));
+                let itemPrice = parseFloat(item.price);
                 let itemTotal = itemPrice * parseFloat(item.quantity);
                 cartTotal = itemTotal + cartTotal;
                 return (
