@@ -304,7 +304,7 @@ function Products() {
                           src={p.images[0]}
                           className="w-24 h-16 object-cover"
                         />
-                        <div className="w-60 ml-2.5">
+                        <div className="w-60 ml-7">
                           <h2 className="text-sm font-medium">{p.title}</h2>
                         </div>
                       </div>

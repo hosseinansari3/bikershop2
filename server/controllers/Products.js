@@ -71,6 +71,7 @@ const createProduct = async (req, res) => {
     const title = req.body.title;
     const price = req.body.price;
     const category = req.body.category;
+    const variants = JSON.parse(req.body.variants);
     const suspention = req.body.suspention;
     const section = req.body.section;
     const content = req.body.content;
@@ -94,6 +95,7 @@ const createProduct = async (req, res) => {
       images,
       section,
       suspention,
+      variants,
       quantity,
       material,
       brand,
