@@ -1,12 +1,12 @@
 import React from "react";
 import "./ProductColor.css";
 
-function ProductColor() {
+function ProductColor(props) {
   return (
     <div className="product-color">
       <ul>
         <li>
-          <input type={"radio"} name="color" id="red" />
+          <input type={"radio"} name="color" id={props.color} />
           <label htmlFor="red">
             <span></span>
           </label>
