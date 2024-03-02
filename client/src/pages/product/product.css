@@ -5,6 +5,7 @@
 }
 
 .title {
+  font-style: normal;
   font-weight: bold;
   font-size: 24px;
   text-align: left;
@@ -14,17 +15,12 @@
   font-size: 30px;
 }
 .product-specification {
-  margin-top: 20px;
-  padding-top: 33px;
-  padding-left: 30px;
-  background-color: #f7f7f7;
   border-radius: 18px;
   height: 155px;
 }
 
 .size {
   margin: auto;
-  width: fit-content;
 }
 .add-to-card-section {
   margin-top: 43px;

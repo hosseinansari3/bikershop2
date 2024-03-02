@@ -187,30 +187,54 @@ function Product() {
                 </SwiperSlide>
               </Carousel>
             </div>
-            <div className="col-lg-6 p-3">
+            <div className="col-lg-6 p-6 shadow-lg ml-4">
               <div>
                 <div className="title">{product?.title}</div>
               </div>
-              <StarRatingComponent name="rate1" starCount={5} value={3} />
 
-              <div className="price">
-                <div>${product?.price}</div>
-              </div>
               <div className="product-specification">
-                <div>
-                  <ProductColor />
-                </div>
                 <div className="size">
-                  <label style={{ padding: "4px" }} for="Size-select">
+                  <label
+                    className="text-sm font-bold"
+                    style={{ padding: "4px" }}
+                    for="Size-select"
+                  >
                     Select Size{" "}
                   </label>
-                  <select name="Sizes" id="Size-select">
+                  <select
+                    className="border-[1.5px] border-solid border-black h-10 w-full"
+                    name="Sizes"
+                    id="Size-select"
+                  >
                     <option value="">--Please choose an option--</option>
-                    <option value="18">18" (Standard) Frame Size</option>
+                    {product?.variants?.map((variant) => {
+                      return (
+                        <option value={variant.size}>
+                          {variant.size} Frame Size
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
+                <div className="flex justify-around mt-4">
+                  <div>
+                    <p className="mb-[-15px] text-red-500">Discount 33%</p>
+                    <span className="text-[30pt] text-red-500">
+                      {product?.price}$
+                    </span>
+                  </div>
+                  <div className="flex items-center">
+                    <div>
+                      <StarRatingComponent value={3} />
+                    </div>
+                    <div className="ml-3">
+                      Assembling | Bulky good Still | 5 in stock
+                    </div>
+                  </div>
+                </div>
+                <p>In stock – Delivery time to Germany 2-6 working days**</p>
               </div>
-              <ul style={{ paddingTop: "34px", paddingLeft: "29px" }}>
+              <ul className="flex mt-12">
                 <li>
                   <AccountBalanceIcon />
                   <span className="pl-2">6 Bank Offers Available.</span>
@@ -228,33 +252,34 @@ function Product() {
                   <span className="pl-2">Free Shipping Worth $200</span>
                 </li>
               </ul>
-              <div className="h-14 my-10 mb-2">
-                <button
-                  className="inline-block border-2 border-solid h-full border-black mx-2 px-20 transition-all hover:bg-black hover:text-white"
-                  onClick={() => addToCardHandler(slug, quantity)}
-                >
-                  ADD TO CARD
-                </button>
-
-                <div className="border-2	border-solid h-full border-black inline-flex mx-2">
-                  <button onClick={decrement} className="quantity-btn">
-                    -
+              <div className="h-14 mt-5 mb-2">
+                <div className="h-full flex mb-1.5 justify-between">
+                  <button
+                    className="w-[74%] inline-block border-2 border-solid h-full border-black px-20 transition-all hover:bg-black hover:text-white"
+                    onClick={() => addToCardHandler(slug, quantity)}
+                  >
+                    ADD TO CARD
                   </button>
-                  <span className="quantity-input flex justify-center items-center">
-                    {quantity}
-                  </span>
-                  <button onClick={increment} className="quantity-btn">
-                    +
-                  </button>
+                  <div className="w-1/4 justify-around border-2	border-solid h-full border-black inline-flex">
+                    <button onClick={decrement} className="quantity-btn">
+                      -
+                    </button>
+                    <span className="quantity-input flex justify-center items-center">
+                      {quantity}
+                    </span>
+                    <button onClick={increment} className="quantity-btn">
+                      +
+                    </button>
+                  </div>
                 </div>
+                <button
+                  onClick={handleAddToWishlist}
+                  className="h-14 w-full border-2	 block border-solid  h-8 px-[88px] border-black transition-all hover:bg-black hover:text-white"
+                >
+                  <FavoriteBorderIcon />
+                  ADD TO WISHLIST
+                </button>
               </div>
-              <button
-                onClick={handleAddToWishlist}
-                className="border-2	 block border-solid  h-8 px-[88px] border-black mx-2 transition-all hover:bg-black hover:text-white"
-              >
-                <FavoriteBorderIcon />
-                ADD TO WISHLIST
-              </button>
             </div>
           </div>
           <div className="px-5">

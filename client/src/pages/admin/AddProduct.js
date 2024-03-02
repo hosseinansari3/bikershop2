@@ -367,7 +367,8 @@ function AddProduct() {
     for (let i = 0; i < images.length; i++) {
       formData.append("images", images[i]);
     }
-
+    const object = Object.fromEntries(formData.entries());
+    console.log("UPPPPP", JSON.stringify(object));
     dispatch(createProduct(formData));
   };
 
@@ -759,57 +760,56 @@ function AddProduct() {
                 </div>
               )
           )}
-          {firstVariant && (
-            <div className="block mr-4 mb-4 flex-row w-40 h-[215px] border-[3px] border-dashed border-gray-200 rounded">
-              <div className="flex mt-4 items-center h-fit px-1.5">
-                <span className="mr-1">quantity:</span>
-                <input
-                  defaultValue={stock}
-                  onChange={(e) => setStock(e.target.value)}
-                  type="number"
-                  className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
-                ></input>
-              </div>
-              <div className="flex mt-4 items-center h-fit px-1.5">
-                <span className="mr-1">color:</span>
-                <select
-                  onChange={(e) =>
-                    setColor(e.target.options[e.target.selectedIndex].text)
-                  }
-                  className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-                >
-                  <option value={"red"}>red</option>;
-                  <option value={"white"}>white</option>;
-                  <option value={"black"}>black</option>
-                  <option value={"green"}>green</option>
-                  <option value={"yellow"}>yellow</option>
-                  <option value={"orange"}>orange</option>
-                </select>
-              </div>
-              <div className="flex mt-4 items-center h-fit px-1.5">
-                <span className="mr-1">size:</span>
-                <select
-                  onChange={(e) =>
-                    setSize(e.target.options[e.target.selectedIndex].text)
-                  }
-                  className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-                >
-                  <option value={"48cm"}>48cm</option>
-                  <option value={"54cm"}>54cm</option>;
-                  <option value={"58cm"}>58cm</option>;
-                  <option value={"62cm"}>62cm</option>
-                </select>
-              </div>
-              <div className="flex mt-4 justify-center items-center h-fit px-1.5">
-                <button
-                  onClick={(e) => handleAdd(e)}
-                  className="px-10 py-2 rounded bg-blue-500"
-                >
-                  Add
-                </button>
-              </div>
+
+          <div className="block mr-4 mb-4 flex-row w-40 h-[215px] border-[3px] border-dashed border-gray-200 rounded">
+            <div className="flex mt-4 items-center h-fit px-1.5">
+              <span className="mr-1">quantity:</span>
+              <input
+                defaultValue={stock}
+                onChange={(e) => setStock(e.target.value)}
+                type="number"
+                className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
+              ></input>
             </div>
-          )}
+            <div className="flex mt-4 items-center h-fit px-1.5">
+              <span className="mr-1">color:</span>
+              <select
+                onChange={(e) =>
+                  setColor(e.target.options[e.target.selectedIndex].text)
+                }
+                className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+              >
+                <option value={"red"}>red</option>;
+                <option value={"white"}>white</option>;
+                <option value={"black"}>black</option>
+                <option value={"green"}>green</option>
+                <option value={"yellow"}>yellow</option>
+                <option value={"orange"}>orange</option>
+              </select>
+            </div>
+            <div className="flex mt-4 items-center h-fit px-1.5">
+              <span className="mr-1">size:</span>
+              <select
+                onChange={(e) =>
+                  setSize(e.target.options[e.target.selectedIndex].text)
+                }
+                className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+              >
+                <option value={"48cm"}>48cm</option>
+                <option value={"54cm"}>54cm</option>;
+                <option value={"58cm"}>58cm</option>;
+                <option value={"62cm"}>62cm</option>
+              </select>
+            </div>
+            <div className="flex mt-4 justify-center items-center h-fit px-1.5">
+              <button
+                onClick={(e) => handleAdd(e)}
+                className="px-10 py-2 rounded bg-blue-500"
+              >
+                Add
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 

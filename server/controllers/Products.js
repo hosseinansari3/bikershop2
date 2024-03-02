@@ -269,6 +269,8 @@ const updateProduct = async (req, res) => {
   try {
     const productId = req.params.id;
     const formData = req.body;
+    formData.variants = JSON.parse(req.body.variants);
+
     let images = [];
     let updated = {};
 
