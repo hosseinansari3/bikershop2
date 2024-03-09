@@ -1,28 +1,30 @@
 import { fetchProductById } from "../api";
 import { ADD_TO_CARD, REMOVE_FROM_CART } from "../constants/actionTypes";
 
-export const addToCard = (productId, qty) => async (dispatch, getState) => {
-  const { data } = await fetchProductById(productId);
+export const addToCard =
+  (productId, qty, size) => async (dispatch, getState) => {
+    const { data } = await fetchProductById(productId);
 
-  try {
-    dispatch({
-      type: ADD_TO_CARD,
-      payload: {
-        title: data.title,
-        image: data.images[0],
-        price: data.price,
-        product: data._id,
-        quantity: qty,
-      },
-    });
-    localStorage.setItem(
-      "cartItems",
-      JSON.stringify(getState().cart.cartItems)
-    );
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+    try {
+      dispatch({
+        type: ADD_TO_CARD,
+        payload: {
+          title: data.title,
+          image: data.images[0],
+          price: data.price,
+          product: data._id,
+          quantity: qty,
+          size: size,
+        },
+      });
+      localStorage.setItem(
+        "cartItems",
+        JSON.stringify(getState().cart.cartItems)
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
 export const removeFromCart = (product) => (dispatch, getState) => {
   const cartItems = getState()

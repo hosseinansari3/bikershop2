@@ -1,0 +1,14 @@
+input[type="radio"] {
+  display: none;
+}
+
+input[type="radio"]:checked + label span {
+  border-width: 9px;
+}
+
+label span {
+  border-width: 2px;
+  border-radius: 25px;
+  padding: 6px;
+  margin: 5px;
+}

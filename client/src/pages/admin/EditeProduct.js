@@ -35,7 +35,6 @@ function EditeProduct() {
   const [images, setImages] = useState([]);
   const [variants, setVariants] = useState([]);
   const [size, setSize] = useState("28C");
-  const [color, setColor] = useState("");
   const [stock, setStock] = useState(null);
 
   const { slug } = useParams();
@@ -185,7 +184,6 @@ function EditeProduct() {
     // Create a new variant object with default values
     const newVariant = {
       size: size,
-      color: color,
       stock: stock,
     };
     // Add the new variant to the extra variants array
@@ -601,52 +599,7 @@ function EditeProduct() {
                       className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
                     ></input>
                   </div>
-                  <div className="flex mt-4 items-center h-fit px-1.5">
-                    <span className="mr-1">color:</span>
-                    <select
-                      disabled={index < variants.length}
-                      onChange={(e) =>
-                        setColor(e.target.options[e.target.selectedIndex].text)
-                      }
-                      className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-                    >
-                      <option selected={variant.color == "red"} value={"red"}>
-                        red
-                      </option>
-                      ;
-                      <option
-                        selected={variant.color == "white"}
-                        value={"white"}
-                      >
-                        white
-                      </option>
-                      ;
-                      <option
-                        selected={variant.color == "black"}
-                        value={"black"}
-                      >
-                        black
-                      </option>
-                      <option
-                        selected={variant.color == "green"}
-                        value={"green"}
-                      >
-                        green
-                      </option>
-                      <option
-                        selected={variant.color == "yellow"}
-                        value={"yellow"}
-                      >
-                        yellow
-                      </option>
-                      <option
-                        selected={variant.color == "orange"}
-                        value={"orange"}
-                      >
-                        orange
-                      </option>
-                    </select>
-                  </div>
+
                   <div className="flex mt-4 items-center h-fit px-1.5">
                     <span className="mr-1">size:</span>
                     <select
@@ -698,22 +651,7 @@ function EditeProduct() {
                 className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
               ></input>
             </div>
-            <div className="flex mt-4 items-center h-fit px-1.5">
-              <span className="mr-1">color:</span>
-              <select
-                onChange={(e) =>
-                  setColor(e.target.options[e.target.selectedIndex].text)
-                }
-                className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-              >
-                <option value={"red"}>red</option>;
-                <option value={"white"}>white</option>;
-                <option value={"black"}>black</option>
-                <option value={"green"}>green</option>
-                <option value={"yellow"}>yellow</option>
-                <option value={"orange"}>orange</option>
-              </select>
-            </div>
+
             <div className="flex mt-4 items-center h-fit px-1.5">
               <span className="mr-1">size:</span>
               <select

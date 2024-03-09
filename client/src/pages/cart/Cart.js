@@ -30,7 +30,6 @@ function Cart() {
           <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
             <tr>
               <th className="py-3">PRODUCT</th>
-              <th className="py-3">COLOR</th>
               <th className="py-3">SIZE</th>
               <th className="py-3">PRICE</th>
               <th className="py-3">QUANTITY</th>
@@ -49,8 +48,7 @@ function Cart() {
                       <img className="inline product-img" src={item.image} />
                       {item.title}
                     </td>
-                    <td>Mark</td>
-                    <td>Otto</td>
+                    <td>{item.size}</td>
                     <td>{item.price}</td>
                     <td>{item.quantity}</td>
                     <td>{itemTotal}</td>

@@ -7,6 +7,7 @@ import {
 } from "../../actions/orders";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 import { ROLES } from "../../constants/panelConstants";
+import Modal from "./Modal";
 
 function Orders() {
   const user = useSelector((state) => state.usersSignin.userInfo.user);
@@ -18,6 +19,9 @@ function Orders() {
 
   const [Limit, setLimit] = useState(4);
   const [Orders, setOrders] = useState([]);
+  const [items, setItems] = useState([]);
+
+  const [isModalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     if (user.role === ROLES.Admin) {
@@ -31,6 +35,10 @@ function Orders() {
     setOrders(orders);
   }, [orders]);
 
+  useEffect(() => {
+    console.log("modal", isModalOpen);
+  }, [isModalOpen]);
+
   const searchHandler = (value) => {
     dispatch(onOrderSearch(value));
   };
@@ -40,7 +48,8 @@ function Orders() {
   };
 
   return (
-    <div className="container grid px-6 mx-auto">
+    <div className="relative container grid px-6 mx-auto">
+      <Modal isOpen={isModalOpen} items={items} setModalOpen={setModalOpen} />
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Orders
       </h1>
@@ -85,8 +94,12 @@ function Orders() {
           <table className="w-full whitespace-no-wrap">
             <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
               <tr>
-                <td className="px-4 py-3">ORDER DATE</td>
-                <td className="px-4 py-3">ORDER ITEMS</td>
+                <td className="px-4 py-3">
+                  <input id="selectAll" name="selectAll" type="checkbox" />
+                </td>
+                <td className="px-4 py-3">ID</td>
+                <td className="px-4 py-3">ITEMS</td>
+                <td className="px-4 py-3">DATE</td>
                 <td className="px-4 py-3">CUSTOMER</td>
                 <td className="px-4 py-3">AMOUNT</td>
                 <td className="px-4 py-3">STATUS</td>
@@ -95,7 +108,7 @@ function Orders() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
-              {orders?.map((order) => {
+              {orders?.map((order, index) => {
                 let total = 0;
                 order.orderItems?.map((item) => {
                   let itemPrice = parseFloat(item.price);
@@ -109,21 +122,31 @@ function Orders() {
                 return (
                   <tr>
                     <td className="px-4 py-3">
+                      <input id="selectAll" name="selectAll" type="checkbox" />
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className="font-semibold uppercase text-xs">
+                        {order?.orderId}
+                      </span>
+                    </td>
+
+                    <td className="px-4 py-3">
+                      <div className="w-[155px] overflow-x-auto flex">
+                        {order.orderItems.map((item) => {
+                          return (
+                            <img
+                              className="w-12 h-12 mx-0.5 border-2 border-solid object-cover rounded-sm	inline-block"
+                              src={item.image}
+                            />
+                          );
+                        })}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3">
                       <span className="font-semibold uppercase text-xs">
                         {order.createdAt}
                       </span>
                     </td>
-                    <td className="px-4 py-3">
-                      {order.orderItems.map((item) => {
-                        return (
-                          <img
-                            className="w-12 h-12 object-contain	inline-block"
-                            src={item.image}
-                          />
-                        );
-                      })}
-                    </td>
-
                     <td className="px-4 py-3">
                       <span className="text-sm font-semibold">
                         {order.user?.firstName}
@@ -165,7 +188,13 @@ function Orders() {
                             </svg>
                           </p>
                         </button>
-                        <span className="p-2 cursor-pointer text-gray-400 hover:text-green-600">
+                        <span
+                          onClick={(e) => {
+                            setItems(order?.orderItems);
+                            setModalOpen(!isModalOpen);
+                          }}
+                          className="p-2 cursor-pointer text-gray-400 hover:text-green-600"
+                        >
                           <a href="#">
                             <p>
                               <svg

@@ -47,6 +47,8 @@ import {
 
 function Product() {
   const [quantity, setQuantity] = useState(1);
+  const [selectedVarient, setSelectedVarient] = useState([]);
+  const [selectedSize, setSelectedSize] = useState("");
 
   const increment = () => {
     setQuantity(Number(quantity) + 1);
@@ -69,7 +71,7 @@ function Product() {
     toast("PRODUCT ADDED TO CART SUCCESSFULLY!");
 
   const addToCardHandler = (p, qty) => {
-    dispatch(addToCard(p, qty));
+    dispatch(addToCard(p, qty, selectedSize));
     ProductAddToCartNotif();
   };
 
@@ -91,6 +93,16 @@ function Product() {
   useEffect(() => {
     setImages(product?.images);
   }, [product]);
+
+  useEffect(() => {
+    const selectedV = product?.variants?.filter((varient) => {
+      return varient.size == selectedSize;
+    });
+
+    console.log("selectedV", selectedV);
+
+    setSelectedVarient(selectedV);
+  }, [selectedSize]);
 
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -202,6 +214,9 @@ function Product() {
                     Select Size{" "}
                   </label>
                   <select
+                    onChange={(e) => {
+                      setSelectedSize(e.target.value);
+                    }}
                     className="border-[1.5px] border-solid border-black h-10 w-full"
                     name="Sizes"
                     id="Size-select"
@@ -228,7 +243,10 @@ function Product() {
                       <StarRatingComponent value={3} />
                     </div>
                     <div className="ml-3">
-                      Assembling | Bulky good Still | 5 in stock
+                      Assembling | Bulky good Still |{" "}
+                      {selectedVarient?.length > 0 && (
+                        <span> {selectedVarient[0]?.stock} in stock</span>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -10,12 +10,12 @@ exports.MERCHANT_STATUS = {
   Waiting_Approval: "Waiting Approval",
 };
 
-exports.CART_ITEM_STATUS = {
+exports.ORDER_STATUS = {
   Processing: "Processing",
   Shipped: "Shipped",
   Delivered: "Delivered",
   Cancelled: "Cancelled",
-  Not_processed: "Not processed",
+  Pending: "Pending",
 };
 
 exports.REVIEW_STATUS = {

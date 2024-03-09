@@ -49,7 +49,6 @@ const ProductSchema = new mongoose.Schema({
   variants: [
     {
       size: { type: String },
-      color: { type: String },
       stock: { type: Number },
     },
   ],

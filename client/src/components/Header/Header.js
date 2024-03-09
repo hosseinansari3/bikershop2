@@ -188,7 +188,7 @@ function Header() {
           <div
             className="ShoppingCartIcon"
             onMouseEnter={openCart}
-            //onMouseLeave={closeCart}
+            onMouseLeave={closeCart}
           >
             <ShoppingCart fontSize="large" />
             {cartIsOpen &&
@@ -209,6 +209,7 @@ function Header() {
                                 <div className="card-price">
                                   <span>${item.price} </span>
                                   <span>QTY: {item.quantity}</span>
+                                  <span>size: {item.size}</span>
                                 </div>
                               </div>
                               <div
