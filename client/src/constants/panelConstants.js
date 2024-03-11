@@ -9,3 +9,11 @@ export const SECTIONS = {
   New_Arrival: "New Arrival",
   Our_Offer: "Our Offer",
 };
+
+export const ORDER_STATUS = {
+  Processing: "Processing",
+  Shipped: "Shipped",
+  Delivered: "Delivered",
+  Cancelled: "Cancelled",
+  Pending: "Pending",
+};

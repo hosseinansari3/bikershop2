@@ -4,6 +4,7 @@ import {
   listAllOrders,
   listMyOrders,
   onOrderSearch,
+  updateOrder,
 } from "../../actions/orders";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 import { ROLES } from "../../constants/panelConstants";
@@ -19,7 +20,7 @@ function Orders() {
 
   const [Limit, setLimit] = useState(4);
   const [Orders, setOrders] = useState([]);
-  const [items, setItems] = useState([]);
+  const [selectedOrder, setSelectedOrder] = useState([]);
 
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -49,7 +50,11 @@ function Orders() {
 
   return (
     <div className="relative container grid px-6 mx-auto">
-      <Modal isOpen={isModalOpen} items={items} setModalOpen={setModalOpen} />
+      <Modal
+        isOpen={isModalOpen}
+        order={selectedOrder}
+        setModalOpen={setModalOpen}
+      />
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Orders
       </h1>
@@ -190,7 +195,7 @@ function Orders() {
                         </button>
                         <span
                           onClick={(e) => {
-                            setItems(order?.orderItems);
+                            setSelectedOrder(order);
                             setModalOpen(!isModalOpen);
                           }}
                           className="p-2 cursor-pointer text-gray-400 hover:text-green-600"

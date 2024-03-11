@@ -1,12 +1,28 @@
 import React, { useEffect, useState } from "react";
 import "./Modal.css";
+import { ORDER_STATUS } from "../../constants/panelConstants";
+import { useDispatch } from "react-redux";
+import { updateOrder } from "../../actions/orders";
 
-function Modal({ isOpen, items, setModalOpen }) {
+function Modal({ isOpen, order, setModalOpen }) {
   const [showModal, setShowModal] = useState(false);
+  const [status, setStatus] = useState(order?.status);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setStatus(order?.status);
+  }, [order]);
+
+  console.log("status", status);
   useEffect(() => {
     setShowModal(isOpen);
   }, [isOpen]);
+
+  const saveHandler = () => {
+    dispatch(updateOrder(order._id, { ...order, status: status }));
+    setModalOpen(false);
+  };
 
   return (
     <div
@@ -15,11 +31,12 @@ function Modal({ isOpen, items, setModalOpen }) {
         showModal ? "flex" : "hidden"
       } absolute  justify-center items-center w-full h-full bg-gray-500/50`}
     >
+      {console.log("RREEEEENDER")}
       <div
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="p-9 bg-white w-3/4 shadow h-80 overflow-hidden border border-gray-900 dark:border-gray-700 rounded-lg ring-1 ring-black ring-opacity-5 mb-8"
+        className="p-9 bg-white w-3/4 shadow h-[400px] overflow-hidden border border-gray-900 dark:border-gray-700 rounded-lg ring-1 ring-black ring-opacity-5 mb-8"
       >
         <div className=" h-56 border-2 rounded overflow-y-auto">
           <table className="w-full whitespace-no-wrap overflow-auto">
@@ -33,8 +50,8 @@ function Modal({ isOpen, items, setModalOpen }) {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
-              {items ? (
-                items.map((item) => {
+              {order ? (
+                order?.orderItems?.map((item) => {
                   let itemPrice = parseFloat(item.price);
                   let itemTotal = itemPrice * parseFloat(item.quantity);
                   return (
@@ -65,12 +82,14 @@ function Modal({ isOpen, items, setModalOpen }) {
             </tbody>
           </table>
         </div>
-        <div className="flex justify-center mt-5">
+        <div className="flex justify-center mt-7">
           <input
+            checked={status == "Pending"}
+            onChange={(e) => setStatus(e.target.value)}
             type="radio"
             id="Pending"
             name="fav_language"
-            value="Pending"
+            value={ORDER_STATUS.Pending}
           />
 
           <label for="Pending">
@@ -78,42 +97,55 @@ function Modal({ isOpen, items, setModalOpen }) {
           </label>
 
           <input
+            checked={status == "Processing"}
+            onChange={(e) => setStatus(e.target.value)}
             type="radio"
             id="Processing"
             name="fav_language"
-            value="Processing"
+            value={ORDER_STATUS.Processing}
           />
           <label for="Processing">
-            <span>Processing</span>
+            <span>Processing {status}</span>
           </label>
 
           <input
+            checked={status == "Shipped"}
+            onChange={(e) => setStatus(e.target.value)}
             type="radio"
             id="Shipped"
             name="fav_language"
-            value="Shipped"
+            value={ORDER_STATUS.Shipped}
           />
           <label for="Shipped">
             <span>Shipped</span>
           </label>
           <input
+            checked={status == "Delivered"}
+            onChange={(e) => setStatus(e.target.value)}
             type="radio"
             id="Delivered"
             name="fav_language"
-            value="Delivered"
+            value={ORDER_STATUS.Delivered}
           />
           <label for="Delivered">
             <span>Delivered</span>
           </label>
           <input
+            checked={status == "Cancelled"}
+            onChange={(e) => setStatus(e.target.value)}
             type="radio"
             id="Cancelled"
             name="fav_language"
             value="Cancelled"
           />
           <label for="Cancelled">
-            <span>Cancelled</span>
+            <span>Cancelled </span>
           </label>
+        </div>
+        <div className="flex justify-center mt-5">
+          <button onClick={saveHandler} className="border-2 rounded-lg p-2">
+            save
+          </button>
         </div>
       </div>
     </div>

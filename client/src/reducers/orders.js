@@ -1,5 +1,6 @@
 import {
   ORDER_ALL_LIST_SUCCESS,
+  ORDER_ALL_LIST_UPDAT,
   ORDER_CREATE_FAILURE,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
@@ -22,6 +23,7 @@ export const orderCreateReducer = (state = {}, action) => {
         success: true,
         order: action.payload,
       };
+
     case ORDER_CREATE_FAILURE:
       return {
         loading: false,
@@ -51,6 +53,11 @@ export const orderListUserReducer = (state = { orders: [] }, action) => {
         loading: false,
         orders: action.payload,
       };
+    case ORDER_ALL_LIST_UPDAT:
+      const updated = state.orders.map((order) =>
+        order._id === action.payload._id ? action.payload : order
+      );
+      return { loading: false, orders: updated };
     case ORDER_SEARCH_SUCCESS:
       return {
         loading: false,

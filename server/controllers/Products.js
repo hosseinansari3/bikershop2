@@ -139,7 +139,7 @@ const searchProduct = async (req, res) => {
 
     let query = productModel.find(
       { title: { $regex: new RegExp(name), $options: "is" } },
-      { title: 1, slug: 1, image: 1, price: 1, _id: 1 }
+      { title: 1, slug: 1, images: 1, price: 1, _id: 1 }
     );
 
     const page = parseInt(req.query.page) || 1;

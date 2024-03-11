@@ -301,7 +301,7 @@ function Products() {
                     <td className="px-4 py-3">
                       <div className="flex items-center">
                         <img
-                          src={p.images[0]}
+                          src={p?.images[0]}
                           className="w-24 h-16 object-cover"
                         />
                         <div className="w-60 ml-7">

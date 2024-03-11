@@ -7,6 +7,7 @@ const {
   GetOrders,
   updateOrderToDelivered,
   searchOrder,
+  updateOrder,
 } = require("../controllers/Orders");
 
 const { protectRoute } = require("../middlewares/authMiddleware");
@@ -20,5 +21,6 @@ router.get("/list/search/:searchValue", searchOrder);
 
 router.get("/", GetOrders);
 router.get("/:id", getOrderById);
+router.put(`/:id`, updateOrder);
 
 module.exports = router;

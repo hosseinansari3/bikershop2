@@ -56,6 +56,9 @@ export const searchUserAPI = (inputValue, page) =>
 export const createOrderAPI = (order, config) =>
   axios.post(`${baseUrl}/orders`, order, config);
 
+export const updateOrderAPI = (id, updated) =>
+  axios.put(`${baseUrl}/orders/${id}`, updated);
+
 export const listUserOrdersAPI = (config) =>
   axios.get(`${baseUrl}/orders/myOrder/`, config);
 

@@ -47,6 +47,26 @@ const addorderitems = async (req, res) => {
     res.status(201).json(createdOrder);
   }
 };
+
+const updateOrder = async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    const updated = req.body;
+
+    const updatedOrder = await Order.findOneAndUpdate(
+      { _id: orderId },
+      { $set: updated },
+      { new: true }
+    );
+
+    res.status(201).json(updatedOrder);
+  } catch (error) {
+    res.status(400).json({
+      error: "Your request could not be processed. Please try again.",
+    });
+  }
+};
+
 // @desc get order by id
 // @route GET /api/orders/:id
 // @access Private
@@ -159,6 +179,7 @@ const searchOrder = async (req, res) => {
 
 module.exports = {
   addorderitems,
+  updateOrder,
   getOrderById,
   updateOrderToPaid,
   GetMyOrders,

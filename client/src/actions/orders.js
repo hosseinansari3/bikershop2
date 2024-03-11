@@ -5,9 +5,11 @@ import {
   listAllOrdersAPI,
   listUserOrdersAPI,
   searchOrderAPI,
+  updateOrderAPI,
 } from "../api";
 import {
   ORDER_ALL_LIST_SUCCESS,
+  ORDER_ALL_LIST_UPDAT,
   ORDER_CREATE_FAILURE,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
@@ -45,6 +47,18 @@ export const createOrder = (order) => async (dispatch, getState) => {
           ? error.response.data.message
           : error.message,
     });
+  }
+};
+
+export const updateOrder = (id, updated) => async (dispatch) => {
+  try {
+    const { data } = await updateOrderAPI(id, updated);
+    console.log("update action", data);
+
+    dispatch({ type: ORDER_ALL_LIST_UPDAT, payload: data });
+    toast("order updated");
+  } catch (error) {
+    console.log(error.message);
   }
 };
 

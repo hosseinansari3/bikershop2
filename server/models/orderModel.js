@@ -23,7 +23,7 @@ const orderSchema = mongoose.Schema(
         ORDER_STATUS.Processing,
         ORDER_STATUS.Shipped,
       ],
-      default: ORDER_STATUS.Delivered,
+      default: ORDER_STATUS.Pending,
     },
     orderItems: [
       {
