@@ -21,6 +21,8 @@ import Wishlist from "./pages/admin/Wishlist";
 import Reviews from "./pages/admin/Reviews";
 import AccountInfo from "./pages/admin/AccountInfo";
 import { ToastContainer } from "react-toastify";
+import Modal from "./pages/admin/Modal";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
   const location = useLocation();
