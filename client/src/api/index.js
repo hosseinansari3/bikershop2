@@ -62,8 +62,10 @@ export const updateOrderAPI = (id, updated) =>
 export const listUserOrdersAPI = (config) =>
   axios.get(`${baseUrl}/orders/myOrder/`, config);
 
-export const listAllOrdersAPI = (limit) =>
-  axios.get(`${baseUrl}/orders?limit=${limit}`);
+export const listAllOrdersAPI = (limit, filters) =>
+  axios.get(`${baseUrl}/orders`, {
+    params: { limit: limit, filters: filters },
+  });
 
 export const updateWishlistAPI = (item, config) =>
   axios.post(`${baseUrl}/wishlist`, item, config);

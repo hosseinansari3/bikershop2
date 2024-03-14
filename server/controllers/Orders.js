@@ -85,6 +85,28 @@ const getOrderById = async (req, res) => {
 // @desc update order to paid
 // @route update /api/orders/:id/pay
 // @access Private
+
+const getOrdersByFilters = async (req, res) => {
+  try {
+    const filters = JSON.parse(req.query.filters);
+
+    let query = {};
+
+    if (filters.status) {
+      query.status = { $in: filters.status };
+    }
+
+    const products = await productModel.find(query);
+
+    res.status(200).json({
+      status: "success",
+      products: products,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const updateOrderToPaid = async (req, res) => {
   const order = await Order.findById(req.params.id);
   if (order) {
@@ -142,7 +164,15 @@ const GetMyOrders = async (req, res) => {
 const GetOrders = async (req, res) => {
   let limit = req.query.limit ? parseInt(req.query.limit) : 100;
 
-  const orders = await Order.find({})
+  const filters = req.query.filters;
+
+  let query = {};
+
+  if (filters?.status && filters?.status != "") {
+    query.status = { $in: filters.status };
+  }
+
+  const orders = await Order.find(query)
     .populate({
       path: "user",
       select: "firstName",

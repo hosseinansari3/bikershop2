@@ -1,35 +1,45 @@
 import React, { useEffect, useState } from "react";
 import "./Modal.css";
 import { ORDER_STATUS } from "../../constants/panelConstants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateOrder } from "../../actions/orders";
+import { hideModal } from "../../actions/modal";
 
-function Modal({ isOpen, order, setModalOpen }) {
-  const [showModal, setShowModal] = useState(false);
-  const [status, setStatus] = useState(order?.status);
-
+function Modal() {
+  const modal = useSelector((state) => state.modal);
+  const { isOpen, order } = modal;
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    setStatus(order?.status);
-  }, [order]);
+  const [showModal, setShowModal] = useState(false);
+  const [status, setStatus] = useState(modal.order?.status);
 
-  console.log("status", status);
+  const handleCloseModal = () => {
+    dispatch(hideModal());
+  };
+
+  // useEffect(() => {
+  //   setStatus(order?.status);
+  // }, []);
+
   useEffect(() => {
-    setShowModal(isOpen);
-  }, [isOpen]);
+    console.log("modal", modal);
+  }, [modal]);
+
+  // useEffect(() => {
+  // setShowModal(isOpen);
+  //  }, []);
 
   const saveHandler = () => {
     dispatch(updateOrder(order._id, { ...order, status: status }));
-    setModalOpen(false);
+    handleCloseModal();
   };
 
   return (
     <div
-      onClick={(e) => setModalOpen(false)}
+      onClick={handleCloseModal}
       className={`${
-        showModal ? "flex" : "hidden"
-      } absolute  justify-center items-center w-full h-full bg-gray-500/50`}
+        isOpen ? "flex" : "hidden"
+      } absolute z-50 justify-center items-center w-full h-full bg-gray-500/50`}
     >
       {console.log("RREEEEENDER")}
       <div
@@ -39,8 +49,8 @@ function Modal({ isOpen, order, setModalOpen }) {
         className="p-9 bg-white w-3/4 shadow h-[400px] overflow-hidden border border-gray-900 dark:border-gray-700 rounded-lg ring-1 ring-black ring-opacity-5 mb-8"
       >
         <div className=" h-56 border-2 rounded overflow-y-auto">
-          <table className="w-full whitespace-no-wrap overflow-auto">
-            <thead className="sticky top-0 z-10 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
+          <table className="w-full whitespace-no-wrap overflow-auto text-center">
+            <thead className="sticky text-center top-0 z-10 text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
               <tr>
                 <th className="py-3">PRODUCT</th>
                 <th className="py-3">SIZE</th>
@@ -62,7 +72,7 @@ function Modal({ isOpen, order, setModalOpen }) {
                             className="inline product-img"
                             src={item.image}
                           />
-                          <div className="w-[330] text-ellipsis whitespace-nowrap overflow-hidden">
+                          <div className="w-[400px] text-ellipsis whitespace-nowrap overflow-hidden">
                             {item.title}
                           </div>
                         </div>

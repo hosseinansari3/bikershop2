@@ -14,6 +14,7 @@ import { Logout } from "@mui/icons-material";
 import { logout } from "../../actions/users";
 import { fetchProfile } from "../../actions/account";
 import defaultAvatar from "../../assets/images/Circle-icons-profile.svg.png";
+import Modal from "./Modal";
 function Panel() {
   const user = useSelector((state) => state.account.user);
 
@@ -57,6 +58,8 @@ function Panel() {
   };
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900 false">
+      <Modal />
+
       {user.role !== undefined && user.role === ROLES.Admin ? (
         <Admin
           user={user}

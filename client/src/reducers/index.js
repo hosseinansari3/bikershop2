@@ -7,6 +7,7 @@ import { orderCreateReducer, orderListUserReducer } from "./orders";
 import wishListReducer from "./wishlist";
 import reviewReducer from "./reviews";
 import { accountReducer } from "./account";
+import modalReducer from "./modal";
 export const reducers = combineReducers({
   products: productReducer,
   ProductDetails: ProductDetailsReducer,
@@ -19,4 +20,5 @@ export const reducers = combineReducers({
   review: reviewReducer,
   account: accountReducer,
   categories: categoriesReducer,
+  modal: modalReducer,
 });

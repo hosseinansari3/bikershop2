@@ -89,11 +89,11 @@ export const listMyOrders = () => async (dispatch, getState) => {
   }
 };
 
-export const listAllOrders = (limit) => async (dispatch, getState) => {
+export const listAllOrders = (limit, filters) => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_LIST_REQUEST });
 
-    const { data } = await listAllOrdersAPI(limit);
+    const { data } = await listAllOrdersAPI(limit, filters);
 
     dispatch({ type: ORDER_ALL_LIST_SUCCESS, payload: data });
   } catch (error) {

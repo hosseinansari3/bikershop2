@@ -7,13 +7,16 @@ import {
   updateOrder,
 } from "../../actions/orders";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
-import { ROLES } from "../../constants/panelConstants";
+import { ORDER_STATUS, ROLES } from "../../constants/panelConstants";
 import Modal from "./Modal";
+import { showModal } from "../../actions/modal";
 
 function Orders() {
   const user = useSelector((state) => state.usersSignin.userInfo.user);
 
   const orderListUser = useSelector((state) => state.orderListUser);
+  const modal = useSelector((state) => state.modal);
+
   const { orders, loading } = orderListUser;
 
   const dispatch = useDispatch();
@@ -21,20 +24,31 @@ function Orders() {
   const [Limit, setLimit] = useState(4);
   const [Orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState([]);
+  const [status, setStatus] = useState();
 
   const [isModalOpen, setModalOpen] = useState(false);
 
+  const handleOpenModal = (e, order) => {
+    e.preventDefault();
+
+    dispatch(showModal(order));
+  };
+
   useEffect(() => {
     if (user.role === ROLES.Admin) {
-      dispatch(listAllOrders(Limit));
+      dispatch(listAllOrders(Limit, { status: status }));
     } else {
       dispatch(listMyOrders());
     }
-  }, [Limit]);
+  }, [Limit, status]);
 
   useEffect(() => {
     setOrders(orders);
   }, [orders]);
+
+  useEffect(() => {
+    console.log("isOpen", modal.isOpen);
+  }, [modal]);
 
   useEffect(() => {
     console.log("modal", isModalOpen);
@@ -50,11 +64,6 @@ function Orders() {
 
   return (
     <div className="relative container grid px-6 mx-auto">
-      <Modal
-        isOpen={isModalOpen}
-        order={selectedOrder}
-        setModalOpen={setModalOpen}
-      />
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Orders
       </h1>
@@ -73,22 +82,33 @@ function Orders() {
                 />
               </div>
               <div>
-                <select className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white">
+                <select
+                  onChange={(e) => setStatus(e.target.value)}
+                  className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+                >
                   <option value="Status" hidden>
                     Status
                   </option>
-                  <option value="Status">Sfghtatus</option>
-                  <option value="Status">Stfghfgatus</option>
+                  <option value={""}>All</option>
+                  <option value={ORDER_STATUS.Pending}>
+                    {ORDER_STATUS.Pending}
+                  </option>
+                  <option value={ORDER_STATUS.Processing}>
+                    {ORDER_STATUS.Processing}
+                  </option>
+                  <option value={ORDER_STATUS.Delivered}>
+                    {ORDER_STATUS.Delivered}
+                  </option>
+                  <option value={ORDER_STATUS.Shipped}>
+                    {ORDER_STATUS.Shipped}
+                  </option>
+                  <option value={ORDER_STATUS.Cancelled}>
+                    {ORDER_STATUS.Cancelled}
+                  </option>
                 </select>
               </div>
               <div>
-                <select className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white">
-                  <option value="Status" hidden>
-                    Order limits
-                  </option>
-                  <option value="Status">Sfghtatus</option>
-                  <option value="Status">Stfghfgatus</option>
-                </select>
+                <select className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"></select>
               </div>
             </div>
           </form>
@@ -164,8 +184,19 @@ function Orders() {
                     </td>
                     <td className="px-4 py-3 text-xs">
                       <span className="font-serif">
-                        <span className="inline-flex px-2 text-xs font-medium leading-5 rounded-full text-green-500 bg-green-100 dark:bg-green-800 dark:text-green-100">
-                          Delivered
+                        <span
+                          className={`inline-flex px-2 text-xs font-medium leading-5 rounded-full  ${
+                            (order.status == ORDER_STATUS.Pending &&
+                              "bg-yellow-200 text-yellow-700") ||
+                            (order.status == ORDER_STATUS.Processing &&
+                              "bg-green-200 text-green-700") ||
+                            (order.status == ORDER_STATUS.Shipped &&
+                              "bg-blue-200 text-blue-700") ||
+                            (order.status == ORDER_STATUS.Delivered &&
+                              "bg-green-800 text-green-200")
+                          } bg-green-100 dark:bg-green-800 dark:text-green-100`}
+                        >
+                          {order.status}
                         </span>
                       </span>
                     </td>
@@ -194,10 +225,7 @@ function Orders() {
                           </p>
                         </button>
                         <span
-                          onClick={(e) => {
-                            setSelectedOrder(order);
-                            setModalOpen(!isModalOpen);
-                          }}
+                          onClick={(e) => handleOpenModal(e, order)}
                           className="p-2 cursor-pointer text-gray-400 hover:text-green-600"
                         >
                           <a href="#">
