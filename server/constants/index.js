@@ -21,7 +21,7 @@ exports.ORDER_STATUS = {
 exports.REVIEW_STATUS = {
   Rejected: "Rejected",
   Approved: "Approved",
-  Waiting_Approval: "Waiting Approval",
+  Pending: "Pending",
 };
 
 exports.EMAIL_PROVIDER = {

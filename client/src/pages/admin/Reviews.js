@@ -10,6 +10,7 @@ function Reviews() {
 
   const [Limit, setLimit] = useState(4);
   const [Reviews, setReviews] = useState([]);
+  const [showActions, setShowActions] = useState([]);
 
   useEffect(() => {
     console.log("dispatch");
@@ -51,36 +52,35 @@ function Reviews() {
         <div className="w-full overflow-x-auto">
           {loading && <LoadingIndicator />}
           <table className="w-full whitespace-no-wrap">
-            <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
+            <thead className="text-xs  font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
               <tr>
-                <td className="px-4 py-3">TITLE</td>
-                <td className="px-4 py-3">REVIEW</td>
                 <td className="px-4 py-3">PRODUCT</td>
-
                 {user.role === ROLES.Admin && (
-                  <td className="px-4 py-3">CUSTOMER</td>
+                  <td className="px-4 py-3">REVIEWER</td>
                 )}
+                <td className="px-4 py-3">REVIEW</td>
+                <td className="px-4 py-3">DATE</td>
+
                 <td className="px-4 py-3">STATUS</td>
                 <td className="px-4 py-3">ACTION</td>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
               {Reviews &&
-                Reviews.map((item) => {
+                Reviews.map((item, index) => {
                   return (
-                    <tr>
-                      <td className="px-4 py-3">
-                        <span className="font-semibold uppercase text-xs">
-                          {item.title}
-                        </span>
+                    <tr key={index}>
+                      <td className="px-4 py-3 w-64">
+                        <div className="flex items-center">
+                          <img
+                            className="w-24 h16"
+                            src={item.product?.images[0]}
+                          />
+                          <span className="font-semibold ml-5 uppercase text-xs">
+                            {item.product?.title}
+                          </span>
+                        </div>
                       </td>
-                      <td className="px-4 py-3">
-                        <span className="text-sm">{item.review}</span>
-                      </td>
-                      <td className="px-4 py-3 text-xs">
-                        <span className="text-sm">{item.product?.title}</span>
-                      </td>
-
                       {user.role === ROLES.Admin && (
                         <td className="px-4 py-3 text-xs">
                           <span className="text-sm">
@@ -88,6 +88,13 @@ function Reviews() {
                           </span>
                         </td>
                       )}
+                      <td className="px-4 py-3">
+                        <h3 className="font-bold">{item.title}</h3>
+                        <p>{item.review}</p>
+                      </td>
+                      <td className="px-4 py-3 text-xs">
+                        <span className="text-sm">{item.created}</span>
+                      </td>
 
                       <td className="px-4 py-3 text-xs">
                         <span className="font-serif">
@@ -97,51 +104,51 @@ function Reviews() {
                         </span>
                       </td>
                       <td className="px-4 py-3 text-right flex">
-                        <div className="flex justify-between items-center">
+                        <div className="relative">
                           <button
-                            type="button"
-                            className="ml-2 p-2 cursor-pointer text-gray-500 hover:text-green-600 focus:outline-none"
+                            onClick={() => {
+                              if (showActions.includes(index)) {
+                                const newArr = showActions.filter(
+                                  (item) => item !== index
+                                );
+                                setShowActions(newArr);
+                              } else {
+                                setShowActions([...showActions, index]);
+                              }
+                            }}
                           >
-                            <p>
-                              <svg
+                            <svg
+                              class="w-6 h-6 text-gray-800 dark:text-white"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
                                 stroke="currentColor"
-                                fill="none"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
                                 stroke-linecap="round"
-                                stroke-linejoin="round"
-                                height="1em"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-                                <rect x="6" y="14" width="12" height="8"></rect>
-                              </svg>
-                            </p>
+                                stroke-width="3"
+                                d="M12 6h.01M12 12h.01M12 18h.01"
+                              />
+                            </svg>
                           </button>
-                          <span className="p-2 cursor-pointer text-gray-400 hover:text-green-600">
-                            <a href="#">
-                              <p>
-                                <svg
-                                  stroke="currentColor"
-                                  fill="none"
-                                  stroke-width="2"
-                                  viewBox="0 0 24 24"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  height="1em"
-                                  width="1em"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <polyline points="3 6 5 6 21 6"></polyline>
-                                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                  <line x1="10" y1="11" x2="10" y2="17"></line>
-                                  <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg>
-                              </p>
-                            </a>
-                          </span>
+
+                          {showActions.includes(index) && (
+                            <div
+                              className={` absolute right-[-28px] bg-gray-100 rounded w-20 h-auto text-center`}
+                            >
+                              <ul>
+                                <li className="hover:bg-gray-50 hover:cursor-pointer p-1.5">
+                                  Approve
+                                </li>
+                                <li className="hover:bg-gray-50 hover:cursor-pointer p-1.5">
+                                  Reject
+                                </li>
+                              </ul>
+                            </div>
+                          )}
                         </div>
                       </td>
                     </tr>

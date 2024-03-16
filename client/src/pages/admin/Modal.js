@@ -17,9 +17,9 @@ function Modal() {
     dispatch(hideModal());
   };
 
-  // useEffect(() => {
-  //   setStatus(order?.status);
-  // }, []);
+  useEffect(() => {
+    setStatus(order?.status);
+  }, [modal]);
 
   useEffect(() => {
     console.log("modal", modal);
@@ -46,7 +46,7 @@ function Modal() {
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="p-9 bg-white w-3/4 shadow h-[400px] overflow-hidden border border-gray-900 dark:border-gray-700 rounded-lg ring-1 ring-black ring-opacity-5 mb-8"
+        className="p-9 bg-white w-3/5 shadow h-[400px] overflow-hidden border border-gray-900 dark:border-gray-700 rounded-lg ring-1 ring-black ring-opacity-5 mb-8"
       >
         <div className=" h-56 border-2 rounded overflow-y-auto">
           <table className="w-full whitespace-no-wrap overflow-auto text-center">

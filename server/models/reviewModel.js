@@ -34,9 +34,9 @@ const ReviewSchema = new Schema({
   },
   status: {
     type: String,
-    default: REVIEW_STATUS.Waiting_Approval,
+    default: REVIEW_STATUS.Pending,
     enum: [
-      REVIEW_STATUS.Waiting_Approval,
+      REVIEW_STATUS.Pending,
       REVIEW_STATUS.Rejected,
       REVIEW_STATUS.Approved,
     ],

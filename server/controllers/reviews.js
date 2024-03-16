@@ -75,7 +75,7 @@ const fetchAllReviews = async (req, res) => {
       })
       .populate({
         path: "product",
-        select: "title slug imageUrl",
+        select: "title slug images",
       })
       .limit(limit);
 
