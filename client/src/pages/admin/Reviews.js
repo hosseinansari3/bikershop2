@@ -1,9 +1,13 @@
 import { lime } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMyReviews, fetchReviews } from "../../actions/reviews";
+import {
+  fetchMyReviews,
+  fetchReviews,
+  updateReview,
+} from "../../actions/reviews";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
-import { ROLES } from "../../constants/panelConstants";
+import { REVIEW_STATUS, ROLES } from "../../constants/panelConstants";
 
 function Reviews() {
   const dispatch = useDispatch();
@@ -74,7 +78,10 @@ function Reviews() {
                         <div className="flex items-center">
                           <img
                             className="w-24 h16"
-                            src={item.product?.images[0]}
+                            src={
+                              item?.product?.images.length > 0 &&
+                              item?.product?.images[0]
+                            }
                           />
                           <span className="font-semibold ml-5 uppercase text-xs">
                             {item.product?.title}
@@ -99,7 +106,7 @@ function Reviews() {
                       <td className="px-4 py-3 text-xs">
                         <span className="font-serif">
                           <span className="inline-flex px-2 text-xs font-medium leading-5 rounded-full text-green-500 bg-green-100 dark:bg-green-800 dark:text-green-100">
-                            approved
+                            {item?.status}
                           </span>
                         </span>
                       </td>
@@ -140,10 +147,30 @@ function Reviews() {
                               className={` absolute right-[-28px] bg-gray-100 rounded w-20 h-auto text-center`}
                             >
                               <ul>
-                                <li className="hover:bg-gray-50 hover:cursor-pointer p-1.5">
+                                <li
+                                  onClick={() =>
+                                    dispatch(
+                                      updateReview(item._id, {
+                                        ...item,
+                                        status: REVIEW_STATUS.Approved,
+                                      })
+                                    )
+                                  }
+                                  className="hover:bg-gray-50 hover:cursor-pointer p-1.5"
+                                >
                                   Approve
                                 </li>
-                                <li className="hover:bg-gray-50 hover:cursor-pointer p-1.5">
+                                <li
+                                  onClick={() =>
+                                    dispatch(
+                                      updateReview(item._id, {
+                                        ...item,
+                                        status: REVIEW_STATUS.Rejected,
+                                      })
+                                    )
+                                  }
+                                  className="hover:bg-gray-50 hover:cursor-pointer p-1.5"
+                                >
                                   Reject
                                 </li>
                               </ul>

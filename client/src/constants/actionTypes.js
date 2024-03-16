@@ -104,6 +104,7 @@ export const ADD_REVIEW = "ADD_REVIEW";
 export const REMOVE_REVIEW = "REMOVE_REVIEW";
 export const SET_REVIEWS_LOADING = "SET_REVIEWS_LOADING";
 export const FETCH_REVIEWS = "FETCH_REVIEWS";
+export const UPDATE_REVIEW = "UPDATE_REVIEW";
 
 /*
  *

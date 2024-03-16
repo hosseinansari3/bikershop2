@@ -62,6 +62,33 @@ const getProductReviews = async (req, res) => {
   }
 };
 
+const updateReview = async (req, res) => {
+  try {
+    const reviewId = req.params.id;
+    const updated = req.body;
+
+    const updatedReview = await Review.findOneAndUpdate(
+      { _id: reviewId },
+      { $set: updated },
+      { new: true }
+    )
+      .populate({
+        path: "user",
+        select: "firstName",
+      })
+      .populate({
+        path: "product",
+        select: "title slug images",
+      });
+
+    res.status(201).json(updatedReview);
+  } catch (error) {
+    res.status(400).json({
+      error: "Your request could not be processed. Please try again.",
+    });
+  }
+};
+
 // fetch all reviews api
 const fetchAllReviews = async (req, res) => {
   try {
@@ -112,6 +139,7 @@ const fetchMyReviews = async (req, res) => {
 
 module.exports = {
   addReview,
+  updateReview,
   getProductReviews,
   fetchAllReviews,
   fetchMyReviews,

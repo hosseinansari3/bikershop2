@@ -85,6 +85,9 @@ export const fetchMyReviewsAPI = (config, limit) =>
 export const fetchAllReviewsAPI = (limit) =>
   axios.get(`${baseUrl}/review?limit=${limit}`);
 
+export const updateReviewAPI = (id, updated) =>
+  axios.put(`${baseUrl}/review/${id}`, updated);
+
 export const updateProfileAPI = (profile, config) =>
   axios.put(`${baseUrl}/users`, profile, config);
 

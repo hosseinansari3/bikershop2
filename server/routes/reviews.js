@@ -4,7 +4,8 @@ const {
   getProductReviews,
   fetchAllReviews,
   fetchMyReviews,
-} = require("../controllers/reviews");
+  updateReview,
+} = require("../controllers/Reviews");
 
 const { protectRoute } = require("../middlewares/authMiddleware");
 
@@ -13,6 +14,7 @@ router.get("/myReviews", protectRoute, fetchMyReviews);
 
 router.get("/:slug", getProductReviews);
 router.get("/", fetchAllReviews);
+router.put(`/:id`, updateReview);
 
 router.post("/add", protectRoute, addReview);
 

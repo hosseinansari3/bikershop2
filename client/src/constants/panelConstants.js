@@ -17,3 +17,9 @@ export const ORDER_STATUS = {
   Cancelled: "Cancelled",
   Pending: "Pending",
 };
+
+export const REVIEW_STATUS = {
+  Rejected: "Rejected",
+  Approved: "Approved",
+  Pending: "Pending",
+};

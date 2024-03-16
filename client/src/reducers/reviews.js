@@ -15,6 +15,7 @@ import {
   REVIEW_CHANGE,
   SET_REVIEWS_LOADING,
   SET_REVIEW_FORM_ERRORS,
+  UPDATE_REVIEW,
 } from "../constants/actionTypes";
 
 const initialState = {
@@ -46,6 +47,12 @@ const reviewReducer = (state = initialState, action) => {
         reviews: action.payload,
         loading: false,
       };
+
+    case UPDATE_REVIEW:
+      const updated = state.reviews.map((review) =>
+        review._id === action.payload._id ? action.payload : review
+      );
+      return { loading: false, reviews: updated };
 
     case FETCH_PRODUCT_REVIEWS:
       return {

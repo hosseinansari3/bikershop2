@@ -4,6 +4,7 @@ import {
   fetchAllReviewsAPI,
   fetchMyReviewsAPI,
   fetchProductReviewsAPI,
+  updateReviewAPI,
 } from "../api";
 import {
   FETCH_MY_REVIEWS,
@@ -14,6 +15,7 @@ import {
   REVIEW_CHANGE,
   SET_REVIEWS_LOADING,
   SET_REVIEW_FORM_ERRORS,
+  UPDATE_REVIEW,
 } from "../constants/actionTypes";
 import { allFieldsValidation, santizeFields } from "../utils/validation";
 
@@ -90,6 +92,18 @@ export const fetchProductReviews = (slug) => {
       console.log(error);
     }
   };
+};
+
+export const updateReview = (id, updated) => async (dispatch) => {
+  try {
+    const { data } = await updateReviewAPI(id, updated);
+    console.log("update action", data);
+
+    dispatch({ type: UPDATE_REVIEW, payload: data });
+    toast("Review updated");
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 export const fetchMyReviews = (limit) => {
