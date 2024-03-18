@@ -24,6 +24,7 @@ import {
   onProductSuggestionsClearRequested,
   onProductSuggestionsFetchRequested,
 } from "../../actions/products";
+import CartDrawer from "../Cart/CartDrawer";
 
 function Header() {
   const userInfo = useSelector((state) => state.usersSignin.userInfo);
@@ -38,6 +39,19 @@ function Header() {
   const [userName, setuserName] = useState("");
 
   const [isLoggedin, setisLoggedin] = useState(false);
+  const [cartDrawerisOpen, setCartDrawerOpen] = useState(false);
+
+  const [width, setWidth] = useState(window.innerWidth);
+  const breakpoint = 768;
+
+  useEffect(() => {
+    const handleResizeWindow = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResizeWindow);
+
+    return () => {
+      window.removeEventListener("resize", handleResizeWindow);
+    };
+  }, []);
 
   const openCart = () => {
     setCartIsOpen(true);
@@ -140,6 +154,7 @@ function Header() {
 
   return (
     <header className="header" style={{ zIndex: "30" }}>
+      <CartDrawer isOpen={cartDrawerisOpen} setOpen={setCartDrawerOpen} />
       <div
         className="py-8 grid grid-cols-5"
         style={{ backgroundColor: "black" }}
@@ -187,6 +202,9 @@ function Header() {
         <div className="flex justify-end items-center col-span-2 md:col-span-1">
           <div
             className="ShoppingCartIcon"
+            onClick={() =>
+              width < breakpoint && setCartDrawerOpen(!cartDrawerisOpen)
+            }
             onMouseEnter={openCart}
             onMouseLeave={closeCart}
           >
@@ -194,7 +212,7 @@ function Header() {
             {cartIsOpen &&
               savedCartItems?.length !== 0 &&
               savedCartItems !== undefined && (
-                <div className="card-dropdown shadow-xl">
+                <div className="hidden md:block card-dropdown shadow-xl">
                   <>
                     <ul>
                       {savedCartItems?.map((item) => {

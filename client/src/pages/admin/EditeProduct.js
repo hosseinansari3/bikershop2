@@ -32,7 +32,10 @@ function EditeProduct() {
   const [quantity, setQuantity] = useState("");
   const [content, setContent] = useState("");
   const [section, setSection] = useState("");
-  const [images, setImages] = useState([]);
+  const [mainImgFile, setMainImgFile] = useState();
+  const [otherImgsFiles, setOtherImgsFiles] = useState([]);
+  const [allImages, setAllImages] = useState([]);
+
   const [variants, setVariants] = useState([]);
   const [size, setSize] = useState("28C");
   const [stock, setStock] = useState(null);
@@ -87,7 +90,8 @@ function EditeProduct() {
 
   const { product } = productDetails;
 
-  const [preview, setPreview] = useState([]);
+  const [mainPreview, setMainPreview] = useState("");
+  const [othersPreview, setOthersPreview] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -174,8 +178,9 @@ function EditeProduct() {
       setQuantity(product.quantity);
       setSize(product.size);
       setVariants(product.variants);
-      setPreview(product.images);
-      console.log("PRW", preview);
+      setMainPreview(product?.images?.length > 0 && product?.images[0]);
+      setOthersPreview(product?.images?.slice(1));
+      console.log("PRW", mainPreview);
       console.log("title", title);
     }
   }, [product]);
@@ -191,27 +196,52 @@ function EditeProduct() {
   };
 
   useEffect(() => {
+    console.log("preview", mainPreview);
+  }, [mainPreview]);
+
+  useEffect(() => {
+    console.log("othersPreview", othersPreview);
+  }, [othersPreview]);
+
+  useEffect(() => {
     dispatch(fetchCategories());
     console.log("catss", categories);
   }, [dispatch]);
 
   useEffect(() => {
-    if (!images) {
-      setPreview(undefined);
+    if (!mainImgFile) {
+      setMainPreview(undefined);
       return;
     }
 
-    let imagess = [];
+    console.log("mainImgFile", mainImgFile);
 
-    for (let i = 0; i < images.length; i++) {
-      imagess.push(URL.createObjectURL(images[i]));
+    if (mainImgFile) {
+      const mainImgUrl = URL.createObjectURL(mainImgFile);
+      setMainPreview(mainImgUrl);
     }
-
-    setPreview(imagess);
 
     // free memory when ever this component is unmounted
     // return () => URL.revokeObjectURL(objectUrl);
-  }, [images]);
+  }, [mainImgFile]);
+
+  useEffect(() => {
+    if (!otherImgsFiles) {
+      setOthersPreview(undefined);
+      return;
+    }
+
+    let otherImgsUrls = [];
+
+    for (let i = 0; i < otherImgsFiles.length; i++) {
+      otherImgsUrls.push(URL.createObjectURL(otherImgsFiles[i]));
+    }
+
+    setOthersPreview(otherImgsUrls);
+
+    // free memory when ever this component is unmounted
+    // return () => URL.revokeObjectURL(objectUrl);
+  }, [otherImgsFiles]);
 
   const apiProduct = useSelector((state) => state.products);
   const { products, totalProducts } = apiProduct;
@@ -219,6 +249,12 @@ function EditeProduct() {
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch, products]);
+
+  useEffect(() => {
+    if (mainImgFile && otherImgsFiles.length > 0) {
+      setAllImages([mainImgFile, ...otherImgsFiles]);
+    }
+  }, [mainImgFile, otherImgsFiles]);
 
   const ProductAddnotif = () => toast("NEW PRODUCT ADDED SUCCESSFULLY!");
   const ProductDeletnotif = () => toast("PRODUCT DELETED SUCCESSFULLY!");
@@ -242,7 +278,7 @@ function EditeProduct() {
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       // handleFiles(e.dataTransfer.files);
 
-      setImages(e.dataTransfer.files);
+      setMainImgFile(e.dataTransfer.files);
     }
   };
 
@@ -262,9 +298,9 @@ function EditeProduct() {
     formData.append("content", content);
     formData.append("size", size);
     formData.append("quantity", quantity);
-    if (images.length > 0) {
-      for (let i = 0; i < images.length; i++) {
-        formData.append("images", images[i]);
+    if (allImages.length > 0) {
+      for (let i = 0; i < allImages.length; i++) {
+        formData.append("images", allImages[i]);
       }
     }
 
@@ -313,26 +349,49 @@ function EditeProduct() {
           Product Images
         </label>
         <div className="col-span-8 sm:col-span-4">
-          <label for="files">
-            <div
-              onDragEnter={handleDrag}
-              onDragLeave={handleDrag}
-              onDragOver={handleDrag}
-              onDrop={handleDrop}
-              className="w-full text-center"
-            >
-              <div
-                for="files"
-                role="button"
-                tabIndex="0"
-                className="border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer px-6 pt-5 pb-6"
+          <div
+            onDragEnter={handleDrag}
+            onDragLeave={handleDrag}
+            onDragOver={handleDrag}
+            onDrop={handleDrop}
+            className="w-full text-center"
+          >
+            <div className="flex justify-between">
+              <label
+                for="file0"
+                className="flex justify-center items-center w-[30%] aspect-square border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer px-6 pt-5 pb-6"
+              >
+                {mainPreview?.length == "" ? (
+                  <>
+                    <span>main image here</span>
+                  </>
+                ) : (
+                  <img className="w-32 h-32 object-cover" src={mainPreview} />
+                )}
+                <input
+                  onChange={(e) => {
+                    e.target.files.length != 0 &&
+                      setMainImgFile(e.target.files[0]);
+                  }}
+                  id="file0"
+                  tabIndex="-1"
+                  accept="image/*"
+                  type="file"
+                  autoComplete="off"
+                  style={{ display: "none" }}
+                />
+              </label>
+
+              <label
+                for="file1"
+                className="flex justify-center items-center w-[65%]  border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer px-6 pt-5 pb-6"
               >
                 <input
                   onChange={(e) => {
-                    e.target.files.length != 0 && setImages(e.target.files);
-                    console.log("IMG", images.length);
+                    e.target.files.length != 0 &&
+                      setOtherImgsFiles(e.target.files);
                   }}
-                  id="files"
+                  id="file1"
                   tabIndex="-1"
                   accept="image/*"
                   multiple
@@ -340,37 +399,17 @@ function EditeProduct() {
                   autoComplete="off"
                   style={{ display: "none" }}
                 />
-
-                {preview.length == 0 ? (
+                {othersPreview?.length == 0 ? (
                   <>
-                    <span className="mx-auto flex justify-center">
-                      <svg
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-width="2"
-                        viewBox="0 0 24 24"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="text-3xl text-green-500"
-                        height="1em"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <polyline points="16 16 12 12 8 16"></polyline>
-                        <line x1="12" y1="12" x2="12" y2="21"></line>
-                        <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>
-                        <polyline points="16 16 12 12 8 16"></polyline>
-                      </svg>
-                    </span>
-                    <p className="text-sm mt-2">Drag your images here</p>
+                    <span>other images here</span>
                   </>
                 ) : (
-                  <div className="grid gap-4 md:grid-cols-4 xl:grid-cols-4">
-                    {preview?.map((image, i) => {
-                      while (i < 4) {
+                  <div className="grid gap-4 md:grid-cols-3 xl:grid-cols-3">
+                    {othersPreview?.map((image, i) => {
+                      while (i < othersPreview.length) {
                         return (
                           <img
-                            className="h-[165px] w-36 object-cover"
+                            className="w-32 h-32 object-cover"
                             key={i}
                             src={image}
                           />
@@ -379,9 +418,9 @@ function EditeProduct() {
                     })}
                   </div>
                 )}
-              </div>
+              </label>
             </div>
-          </label>
+          </div>
         </div>
       </div>
 

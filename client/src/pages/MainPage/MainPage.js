@@ -161,6 +161,7 @@ function MainPage() {
                 image={product.images[0]}
                 price={product.price}
                 title={product.title}
+                slug={product.slug}
               />
             );
           })}
