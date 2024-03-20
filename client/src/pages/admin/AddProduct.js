@@ -17,6 +17,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { fetchCategories } from "../../actions/categories";
 import { fetchProductBySection, imageUpload } from "../../api";
 import { SECTIONS } from "../../constants/panelConstants";
+import { useForm } from "react-hook-form";
+import { string } from "prop-types";
 
 function AddProduct() {
   const dispatch = useDispatch();
@@ -30,20 +32,20 @@ function AddProduct() {
     console.log("catss", categories);
   }, [dispatch]);
 
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
+  //const [title, setTitle] = useState("");
+  //const [price, setPrice] = useState("");
   const [suspention, setSuspention] = useState("Dual Suspension");
   const [section, setSection] = useState("");
   const [material, setMaterial] = useState("Carbon");
   const [brand, setBrand] = useState("BIANCHI");
   const [size, setSize] = useState("28C");
-  const [stock, setStock] = useState(null);
+  //const [stock, setStock] = useState(null);
   const [category, setCategory] = useState(
     categories?.length > 0 ? categories[0]._id : ""
   );
   const [images, setImages] = useState([]);
-  const [mainImage, setMainImage] = useState([]);
-  const [otherImages, setOtherImages] = useState([]);
+  //const [mainImage, setMainImage] = useState([]);
+  //const [otherImages, setOtherImages] = useState([]);
   const [value, setValue] = useState("");
   const [otherpreview, setOtherPreview] = useState([]);
   const [mainpreview, setMainPreview] = useState([]);
@@ -56,12 +58,30 @@ function AddProduct() {
 
   const [extra, setExtra] = useState([]);
 
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setError,
+    clearErrors,
+    formState: { errors },
+  } = useForm();
+
+  const title = watch("title");
+  const mainImage = watch("mainimage", []);
+  const otherImages = watch("otherImages", []);
+  const price = watch("price");
+  const stock = watch("stock");
+
+  const sus = watch("suspention");
+
   // const handleAddVariant = () => {
   //  setExtraVariant(extraVariant + 1);
   //  };
 
   const handleAdd = (e) => {
     // Create a new variant object with default values
+    e.preventDefault();
     const newVariant = {
       size: size,
       stock: stock,
@@ -260,14 +280,6 @@ function AddProduct() {
   );
 
   useEffect(() => {
-    console.log("variants", variants);
-  }, [variants]);
-
-  useEffect(() => {
-    console.log("section", section);
-  }, [section]);
-
-  useEffect(() => {
     if (!mainImage) {
       setMainPreview(undefined);
       return;
@@ -293,16 +305,12 @@ function AddProduct() {
   }, [mainpreview]);
 
   useEffect(() => {
-    console.log("quantity", stock);
-  }, [stock]);
-
-  useEffect(() => {
     console.log(value);
   }, [value]);
 
   useEffect(() => {
-    console.log("mainImage", mainImage);
-  }, [mainImage]);
+    console.log("sus", sus);
+  }, [sus]);
 
   useEffect(() => {
     if (mainImage.length > 0 && otherImages.length > 0) {
@@ -317,6 +325,12 @@ function AddProduct() {
   useEffect(() => {
     console.log("otherImages", otherImages);
   }, [otherImages]);
+
+  useEffect(() => {
+    if (variants.length > 0) {
+      clearErrors("variant");
+    }
+  }, [variants]);
 
   const ProductAddnotif = () => toast("NEW PRODUCT ADDED SUCCESSFULLY!");
   const ProductDeletnotif = () => toast("PRODUCT DELETED SUCCESSFULLY!");
@@ -344,427 +358,472 @@ function AddProduct() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const finalVariants = variants.filter((variant) => variant != undefined);
-
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("variants", JSON.stringify(finalVariants));
-
-    formData.append("content", value);
-    formData.append("price", price);
-    formData.append("category", category);
-    formData.append("suspention", suspention);
-    formData.append("section", section);
-    formData.append("material", material);
-    formData.append("brand", brand);
-    formData.append("quantity", stock);
-    formData.append("size", size);
-    for (let i = 0; i < images.length; i++) {
-      formData.append("images", images[i]);
+  const onError = (e) => {
+    if (variants.length == 0) {
+      setError("variant", {
+        type: string,
+        message: "please select atleast one variant!",
+      });
     }
-    const object = Object.fromEntries(formData.entries());
-    console.log("UPPPPP", JSON.stringify(object));
-    dispatch(createProduct(formData));
+  };
+
+  const onSubmit = (e) => {
+    // e.preventDefault();
+
+    if (variants.length == 0) {
+      setError("variant", {
+        type: string,
+        message: "please select atleast one variant!",
+      });
+    } else {
+      const finalVariants = variants.filter((variant) => variant != undefined);
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("variants", JSON.stringify(finalVariants));
+
+      formData.append("content", value);
+      formData.append("price", price);
+      formData.append("category", category);
+      formData.append("suspention", suspention);
+      formData.append("section", section);
+      formData.append("material", material);
+      formData.append("brand", brand);
+      formData.append("quantity", stock);
+      formData.append("size", size);
+      for (let i = 0; i < images.length; i++) {
+        formData.append("images", images[i]);
+      }
+      const object = Object.fromEntries(formData.entries());
+      console.log("UPPPPP", JSON.stringify(object));
+      dispatch(createProduct(formData));
+    }
   };
 
   return (
-    <div className="px-6 pt-8 flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
-      <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-        <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
-          Product Title/Name
-        </label>
-        <div className="col-span-8 sm:col-span-4">
-          <input
-            className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
-            id="outlined-basic"
-            placeholder="Product Title/Name"
-            label="Product Name"
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          />
+    <form onSubmit={handleSubmit(onSubmit, onError)}>
+      <div className="px-6 pt-8 flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
+        <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+          <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
+            Product Title/Name
+          </label>
+          <div className="col-span-8 sm:col-span-4">
+            <input
+              className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
+              id="outlined-basic"
+              placeholder="Product Title/Name"
+              label="Product Name"
+              {...register("title", { required: true })}
+              //onChange={(e) => {
+              //setTitle(e.target.value);
+              //}}
+            />
+            {errors.title && (
+              <p className="text-red-600">title can't be empty</p>
+            )}
+          </div>
         </div>
-      </div>
 
-      <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-        <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
-          Product Description
-        </label>
-        <div className="col-span-8 sm:col-span-4">
-          <ReactQuill
-            ref={quillRef}
-            modules={modules}
-            theme="snow"
-            value={value}
-            onChange={setValue}
-          />
+        <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+          <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
+            Product Description
+          </label>
+          <div className="col-span-8 sm:col-span-4">
+            <ReactQuill
+              ref={quillRef}
+              modules={modules}
+              theme="snow"
+              value={value}
+              onChange={setValue}
+            />
+          </div>
         </div>
-      </div>
 
-      <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-        <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
-          Product Images
-        </label>
-        <div className="col-span-8 sm:col-span-4">
-          <div
-            onDragEnter={handleDrag}
-            onDragLeave={handleDrag}
-            onDragOver={handleDrag}
-            onDrop={handleDrop}
-            className="w-full text-center"
-          >
-            <div className="flex justify-between">
-              <label
-                for="file0"
-                className="flex justify-center items-center w-[30%] aspect-square border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer px-6 pt-5 pb-6"
-              >
-                {mainImage?.length == 0 ? (
-                  <>
-                    <span>main image here</span>
-                  </>
-                ) : (
-                  <img
-                    className="w-32 h-32 object-cover"
-                    src={mainpreview.length > 0 ? mainpreview[0] : null}
+        <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+          <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
+            Product Images
+          </label>
+          <div className="col-span-8 sm:col-span-4">
+            <div
+              onDragEnter={handleDrag}
+              onDragLeave={handleDrag}
+              onDragOver={handleDrag}
+              onDrop={handleDrop}
+              className="w-full text-center"
+            >
+              <div className="flex justify-between">
+                <label
+                  for="file0"
+                  className="flex justify-center items-center w-[30%] aspect-square border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer px-6 pt-5 pb-6"
+                >
+                  {mainImage?.length == 0 ? (
+                    <div>
+                      <span>main image here</span>
+                      {errors.mainimage && (
+                        <p className="text-red-600">
+                          you must upload main image
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <img
+                      className="w-32 h-32 object-cover"
+                      src={mainpreview.length > 0 ? mainpreview[0] : null}
+                    />
+                  )}
+
+                  <input
+                    //onChange={(e) => {
+                    //console.log("e.target.files", e.target);
+                    //e.target.files.length != 0 &&
+                    //setMainImage(e.target.files);
+                    //}}
+                    {...register("mainimage", { required: true })}
+                    id="file0"
+                    tabIndex="-1"
+                    accept="image/*"
+                    type="file"
+                    autoComplete="off"
+                    style={{ display: "none" }}
                   />
-                )}
-                <input
-                  onChange={(e) => {
-                    e.target.files.length != 0 && setMainImage(e.target.files);
-                  }}
-                  id="file0"
-                  tabIndex="-1"
-                  accept="image/*"
-                  type="file"
-                  autoComplete="off"
-                  style={{ display: "none" }}
-                />
-              </label>
+                </label>
 
-              <label
-                for="file1"
-                className="flex justify-center items-center w-[65%]  border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer px-6 pt-5 pb-6"
-              >
-                <input
-                  onChange={(e) => {
-                    e.target.files.length != 0 &&
-                      setOtherImages(e.target.files);
-                  }}
-                  id="file1"
-                  tabIndex="-1"
-                  accept="image/*"
-                  multiple
-                  type="file"
-                  autoComplete="off"
-                  style={{ display: "none" }}
-                />
-                {otherImages?.length == 0 ? (
-                  <>
-                    <span>other images here</span>
-                  </>
-                ) : (
-                  <div className="grid gap-4 md:grid-cols-3 xl:grid-cols-3">
-                    {otherpreview?.map((image, i) => {
-                      while (i < otherpreview.length) {
-                        return (
-                          <img
-                            className="w-32 h-32 object-cover"
-                            key={i}
-                            src={image}
-                          />
-                        );
-                      }
-                    })}
-                  </div>
-                )}
-              </label>
+                <label
+                  for="file1"
+                  className="flex justify-center items-center w-[65%]  border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer px-6 pt-5 pb-6"
+                >
+                  <input
+                    // onChange={(e) => {
+                    // e.target.files.length != 0 &&
+                    // setOtherImages(e.target.files);
+                    //}}
+                    {...register("otherImages", { required: true })}
+                    id="file1"
+                    tabIndex="-1"
+                    accept="image/*"
+                    multiple
+                    type="file"
+                    autoComplete="off"
+                    style={{ display: "none" }}
+                  />
+                  {otherImages?.length == 0 ? (
+                    <div>
+                      <span>other images here</span>
+                      {errors.otherImages && (
+                        <p className="text-red-600">
+                          you must upload at least one image
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="grid gap-4 md:grid-cols-3 xl:grid-cols-3">
+                      {otherpreview?.map((image, i) => {
+                        while (i < otherpreview.length) {
+                          return (
+                            <img
+                              className="w-32 h-32 object-cover"
+                              key={i}
+                              src={image}
+                            />
+                          );
+                        }
+                      })}
+                    </div>
+                  )}
+                </label>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-        <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
-          Category
-        </label>
-        <div className="col-span-8 sm:col-span-4">
-          <select
-            onChange={(e) => setCategory(e.target.value)}
-            className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-          >
-            {categories?.map((cat) => {
-              return <option value={cat._id}>{cat.name}</option>;
-            })}
-          </select>
-        </div>
-      </div>
-      <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-        <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
-          Section
-        </label>
-        <div className="col-span-8 sm:col-span-4">
-          <select
-            onChange={(e) =>
-              setSection(e.target.options[e.target.selectedIndex].value)
-            }
-            className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-          >
-            <option
-              disabled={bestSeller?.length >= 6}
-              value={SECTIONS.Best_Seller}
+        <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+          <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
+            Category
+          </label>
+          <div className="col-span-8 sm:col-span-4">
+            <select
+              onChange={(e) => setCategory(e.target.value)}
+              className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
             >
-              {SECTIONS.Best_Seller}
-            </option>
-            ;
-            <option
-              disabled={hotDiscount?.length >= 4}
-              value={SECTIONS.Hot_Discount}
-            >
-              {SECTIONS.Hot_Discount}
-            </option>
-            ;
-            <option value={SECTIONS.New_Arrival}>{SECTIONS.New_Arrival}</option>
-            ;
-            <option disabled={ourOffer?.length >= 4} value={SECTIONS.Our_Offer}>
-              {SECTIONS.Our_Offer}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-        <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
-          Suspention
-        </label>
-        <div className="col-span-8 sm:col-span-4">
-          <select
-            onChange={(e) =>
-              setSuspention(e.target.options[e.target.selectedIndex].text)
-            }
-            className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-          >
-            <option value={"Dual Suspension"}>Dual Suspension</option>;
-            <option value={"Hardtail"}>Hardtail</option>;
-            <option value={"Rigid"}>Rigid</option>;
-          </select>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-        <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
-          Material
-        </label>
-        <div className="col-span-8 sm:col-span-4">
-          <select
-            onChange={(e) =>
-              setMaterial(e.target.options[e.target.selectedIndex].text)
-            }
-            className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-          >
-            <option value={"Carbon"}>Carbon</option>;
-            <option value={"Aluminium"}>Aluminium</option>;
-            <option value={"Other"}>Other</option>;
-          </select>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-        <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
-          Brand
-        </label>
-        <div className="col-span-8 sm:col-span-4">
-          <select
-            onChange={(e) =>
-              setBrand(e.target.options[e.target.selectedIndex].text)
-            }
-            className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-          >
-            <option value={"BIANCHI"}>BIANCHI</option>;
-            <option value={"CIPOLLINI"}>CIPOLLINI</option>;
-            <option value={"FUJI"}>FUJI</option>
-            <option value={"GT"}>GT</option>
-            <option value={"KTM"}>KTM</option>
-            <option value={"SCOTT"}>SCOTT</option>
-            <option value={"CUBE"}>CUBE</option>
-            <option value={"Cannondale"}>Cannondale</option>
-            <option value={"BMC"}>BMC</option>
-          </select>
-        </div>
-      </div>
-      <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-        <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
-          Size
-        </label>
-        <div className="col-span-8 sm:col-span-4">
-          <select
-            onChange={(e) =>
-              setSize(e.target.options[e.target.selectedIndex].text)
-            }
-            className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-          >
-            <option value={"28C"}>28C</option>;
-            <option value={"25C"}>25C</option>;
-            <option value={"30C"}>30C</option>;
-            <option value={"32C"}>32C</option>;
-            <option value={"35C"}>35C</option>;
-          </select>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-        <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
-          Product Price
-        </label>
-        <div className="col-span-8 sm:col-span-4">
-          <div className="flex flex-row">
-            <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white focus:border-green-300 dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600">
-              $
-            </span>
-            <input
-              onChange={(e) => setPrice(e.target.value)}
-              type="number"
-              className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded w-full h-12 p-2 text-sm border border-gray-300 focus:bg-white focus:border-gray-300 focus:outline-none rounded-l-none"
-            ></input>
+              {categories?.map((cat) => {
+                return <option value={cat._id}>{cat.name}</option>;
+              })}
+            </select>
           </div>
         </div>
-      </div>
-
-      <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
-        <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
-          Product Quantity
-        </label>
-        <div className="col-span-8 sm:col-span-4">
-          <div className="flex flex-row">
-            <input
-              defaultValue={stock}
-              onChange={(e) => setStock(e.target.value)}
-              type="number"
-              className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-12 p-2 text-sm border border-gray-300 focus:bg-white focus:border-gray-300 focus:outline-none"
-            ></input>
+        <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+          <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
+            Section
+          </label>
+          <div className="col-span-8 sm:col-span-4">
+            <select
+              onChange={(e) =>
+                setSection(e.target.options[e.target.selectedIndex].value)
+              }
+              className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+            >
+              <option
+                disabled={bestSeller?.length >= 6}
+                value={SECTIONS.Best_Seller}
+              >
+                {SECTIONS.Best_Seller}
+              </option>
+              ;
+              <option
+                disabled={hotDiscount?.length >= 4}
+                value={SECTIONS.Hot_Discount}
+              >
+                {SECTIONS.Hot_Discount}
+              </option>
+              ;
+              <option value={SECTIONS.New_Arrival}>
+                {SECTIONS.New_Arrival}
+              </option>
+              ;
+              <option
+                disabled={ourOffer?.length >= 4}
+                value={SECTIONS.Our_Offer}
+              >
+                {SECTIONS.Our_Offer}
+              </option>
+            </select>
           </div>
         </div>
-      </div>
+        <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+          <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
+            Suspention
+          </label>
+          <div className="col-span-8 sm:col-span-4">
+            <select
+              onChange={(e) => setSuspention(e.target.value)}
+              className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+            >
+              <option value={"Dual Suspension"}>Dual Suspension</option>
+              <option value={"Hardtail"}>Hardtail</option>
+              <option value={"Rigid"}>Rigid</option>
+            </select>
+          </div>
+        </div>
 
-      <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
-        <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
-          Product Variants
-        </label>
-        <div className="flex grid grid-cols-3 col-span-4 sm:col-span-4">
-          {variants?.map(
-            (variant, index) =>
-              variants[index] && (
-                <div
-                  key={index}
-                  className="block mr-4 mb-4 flex-row w-40 h-[215px] border border-green-400 shadow-md bg-green-200 rounded"
-                >
-                  <div className="flex mt-4 items-center h-fit px-1.5">
-                    <span className="mr-1">quantity:</span>
-                    <input
-                      disabled={index < variants.length}
-                      value={variant.price}
-                      defaultValue={stock}
-                      onChange={(e) => {
-                        setStock(e.target.value);
-                      }}
-                      type="number"
-                      className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
-                    ></input>
-                  </div>
+        <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+          <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
+            Material
+          </label>
+          <div className="col-span-8 sm:col-span-4">
+            <select
+              onChange={(e) =>
+                setMaterial(e.target.options[e.target.selectedIndex].text)
+              }
+              className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+            >
+              <option value={"Carbon"}>Carbon</option>;
+              <option value={"Aluminium"}>Aluminium</option>;
+              <option value={"Other"}>Other</option>;
+            </select>
+          </div>
+        </div>
 
-                  <div className="flex mt-4 items-center h-fit px-1.5">
-                    <span className="mr-1">size:</span>
-                    <select
-                      disabled={index < variants.length}
-                      onChange={(e) =>
-                        setSize(e.target.options[e.target.selectedIndex].text)
-                      }
-                      className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-                    >
-                      <option selected={variant.size == "48cm"} value={"48cm"}>
-                        48cm
-                      </option>
-                      <option selected={variant.size == "54cm"} value={"54cm"}>
-                        54cm
-                      </option>
-                      ;
-                      <option selected={variant.size == "58cm"} value={"58cm"}>
-                        58cm
-                      </option>
-                      ;
-                      <option selected={variant.size == "62cm"} value={"62cm"}>
-                        62cm
-                      </option>
-                    </select>
-                  </div>
-                  <div className="flex mt-4 justify-center items-center h-fit px-1.5">
-                    <button
-                      onClick={() => {
-                        delete variants[index];
-                        const newArr = [...variants];
-                        setVariants(newArr);
-                      }}
-                      className="px-10 py-2 rounded bg-blue-500"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              )
-          )}
+        <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+          <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
+            Brand
+          </label>
+          <div className="col-span-8 sm:col-span-4">
+            <select
+              onChange={(e) =>
+                setBrand(e.target.options[e.target.selectedIndex].text)
+              }
+              className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+            >
+              <option value={"BIANCHI"}>BIANCHI</option>;
+              <option value={"CIPOLLINI"}>CIPOLLINI</option>;
+              <option value={"FUJI"}>FUJI</option>
+              <option value={"GT"}>GT</option>
+              <option value={"KTM"}>KTM</option>
+              <option value={"SCOTT"}>SCOTT</option>
+              <option value={"CUBE"}>CUBE</option>
+              <option value={"Cannondale"}>Cannondale</option>
+              <option value={"BMC"}>BMC</option>
+            </select>
+          </div>
+        </div>
 
-          <div className="block mr-4 mb-4 flex-row w-40 h-[215px] border-[3px] border-dashed border-gray-200 rounded">
-            <div className="flex mt-4 items-center h-fit px-1.5">
-              <span className="mr-1">quantity:</span>
+        <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+          <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
+            Product Price
+          </label>
+          <div className="col-span-8 sm:col-span-4">
+            <div className="flex flex-row">
+              <span className="inline-flex items-center px-3 rounded rounded-r-none border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm focus:bg-white focus:border-green-300 dark:bg-gray-700 dark:text-gray-300 dark:border dark:border-gray-600">
+                $
+              </span>
               <input
-                defaultValue={stock}
-                onChange={(e) => setStock(e.target.value)}
+                {...register("price", { required: true })}
+                //onChange={(e) => setPrice(e.target.value)}
                 type="number"
-                className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
+                className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded w-full h-12 p-2 text-sm border border-gray-300 focus:bg-white focus:border-gray-300 focus:outline-none rounded-l-none"
               ></input>
             </div>
+            {errors.price && (
+              <p className="text-red-600">price can't be empty</p>
+            )}
+          </div>
+        </div>
 
-            <div className="flex mt-4 items-center h-fit px-1.5">
-              <span className="mr-1">size:</span>
-              <select
-                onChange={(e) =>
-                  setSize(e.target.options[e.target.selectedIndex].text)
-                }
-                className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-              >
-                <option value={"48cm"}>48cm</option>
-                <option value={"54cm"}>54cm</option>;
-                <option value={"58cm"}>58cm</option>;
-                <option value={"62cm"}>62cm</option>
-              </select>
+        <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
+          <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
+            Number in stock
+          </label>
+          <div className="col-span-8 sm:col-span-4">
+            <div className="flex flex-row">
+              <input
+                {...register("stock", { required: true })}
+                //defaultValue={stock}
+                //onChange={(e) => setStock(e.target.value)}
+                type="number"
+                className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-12 p-2 text-sm border border-gray-300 focus:bg-white focus:border-gray-300 focus:outline-none"
+              ></input>
             </div>
-            <div className="flex mt-4 justify-center items-center h-fit px-1.5">
-              <button
-                onClick={(e) => handleAdd(e)}
-                className="px-10 py-2 rounded bg-blue-500"
-              >
-                Add
-              </button>
+            {errors.stock && (
+              <p className="text-red-600">Number in stock can'tbe empty</p>
+            )}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
+          <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
+            Product Variants
+          </label>
+          <div className="flex grid grid-cols-3 col-span-4 sm:col-span-4">
+            {variants?.map(
+              (variant, index) =>
+                variants[index] && (
+                  <div
+                    key={index}
+                    className="block mr-4 mb-4 flex-row w-40 h-[215px] border border-green-400 shadow-md bg-green-200 rounded"
+                  >
+                    <div className="flex mt-4 items-center h-fit px-1.5">
+                      <span className="mr-1">quantity:</span>
+                      <input
+                        disabled={index < variants.length}
+                        value={variant.price}
+                        defaultValue={stock}
+                        // onChange={(e) => {
+                        // setStock(e.target.value);
+                        //}}
+                        type="number"
+                        className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
+                      ></input>
+                    </div>
+
+                    <div className="flex mt-4 items-center h-fit px-1.5">
+                      <span className="mr-1">size:</span>
+                      <select
+                        disabled={index < variants.length}
+                        onChange={(e) =>
+                          setSize(e.target.options[e.target.selectedIndex].text)
+                        }
+                        className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+                      >
+                        <option
+                          selected={variant.size == "48cm"}
+                          value={"48cm"}
+                        >
+                          48cm
+                        </option>
+                        <option
+                          selected={variant.size == "54cm"}
+                          value={"54cm"}
+                        >
+                          54cm
+                        </option>
+                        ;
+                        <option
+                          selected={variant.size == "58cm"}
+                          value={"58cm"}
+                        >
+                          58cm
+                        </option>
+                        ;
+                        <option
+                          selected={variant.size == "62cm"}
+                          value={"62cm"}
+                        >
+                          62cm
+                        </option>
+                      </select>
+                    </div>
+                    <div className="flex mt-4 justify-center items-center h-fit px-1.5">
+                      <button
+                        onClick={() => {
+                          delete variants[index];
+                          const newArr = [...variants];
+                          setVariants(newArr);
+                        }}
+                        className="px-10 py-2 rounded bg-blue-500"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                )
+            )}
+
+            <div className="block mr-4 mb-4 flex-row w-40 h-[215px] border-[3px] border-dashed border-gray-200 rounded">
+              <div className="flex mt-4 items-center h-fit px-1.5">
+                <span className="mr-1">quantity:</span>
+                <input
+                  defaultValue={stock}
+                  //onChange={(e) => setStock(e.target.value)}
+                  type="number"
+                  className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
+                ></input>
+              </div>
+
+              <div className="flex mt-4 items-center h-fit px-1.5">
+                <span className="mr-1">size:</span>
+                <select
+                  onChange={(e) =>
+                    setSize(e.target.options[e.target.selectedIndex].text)
+                  }
+                  className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+                >
+                  <option value={"48cm"}>48cm</option>
+                  <option value={"54cm"}>54cm</option>;
+                  <option value={"58cm"}>58cm</option>;
+                  <option value={"62cm"}>62cm</option>
+                </select>
+              </div>
+              <div className="flex mt-4 justify-center items-center h-fit px-1.5">
+                <button
+                  onClick={(e) => handleAdd(e)}
+                  className="px-10 py-2 rounded bg-blue-500"
+                >
+                  Add
+                </button>
+              </div>
+              {errors.variant && (
+                <p className="text-red-600">
+                  you must choose at least one variant
+                </p>
+              )}
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
-        <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
-          Product Tags
-        </label>
-        <div className="col-span-8 sm:col-span-4"></div>
-      </div>
+        <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
+          <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
+            Product Tags
+          </label>
+          <div className="col-span-8 sm:col-span-4"></div>
+        </div>
 
-      <Grid item xs={12}></Grid>
-      <Grid item xs={12}>
-        <Button onClick={handleSubmit} variant="contained">
-          Publish Product
-        </Button>
-      </Grid>
-    </div>
+        <Grid item xs={12}></Grid>
+        <Grid item xs={12}>
+          <Button type="submit" variant="contained">
+            Publish Product
+          </Button>
+        </Grid>
+      </div>
+    </form>
   );
 }
 
