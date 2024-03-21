@@ -16,18 +16,32 @@ import { fetchProfile } from "../../actions/account";
 import defaultAvatar from "../../assets/images/Circle-icons-profile.svg.png";
 import Modal from "./Modal";
 function Panel() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(fetchProfile());
+  }, []);
+
   const user = useSelector((state) => state.account.user);
+  const account = useSelector((state) => state.account);
+
+  console.log("usermozer", user);
+  console.log("acmozer", account);
 
   const [sideOpen, setSideOpen] = useState(false);
   const [profiletIsOpen, setProfileIsOpen] = useState(false);
   const [avatar, setAvatar] = useState("");
 
+  useEffect(() => {
+    if (!account?.user) {
+      navigate("/login");
+    }
+  }, [account]);
+
   const toggleProfile = () => {
     setProfileIsOpen(!profiletIsOpen);
   };
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -40,16 +54,11 @@ function Panel() {
   const { pathname } = location;
   const splitLocation = pathname.split("/");
 
-  useEffect(() => {}, [location.pathname]);
   useEffect(() => {
-    dispatch(fetchProfile());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (typeof user.avatar === "object" && user.avatar !== null) {
-      setAvatar(URL.createObjectURL(user.avatar));
+    if (typeof user?.avatar === "object" && user?.avatar !== null) {
+      setAvatar(URL.createObjectURL(user?.avatar));
     } else {
-      setAvatar(user.avatar);
+      setAvatar(user?.avatar);
     }
   }, [user]);
 
@@ -60,7 +69,7 @@ function Panel() {
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900 false">
       <Modal />
 
-      {user.role !== undefined && user.role === ROLES.Admin ? (
+      {user?.role !== undefined && user?.role === ROLES.Admin ? (
         <Admin
           user={user}
           sideOpen={sideOpen}
@@ -125,7 +134,7 @@ function Panel() {
                     className="mx-2 inline rounded-full h-8 w-8"
                     src={avatar ? avatar : defaultAvatar}
                   />
-                  <span>{user.firstName}</span>
+                  <span>{user?.firstName}</span>
                 </button>
                 {profiletIsOpen && (
                   <div className="text-black absolute z-50 bg-white rounded  w-28 right-16">

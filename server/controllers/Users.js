@@ -47,7 +47,7 @@ const signIn = async (req, res) => {
         isRestricted: user.isRestricted,
       },
       jwtSecret,
-      { expiresIn: "24h" },
+      { expiresIn: "30s" },
       (err, token) => {
         if (err) res.json({ err });
         else {

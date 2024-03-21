@@ -2,16 +2,11 @@ import {
   DELET_PROFILE_INFO,
   FETCH_PROFILE,
   FETCH_PROFILE_REQUEST,
+  NOT_AUTHORIZED,
 } from "../constants/actionTypes";
 
 const initialState = {
-  user: {
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: "",
-    avatar: "",
-  },
+  user: {},
   loading: false,
 };
 
@@ -19,9 +14,7 @@ export const accountReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_PROFILE:
       return {
-        ...state,
         user: {
-          ...state.user,
           ...action.payload,
         },
         loading: false,
@@ -29,6 +22,10 @@ export const accountReducer = (state = initialState, action) => {
     case DELET_PROFILE_INFO:
       return {
         user: [],
+        loading: false,
+      };
+    case NOT_AUTHORIZED:
+      return {
         loading: false,
       };
     case FETCH_PROFILE_REQUEST:

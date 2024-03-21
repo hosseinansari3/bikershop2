@@ -16,6 +16,7 @@ import {
   SET_LOGIN_FORM_ERRORS,
   USER_SEARCH_SUCCESS,
   DELET_PROFILE_INFO,
+  FETCH_PROFILE,
 } from "../constants/actionTypes";
 import * as api from "../api/index";
 
@@ -70,6 +71,8 @@ export const signin = (email, password) => async (dispatch) => {
     setAuthToken(token);
     // if success, dispatch success and set payload to data
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
+    dispatch({ type: FETCH_PROFILE });
+
     const patse = localStorage.getItem("userInfo");
     toast("LOGGED IN SUCCESSFULLY!");
 

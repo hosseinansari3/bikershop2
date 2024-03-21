@@ -1,6 +1,10 @@
 import { toast } from "react-toastify";
 import { getCurrentUserAPI, updateProfileAPI } from "../api";
-import { FETCH_PROFILE, FETCH_PROFILE_REQUEST } from "../constants/actionTypes";
+import {
+  FETCH_PROFILE,
+  FETCH_PROFILE_REQUEST,
+  NOT_AUTHORIZED,
+} from "../constants/actionTypes";
 
 export const updateProfile = (formData) => {
   return async (dispatch, getState) => {
@@ -43,6 +47,9 @@ export const fetchProfile = () => {
       dispatch({ type: FETCH_PROFILE, payload: response.data.user });
     } catch (error) {
       console.log(error);
+      if (error.response.status === 401) {
+        dispatch({ type: NOT_AUTHORIZED });
+      }
     }
   };
 };
