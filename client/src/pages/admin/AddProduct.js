@@ -38,7 +38,7 @@ function AddProduct() {
   const [section, setSection] = useState("");
   const [material, setMaterial] = useState("Carbon");
   const [brand, setBrand] = useState("BIANCHI");
-  const [size, setSize] = useState("28C");
+  //const [size, setSize] = useState("28C");
   //const [stock, setStock] = useState(null);
   const [category, setCategory] = useState(
     categories?.length > 0 ? categories[0]._id : ""
@@ -71,7 +71,8 @@ function AddProduct() {
   const mainImage = watch("mainimage", []);
   const otherImages = watch("otherImages", []);
   const price = watch("price");
-  const stock = watch("stock");
+  const stock = watch("stock", 1);
+  const size = watch("size", "48cm");
 
   const sus = watch("suspention");
 
@@ -670,26 +671,6 @@ function AddProduct() {
 
         <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
           <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
-            Number in stock
-          </label>
-          <div className="col-span-8 sm:col-span-4">
-            <div className="flex flex-row">
-              <input
-                {...register("stock", { required: true })}
-                //defaultValue={stock}
-                //onChange={(e) => setStock(e.target.value)}
-                type="number"
-                className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-12 p-2 text-sm border border-gray-300 focus:bg-white focus:border-gray-300 focus:outline-none"
-              ></input>
-            </div>
-            {errors.stock && (
-              <p className="text-red-600">Number in stock can'tbe empty</p>
-            )}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
-          <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
             Product Variants
           </label>
           <div className="flex grid grid-cols-3 col-span-4 sm:col-span-4">
@@ -701,14 +682,15 @@ function AddProduct() {
                     className="block mr-4 mb-4 flex-row w-40 h-[215px] border border-green-400 shadow-md bg-green-200 rounded"
                   >
                     <div className="flex mt-4 items-center h-fit px-1.5">
-                      <span className="mr-1">quantity:</span>
+                      <span className="mr-1">stock:</span>
                       <input
                         disabled={index < variants.length}
                         value={variant.price}
-                        defaultValue={stock}
+                        defaultValue={4}
+                        {...register("stock", { required: true })}
                         // onChange={(e) => {
-                        // setStock(e.target.value);
-                        //}}
+                        //  setStock(e.target.value);
+                        // }}
                         type="number"
                         className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
                       ></input>
@@ -718,9 +700,7 @@ function AddProduct() {
                       <span className="mr-1">size:</span>
                       <select
                         disabled={index < variants.length}
-                        onChange={(e) =>
-                          setSize(e.target.options[e.target.selectedIndex].text)
-                        }
+                        {...register("size", { required: true })}
                         className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
                       >
                         <option
@@ -769,10 +749,11 @@ function AddProduct() {
 
             <div className="block mr-4 mb-4 flex-row w-40 h-[215px] border-[3px] border-dashed border-gray-200 rounded">
               <div className="flex mt-4 items-center h-fit px-1.5">
-                <span className="mr-1">quantity:</span>
+                <span className="mr-1">stock:</span>
                 <input
                   defaultValue={stock}
                   //onChange={(e) => setStock(e.target.value)}
+                  {...register("stock", { required: true })}
                   type="number"
                   className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
                 ></input>
@@ -781,9 +762,7 @@ function AddProduct() {
               <div className="flex mt-4 items-center h-fit px-1.5">
                 <span className="mr-1">size:</span>
                 <select
-                  onChange={(e) =>
-                    setSize(e.target.options[e.target.selectedIndex].text)
-                  }
+                  {...register("size", { required: true })}
                   className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
                 >
                   <option value={"48cm"}>48cm</option>

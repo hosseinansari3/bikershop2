@@ -5,7 +5,7 @@ import { signin } from "../../actions/users";
 import { Link } from "react-router-dom";
 import "./UserLogin.css";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { Slide, toast } from "react-toastify";
 
@@ -21,6 +21,11 @@ function LoginPage(props) {
   const { userInfo, loading, formErrors } = userSignin;
 
   const dispatch = useDispatch();
+
+  const location = useLocation();
+  const { from } = location.state || { from: { pathname: "/cart" } };
+
+  console.log("state", location?.state);
 
   useEffect(() => {
     if (userInfo !== null && typeof userInfo !== undefined) {
@@ -38,7 +43,9 @@ function LoginPage(props) {
 
   useEffect(() => {
     if (isLoggedin) {
-      navigate("/");
+      location?.state?.from
+        ? navigate(location?.state?.from.pathname)
+        : navigate("/");
       console.log("logged in!");
     }
   }, [userInfo]);

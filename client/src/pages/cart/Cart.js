@@ -1,11 +1,16 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createOrder } from "../../actions/orders";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import "./Cart.css";
 
 function Cart() {
   const savedCartItems = JSON.parse(localStorage.getItem("cartItems"));
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const userInfo = useSelector((state) => state.usersSignin.userInfo);
 
   var cartTotal = 0.0;
 
@@ -13,11 +18,14 @@ function Cart() {
 
   const handleOrder = (e) => {
     e.preventDefault();
-    dispatch(
-      createOrder({
-        orderItems: savedCartItems,
-      })
-    );
+
+    userInfo
+      ? dispatch(
+          createOrder({
+            orderItems: savedCartItems,
+          })
+        )
+      : navigate("/login", { state: { from: location } });
   };
 
   return (
