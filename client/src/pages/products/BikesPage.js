@@ -456,6 +456,7 @@ function BikesPage() {
                 title={p.title}
                 image={p.images[0]}
                 slug={p.slug}
+                rating={p.rating}
               />
             );
           })}

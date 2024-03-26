@@ -46,6 +46,10 @@ const ProductSchema = new mongoose.Schema({
   brand: {
     type: String,
   },
+  rating: {
+    type: Number,
+    default: 0,
+  },
   variants: [
     {
       size: { type: String },

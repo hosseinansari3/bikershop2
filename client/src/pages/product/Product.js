@@ -44,11 +44,16 @@ import {
   fetchProductReviews,
   reviewChange,
 } from "../../actions/reviews";
+import { REVIEW_STATUS } from "../../constants/panelConstants";
+import StarRating from "../../components/StarRating";
+import Rating from "@mui/material/Rating";
 
 function Product() {
   const [quantity, setQuantity] = useState(1);
   const [selectedVarient, setSelectedVarient] = useState([]);
   const [selectedSize, setSelectedSize] = useState("");
+
+  const [rating, setRating] = React.useState(2);
 
   const increment = () => {
     setQuantity(Number(quantity) + 1);
@@ -87,7 +92,7 @@ function Product() {
 
   useEffect(() => {
     dispatch(getProductById(slug));
-    dispatch(fetchProductReviews(slug));
+    dispatch(fetchProductReviews(slug, { status: REVIEW_STATUS.Approved }));
   }, [dispatch]);
 
   useEffect(() => {
@@ -238,10 +243,10 @@ function Product() {
                       {product?.price}$
                     </span>
                   </div>
+
                   <div className="flex items-center">
-                    <div>
-                      <StarRatingComponent value={3} />
-                    </div>
+                    <StarRating rateValue={product?.rating} readOnly={true} />
+
                     <div className="ml-3">
                       Assembling | Bulky good Still |{" "}
                       {selectedVarient?.length > 0 && (
@@ -755,10 +760,9 @@ function Product() {
                                   {review.user ? review.user.firstName : null}
                                 </div>
                                 <div className="ratting-star2 d-flex">
-                                  <StarRatingComponent
-                                    name="rate1"
-                                    starCount={5}
-                                    value={3}
+                                  <StarRating
+                                    rateValue={product?.rating}
+                                    readOnly={true}
                                   />
                                 </div>
                               </div>
@@ -787,11 +791,7 @@ function Product() {
                           <div class="star-box">
                             <span className="text-lg">Your rating:</span>
                             <div className="ratting-star">
-                              <StarRatingComponent
-                                name="rate1"
-                                starCount={5}
-                                value={3}
-                              />
+                              <StarRating />
                             </div>
                           </div>
                           <div className="row">

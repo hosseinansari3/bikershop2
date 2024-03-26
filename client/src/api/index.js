@@ -76,8 +76,10 @@ export const fetchWishlistAPI = (config) =>
 export const addReviewAPI = (santizedReview, config) =>
   axios.post(`${baseUrl}/review/add`, santizedReview, config);
 
-export const fetchProductReviewsAPI = (slug) =>
-  axios.get(`${baseUrl}/review/${slug}`);
+export const fetchProductReviewsAPI = (slug, filters) =>
+  axios.get(`${baseUrl}/review/${slug}`, {
+    params: { filters: filters },
+  });
 
 export const fetchMyReviewsAPI = (config, limit) =>
   axios.get(`${baseUrl}/review/myReviews?limit=${limit}`, config);

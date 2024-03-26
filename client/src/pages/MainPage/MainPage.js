@@ -162,6 +162,7 @@ function MainPage() {
                 price={product.price}
                 title={product.title}
                 slug={product.slug}
+                rating={product?.rating}
               />
             );
           })}

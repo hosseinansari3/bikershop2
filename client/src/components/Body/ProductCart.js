@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./ProductCart.css";
 
 import StarRatingComponent from "react-star-rating-component";
+import StarRating from "../StarRating";
 
 function ProductCart(props) {
   return (
@@ -13,7 +14,8 @@ function ProductCart(props) {
         </div>
       </Link>
       <div className="product-title">{props.title}</div>
-      <StarRatingComponent name="rate1" starCount={5} value={3} />
+      <StarRating rateValue={props.rating} readOnly={true} />
+
       <div className="product-price">{props.price} $</div>
     </div>
   );

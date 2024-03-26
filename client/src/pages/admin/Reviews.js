@@ -9,6 +9,8 @@ import {
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 import { REVIEW_STATUS, ROLES } from "../../constants/panelConstants";
 
+import Rating from "@mui/material/Rating";
+
 function Reviews() {
   const dispatch = useDispatch();
 
@@ -97,6 +99,10 @@ function Reviews() {
                       )}
                       <td className="px-4 py-3">
                         <h3 className="font-bold">{item.title}</h3>
+                        <p>
+                          <Rating readOnly value={item.rating} />
+                        </p>
+
                         <p>{item.review}</p>
                       </td>
                       <td className="px-4 py-3 text-xs">

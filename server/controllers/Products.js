@@ -249,7 +249,7 @@ const getProductsBySection = async (req, res) => {
     console.log(section);
     const products = await productModel.find(
       { section: section },
-      { title: 1, slug: 1, images: 1, price: 1, _id: 1 }
+      { title: 1, slug: 1, images: 1, price: 1, _id: 1, rating: 1 }
     );
     res.status(200).json({
       status: "success",

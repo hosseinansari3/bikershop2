@@ -92,7 +92,7 @@ function Modal() {
             </tbody>
           </table>
         </div>
-        <div className="flex justify-center mt-7">
+        <div id="status" className="flex justify-center mt-7">
           <input
             checked={status == "Pending"}
             onChange={(e) => setStatus(e.target.value)}

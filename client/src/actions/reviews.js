@@ -18,6 +18,7 @@ import {
   UPDATE_REVIEW,
 } from "../constants/actionTypes";
 import { allFieldsValidation, santizeFields } from "../utils/validation";
+import { REVIEW_STATUS } from "../constants/panelConstants";
 
 export const reviewChange = (name, value) => {
   let formData = {};
@@ -50,6 +51,7 @@ export const addProductReview = () => {
         product: product._id,
         review: review.review,
         title: review.title,
+        rating: review.rating,
       };
 
       const { isValid, errors } = allFieldsValidation(newReview, rules, {
@@ -66,7 +68,9 @@ export const addProductReview = () => {
 
       if (response.data.success === true) {
         toast(response.data.message);
-        dispatch(fetchProductReviews(product.slug));
+        dispatch(
+          fetchProductReviews(product.slug, { status: REVIEW_STATUS.Approved })
+        );
         console.log(response.data.message);
 
         dispatch({ type: RESET_REVIEW });
@@ -77,10 +81,10 @@ export const addProductReview = () => {
   };
 };
 
-export const fetchProductReviews = (slug) => {
+export const fetchProductReviews = (slug, filters) => {
   return async (dispatch, getState) => {
     try {
-      const response = await fetchProductReviewsAPI(slug);
+      const response = await fetchProductReviewsAPI(slug, filters);
 
       dispatch({
         type: FETCH_PRODUCT_REVIEWS,

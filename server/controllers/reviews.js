@@ -2,6 +2,33 @@ const Review = require("../models/reviewModel");
 const Product = require("../models/productModel");
 var mongoose = require("mongoose");
 
+// Function to update the product rating
+async function updateProductRating(productId) {
+  // Calculate the average rating
+  const averageResult = await Review.aggregate([
+    { $match: { product: productId } },
+    {
+      $group: {
+        _id: null,
+        averageRating: { $avg: "$rating" },
+      },
+    },
+  ]);
+
+  // Check if there are any reviews
+  if (averageResult.length > 0) {
+    const averageRating = averageResult[0].averageRating;
+    const roundedAverage = Math.round(averageRating);
+    // Update the product's rating
+    await Product.updateOne(
+      { _id: productId },
+      {
+        $set: { rating: roundedAverage },
+      }
+    );
+  }
+}
+
 const addReview = async (req, res) => {
   try {
     const body = req.body;
@@ -15,6 +42,9 @@ const addReview = async (req, res) => {
     });
 
     const reviewDoc = await review.save();
+
+    console.log("body", typeof body.product);
+    updateProductRating(mongoose.Types.ObjectId(body.product));
 
     res.status(200).json({
       success: true,
@@ -37,6 +67,14 @@ const getProductReviews = async (req, res) => {
     const hasNoBrand =
       productDoc?.brand === null || productDoc?.brand?.isActive === false;
 
+    const filters = req.query.filters;
+
+    let query = {};
+
+    if (filters?.status && filters?.status != "") {
+      query.status = { $in: filters.status };
+    }
+
     if (!productDoc || hasNoBrand) {
       return res.status(404).json({
         message: "No product found.",
@@ -45,6 +83,7 @@ const getProductReviews = async (req, res) => {
 
     const reviews = await Review.find({
       product: productDoc._id,
+      ...query,
     })
       .populate({
         path: "user",
