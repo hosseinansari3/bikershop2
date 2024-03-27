@@ -27,13 +27,38 @@ const addorderitems = async (req, res) => {
     console.log("Length", req.body.orderItems.length);
     for (const item of req.body.orderItems) {
       try {
-        console.log(item.quantity);
+        //const updatePromise = await productModel.findOneAndUpdate(
+        //{ _id: mongoose.Types.ObjectId(item.product) },
+        // { $inc: { quantity: -item.quantity } },
+        // { new: true }
+        // );
 
-        const updatePromise = await productModel.findOneAndUpdate(
-          { _id: mongoose.Types.ObjectId(item.product) },
-          { $inc: { quantity: -item.quantity } },
-          { new: true }
-        );
+        const updatePromise = productModel
+          .findOne({
+            _id: mongoose.Types.ObjectId(item.product),
+          })
+          .then((product) => {
+            // Find the index of the specific variant
+            const variantIndex = product.variants.findIndex(
+              (variant) => variant.size == item.size
+            );
+
+            // Check if there's enough stock
+            if (product.variants[variantIndex].stock >= item.quantity) {
+              // Decrement the stock
+              product.variants[variantIndex].stock -= item.quantity;
+              return product.save();
+            } else {
+              throw new Error("Not enough stock");
+            }
+          })
+          .then((updatedProduct) => {
+            console.log("Stock updated", updatedProduct);
+          })
+          .catch((err) => {
+            console.error("Error updating stock", err);
+          });
+
         updatePromises.push(updatePromise);
       } catch (error) {
         console.error(
