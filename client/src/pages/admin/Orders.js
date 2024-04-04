@@ -8,14 +8,13 @@ import {
 } from "../../actions/orders";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 import { ORDER_STATUS, ROLES } from "../../constants/panelConstants";
-import Modal from "./Modal";
-import { showModal } from "../../actions/modal";
+import { showOrderModal } from "../../actions/orderModal";
 
 function Orders() {
   const user = useSelector((state) => state.usersSignin.userInfo.user);
 
   const orderListUser = useSelector((state) => state.orderListUser);
-  const modal = useSelector((state) => state.modal);
+  const modal = useSelector((state) => state.orderModal);
 
   const { orders, loading } = orderListUser;
 
@@ -31,7 +30,7 @@ function Orders() {
   const handleOpenModal = (e, order) => {
     e.preventDefault();
 
-    dispatch(showModal(order));
+    dispatch(showOrderModal(order));
   };
 
   useEffect(() => {

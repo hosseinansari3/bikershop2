@@ -1,5 +1,10 @@
 import { toast } from "react-toastify";
-import { getCurrentUserAPI, updateProfileAPI } from "../api";
+import {
+  editeAddressAPI,
+  getCurrentUserAPI,
+  updateAddressAPI,
+  updateProfileAPI,
+} from "../api";
 import {
   FETCH_PROFILE,
   FETCH_PROFILE_REQUEST,
@@ -22,6 +27,55 @@ export const updateProfile = (formData) => {
 
       const response = await updateProfileAPI(formData, config);
       toast("Profile Info Updated!");
+
+      dispatch({ type: FETCH_PROFILE, payload: response.data.user });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const updateUserAddress = (address) => {
+  return async (dispatch, getState) => {
+    const userinfo = getState().usersSignin.userInfo;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userinfo.token}`,
+      },
+    };
+
+    try {
+      dispatch({ type: FETCH_PROFILE_REQUEST });
+
+      const response = await updateAddressAPI(address, config);
+      toast("Adress added");
+
+      dispatch({ type: FETCH_PROFILE, payload: response.data.user });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const editeAddress = (addressId, address) => {
+  return async (dispatch, getState) => {
+    const userinfo = getState().usersSignin.userInfo;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userinfo.token}`,
+      },
+    };
+
+    try {
+      dispatch({ type: FETCH_PROFILE_REQUEST });
+
+      const response = await editeAddressAPI(addressId, address, config);
+      toast("Adress edited");
+      console.log("response", response);
 
       dispatch({ type: FETCH_PROFILE, payload: response.data.user });
     } catch (error) {

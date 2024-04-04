@@ -21,15 +21,19 @@ import Wishlist from "./pages/admin/Wishlist";
 import Reviews from "./pages/admin/Reviews";
 import AccountInfo from "./pages/admin/AccountInfo";
 import { ToastContainer } from "react-toastify";
-import Modal from "./pages/admin/Modal";
 import { useDispatch, useSelector } from "react-redux";
+import Checkout from "./pages/Checkout";
+import AddressModal from "./pages/user/AddressModal";
 
 function App() {
   const location = useLocation();
+  const addressModal = useSelector((state) => state.addressModal);
+  const { isOpen } = addressModal;
 
   return (
-    <div className="relative">
+    <div className={`relative ${isOpen && "overflow-y-hidden h-screen"}`}>
       <ToastContainer />
+      <AddressModal />
 
       {!location.pathname.includes("/panel") &&
       location.pathname !== "/user" &&
@@ -44,6 +48,8 @@ function App() {
 
         <Route path="login" element={<LoginPage />} />
         <Route path="cart" element={<Cart />} />
+        <Route path="checkout" element={<Checkout />} />
+
         <Route path="register" element={<RegisterPage />} />
         <Route exact index path="/" element={<MainPage />} />
 

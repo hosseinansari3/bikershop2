@@ -13,6 +13,7 @@ const initialState = {
 export const accountReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_PROFILE:
+      console.log("actionpayload", action.payload);
       return {
         user: {
           ...action.payload,

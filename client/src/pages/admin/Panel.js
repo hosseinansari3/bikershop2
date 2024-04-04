@@ -14,7 +14,7 @@ import { Logout } from "@mui/icons-material";
 import { logout } from "../../actions/users";
 import { fetchProfile } from "../../actions/account";
 import defaultAvatar from "../../assets/images/Circle-icons-profile.svg.png";
-import Modal from "./Modal";
+import OrderModal from "./OrderModal";
 function Panel() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -67,7 +67,7 @@ function Panel() {
   };
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900 false">
-      <Modal />
+      <OrderModal />
 
       {user?.role !== undefined && user?.role === ROLES.Admin ? (
         <Admin

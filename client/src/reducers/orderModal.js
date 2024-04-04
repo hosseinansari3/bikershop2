@@ -1,4 +1,4 @@
-import { HIDE_MODAL, SHOW_MODAL } from "../constants/actionTypes";
+import { HIDE_ORDER_MODAL, SHOW_ORDER_MODAL } from "../constants/actionTypes";
 
 // reducers/modalReducer.js
 const initialState = {
@@ -6,14 +6,14 @@ const initialState = {
   order: {},
 };
 
-const modalReducer = (state = initialState, action) => {
+const orderModalReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SHOW_MODAL:
+    case SHOW_ORDER_MODAL:
       return {
         isOpen: true,
         order: action.order,
       };
-    case HIDE_MODAL:
+    case HIDE_ORDER_MODAL:
       console.log("hideModReducer");
       return {
         isOpen: false,
@@ -25,4 +25,4 @@ const modalReducer = (state = initialState, action) => {
   }
 };
 
-export default modalReducer;
+export default orderModalReducer;

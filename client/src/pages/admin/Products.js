@@ -317,7 +317,14 @@ function Products() {
                     </td>
 
                     <td className="px-4 py-3">
-                      <span className="text-sm">N/A</span>
+                      {p.variants.map((variant) => {
+                        return (
+                          <div>
+                            <span className="text-sm">{variant.size}: </span>
+                            <span className="text-sm">{variant.stock}</span>
+                          </div>
+                        );
+                      })}
                     </td>
                     <td className="px-4 py-3">
                       <span className="inline-flex px-2 text-xs font-medium leading-5 rounded-full text-green-500 bg-green-100 dark:bg-green-800 dark:text-green-100">

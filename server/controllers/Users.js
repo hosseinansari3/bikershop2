@@ -3,6 +3,7 @@ const { generateToken, isAuth } = require("../utils/util");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 
 // Load input validation
 
@@ -173,7 +174,6 @@ const updateUser = async (req, res) => {
   try {
     const user = req.user.id;
     const image = "http://localhost:5000/uploads/" + req.files[0].filename;
-
     const update = { ...req.body, avatar: image };
     console.log("inaaaa:" + JSON.stringify(update));
     const query = { _id: user };
@@ -185,6 +185,76 @@ const updateUser = async (req, res) => {
       success: true,
       message: "Your profile is successfully updated!",
       user: userDoc,
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: "Your request could not be processed. Please try again.",
+    });
+  }
+};
+
+const updateUserAdress = async (req, res) => {
+  try {
+    const user = req.user.id;
+    const newAdress = req.body;
+    console.log("nweAddress", newAdress);
+    const query = { _id: user };
+    const userDoc = await User.findOneAndUpdate(
+      query,
+      {
+        $push: { address: newAdress },
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "new address successfully added!",
+      user: userDoc,
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: "Your request could not be processed. Please try again.",
+    });
+  }
+};
+
+const editeAddress = async (req, res) => {
+  try {
+    const user = req.user.id;
+    const addressId = req.query.addressId;
+    const newAddress = req.body;
+    console.log("addressId", addressId);
+    console.log("newAddres", newAddress);
+
+    await User.updateOne(
+      { _id: user, "address._id": new mongoose.Types.ObjectId(addressId) },
+      {
+        $set: {
+          "address.$.street": newAddress.street,
+          "address.$.province": newAddress.province,
+          "address.$.city": newAddress.city,
+          "address.$.postalCode": newAddress.postalCode,
+          "address.$.default": true,
+        },
+      }
+    );
+
+    await User.updateMany(
+      {
+        _id: user,
+      },
+      { $set: { "address.$[elem].default": false } },
+      {
+        arrayFilters: [
+          { "elem._id": { $ne: new mongoose.Types.ObjectId(addressId) } },
+        ],
+      }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "new address successfully added!",
     });
   } catch (error) {
     res.status(400).json({
@@ -264,6 +334,8 @@ module.exports = {
   verifyToken,
   fetchUsers,
   deleteUser,
+  editeAddress,
   updateUser,
+  updateUserAdress,
   getCurrentUser,
 };

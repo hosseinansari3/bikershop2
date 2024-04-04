@@ -93,6 +93,16 @@ export const updateReviewAPI = (id, updated) =>
 export const updateProfileAPI = (profile, config) =>
   axios.put(`${baseUrl}/users`, profile, config);
 
+export const updateAddressAPI = (address, config) =>
+  axios.put(`${baseUrl}/users/updateAddress`, address, config);
+
+export const editeAddressAPI = (addressId, newAddress, config) =>
+  axios.put(
+    `${baseUrl}/users/editeAddress?addressId=${addressId}`,
+    newAddress,
+    config
+  );
+
 export const createCategoryAPI = (category) =>
   axios.post(`${baseUrl}/categories/add`, category);
 

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import "./Modal.css";
+import "./OrderModal.css";
 import { ORDER_STATUS } from "../../constants/panelConstants";
 import { useDispatch, useSelector } from "react-redux";
 import { updateOrder } from "../../actions/orders";
-import { hideModal } from "../../actions/modal";
+import { hideOrderModal } from "../../actions/orderModal";
 
-function Modal() {
-  const modal = useSelector((state) => state.modal);
+function OrderModal() {
+  const modal = useSelector((state) => state.orderModal);
   const { isOpen, order } = modal;
   const dispatch = useDispatch();
 
@@ -14,7 +14,7 @@ function Modal() {
   const [status, setStatus] = useState(modal.order?.status);
 
   const handleCloseModal = () => {
-    dispatch(hideModal());
+    dispatch(hideOrderModal());
   };
 
   useEffect(() => {
@@ -162,4 +162,4 @@ function Modal() {
   );
 }
 
-export default Modal;
+export default OrderModal;
