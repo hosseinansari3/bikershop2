@@ -199,10 +199,16 @@ const updateUserAdress = async (req, res) => {
     const newAdress = req.body;
     console.log("nweAddress", newAdress);
     const query = { _id: user };
+
+    await User.updateMany(
+      { _id: user },
+      { $set: { "address.$[].default": false } }
+    );
+
     const userDoc = await User.findOneAndUpdate(
       query,
       {
-        $push: { address: newAdress },
+        $push: { address: { ...newAdress, default: true } },
       },
       { new: true }
     );
@@ -227,7 +233,7 @@ const editeAddress = async (req, res) => {
     console.log("addressId", addressId);
     console.log("newAddres", newAddress);
 
-    await User.updateOne(
+    const userDoc = await User.findOneAndUpdate(
       { _id: user, "address._id": new mongoose.Types.ObjectId(addressId) },
       {
         $set: {
@@ -237,7 +243,8 @@ const editeAddress = async (req, res) => {
           "address.$.postalCode": newAddress.postalCode,
           "address.$.default": true,
         },
-      }
+      },
+      { new: true }
     );
 
     await User.updateMany(
@@ -255,6 +262,7 @@ const editeAddress = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "new address successfully added!",
+      user: userDoc,
     });
   } catch (error) {
     res.status(400).json({

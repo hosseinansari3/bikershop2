@@ -73,7 +73,8 @@ function AddressModal() {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    await editeAddressAPI(addressId, newAddress, config);
+    // await editeAddressAPI(addressId, newAddress, config);
+    dispatch(editeAddress(addressId, newAddress));
     handleCloseModal();
   };
 

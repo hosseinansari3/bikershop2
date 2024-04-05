@@ -39,8 +39,10 @@ function Checkout() {
 
   useEffect(() => {
     if (user?.address?.length > 0) {
-      setSelectedAddress(user?.address[user?.address?.length - 1]);
-      console.log(user.address[user?.address?.length - 1]);
+      const defaultAddressArr = user?.address.filter(
+        (address) => address.default == true
+      );
+      setSelectedAddress(defaultAddressArr[0]);
     }
     console.log("ad", user.address);
   }, [user.address]);
