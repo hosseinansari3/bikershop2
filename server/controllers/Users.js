@@ -233,6 +233,18 @@ const editeAddress = async (req, res) => {
     console.log("addressId", addressId);
     console.log("newAddres", newAddress);
 
+    await User.updateMany(
+      {
+        _id: user,
+      },
+      { $set: { "address.$[elem].default": false } },
+      {
+        arrayFilters: [
+          { "elem._id": { $ne: new mongoose.Types.ObjectId(addressId) } },
+        ],
+      }
+    );
+
     const userDoc = await User.findOneAndUpdate(
       { _id: user, "address._id": new mongoose.Types.ObjectId(addressId) },
       {
@@ -245,18 +257,6 @@ const editeAddress = async (req, res) => {
         },
       },
       { new: true }
-    );
-
-    await User.updateMany(
-      {
-        _id: user,
-      },
-      { $set: { "address.$[elem].default": false } },
-      {
-        arrayFilters: [
-          { "elem._id": { $ne: new mongoose.Types.ObjectId(addressId) } },
-        ],
-      }
     );
 
     res.status(200).json({

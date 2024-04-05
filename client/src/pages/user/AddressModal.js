@@ -59,7 +59,7 @@ function AddressModal() {
     handleCloseModal();
   };
 
-  const editeOnSubmit = async (addressId) => {
+  const editeOnSubmit = (addressId) => {
     const newAddress = {
       province: province,
       city: city,
@@ -67,13 +67,6 @@ function AddressModal() {
       postalCode: postalCode,
     };
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-    // await editeAddressAPI(addressId, newAddress, config);
     dispatch(editeAddress(addressId, newAddress));
     handleCloseModal();
   };
@@ -117,6 +110,13 @@ function AddressModal() {
   const handleCloseModal = () => {
     dispatch(hideAddressModal());
     setCurrentPage("addresses");
+    let defaultValues = {};
+    defaultValues.province = "";
+    defaultValues.city = "";
+    defaultValues.street = "";
+    defaultValues.postalCode = "";
+
+    reset({ ...defaultValues });
   };
 
   return (
@@ -217,7 +217,6 @@ function AddressModal() {
                       //placeholder="Product Title/Name"
                       //label="Product Name"
                       name="postalCode"
-                      defaultValue={"ddd"}
                     />
                     {errors.postalCode && (
                       <p className="text-red-600">postalCode can't be empty</p>

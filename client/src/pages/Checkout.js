@@ -16,7 +16,7 @@ function Checkout() {
     formState: { errors },
   } = useForm();
 
-  const user = useSelector((state) => state.account.user);
+  const user = useSelector((state) => state?.account?.user);
 
   useEffect(() => {
     dispatch(fetchProfile());
@@ -39,13 +39,17 @@ function Checkout() {
 
   useEffect(() => {
     if (user?.address?.length > 0) {
-      const defaultAddressArr = user?.address.filter(
+      const defaultAddressArr = user?.address?.filter(
         (address) => address.default == true
       );
       setSelectedAddress(defaultAddressArr[0]);
     }
     console.log("ad", user.address);
-  }, [user.address]);
+  }, [user]);
+
+  useEffect(() => {
+    console.log("selectedAddress", selectedAddress);
+  }, [selectedAddress]);
 
   const onSubmit = (e) => {
     // e.preventDefault();
