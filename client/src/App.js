@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Checkout from "./pages/Checkout";
 import AddressModal from "./pages/user/AddressModal";
 import ProtectedRoute from "./components/route/ProtectedRoute";
+import OrderSuccess from "./pages/OrderSuccess";
 
 function App() {
   const location = useLocation();
@@ -49,6 +50,7 @@ function App() {
 
         <Route path="login" element={<LoginPage />} />
         <Route path="cart" element={<Cart />} />
+        <Route path="ordersuccess" element={<OrderSuccess />} />
 
         <Route element={<ProtectedRoute destination={"/checkout"} />}>
           <Route path="checkout" element={<Checkout />} />

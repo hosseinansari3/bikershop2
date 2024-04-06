@@ -23,8 +23,6 @@ import * as api from "../api/index";
 import setAuthToken from "../utils/setAuthToken";
 import { toast } from "react-toastify";
 import { allFieldsValidation } from "../utils/validation";
-import { fetchProfile } from "./account";
-import { useNavigate } from "react-router";
 
 export const getUsers = (page) => async (dispatch) => {
   dispatch({ type: FETCH_ALL_USERS_REQUEST });

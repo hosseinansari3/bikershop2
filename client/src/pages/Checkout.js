@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { createOrder } from "../actions/orders";
 import AddressModal from "./user/AddressModal";
 import { showAddressModal } from "../actions/addressModal";
+import { useNavigate } from "react-router-dom";
 
 function Checkout() {
   const {
@@ -16,7 +17,10 @@ function Checkout() {
     formState: { errors },
   } = useForm();
 
+  const navigate = useNavigate();
+
   const account = useSelector((state) => state?.account);
+  const orderCreate = useSelector((state) => state?.orderCreate);
 
   const { user, loading } = account;
 
@@ -38,6 +42,11 @@ function Checkout() {
   useEffect(() => {
     console.log("selectedAddress", JSON.stringify(selectedAddress));
   }, []);
+
+  useEffect(() => {
+    orderCreate.success && navigate("/ordersuccess");
+    console.log("orderCreate", orderCreate);
+  }, [orderCreate]);
 
   useEffect(() => {
     if (user?.address?.length > 0) {

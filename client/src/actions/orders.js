@@ -33,12 +33,11 @@ export const createOrder = (order) => async (dispatch, getState) => {
       },
     };
 
-    console.log("order", order);
-
     const { data } = await createOrderAPI(order, config);
 
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: data });
     toast("Your Order Submitted!");
+    console.log("order", data);
   } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAILURE,
