@@ -24,6 +24,7 @@ import { ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import Checkout from "./pages/Checkout";
 import AddressModal from "./pages/user/AddressModal";
+import ProtectedRoute from "./components/route/ProtectedRoute";
 
 function App() {
   const location = useLocation();
@@ -48,23 +49,28 @@ function App() {
 
         <Route path="login" element={<LoginPage />} />
         <Route path="cart" element={<Cart />} />
-        <Route path="checkout" element={<Checkout />} />
+
+        <Route element={<ProtectedRoute destination={"/checkout"} />}>
+          <Route path="checkout" element={<Checkout />} />
+        </Route>
 
         <Route path="register" element={<RegisterPage />} />
         <Route exact index path="/" element={<MainPage />} />
 
-        <Route path="panel" element={<Panel />}>
-          <Route index element={<Dashboard />} />
-          <Route path="customers" element={<Customers />} />
-          <Route path="Products" element={<Products />} />
-          <Route path="Categories" element={<Categories />} />
-          <Route path="Orders" element={<Orders />} />
-          <Route path="reviews" element={<Reviews />} />
-          <Route path="wishlist" element={<Wishlist />} />
-          <Route path="account-info" element={<AccountInfo />} />
+        <Route element={<ProtectedRoute destination={"/panel"} />}>
+          <Route path="panel" element={<Panel />}>
+            <Route index element={<Dashboard />} />
+            <Route path="customers" element={<Customers />} />
+            <Route path="Products" element={<Products />} />
+            <Route path="Categories" element={<Categories />} />
+            <Route path="Orders" element={<Orders />} />
+            <Route path="reviews" element={<Reviews />} />
+            <Route path="wishlist" element={<Wishlist />} />
+            <Route path="account-info" element={<AccountInfo />} />
 
-          <Route path="AddProducts" element={<AddProduct />} />
-          <Route path="EditeProduct/:slug" element={<EditeProduct />} />
+            <Route path="AddProducts" element={<AddProduct />} />
+            <Route path="EditeProduct/:slug" element={<EditeProduct />} />
+          </Route>
         </Route>
       </Routes>
 

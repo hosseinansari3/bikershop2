@@ -16,7 +16,9 @@ function Checkout() {
     formState: { errors },
   } = useForm();
 
-  const user = useSelector((state) => state?.account?.user);
+  const account = useSelector((state) => state?.account);
+
+  const { user, loading } = account;
 
   useEffect(() => {
     dispatch(fetchProfile());
@@ -70,6 +72,16 @@ function Checkout() {
     );
   };
 
+  const handleOrder = (e) => {
+    e.preventDefault();
+
+    dispatch(
+      createOrder({
+        orderItems: savedCartItems,
+      })
+    );
+  };
+
   return (
     <div className="relative ">
       {console.log("REEEDNDERRR")}
@@ -82,10 +94,18 @@ function Checkout() {
               <button onClick={() => dispatch(showAddressModal())}>
                 <span className="ml-4">edite or change the address</span>
               </button>
+              <div>
+                <button
+                  className="bg-black text-white mt-10 p-2 w-fit h-14 rounded "
+                  onClick={(e) => handleOrder(e)}
+                >
+                  Submit Order
+                </button>
+              </div>
             </div>
           }
         </div>
-      ) : (
+      ) : user?.address?.length < 0 ? (
         <div>
           <div className="px-6 pt-8 flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -166,7 +186,7 @@ function Checkout() {
             </form>
           </div>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

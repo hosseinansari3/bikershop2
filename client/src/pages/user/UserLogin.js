@@ -20,6 +20,8 @@ function LoginPage(props) {
   const userSignin = useSelector((state) => state.usersSignin);
   const { userInfo, loading, formErrors } = userSignin;
 
+  console.log("userInfo", userInfo);
+
   const dispatch = useDispatch();
 
   const location = useLocation();
@@ -28,10 +30,14 @@ function LoginPage(props) {
   console.log("state", location?.state);
 
   useEffect(() => {
-    if (userInfo !== null && typeof userInfo !== undefined) {
+    if (typeof userInfo !== undefined) {
       setisLoggedin(true);
     }
-  }, [dispatch, userInfo]);
+  }, [userSignin, userInfo]);
+
+  useEffect(() => {
+    console.log("INNN", isLoggedin);
+  }, [isLoggedin]);
 
   // handle login form submit
   const submitHandler = (e) => {
@@ -42,12 +48,14 @@ function LoginPage(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoggedin) {
-      location?.state?.from
-        ? navigate(location?.state?.from.pathname)
+    if (isLoggedin == true) {
+      location?.state?.destination
+        ? navigate(location?.state?.destination)
         : navigate("/");
       console.log("logged in!");
+      console.log("FOOOIN", userInfo);
     }
+    console.log("FOOOOUT", userInfo);
   }, [userInfo]);
 
   const validate = () =>

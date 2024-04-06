@@ -20,12 +20,8 @@ function Cart() {
     e.preventDefault();
 
     userInfo
-      ? dispatch(
-          createOrder({
-            orderItems: savedCartItems,
-          })
-        )
-      : navigate("/login", { state: { from: location } });
+      ? navigate("/checkout")
+      : navigate("/login", { state: { destination: "/checkout" } });
   };
 
   return (
@@ -139,7 +135,7 @@ function Cart() {
             <p>subtotal</p>
             <p>{cartTotal}$</p>
           </div>
-          <button onClick={handleOrder}>Submit Your Order</button>
+          <button onClick={handleOrder}>Proceed to Checkout</button>
         </div>
       </div>
     </div>
