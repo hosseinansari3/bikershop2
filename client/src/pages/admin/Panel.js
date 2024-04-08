@@ -15,6 +15,7 @@ import { logout } from "../../actions/users";
 import { fetchProfile } from "../../actions/account";
 import defaultAvatar from "../../assets/images/Circle-icons-profile.svg.png";
 import OrderModal from "./OrderModal";
+import { listAllOrders, listMyOrders } from "../../actions/orders";
 function Panel() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,6 +33,14 @@ function Panel() {
   const [sideOpen, setSideOpen] = useState(false);
   const [profiletIsOpen, setProfileIsOpen] = useState(false);
   const [avatar, setAvatar] = useState("");
+
+  useEffect(() => {
+    if (user.role === ROLES.Admin) {
+      dispatch(listAllOrders(0, {}));
+    } else {
+      dispatch(listMyOrders());
+    }
+  }, []);
 
   useEffect(() => {
     if (!account?.user) {
