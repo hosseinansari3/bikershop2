@@ -25,13 +25,16 @@ const orderSchema = mongoose.Schema(
       ],
       default: ORDER_STATUS.Pending,
     },
+    total: {
+      type: Number,
+    },
     orderItems: [
       {
         title: { type: String },
         quantity: { type: Number },
         size: { type: String },
         image: { type: String },
-        price: { type: String },
+        price: { type: Number },
         product: { type: String },
       },
     ],

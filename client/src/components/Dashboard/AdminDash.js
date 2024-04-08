@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -8,9 +8,90 @@ import {
   Tooltip,
 } from "recharts";
 
+import { useDispatch, useSelector } from "react-redux";
+
 import { PieChart, Pie, Cell } from "recharts";
+import { listAllOrders } from "../../actions/orders";
+import { ORDER_STATUS } from "../../constants/panelConstants";
 
 function AdminDash() {
+  const orderList = useSelector((state) => state.orderListUser);
+
+  const { orders, loading } = orderList;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(listAllOrders(0, {}));
+  }, []);
+
+  const currentDate = new Date();
+
+  // Filter orders for today
+  const todayOrders = orders?.filter((order) => {
+    const orderDate = new Date(order.createdAt);
+    return (
+      orderDate.getDate() === currentDate.getDate() &&
+      orderDate.getMonth() === currentDate.getMonth() &&
+      orderDate.getFullYear() === currentDate.getFullYear()
+    );
+  });
+
+  console.log("todayOrders", todayOrders);
+
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  // Filter orders for yesterday
+  const yesterdayOrders = orders.filter((order) => {
+    const orderDate = new Date(order.createdAt);
+    return (
+      orderDate.getDate() === yesterday.getDate() &&
+      orderDate.getMonth() === yesterday.getMonth() &&
+      orderDate.getFullYear() === yesterday.getFullYear()
+    );
+  });
+
+  console.log("yesterdayOrders", yesterdayOrders);
+
+  const thisMonthOrders = orders?.filter((order) => {
+    const orderDate = new Date(order.createdAt);
+    return (
+      orderDate.getMonth() === currentDate.getMonth() &&
+      orderDate.getFullYear() === currentDate.getFullYear()
+    );
+  });
+
+  const todayTotal = todayOrders.reduce((accumulator, order) => {
+    return accumulator + order.total;
+  }, 0);
+
+  const yesterdayTotal = yesterdayOrders.reduce((accumulator, order) => {
+    return accumulator + order.total;
+  }, 0);
+
+  const thisMonthTotal = thisMonthOrders.reduce((accumulator, order) => {
+    return accumulator + order.total;
+  }, 0);
+
+  const allTimeTotal = orders.reduce((accumulator, order) => {
+    return accumulator + order.total;
+  }, 0);
+
+  console.log("thisMonthOrders", thisMonthOrders);
+
+  const pendingOrders = orders.filter(
+    (order) => order.status == ORDER_STATUS.Pending
+  );
+
+  const processingOrders = orders.filter(
+    (order) => order.status == ORDER_STATUS.Processing
+  );
+
+  const deliveredOrders = orders.filter(
+    (order) => order.status == ORDER_STATUS.Delivered
+  );
+
   const data = [
     { name: "Page A", uv: 400, pv: 2400, amt: 2400 },
     { name: "Page B", uv: 340, pv: 2400, amt: 2400 },
@@ -81,7 +162,7 @@ function AdminDash() {
                   Today Orders
                 </p>
                 <p className="text-2xl font-bold leading-none text-gray-50 dark:text-gray-50">
-                  $0.00
+                  ${todayTotal}
                 </p>
               </div>
               <div className="flex text-center text-xs font-normal text-gray-50 dark:text-gray-100">
@@ -114,7 +195,7 @@ function AdminDash() {
                   Yesterday Orders
                 </p>
                 <p className="text-2xl font-bold leading-none text-gray-50 dark:text-gray-50">
-                  $0.00
+                  ${yesterdayTotal}
                 </p>
               </div>
               <div className="flex text-center text-xs font-normal text-gray-50 dark:text-gray-100">
@@ -146,7 +227,7 @@ function AdminDash() {
                   This Month
                 </p>
                 <p className="text-2xl font-bold leading-none text-gray-50 dark:text-gray-50">
-                  $3625.99
+                  ${thisMonthTotal}
                 </p>
               </div>
               <div className="flex text-center text-xs font-normal text-gray-50 dark:text-gray-100">
@@ -178,7 +259,7 @@ function AdminDash() {
                   All-Time Sales
                 </p>
                 <p className="text-2xl font-bold leading-none text-gray-50 dark:text-gray-50">
-                  $28486.47
+                  ${allTimeTotal}
                 </p>
               </div>
               <div className="flex text-center text-xs font-normal text-gray-50 dark:text-gray-100">
@@ -211,7 +292,7 @@ function AdminDash() {
                 <span>Total Order</span>
               </h6>
               <p className="text-2xl font-bold leading-none text-gray-600 dark:text-gray-200">
-                49
+                {orders.length}
               </p>
             </div>
           </div>
@@ -243,7 +324,7 @@ function AdminDash() {
                 </span>
               </h6>
               <p className="text-2xl font-bold leading-none text-gray-600 dark:text-gray-200">
-                49
+                {pendingOrders.length}
               </p>
             </div>
           </div>
@@ -268,7 +349,7 @@ function AdminDash() {
                 <span>Orders Processing</span>
               </h6>
               <p className="text-2xl font-bold leading-none text-gray-600 dark:text-gray-200">
-                49
+                {processingOrders.length}
               </p>
             </div>
           </div>
@@ -293,7 +374,7 @@ function AdminDash() {
                 <span>Orders Delivered</span>
               </h6>
               <p className="text-2xl font-bold leading-none text-gray-600 dark:text-gray-200">
-                49
+                {deliveredOrders.length}
               </p>
             </div>
           </div>

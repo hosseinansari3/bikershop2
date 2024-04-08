@@ -1,14 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import HomeIcon from "@mui/icons-material/Home";
-import PersonIcon from "@mui/icons-material/Person";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import ViewInArIcon from "@mui/icons-material/ViewInAr";
-
-import ChatBubbleIcon from "@mui/icons-material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-
 function Admin(props) {
   return (
     <aside

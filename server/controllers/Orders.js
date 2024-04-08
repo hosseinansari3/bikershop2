@@ -13,18 +13,22 @@ const addorderitems = async (req, res) => {
     throw new Error("No order items");
   } else {
     const user = req.user;
-    console.log("user:" + JSON.stringify(user));
+
+    const orderItems = req.body.orderItems;
+
+    const total = orderItems.reduce((accumulator, item) => {
+      return accumulator + item.price * item.quantity;
+    }, 0);
+
     const order = new Order({
       user: user.id,
-      orderItems: req.body.orderItems,
+      orderItems: orderItems,
+      total: total,
     });
 
     const createdOrder = await order.save();
 
-    console.log("ordered!" + JSON.stringify(req.body.orderItems));
-
     const updatePromises = [];
-    console.log("Length", req.body.orderItems.length);
     for (const item of req.body.orderItems) {
       try {
         //const updatePromise = await productModel.findOneAndUpdate(
@@ -187,7 +191,7 @@ const GetMyOrders = async (req, res) => {
 // @route GET /api/admin/orders
 // @access Private/admin
 const GetOrders = async (req, res) => {
-  let limit = req.query.limit ? parseInt(req.query.limit) : 100;
+  let limit = req.query.limit ? parseInt(req.query.limit) : 0;
 
   const filters = req.query.filters;
 
