@@ -24,8 +24,6 @@ import road from "../../assets/images/Road-bike.jpg";
 import { Paper } from "@mui/material";
 import CartList from "../../components/CartList/CartList";
 
-import StarRatingComponent from "react-star-rating-component";
-
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";

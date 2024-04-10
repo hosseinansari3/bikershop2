@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./ProductCart.css";
 
-import StarRatingComponent from "react-star-rating-component";
 import StarRating from "../StarRating";
 
 function ProductCart(props) {

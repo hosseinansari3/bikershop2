@@ -1,12 +1,6 @@
 import React, { useEffect } from "react";
-import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-} from "recharts";
+import { Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
+import { LineChart } from "@mui/x-charts/LineChart";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -136,6 +130,27 @@ function AdminDash() {
       </text>
     );
   };
+
+  // Get today's date as the starting point
+  let endDate = new Date();
+  endDate.setHours(0, 0, 0, 0); // Set to midnight
+
+  // Calculate the date 7 days ago as the starting point
+  let startDate = new Date();
+  startDate.setDate(startDate.getDate() - 7);
+  startDate.setHours(0, 0, 0, 0); // Set to midnight
+
+  // Generate dates for the last seven days
+  let dates = [];
+  for (let i = 0; i < 7; i++) {
+    let currentDate = new Date(startDate);
+    currentDate.setDate(currentDate.getDate() + i);
+
+    dates.push(currentDate);
+  }
+
+  // Now 'dates' array contains the last seven days formatted as strings
+  console.log("dates", dates);
 
   return (
     <>
@@ -382,37 +397,51 @@ function AdminDash() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 my-8">
-        <div className="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-          <p className="mb-4 font-semibold text-gray-800 dark:text-gray-300">
-            Weekly sales
-          </p>
+        <div className="shadow-lg flex h-fit min-w-0  bg-white rounded-lg shadow-xs dark:bg-gray-800">
           <LineChart
-            width={400}
+            xAxis={[{ data: dates, scaleType: "time" }]}
+            sx={{
+              "& .MuiAreaElement-root": {
+                fill: "url('#myGradient')",
+              },
+              "& .MuiChartsAxis-line": {
+                strokeWidth: "0 !important",
+              },
+              "& .MuiChartsAxis-tick": {
+                stroke: "none !important",
+              },
+            }}
+            series={[
+              {
+                data: [30, 38, 46, 34, 40, 51, 55],
+                curve: "linear",
+                area: true,
+                showMark: false,
+              },
+            ]}
+            grid={{ horizontal: true }}
+            width={500}
             height={300}
-            data={data}
-            margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
           >
-            <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
+            <defs>
+              <linearGradient id="myGradient" gradientTransform="rotate(90)">
+                <stop offset="5%" stopColor="#e5effa" />
+                <stop offset="95%" stopColor="white" />
+              </linearGradient>
+            </defs>
           </LineChart>
         </div>
-        <div className="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 ">
-          <p className="mb-4 font-semibold text-gray-800 dark:text-gray-300">
-            Best Selling Products
-          </p>
-          <div className="flex justify-center">
-            <PieChart width={300} height={400}>
+        <div className=" shadow-lg min-w-0  bg-white rounded-lg shadow-xs dark:bg-gray-800 ">
+          <div className="flex h-fit justify-center">
+            <PieChart width={250} height={300}>
               <Pie
                 data={pieData}
                 cx="50%"
                 cy="50%"
                 labelLine={false}
-                viewBox={{ x: "100", y: "100", width: "200", height: "130" }}
+                viewBox={{ x: "60", y: "60", width: "200", height: "130" }}
                 label={renderCustomizedLabel}
-                outerRadius={140}
+                outerRadius={120}
                 fill="#8884d8"
                 dataKey="value"
               >
