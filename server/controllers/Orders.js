@@ -193,6 +193,8 @@ const GetMyOrders = async (req, res) => {
 const GetOrders = async (req, res) => {
   let limit = req.query.limit ? parseInt(req.query.limit) : 0;
 
+  const projection = req.query.projection ? req.query.projection : {};
+
   const filters = req.query.filters;
 
   let query = {};
@@ -201,12 +203,12 @@ const GetOrders = async (req, res) => {
     query.status = { $in: filters.status };
   }
 
-  const orders = await Order.find(query)
+  const orders = await Order.find(query, projection)
     .populate({
       path: "user",
       select: "firstName",
     })
-    .sort("-created")
+    .sort("-createdAt")
     .limit(limit);
   console.log("ALLOrders:" + JSON.stringify(orders));
 
