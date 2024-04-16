@@ -31,6 +31,22 @@ function AdminDash() {
     dispatch(listAllOrders(0, {}, { total: 1, status: 1 }));
   }, []);
 
+  // Calculate the date 7 days ago as the starting point
+  let startDate = new Date();
+  startDate.setDate(startDate.getDate() - 7);
+  startDate.setHours(0, 0, 0, 0); // Set to midnight
+
+  // Generate dates for the last seven days
+  let lastSevenDays = [];
+  for (let i = 1; i < 8; i++) {
+    let currentDate = new Date(startDate);
+    currentDate.setDate(currentDate.getDate() + i);
+
+    lastSevenDays.push(currentDate);
+  }
+
+  console.log("lastSevenDays", lastSevenDays);
+
   const currentDate = new Date();
 
   // Filter orders for today
@@ -59,6 +75,49 @@ function AdminDash() {
   });
 
   console.log("yesterdayOrders", yesterdayOrders);
+
+  const lastSeven = lastSevenDays.map((date) => {
+    return date.toDateString();
+  });
+  console.log("lastSeven", lastSeven);
+
+  const lastSevenDaysOrders = orders.filter((order) => {
+    const orderDate = new Date(order.createdAt);
+    return lastSeven.includes(orderDate.toDateString());
+  });
+
+  const lastSevenDaysOrdersDates = lastSevenDaysOrders.map((order) => {
+    return new Date(order.createdAt).toDateString();
+  });
+  const lastSevenDaysTotals = [];
+  lastSevenDays.forEach((day, index) => {
+    // lastSevenDaysOrdersDates.includes(day.toDateString())
+    //  ? myArr.push(index)
+    // : myArr.push(undefined);
+    const dayTotals = [];
+    orders.forEach((order) => {
+      if (new Date(order.createdAt).toDateString() == day.toDateString()) {
+        dayTotals.push(order.total);
+      }
+    });
+    if (dayTotals.length > 0) {
+      const dayTotal = dayTotals.reduce(
+        (accumulator, total) => accumulator + total
+      );
+      lastSevenDaysTotals.push(dayTotal);
+    } else {
+      lastSevenDaysTotals.push(0);
+    }
+  });
+
+  console.log("myArr", lastSevenDaysTotals);
+
+  lastSevenDaysOrdersDates.includes(lastSevenDays[0].toDateString()) &&
+    console.log("TT", true);
+
+  console.log("lastSevenDaysOrdersDates", lastSevenDaysOrdersDates);
+
+  console.log("lastSevenDaysOrders", lastSevenDaysOrders);
 
   const thisMonthOrders = orders?.filter((order) => {
     const orderDate = new Date(order.createdAt);
@@ -142,27 +201,6 @@ function AdminDash() {
       </text>
     );
   };
-
-  // Get today's date as the starting point
-  let endDate = new Date();
-  endDate.setHours(0, 0, 0, 0); // Set to midnight
-
-  // Calculate the date 7 days ago as the starting point
-  let startDate = new Date();
-  startDate.setDate(startDate.getDate() - 7);
-  startDate.setHours(0, 0, 0, 0); // Set to midnight
-
-  // Generate dates for the last seven days
-  let dates = [];
-  for (let i = 0; i < 7; i++) {
-    let currentDate = new Date(startDate);
-    currentDate.setDate(currentDate.getDate() + i);
-
-    dates.push(currentDate);
-  }
-
-  // Now 'dates' array contains the last seven days formatted as strings
-  console.log("dates", dates);
 
   return (
     <>
@@ -411,7 +449,7 @@ function AdminDash() {
       <div className="grid gap-4 md:grid-cols-2 my-8">
         <div className="shadow-lg flex h-fit min-w-0  bg-white rounded-lg shadow-xs dark:bg-gray-800">
           <LineChart
-            xAxis={[{ data: dates, scaleType: "time" }]}
+            xAxis={[{ data: lastSevenDays, scaleType: "time" }]}
             sx={{
               "& .MuiAreaElement-root": {
                 fill: "url('#myGradient')",
@@ -425,7 +463,7 @@ function AdminDash() {
             }}
             series={[
               {
-                data: [30, 38, 46, 34, 40, 51, 55],
+                data: lastSevenDaysTotals,
                 curve: "linear",
                 area: true,
                 showMark: false,
