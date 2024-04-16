@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
 import { LineChart } from "@mui/x-charts/LineChart";
+import { PieChart } from "@mui/x-charts/PieChart";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { PieChart, Pie, Cell } from "recharts";
 import { listAllOrders } from "../../actions/orders";
 import { ORDER_STATUS } from "../../constants/panelConstants";
 import { listAllOrdersAPI } from "../../api";
@@ -447,63 +446,68 @@ function AdminDash() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 my-8">
-        <div className="shadow-lg flex h-fit min-w-0  bg-white rounded-lg shadow-xs dark:bg-gray-800">
-          <LineChart
-            xAxis={[{ data: lastSevenDays, scaleType: "time" }]}
-            sx={{
-              "& .MuiAreaElement-root": {
-                fill: "url('#myGradient')",
-              },
-              "& .MuiChartsAxis-line": {
-                strokeWidth: "0 !important",
-              },
-              "& .MuiChartsAxis-tick": {
-                stroke: "none !important",
-              },
-            }}
-            series={[
-              {
-                data: lastSevenDaysTotals,
-                curve: "linear",
-                area: true,
-                showMark: false,
-              },
-            ]}
-            grid={{ horizontal: true }}
-            width={500}
-            height={300}
-          >
-            <defs>
-              <linearGradient id="myGradient" gradientTransform="rotate(90)">
-                <stop offset="5%" stopColor="#e5effa" />
-                <stop offset="95%" stopColor="white" />
-              </linearGradient>
-            </defs>
-          </LineChart>
+        <div className="shadow-lg min-w-0  bg-white rounded-lg shadow-xs dark:bg-gray-800">
+          <h3 className="pt-4 pl-4 font-bold text-xl">last 7 days sales</h3>
+          <div className="flex h-fit justify-center">
+            <LineChart
+              xAxis={[{ data: lastSevenDays, scaleType: "time" }]}
+              sx={{
+                "& .MuiAreaElement-root": {
+                  fill: "url('#myGradient')",
+                },
+                "& .MuiChartsAxis-line": {
+                  strokeWidth: "0 !important",
+                },
+                "& .MuiChartsAxis-tick": {
+                  stroke: "none !important",
+                },
+              }}
+              series={[
+                {
+                  data: lastSevenDaysTotals,
+                  curve: "linear",
+                  area: true,
+                  showMark: false,
+                },
+              ]}
+              grid={{ horizontal: true }}
+              width={450}
+              height={250}
+            >
+              <defs>
+                <linearGradient id="myGradient" gradientTransform="rotate(90)">
+                  <stop offset="5%" stopColor="#e5effa" />
+                  <stop offset="95%" stopColor="white" />
+                </linearGradient>
+              </defs>
+            </LineChart>
+          </div>
         </div>
         <div className=" shadow-lg min-w-0  bg-white rounded-lg shadow-xs dark:bg-gray-800 ">
+          <h3 className="p-4 font-bold text-xl">sales source</h3>
+
           <div className="flex h-fit justify-center">
-            <PieChart width={250} height={300}>
-              <Pie
-                data={pieData}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                viewBox={{ x: "60", y: "60", width: "200", height: "130" }}
-                label={renderCustomizedLabel}
-                outerRadius={120}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {data.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
+            <PieChart
+              series={[
+                {
+                  data: [
+                    { id: 0, value: 10, label: "Campaign" },
+                    { id: 1, value: 20, label: "Promotion" },
+                    { id: 2, value: 70, label: "Affiliation" },
+                  ],
+                  innerRadius: 49,
+                  outerRadius: 93,
+                  paddingAngle: 3,
+                  cornerRadius: 4,
+                  startAngle: -180,
+                  endAngle: 180,
+                  cx: 150,
+                  cy: 100,
+                },
+              ]}
+              width={400}
+              height={200}
+            />
           </div>
         </div>
       </div>
