@@ -18,6 +18,17 @@ function Reviews() {
   const [Reviews, setReviews] = useState([]);
   const [showActions, setShowActions] = useState([]);
 
+  const toggleActionBtn = (index) => {
+    {
+      if (showActions.includes(index)) {
+        const newArr = showActions.filter((item) => item !== index);
+        setShowActions(newArr);
+      } else {
+        setShowActions([...showActions, index]);
+      }
+    }
+  };
+
   useEffect(() => {
     console.log("dispatch");
     if (user.role === ROLES.Admin) {
@@ -118,18 +129,7 @@ function Reviews() {
                       </td>
                       <td className="px-4 py-3 text-right flex">
                         <div className="relative">
-                          <button
-                            onClick={() => {
-                              if (showActions.includes(index)) {
-                                const newArr = showActions.filter(
-                                  (item) => item !== index
-                                );
-                                setShowActions(newArr);
-                              } else {
-                                setShowActions([...showActions, index]);
-                              }
-                            }}
-                          >
+                          <button onClick={() => toggleActionBtn(index)}>
                             <svg
                               class="w-6 h-6 text-gray-800 dark:text-white"
                               aria-hidden="true"
@@ -154,27 +154,29 @@ function Reviews() {
                             >
                               <ul>
                                 <li
-                                  onClick={() =>
+                                  onClick={() => {
                                     dispatch(
                                       updateReview(item._id, {
                                         ...item,
                                         status: REVIEW_STATUS.Approved,
                                       })
-                                    )
-                                  }
+                                    );
+                                    toggleActionBtn(index);
+                                  }}
                                   className="hover:bg-gray-50 hover:cursor-pointer p-1.5"
                                 >
                                   Approve
                                 </li>
                                 <li
-                                  onClick={() =>
+                                  onClick={() => {
                                     dispatch(
                                       updateReview(item._id, {
                                         ...item,
                                         status: REVIEW_STATUS.Rejected,
                                       })
-                                    )
-                                  }
+                                    );
+                                    toggleActionBtn(index);
+                                  }}
                                   className="hover:bg-gray-50 hover:cursor-pointer p-1.5"
                                 >
                                   Reject

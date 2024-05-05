@@ -258,24 +258,40 @@ function Product() {
                     </div>
                   </div>
                 </div>
-                <p>In stock – Delivery time to Germany 2-6 working days**</p>
+                {selectedVarient?.length > 0 &&
+                  (selectedVarient[0]?.stock > 0 ? (
+                    <span>
+                      {" "}
+                      <p>
+                        In stock – Delivery time to Germany 2-6 working days**
+                      </p>{" "}
+                    </span>
+                  ) : null)}
               </div>
               <ul className="flex mt-12">
-                <li>
-                  <AccountBalanceIcon />
-                  <span className="pl-2">6 Bank Offers Available.</span>
+                <li className="text-center">
+                  <div>
+                    <AccountBalanceIcon />
+                    <p className="pl-2">6 Bank Offers Available</p>
+                  </div>
                 </li>
-                <li>
-                  <CreditScoreIcon />
-                  <span className="pl-2">90 Payment Options available.</span>
+                <li className="text-center">
+                  <div>
+                    <CreditScoreIcon />
+                    <p className="pl-2">90 Payment Options available</p>
+                  </div>
                 </li>
-                <li>
-                  <EventRepeatIcon />{" "}
-                  <span className="pl-2">7 Day Easy Returns on Biker.com</span>
+                <li className="text-center">
+                  <div>
+                    <EventRepeatIcon />
+                    <p className="pl-2">7 Day Easy Returns on Biker.com</p>
+                  </div>
                 </li>
-                <li>
-                  <LocalShippingIcon />
-                  <span className="pl-2">Free Shipping Worth $200</span>
+                <li className="text-center">
+                  <div>
+                    <LocalShippingIcon />{" "}
+                    <p className="pl-2">Free Shipping Worth $200</p>
+                  </div>
                 </li>
               </ul>
               <div className="h-14 mt-5 mb-2">
