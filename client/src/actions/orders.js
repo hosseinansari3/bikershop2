@@ -19,6 +19,7 @@ import {
   ORDER_USER_LIST_SUCCESS,
   PRODUCT_SEARCH_SUCCESS,
 } from "../constants/actionTypes";
+import { emptyCart } from "./cart";
 
 export const createOrder = (order) => async (dispatch, getState) => {
   try {
@@ -36,6 +37,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
     const { data } = await createOrderAPI(order, config);
 
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: data });
+    dispatch(emptyCart());
     toast("Your Order Submitted!");
     console.log("order", data);
   } catch (error) {

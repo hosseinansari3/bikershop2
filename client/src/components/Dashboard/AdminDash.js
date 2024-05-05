@@ -64,7 +64,7 @@ function AdminDash() {
   yesterday.setDate(yesterday.getDate() - 1);
 
   // Filter orders for yesterday
-  const yesterdayOrders = orders.filter((order) => {
+  const yesterdayOrders = orders?.filter((order) => {
     const orderDate = new Date(order.createdAt);
     return (
       orderDate.getDate() === yesterday.getDate() &&
@@ -80,12 +80,12 @@ function AdminDash() {
   });
   console.log("lastSeven", lastSeven);
 
-  const lastSevenDaysOrders = orders.filter((order) => {
+  const lastSevenDaysOrders = orders?.filter((order) => {
     const orderDate = new Date(order.createdAt);
     return lastSeven.includes(orderDate.toDateString());
   });
 
-  const lastSevenDaysOrdersDates = lastSevenDaysOrders.map((order) => {
+  const lastSevenDaysOrdersDates = lastSevenDaysOrders?.map((order) => {
     return new Date(order.createdAt).toDateString();
   });
   const lastSevenDaysTotals = [];
@@ -94,7 +94,7 @@ function AdminDash() {
     //  ? myArr.push(index)
     // : myArr.push(undefined);
     const dayTotals = [];
-    orders.forEach((order) => {
+    orders?.forEach((order) => {
       if (new Date(order.createdAt).toDateString() == day.toDateString()) {
         dayTotals.push(order.total);
       }
@@ -111,7 +111,7 @@ function AdminDash() {
 
   console.log("myArr", lastSevenDaysTotals);
 
-  lastSevenDaysOrdersDates.includes(lastSevenDays[0].toDateString()) &&
+  lastSevenDaysOrdersDates?.includes(lastSevenDays[0].toDateString()) &&
     console.log("TT", true);
 
   console.log("lastSevenDaysOrdersDates", lastSevenDaysOrdersDates);
@@ -126,33 +126,33 @@ function AdminDash() {
     );
   });
 
-  const todayTotal = todayOrders.reduce((accumulator, order) => {
+  const todayTotal = todayOrders?.reduce((accumulator, order) => {
     return accumulator + order.total;
   }, 0);
 
-  const yesterdayTotal = yesterdayOrders.reduce((accumulator, order) => {
+  const yesterdayTotal = yesterdayOrders?.reduce((accumulator, order) => {
     return accumulator + order.total;
   }, 0);
 
-  const thisMonthTotal = thisMonthOrders.reduce((accumulator, order) => {
+  const thisMonthTotal = thisMonthOrders?.reduce((accumulator, order) => {
     return accumulator + order.total;
   }, 0);
 
-  const allTimeTotal = orders.reduce((accumulator, order) => {
+  const allTimeTotal = orders?.reduce((accumulator, order) => {
     return accumulator + order.total;
   }, 0);
 
   console.log("thisMonthOrders", thisMonthOrders);
 
-  const pendingOrders = orders.filter(
+  const pendingOrders = orders?.filter(
     (order) => order.status == ORDER_STATUS.Pending
   );
 
-  const processingOrders = orders.filter(
+  const processingOrders = orders?.filter(
     (order) => order.status == ORDER_STATUS.Processing
   );
 
-  const deliveredOrders = orders.filter(
+  const deliveredOrders = orders?.filter(
     (order) => order.status == ORDER_STATUS.Delivered
   );
 
@@ -356,7 +356,7 @@ function AdminDash() {
                 <span>Total Order</span>
               </h6>
               <p className="text-2xl font-bold leading-none text-gray-600 dark:text-gray-200">
-                {orders.length}
+                {orders?.length}
               </p>
             </div>
           </div>
@@ -388,7 +388,7 @@ function AdminDash() {
                 </span>
               </h6>
               <p className="text-2xl font-bold leading-none text-gray-600 dark:text-gray-200">
-                {pendingOrders.length}
+                {pendingOrders?.length}
               </p>
             </div>
           </div>
@@ -413,7 +413,7 @@ function AdminDash() {
                 <span>Orders Processing</span>
               </h6>
               <p className="text-2xl font-bold leading-none text-gray-600 dark:text-gray-200">
-                {processingOrders.length}
+                {processingOrders?.length}
               </p>
             </div>
           </div>
@@ -438,7 +438,7 @@ function AdminDash() {
                 <span>Orders Delivered</span>
               </h6>
               <p className="text-2xl font-bold leading-none text-gray-600 dark:text-gray-200">
-                {deliveredOrders.length}
+                {deliveredOrders?.length}
               </p>
             </div>
           </div>

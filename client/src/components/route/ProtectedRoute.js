@@ -1,15 +1,16 @@
 // PrivateRoute.js
 
 import React from "react";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { Navigate, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ProtectedRoute = ({ destination }) => {
   // Add your own authentication logic here
-  const userInfo = useSelector((state) => state.usersSignin.userInfo);
-  const navigate = useNavigate();
+  const userInfo = useSelector((state) => state.account);
 
-  const isLoggedIn = userInfo !== null && userInfo !== undefined;
+  const isLoggedIn =
+    userInfo?.user !== undefined && Object.keys(userInfo?.user).length > 0;
+  console.log("userInfo", userInfo);
 
   return isLoggedIn ? (
     <Outlet />

@@ -23,6 +23,7 @@ import * as api from "../api/index";
 import setAuthToken from "../utils/setAuthToken";
 import { toast } from "react-toastify";
 import { allFieldsValidation } from "../utils/validation";
+import { fetchProfile } from "./account";
 
 export const getUsers = (page) => async (dispatch) => {
   dispatch({ type: FETCH_ALL_USERS_REQUEST });
@@ -69,7 +70,8 @@ export const signin = (email, password) => async (dispatch) => {
     setAuthToken(token);
     // if success, dispatch success and set payload to data
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
-    dispatch({ type: FETCH_PROFILE });
+    // dispatch({ type: FETCH_PROFILE });
+    dispatch(fetchProfile());
 
     const patse = localStorage.getItem("userInfo");
     toast("LOGGED IN SUCCESSFULLY!");

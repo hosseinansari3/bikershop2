@@ -53,6 +53,7 @@ export const USER_SEARCH_SUCCESS = "USER_SEARCH_SUCCESS";
 
 export const ADD_TO_CARD = "ADD_TO_CARD";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const EMPTY_CART = "EMPTY_CART";
 
 /*
  *

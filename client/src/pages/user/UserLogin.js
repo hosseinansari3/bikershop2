@@ -11,18 +11,25 @@ import { Slide, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
+import { fetchProfile } from "../../actions/account";
 
 function LoginPage(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggedin, setisLoggedin] = useState(false);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchProfile());
+  }, []);
+
   const userSignin = useSelector((state) => state.usersSignin);
+  const userAccount = useSelector((state) => state?.account);
+
   const { userInfo, loading, formErrors } = userSignin;
 
   console.log("userInfo", userInfo);
-
-  const dispatch = useDispatch();
 
   const location = useLocation();
   const { from } = location.state || { from: { pathname: "/cart" } };
@@ -30,10 +37,14 @@ function LoginPage(props) {
   console.log("state", location?.state);
 
   useEffect(() => {
-    if (typeof userInfo !== undefined) {
+    if (
+      userAccount?.user !== undefined &&
+      Object.keys(userAccount?.user).length > 0
+    ) {
       setisLoggedin(true);
+      console.log("BIG!");
     }
-  }, [userSignin, userInfo]);
+  }, [userAccount, userInfo, userSignin]);
 
   useEffect(() => {
     console.log("INNN", isLoggedin);
@@ -56,7 +67,7 @@ function LoginPage(props) {
       console.log("FOOOIN", userInfo);
     }
     console.log("FOOOOUT", userInfo);
-  }, [userInfo]);
+  }, [isLoggedin]);
 
   const validate = () =>
     Yup.object({

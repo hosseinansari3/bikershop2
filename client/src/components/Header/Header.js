@@ -25,13 +25,19 @@ import {
   onProductSuggestionsFetchRequested,
 } from "../../actions/products";
 import CartDrawer from "../Cart/CartDrawer";
+import { fetchProfile } from "../../actions/account";
 
 function Header() {
-  const userInfo = useSelector((state) => state.usersSignin.userInfo);
+  const dispatch = useDispatch();
+
+  const userInfo = useSelector((state) => state?.account);
+  useEffect(() => {
+    dispatch(fetchProfile());
+  }, []);
+
   const cart = useSelector((state) => state.cart);
   const suggestions = useSelector((state) => state.products.searchSuggestions);
   const searchValue = useSelector((state) => state.products.searchValue);
-  const dispatch = useDispatch();
 
   const [cartIsOpen, setCartIsOpen] = useState(false);
   const [profiletIsOpen, setProfileIsOpen] = useState(false);
@@ -70,15 +76,19 @@ function Header() {
   const { cartItems } = cart;
 
   useEffect(() => {
-    if (userInfo !== null && userInfo !== undefined) {
+    if (
+      userInfo?.user !== undefined &&
+      Object.keys(userInfo?.user).length > 0
+    ) {
       setisLoggedin(true);
-
-      setuserName(userInfo?.user.firstName);
+      console.log("shod");
+      setuserName(userInfo?.user?.firstName);
     } else {
       setisLoggedin(false);
     }
   }, [userInfo]);
 
+  console.log("userInfo", userInfo);
   const logoutHandler = () => {
     dispatch(logout());
     setisLoggedin(false);
@@ -106,11 +116,12 @@ function Header() {
 
   useEffect(() => {
     let total = 0.0;
-    savedCartItems?.map((item) => {
-      let itemPrice = parseFloat(item.price);
-      let itemTotal = itemPrice * parseFloat(item.quantity);
-      total = itemTotal + total;
-    });
+    savedCartItems.length > 0 &&
+      savedCartItems?.map((item) => {
+        let itemPrice = parseFloat(item.price);
+        let itemTotal = itemPrice * parseFloat(item.quantity);
+        total = itemTotal + total;
+      });
 
     setTotal(total);
   }, [savedCartItems]);
@@ -218,33 +229,34 @@ function Header() {
                 <div className="hidden md:block card-dropdown shadow-xl">
                   <>
                     <ul>
-                      {savedCartItems?.map((item) => {
-                        return (
-                          <li key={item.product}>
-                            <div className="card-item-wrapper p-2.5">
-                              <img src={item.image}></img>
-                              <div className="card-item-text-wrapper w-[215px]">
-                                <div className="card-title contents">
-                                  <p>{item.title}</p>
+                      {savedCartItems.length > 0 &&
+                        savedCartItems?.map((item) => {
+                          return (
+                            <li key={item.product}>
+                              <div className="card-item-wrapper p-2.5">
+                                <img src={item.image}></img>
+                                <div className="card-item-text-wrapper w-[215px]">
+                                  <div className="card-title contents">
+                                    <p>{item.title}</p>
+                                  </div>
+                                  <div className="card-price">
+                                    <span>${item.price} </span>
+                                    <span>QTY: {item.quantity}</span>
+                                    <span>size: {item.size}</span>
+                                  </div>
                                 </div>
-                                <div className="card-price">
-                                  <span>${item.price} </span>
-                                  <span>QTY: {item.quantity}</span>
-                                  <span>size: {item.size}</span>
+                                <div
+                                  className="remove-cart relative ml-4"
+                                  onClick={() =>
+                                    removeFromCardHandler(item.product)
+                                  }
+                                >
+                                  <Close className="absolute" />
                                 </div>
                               </div>
-                              <div
-                                className="remove-cart relative ml-4"
-                                onClick={() =>
-                                  removeFromCardHandler(item.product)
-                                }
-                              >
-                                <Close className="absolute" />
-                              </div>
-                            </div>
-                          </li>
-                        );
-                      })}
+                            </li>
+                          );
+                        })}
                     </ul>
                     <div className="flex justify-center bg-gray-300 font-bold p-2 text-white mb-2">
                       <span>subtotal:</span>
@@ -261,7 +273,7 @@ function Header() {
               )}
 
             {cart &&
-            savedCartItems?.length !== 0 &&
+            savedCartItems?.length > 0 &&
             savedCartItems !== undefined ? (
               <span className="cart-number">{cartItems.length}</span>
             ) : null}

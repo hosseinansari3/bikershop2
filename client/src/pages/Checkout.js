@@ -55,7 +55,7 @@ function Checkout() {
       );
       setSelectedAddress(defaultAddressArr[0]);
     }
-    console.log("ad", user.address);
+    console.log("ad", user?.address);
   }, [user]);
 
   useEffect(() => {

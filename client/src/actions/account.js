@@ -101,7 +101,7 @@ export const fetchProfile = () => {
       dispatch({ type: FETCH_PROFILE, payload: response.data.user });
     } catch (error) {
       console.log(error);
-      if (error.response.status === 401) {
+      if (error?.response?.status === 401) {
         dispatch({ type: NOT_AUTHORIZED });
       }
     }

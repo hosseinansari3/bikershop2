@@ -35,7 +35,7 @@ function Panel() {
   const [avatar, setAvatar] = useState("");
 
   useEffect(() => {
-    if (user.role === ROLES.Admin) {
+    if (user?.role === ROLES.Admin) {
       dispatch(listAllOrders(0, {}));
     } else {
       dispatch(listMyOrders());

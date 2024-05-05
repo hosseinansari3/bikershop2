@@ -48,17 +48,17 @@ import Rating from "@mui/material/Rating";
 
 function Product() {
   const [quantity, setQuantity] = useState(1);
-  const [selectedVarient, setSelectedVarient] = useState([]);
   const [selectedSize, setSelectedSize] = useState("");
+  const [selectedVarient, setSelectedVarient] = useState([]);
 
   const [rating, setRating] = React.useState(2);
 
   const increment = () => {
-    setQuantity(Number(quantity) + 1);
+    quantity < selectedVarient[0]?.stock && setQuantity(Number(quantity) + 1);
   };
 
   const decrement = () => {
-    quantity > 0 && setQuantity(Number(quantity) - 1);
+    quantity > 1 && setQuantity(Number(quantity) - 1);
   };
 
   const { slug } = useParams();
@@ -70,12 +70,8 @@ function Product() {
 
   const dispatch = useDispatch();
 
-  const ProductAddToCartNotif = () =>
-    toast("PRODUCT ADDED TO CART SUCCESSFULLY!");
-
   const addToCardHandler = (p, qty) => {
     dispatch(addToCard(p, qty, selectedSize));
-    ProductAddToCartNotif();
   };
 
   const reviewChangeHandler = (name, value) => {
@@ -104,7 +100,8 @@ function Product() {
 
     console.log("selectedV", selectedV);
 
-    setSelectedVarient(selectedV);
+    selectedV != undefined && setSelectedVarient(selectedV);
+    setQuantity(1);
   }, [selectedSize]);
 
   function TabPanel(props) {
@@ -162,6 +159,8 @@ function Product() {
       console.log("images array is empty or undefined");
     }
   }
+
+  console.log("selected", selectedVarient);
 
   return (
     <>
@@ -246,10 +245,16 @@ function Product() {
                     <StarRating rateValue={product?.rating} readOnly={true} />
 
                     <div className="ml-3">
-                      Assembling | Bulky good Still |{" "}
-                      {selectedVarient?.length > 0 && (
-                        <span> {selectedVarient[0]?.stock} in stock</span>
-                      )}
+                      Assembling | Bulky good
+                      {selectedVarient?.length > 0 &&
+                        (selectedVarient[0]?.stock > 0 ? (
+                          <span>
+                            {" "}
+                            | Still {selectedVarient[0]?.stock} in stock
+                          </span>
+                        ) : (
+                          <span className="text-red-500"> out of stock</span>
+                        ))}
                     </div>
                   </div>
                 </div>
@@ -276,19 +281,49 @@ function Product() {
               <div className="h-14 mt-5 mb-2">
                 <div className="h-full flex mb-1.5 justify-between">
                   <button
-                    className="w-[74%] inline-block border-2 border-solid h-full border-black px-20 transition-all hover:bg-black hover:text-white"
+                    disabled={
+                      selectedVarient?.length == 0 ||
+                      selectedVarient[0]?.stock == 0
+                    }
+                    className={`${
+                      selectedVarient?.length == 0 ||
+                      selectedVarient[0]?.stock == 0
+                        ? "border-gray-100 bg-gray-100 text-gray-300"
+                        : "border-black hover:bg-black hover:text-white"
+                    } w-[74%] inline-block border-2 border-solid h-full px-20 transition-all  `}
                     onClick={() => addToCardHandler(slug, quantity)}
                   >
                     ADD TO CARD
                   </button>
-                  <div className="w-1/4 justify-around border-2	border-solid h-full border-black inline-flex">
-                    <button onClick={decrement} className="quantity-btn">
+                  <div
+                    className={`${
+                      selectedVarient?.length == 0 ||
+                      selectedVarient[0]?.stock == 0
+                        ? "border-gray-100 bg-gray-100 text-gray-300"
+                        : "border-black hover:bg-black hover:text-white"
+                    } w-1/4 justify-around border-2	border-solid h-full inline-flex`}
+                  >
+                    <button
+                      disabled={
+                        selectedVarient?.length == 0 ||
+                        selectedVarient[0]?.stock == 0
+                      }
+                      onClick={decrement}
+                      className="quantity-btn"
+                    >
                       -
                     </button>
                     <span className="quantity-input flex justify-center items-center">
                       {quantity}
                     </span>
-                    <button onClick={increment} className="quantity-btn">
+                    <button
+                      disabled={
+                        selectedVarient?.length == 0 ||
+                        selectedVarient[0]?.stock == 0
+                      }
+                      onClick={increment}
+                      className="quantity-btn"
+                    >
                       +
                     </button>
                   </div>
