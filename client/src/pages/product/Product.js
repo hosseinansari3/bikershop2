@@ -45,6 +45,7 @@ import {
 import { REVIEW_STATUS } from "../../constants/panelConstants";
 import StarRating from "../../components/StarRating";
 import Rating from "@mui/material/Rating";
+import CarouselMobile from "../../components/Carousel/CarouselMobile";
 
 function Product() {
   const [quantity, setQuantity] = useState(1);
@@ -167,9 +168,9 @@ function Product() {
       <div style={{ marginTop: "10px" }}>
         <div>
           <div className="grid grid-cols-1 lg:grid-cols-2 p-5">
-            <div>
+            <div className="product-images-Carousel">
               <Carousel
-                style={{}}
+                class="hidden md:block"
                 spv={1}
                 space={20}
                 thumb={true}
@@ -200,8 +201,40 @@ function Product() {
                   />
                 </SwiperSlide>
               </Carousel>
+              <CarouselMobile
+                class="md:hidden"
+                spv={1}
+                space={20}
+                thumb={true}
+                images={images}
+              >
+                <SwiperSlide>
+                  <img
+                    className="Image"
+                    src={images && images.length > 0 ? images[0] : null}
+                  />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <img
+                    className="Image"
+                    src={images && images.length > 1 ? images[1] : null}
+                  />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <img
+                    className="Image"
+                    src={images && images.length > 2 ? images[2] : null}
+                  />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <img
+                    className="Image"
+                    src={images && images.length > 3 ? images[3] : null}
+                  />
+                </SwiperSlide>
+              </CarouselMobile>
             </div>
-            <div className="col-lg-6 p-6 shadow-lg ml-4">
+            <div className="col-lg-6 p-6 shadow-lg md:ml-4">
               <div>
                 <div className="title">{product?.title}</div>
               </div>
@@ -233,31 +266,7 @@ function Product() {
                     })}
                   </select>
                 </div>
-                <div className="flex justify-around mt-4">
-                  <div>
-                    <p className="mb-[-15px] text-red-500">Discount 33%</p>
-                    <span className="text-[30pt] text-red-500">
-                      {product?.price}$
-                    </span>
-                  </div>
 
-                  <div className="flex items-center">
-                    <StarRating rateValue={product?.rating} readOnly={true} />
-
-                    <div className="ml-3">
-                      Assembling | Bulky good
-                      {selectedVarient?.length > 0 &&
-                        (selectedVarient[0]?.stock > 0 ? (
-                          <span>
-                            {" "}
-                            | Still {selectedVarient[0]?.stock} in stock
-                          </span>
-                        ) : (
-                          <span className="text-red-500"> out of stock</span>
-                        ))}
-                    </div>
-                  </div>
-                </div>
                 {selectedVarient?.length > 0 &&
                   (selectedVarient[0]?.stock > 0 ? (
                     <span>
@@ -268,33 +277,66 @@ function Product() {
                     </span>
                   ) : null)}
               </div>
-              <ul className="flex mt-12">
+              <div className="flex justify-around mt-4">
+                <div>
+                  <p className="mb-[-15px] text-red-500">Discount 33%</p>
+                  <span className="text-[30pt] text-red-500">
+                    {product?.price}$
+                  </span>
+                </div>
+
+                <div className="flex items-center">
+                  <StarRating rateValue={product?.rating} readOnly={true} />
+
+                  <div className="ml-3 hidden md:block">
+                    Assembling | Bulky good
+                    {selectedVarient?.length > 0 &&
+                      (selectedVarient[0]?.stock > 0 ? (
+                        <span>
+                          {" "}
+                          | Still {selectedVarient[0]?.stock} in stock
+                        </span>
+                      ) : (
+                        <span className="text-red-500"> out of stock</span>
+                      ))}
+                  </div>
+                </div>
+              </div>
+              <ul className="flex text-[25pt] justify-evenly">
                 <li className="text-center">
                   <div>
-                    <AccountBalanceIcon />
-                    <p className="pl-2">6 Bank Offers Available</p>
+                    <AccountBalanceIcon fontSize="inherit" />
+                    <p className="pl-2 hidden md:block md:text-[11pt]">
+                      6 Bank Offers Available
+                    </p>
                   </div>
                 </li>
                 <li className="text-center">
                   <div>
-                    <CreditScoreIcon />
-                    <p className="pl-2">90 Payment Options available</p>
+                    <CreditScoreIcon fontSize="inherit" />
+                    <p className="pl-2 hidden md:block md:text-[11pt]">
+                      90 Payment Options available
+                    </p>
                   </div>
                 </li>
                 <li className="text-center">
                   <div>
-                    <EventRepeatIcon />
-                    <p className="pl-2">7 Day Easy Returns on Biker.com</p>
+                    <EventRepeatIcon fontSize="inherit" />
+                    <p className="pl-2 hidden md:block md:text-[11pt]">
+                      7 Day Easy Returns on Biker.com
+                    </p>
                   </div>
                 </li>
                 <li className="text-center">
                   <div>
-                    <LocalShippingIcon />{" "}
-                    <p className="pl-2">Free Shipping Worth $200</p>
+                    <LocalShippingIcon fontSize="inherit" />{" "}
+                    <p className="pl-2 hidden md:block md:text-[11pt]">
+                      Free Shipping Worth $200
+                    </p>
                   </div>
                 </li>
               </ul>
-              <div className="h-14 mt-5 mb-2">
+              <div className="mt-5">
                 <div className="h-full flex mb-1.5 justify-between">
                   <button
                     disabled={
@@ -306,10 +348,10 @@ function Product() {
                       selectedVarient[0]?.stock == 0
                         ? "border-gray-100 bg-gray-100 text-gray-300"
                         : "border-black hover:bg-black hover:text-white"
-                    } w-[74%] inline-block border-2 border-solid h-full px-20 transition-all  `}
+                    } w-[74%] inline-block border-2 border-solid transition-all  `}
                     onClick={() => addToCardHandler(slug, quantity)}
                   >
-                    ADD TO CARD
+                    <span>ADD TO CARD</span>
                   </button>
                   <div
                     className={`${
@@ -317,7 +359,7 @@ function Product() {
                       selectedVarient[0]?.stock == 0
                         ? "border-gray-100 bg-gray-100 text-gray-300"
                         : "border-black hover:bg-black hover:text-white"
-                    } w-1/4 justify-around border-2	border-solid h-full inline-flex`}
+                    } w-1/4 justify-around items-center border-2	border-solid h-full inline-flex`}
                   >
                     <button
                       disabled={
@@ -346,10 +388,10 @@ function Product() {
                 </div>
                 <button
                   onClick={handleAddToWishlist}
-                  className="h-14 w-full border-2	 block border-solid  h-8 px-[88px] border-black transition-all hover:bg-black hover:text-white"
+                  className="h-14 w-full border-2	 block border-solid  h-8  border-black transition-all hover:bg-black hover:text-white"
                 >
                   <FavoriteBorderIcon />
-                  ADD TO WISHLIST
+                  <span>ADD TO WISHLIST</span>
                 </button>
               </div>
             </div>
@@ -358,6 +400,7 @@ function Product() {
             <Box sx={{ width: "100%" }}>
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <Tabs
+                  variant="fullWidth"
                   value={value}
                   onChange={handleChange}
                   aria-label="basic tabs example"
