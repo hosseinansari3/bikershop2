@@ -9,12 +9,13 @@ import img1 from "../../assets/images/cross-race-c68x-te-liquidblue-flashyellow-
 import img2 from "../../assets/images/twostroke-01-four-red-blk-blk-1078586.jpg";
 import img3 from "../../assets/images/bmc-teammachine-alr-two-sil-blk-red-1078691.jpg";
 import img4 from "../../assets/images/roadmachine-01-four-coral-red-black-1285467.jpg";
+import { Link } from "react-router-dom";
+import StarRating from "../StarRating";
 
 function CartList(props) {
   if (props.carousel) {
     return (
       <Carousel
-        style={{ height: "464px" }}
         responsive
         breakpoints={{
           // when window width is >= 480px
@@ -34,46 +35,99 @@ function CartList(props) {
         }}
       >
         <SwiperSlide>
-          <ProductCart
-            className="hover:shadow-xl m-2"
-            image={img}
-            price=" 3990.99"
-            title=" Endura Hummvee Cycling Trousers II"
-          />
+          <div className="hover:shadow-xl m-2">
+            <Link to="#">
+              <div>
+                <img
+                  className=" object-contain w-full h-[225px]"
+                  src={img}
+                  alt="ddsdfsfd"
+                />
+              </div>
+            </Link>
+            <div className="product-title">
+              Endura Hummvee Cycling Trousers II
+            </div>
+            <div className="flex justify-center">
+              <StarRating rateValue={props.rating} readOnly={true} />
+            </div>
+
+            <div className="product-price">3990.99 $</div>
+          </div>
         </SwiperSlide>
 
         <SwiperSlide>
-          <ProductCart
-            className="hover:shadow-xl m-2"
-            image={img1}
-            price=" 2590.99"
-            title="Radon Skeen Trail 9.0"
-          />
+          <div className="hover:shadow-xl m-2">
+            <Link to="#">
+              <div>
+                <img
+                  className="object-contain w-full h-[225px]"
+                  src={img1}
+                  alt="ddsdfsfd"
+                />
+              </div>
+            </Link>
+            <div className="product-title">Radon Skeen Trail 9.0</div>
+            <div className="flex justify-center">
+              <StarRating rateValue={props.rating} readOnly={true} />
+            </div>
+            <div className="product-price">2590.99 $</div>
+          </div>
         </SwiperSlide>
 
         <SwiperSlide>
-          <ProductCart
-            className="hover:shadow-xl m-2"
-            image={img2}
-            price=" 3999.99"
-            title="Cube Stereo Hybrid 140 HPC"
-          />
+          <div className="hover:shadow-xl m-2">
+            <Link to="#">
+              <div>
+                <img
+                  className="object-contain w-full h-[225px]"
+                  src={img2}
+                  alt="ddsdfsfd"
+                />
+              </div>
+            </Link>
+            <div className="product-title">Cube Stereo Hybrid 140 HPC</div>
+            <div className="flex justify-center">
+              <StarRating rateValue={props.rating} readOnly={true} />
+            </div>
+            <div className="product-price">3999.99 $</div>
+          </div>
         </SwiperSlide>
         <SwiperSlide>
-          <ProductCart
-            className="hover:shadow-xl m-2"
-            image={img3}
-            price=" 4290.99"
-            title="Radon Spire Disc 9.0"
-          />
+          <div className="hover:shadow-xl m-2">
+            <Link to="#">
+              <div>
+                <img
+                  className=" object-contain w-full h-[225px]"
+                  src={img3}
+                  alt="ddsdfsfd"
+                />
+              </div>
+            </Link>
+            <div className="product-title">Radon Spire Disc 9.0</div>
+            <div className="flex justify-center">
+              <StarRating rateValue={props.rating} readOnly={true} />
+            </div>
+            <div className="product-price">4290.99 $</div>
+          </div>
         </SwiperSlide>
         <SwiperSlide>
-          <ProductCart
-            className="hover:shadow-xl m-2"
-            image={img4}
-            price="3,196.77"
-            title="Cube Reaction Hybrid SL 750"
-          />
+          <div className="hover:shadow-xl m-2">
+            <Link to="#">
+              <div>
+                <img
+                  className="object-contain w-full h-[225px]"
+                  src={img4}
+                  alt="ddsdfsfd"
+                />
+              </div>
+            </Link>
+            <div className="product-title">Cube Reaction Hybrid SL 750</div>
+            <div className="flex justify-center">
+              <StarRating rateValue={props.rating} readOnly={true} />
+            </div>
+            <div className="product-price">3,196.77 $</div>
+          </div>
         </SwiperSlide>
       </Carousel>
     );

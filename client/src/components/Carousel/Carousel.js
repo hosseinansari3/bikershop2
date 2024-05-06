@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Thumbs } from "swiper";
+import { Pagination } from "swiper";
 
 import CrossBike from "../../assets/images/Cross-Bike.jpg";
 import CityBike from "../../assets/images/City-Bike.jpg";
@@ -25,7 +26,10 @@ function Carousel(props) {
         style={props.style}
         className={props.class}
         // install Swiper modules
-        modules={[Thumbs, Navigation]}
+        modules={[Thumbs, Pagination]}
+        pagination={{
+          dynamicBullets: true,
+        }}
         thumbs={{
           swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
         }}
@@ -34,7 +38,6 @@ function Carousel(props) {
         breakpoints={props.breakpoints}
         spaceBetween={props.space}
         slidesPerView={props.spv}
-        navigation
       >
         {props.children}
       </Swiper>
@@ -47,7 +50,7 @@ function Carousel(props) {
           slidesPerView={4}
           spaceBetween={20}
           height={100}
-          className="thumbs"
+          className="thumbs hidden md:block"
         >
           <SwiperSlide>
             <img

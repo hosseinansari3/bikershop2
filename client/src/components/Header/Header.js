@@ -116,7 +116,7 @@ function Header() {
 
   useEffect(() => {
     let total = 0.0;
-    savedCartItems.length > 0 &&
+    savedCartItems?.length > 0 &&
       savedCartItems?.map((item) => {
         let itemPrice = parseFloat(item.price);
         let itemTotal = itemPrice * parseFloat(item.quantity);
@@ -170,7 +170,7 @@ function Header() {
     <header className="header" style={{ zIndex: "30" }}>
       <CartDrawer isOpen={cartDrawerisOpen} setOpen={setCartDrawerOpen} />
       <div
-        className="py-8 grid grid-cols-5"
+        className="md:py-8 grid grid-cols-5"
         style={{ backgroundColor: "black" }}
       >
         <div className="flex  items-center col-span-3 md:col-span-2 lg:col-span-1">
@@ -229,7 +229,7 @@ function Header() {
                 <div className="hidden md:block card-dropdown shadow-xl">
                   <>
                     <ul>
-                      {savedCartItems.length > 0 &&
+                      {savedCartItems?.length > 0 &&
                         savedCartItems?.map((item) => {
                           return (
                             <li key={item.product}>

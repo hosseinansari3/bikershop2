@@ -16,7 +16,6 @@
 }
 .product-specification {
   border-radius: 18px;
-  height: 155px;
 }
 
 .size {
@@ -98,7 +97,7 @@
   margin-top: -11px;
 }
 
-.swiper img {
+.product-images-Carousel img {
   object-fit: cover;
   width: 100%;
   height: 100%;

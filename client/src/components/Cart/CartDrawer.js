@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 function CartDrawer({ isOpen, setOpen }) {
-  //const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const savedCartItems = JSON.parse(localStorage.getItem("cartItems"));
 
   return (
     <div>
@@ -21,30 +21,21 @@ function CartDrawer({ isOpen, setOpen }) {
         </div>
         <div className="border-b pb-[2vh]">
           <ul className="p-5">
-            <li className="flex mb-[2vh]">
-              <div className="h-[12vh] w-[12vh] bg-slate-600"></div>
-              <div className="ml-3 ">
-                <span className="font-bold">my product title 1</span>
-                <p className="text-sm">price: 500$</p>
-                <p className="text-sm">quantity: 5</p>
-              </div>
-            </li>
-            <li className="flex mb-[2vh]">
-              <div className="h-[12vh] w-[12vh] bg-slate-600"></div>
-              <div className="ml-3 ">
-                <span className="font-bold">my product title 1</span>
-                <p className="text-sm">price: 500$</p>
-                <p className="text-sm">quantity: 5</p>
-              </div>
-            </li>{" "}
-            <li className="flex mb-[2vh]">
-              <div className="h-[12vh] w-[12vh] bg-slate-600"></div>
-              <div className="ml-3 ">
-                <span className="font-bold">my product title 1</span>
-                <p className="text-sm">price: 500$</p>
-                <p className="text-sm">quantity: 5</p>
-              </div>
-            </li>
+            {savedCartItems?.map((item) => {
+              return (
+                <li className="flex mb-[2vh]">
+                  <img
+                    src={item.image}
+                    className="h-[12vh] w-[12vh] bg-slate-600"
+                  />
+                  <div className="ml-3 ">
+                    <span className="font-bold">{item.title}</span>
+                    <p className="text-sm">price: ${item.price}</p>
+                    <p className="text-sm">quantity: {item.quantity}</p>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         </div>
         <div className="flex flex-col justify-center mt-[15vh]">

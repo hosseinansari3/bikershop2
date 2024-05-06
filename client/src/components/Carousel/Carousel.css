@@ -7,6 +7,16 @@
   margin-top: 25px;
 }
 
+.swiper-horizontal
+  > .swiper-pagination-bullets.swiper-pagination-bullets-dynamic,
+.swiper-pagination-horizontal.swiper-pagination-bullets.swiper-pagination-bullets-dynamic {
+  left: 15% !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: black !important;
+}
+
 .swiper-slide-thumb-active img {
   border: 5px solid red;
   transition: all 0.2s ease-out;

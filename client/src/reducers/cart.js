@@ -5,6 +5,7 @@ import {
 } from "../constants/actionTypes";
 
 const savedCartItems =
+  localStorage.getItem("cartItems") &&
   Object.keys(JSON.parse(localStorage.getItem("cartItems"))).length > 0
     ? JSON.parse(localStorage.getItem("cartItems"))
     : [];
