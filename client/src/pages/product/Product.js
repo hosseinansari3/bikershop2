@@ -174,6 +174,7 @@ function Product() {
                 spv={1}
                 space={20}
                 thumb={true}
+                pagination={true}
                 images={images}
               >
                 <SwiperSlide>

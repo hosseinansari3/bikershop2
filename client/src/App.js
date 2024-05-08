@@ -33,7 +33,10 @@ function App() {
   const { isOpen } = addressModal;
 
   return (
-    <div className={`relative ${isOpen && "overflow-y-hidden h-screen"}`}>
+    <div
+      // style={{ minWidth: "450px" }}
+      className={` relative ${isOpen && "overflow-y-hidden h-screen"}`}
+    >
       <ToastContainer />
       <AddressModal />
 

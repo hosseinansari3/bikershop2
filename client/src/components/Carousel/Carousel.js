@@ -26,7 +26,7 @@ function Carousel(props) {
         style={props.style}
         className={props.class}
         // install Swiper modules
-        modules={[Thumbs, Pagination]}
+        modules={props.pagination ? [Thumbs, Pagination] : [Thumbs]}
         pagination={{
           dynamicBullets: true,
         }}

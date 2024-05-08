@@ -106,55 +106,76 @@ function MainPage() {
         </Carousel>
       </div>
 
-      <div className=" p-6 flex grid grid-cols-2 md:grid-cols-4 gap-4 gradient card-wrapper">
-        <div className="category-card">
-          <div>
-            <ShoppingCart className="choose-us-icon" />
-          </div>
-          <div className="choose-us-text">
-            <h4>WIDE RANGE SELECTION </h4>
-            <p>Vast option for latest bike related products for you.</p>
-          </div>
-        </div>
-        <div className="category-card">
-          <div>
-            <CardGiftcardOutlined className="choose-us-icon" />
-          </div>
-          <div className="choose-us-text">
-            <h4>SPECIAL PROMO FOR YOU </h4>
-            <p>Find our promotion for your best deals - special for you.</p>
-          </div>
-        </div>
-        <div className="category-card">
-          <div>
-            <DirectionsBikeOutlined className="choose-us-icon" />
-          </div>
-          <div className="choose-us-text">
-            <h4>READY TO RIDE </h4>
-            <p>We'll deliver your bike in assembled and it's Ready to Ride!</p>
-          </div>
-        </div>
-        <div className="category-card">
-          <div>
-            <StorefrontOutlined className="choose-us-icon" />
-          </div>
-          <div className="choose-us-text">
-            <h4>PICK UP STORE </h4>
-            <p>
-              No need to queue; buy online and pick up your items directly in
-              our shops!
-            </p>
-          </div>
-        </div>
+      <div className="">
+        <Carousel
+          spv={2}
+          responsive
+          breakpoints={{
+            // when window width is >= 480px
+            480: {
+              slidesPerView: 2,
+              //spaceBetween: 40,
+            },
+            // when window width is >= 640px
+            768: {
+              slidesPerView: 3,
+              //spaceBetween: 100,
+            },
+            992: {
+              slidesPerView: 4,
+              // spaceBetween: 40,
+            },
+          }}
+        >
+          <SwiperSlide>
+            <div className="flex justify-center items-center h-24">
+              <img
+                className="w-32 md:w-8/12"
+                src="https://www.bike-discount.de/media/image/c5/5f/9b/cubelogo_200x200.png"
+              />
+            </div>
+          </SwiperSlide>
+
+          <SwiperSlide>
+            <div className="flex justify-center items-center h-24">
+              <img
+                className="w-32 md:w-8/12"
+                src="https://www.bike-discount.de/media/image/50/30/69/dtswiss-logo_200x200.png"
+              />
+            </div>
+          </SwiperSlide>
+
+          <SwiperSlide>
+            <div className="flex justify-center items-center h-24">
+              <img
+                className="w-32 md:w-8/12"
+                src="https://www.bike-discount.de/media/image/36/7d/78/ergon2_wbc_4c_200x200.png"
+              />
+            </div>{" "}
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="flex justify-center items-center h-24">
+              <img
+                className="w-32 md:w-8/12"
+                src="https://www.bike-discount.de/media/image/1d/60/29/garmin-logo_200x200.png"
+              />
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="flex justify-center items-center h-24">
+              <img
+                className="w-32 md:w-8/12"
+                src="https://www.bike-discount.de/media/image/31/69/a1/maxxis-logo_200x200.png"
+              />
+            </div>
+          </SwiperSlide>
+        </Carousel>
       </div>
 
-      <div className="p-6 gradient-continue">
+      <div id="hot-discount" className="p-6 gradient-continue">
         <h3 className="title">HOT DISCOUNT!</h3>
-        <div
-          className=" justify-center grid  grid-cols-2 md:grid-cols-4 gap-4
-        "
-        >
-          {hotDiscount?.map((product) => {
+        <div className="justify-center grid  grid-cols-2 md:grid-cols-4 gap-4">
+          {/*hotDiscount?.map((product) => {
             return (
               <ProductCart
                 className="shadow-lg hover:shadow-none"
@@ -165,10 +186,61 @@ function MainPage() {
                 rating={product?.rating}
               />
             );
-          })}
+          })*/}
         </div>
+        <Carousel
+          spv={2}
+          space={6}
+          class={"h-60 md:h-80"}
+          responsive
+          breakpoints={{
+            // when window width is >= 480px
+            480: {
+              slidesPerView: 2,
+              //spaceBetween: 40,
+            },
+            // when window width is >= 640px
+            768: {
+              slidesPerView: 3,
+              //spaceBetween: 100,
+            },
+            992: {
+              slidesPerView: 4,
+              // spaceBetween: 40,
+            },
+          }}
+        >
+          {hotDiscount?.map((product) => {
+            return (
+              <SwiperSlide>
+                <div className="flex justify-center">
+                  <ProductCart
+                    className="shadow-lg hover:shadow-none w-[230px]"
+                    image={product.images[0]}
+                    price={product.price}
+                    title={product.title}
+                    slug={product.slug}
+                    rating={product?.rating}
+                  />
+                </div>
+              </SwiperSlide>
+            );
+          })}
+        </Carousel>
       </div>
 
+      <div className="relative">
+        <img
+          className="h-64 w-full object-cover"
+          src="https://swiftmedia.s3.amazonaws.com/mountain.swiftcom.com/images/sites/8/2017/04/02131332/SpokeTalkgeneric-1240x825.jpg"
+        />
+        <div className="absolute left-5 top-5">
+          <p className="font-bold text-[20pt]">RIDE TO THE HORIZON</p>
+          <button className="border-2 border-solid border-black p-2">
+            SHOP NOW
+          </button>
+        </div>
+      </div>
       <div
         className="flex justify-center p-5 grid grid-cols-1 lg:grid-cols-3 gap-4"
         style={{ backgroundColor: "#e7e7e7" }}

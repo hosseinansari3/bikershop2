@@ -6,7 +6,7 @@ import { LocationOn, Email, LocalPhone } from "@mui/icons-material";
 
 function Footer() {
   return (
-    <div className="Footer p-5">
+    <div className="Footer p-5 ">
       <div>
         <h4>BIKERSHOP</h4>
       </div>

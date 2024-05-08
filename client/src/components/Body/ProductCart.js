@@ -9,10 +9,14 @@ function ProductCart(props) {
     <div className={`product-cart ${props.className}`}>
       <Link to={props.slug ? `/product/${props.slug}` : "#"}>
         <div>
-          <img className="product-image" src={props.image} alt="ddsdfsfd" />
+          <img
+            className="w-full h-[110px] md:h-[190px] h- object-contain"
+            src={props.image}
+            alt="ddsdfsfd"
+          />
         </div>
       </Link>
-      <div className="product-title">{props.title}</div>
+      <p className="line-clamp-2">{props.title}</p>
       <StarRating rateValue={props.rating} readOnly={true} />
 
       <div className="product-price">{props.price} $</div>

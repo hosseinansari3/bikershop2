@@ -96,36 +96,3 @@
   font-style: italic;
   font-weight: 700;
 }
-
-/*
-@media only screen and (max-width: 768px) {
-  .card-wrapper {
-    display: flex !important;
-    justify-content: center !important;
-  }
-}
-
-@media only screen and (max-width: 1132px) {
-  .left {
-    width: 837px;
-  }
-}
-
-@media only screen and (min-width: 1168px) {
-  .right {
-    width: 315px;
-  }
-}
-
-@media only screen and (max-width: 853px) {
-  .left {
-    width: 558px;
-  }
-}
-
-@media only screen and (max-width: 575px) {
-  .left {
-    width: 284px;
-  }
-}
-*/
