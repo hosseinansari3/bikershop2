@@ -35,7 +35,7 @@ function AddProduct() {
   //const [title, setTitle] = useState("");
   //const [price, setPrice] = useState("");
   const [suspention, setSuspention] = useState("Dual Suspension");
-  const [section, setSection] = useState("");
+  const [section, setSection] = useState(SECTIONS.Best_Seller);
   const [material, setMaterial] = useState("Carbon");
   const [brand, setBrand] = useState("BIANCHI");
   //const [size, setSize] = useState("28C");
@@ -685,12 +685,8 @@ function AddProduct() {
                       <span className="mr-1">stock:</span>
                       <input
                         disabled={index < variants.length}
-                        value={variant.price}
-                        defaultValue={4}
-                        {...register("stock", { required: true })}
-                        // onChange={(e) => {
-                        //  setStock(e.target.value);
-                        // }}
+                        value={variant.stock}
+                        defaultValue={variant.stock}
                         type="number"
                         className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
                       ></input>
@@ -700,7 +696,6 @@ function AddProduct() {
                       <span className="mr-1">size:</span>
                       <select
                         disabled={index < variants.length}
-                        {...register("size", { required: true })}
                         className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
                       >
                         <option
