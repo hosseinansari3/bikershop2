@@ -209,7 +209,7 @@ function MainPage() {
         </Carousel>
       </div>
 
-      <div className="lg:hidden w-full max-w-[1336px] mx-auto">
+      <div className="lg:hidden mb-3 w-full max-w-[1336px] mx-auto">
         <div>
           <div
             style={{ scrollbarWidth: "none" }}
@@ -260,7 +260,9 @@ function MainPage() {
       </div>
 
       <div className="p-6 gradient-continue">
-        <h3 className="title">BEST SELLER!</h3>
+        <h3 className="title w-fit border-b-4 border-red-500 rounded-lg mx-auto mb-5">
+          BEST SELLER!
+        </h3>
         <Carousel
           spv={2}
           space={6}
@@ -302,9 +304,13 @@ function MainPage() {
         </Carousel>
       </div>
       <div className="rightt">
-        <h3 className="title">NEW ARRIVAL</h3>
+        <h3 className="title w-fit border-b-4 border-red-500 rounded-lg mx-auto mb-5">
+          NEW ARRIVAL
+        </h3>
         <Carousel
-          class="big-card-carousel"
+          spv={2}
+          space={6}
+          class={"h-60 md:h-80"}
           responsive
           breakpoints={{
             // when window width is >= 480px
@@ -318,11 +324,7 @@ function MainPage() {
               //spaceBetween: 100,
             },
             992: {
-              slidesPerView: 1,
-              // spaceBetween: 40,
-            },
-            1168: {
-              slidesPerView: 1,
+              slidesPerView: 4,
               // spaceBetween: 40,
             },
           }}
@@ -330,12 +332,14 @@ function MainPage() {
           {newArrival?.map((product) => {
             return (
               <SwiperSlide>
-                <div className="big-card-wrapper">
+                <div className="flex justify-center">
                   <ProductCart
+                    className="shadow-lg hover:shadow-none w-[230px]"
                     image={product.images[0]}
-                    class="big-card"
                     price={product.price}
                     title={product.title}
+                    slug={product.slug}
+                    rating={product?.rating}
                   />
                 </div>
               </SwiperSlide>
