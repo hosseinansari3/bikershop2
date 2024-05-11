@@ -10,7 +10,11 @@ function ProductCart(props) {
       <Link to={props.slug ? `/product/${props.slug}` : "#"}>
         <div>
           <img
-            className="w-full h-[110px] md:h-[190px] h- object-contain"
+            className={
+              props.imgClass
+                ? props.imgClass
+                : "w-full h-[110px] md:h-[190px] object-contain"
+            }
             src={props.image}
             alt="ddsdfsfd"
           />

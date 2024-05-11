@@ -172,22 +172,95 @@ function MainPage() {
         </Carousel>
       </div>
 
-      <div id="hot-discount" className="p-6 gradient-continue">
-        <h3 className="title">HOT DISCOUNT!</h3>
-        <div className="justify-center grid  grid-cols-2 md:grid-cols-4 gap-4">
-          {/*hotDiscount?.map((product) => {
-            return (
-              <ProductCart
-                className="shadow-lg hover:shadow-none"
-                image={product.images[0]}
-                price={product.price}
-                title={product.title}
-                slug={product.slug}
-                rating={product?.rating}
+      <div
+        id="hot-discount"
+        className="rounded-[20px] mb-3 w-[86vw] gradient-continue hidden lg:block w-full  mx-auto"
+      >
+        <Carousel freeMode spv={4} space={10} class={"h-60 md:h-72 "}>
+          <SwiperSlide>
+            <div className="items-center flex flex-col justify-center">
+              <img
+                className="w-[120px] top-[110ox] left-[50px]"
+                src="https://i.postimg.cc/hGx5yJtY/Lovepik-com-401572374-promotional-discount-offer-gift-box-gift-package.png"
               />
+
+              <h3 className="text-[30pt] text-center w-[200px] font-bold text-white top-[30px]">
+                HOT DISCOUNT
+              </h3>
+            </div>
+          </SwiperSlide>
+          {hotDiscount?.map((product) => {
+            return (
+              <SwiperSlide>
+                <div className="flex justify-center">
+                  <ProductCart
+                    className="shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
+                    imgClass="w-full h-[110px] md:h-[100px] object-contain"
+                    image={product.images[0]}
+                    price={product.price}
+                    title={product.title}
+                    slug={product.slug}
+                    rating={product?.rating}
+                  />
+                </div>
+              </SwiperSlide>
             );
-          })*/}
+          })}
+        </Carousel>
+      </div>
+
+      <div className="lg:hidden w-full max-w-[1336px] mx-auto">
+        <div>
+          <div
+            style={{ scrollbarWidth: "none" }}
+            className="gradient-continue py-3 flex flex-nowrap overflow-x-auto"
+          >
+            <div className="items-center flex flex-col justify-center w-[200px] min-w-[200px] max-w-[200px] mr-2.5">
+              <img
+                className="w-[120px] top-[110ox] left-[50px]"
+                src="https://i.postimg.cc/hGx5yJtY/Lovepik-com-401572374-promotional-discount-offer-gift-box-gift-package.png"
+              />
+
+              <h3 className="text-[30pt] text-center w-[200px] font-bold text-white top-[30px]">
+                HOT DISCOUNT
+              </h3>
+            </div>
+            {hotDiscount?.map((product) => {
+              return (
+                <div className="flex justify-center">
+                  <ProductCart
+                    className="mr-1.5 shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
+                    imgClass="w-full h-[110px] md:h-[100px] object-contain"
+                    image={product.images[0]}
+                    price={product.price}
+                    title={product.title}
+                    slug={product.slug}
+                    rating={product?.rating}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
+      </div>
+
+      <div className="relative">
+        <img
+          className="object-cover h-64 w-[86vw] opacity-80  rounded-[10px] h-[200px] mx-auto mb-3"
+          src="https://images.giant-bicycles.com/kl3h00cvovzjp3ile6ih/preview.jpg"
+        />
+        <div className="absolute left-5 top-5 flex flex-col justify-center items-center left-[120px]">
+          <p className="font-bold text-white text-[20pt]">
+            RIDE TO THE HORIZON
+          </p>
+          <button className="border-2 text-white w-[180px] border-solid border-white p-2">
+            SHOP NOW
+          </button>
+        </div>
+      </div>
+
+      <div className="p-6 gradient-continue">
+        <h3 className="title">BEST SELLER!</h3>
         <Carousel
           spv={2}
           space={6}
@@ -210,7 +283,7 @@ function MainPage() {
             },
           }}
         >
-          {hotDiscount?.map((product) => {
+          {bestSeller?.map((product) => {
             return (
               <SwiperSlide>
                 <div className="flex justify-center">
@@ -228,79 +301,47 @@ function MainPage() {
           })}
         </Carousel>
       </div>
-
-      <div className="relative">
-        <img
-          className="h-64 w-full object-cover"
-          src="https://swiftmedia.s3.amazonaws.com/mountain.swiftcom.com/images/sites/8/2017/04/02131332/SpokeTalkgeneric-1240x825.jpg"
-        />
-        <div className="absolute left-5 top-5">
-          <p className="font-bold text-[20pt]">RIDE TO THE HORIZON</p>
-          <button className="border-2 border-solid border-black p-2">
-            SHOP NOW
-          </button>
-        </div>
-      </div>
-      <div
-        className="flex justify-center p-5 grid grid-cols-1 lg:grid-cols-3 gap-4"
-        style={{ backgroundColor: "#e7e7e7" }}
-      >
-        <div className="left lg:col-span-2">
-          <h3 className="title">BEST SELLER!</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {bestSeller?.map((product) => {
-              return (
-                <ProductCart
-                  image={product.images[0]}
-                  price={product.price}
-                  title={product.title}
-                />
-              );
-            })}
-          </div>
-        </div>
-        <div className="rightt">
-          <h3 className="title">NEW ARRIVAL</h3>
-          <Carousel
-            class="big-card-carousel"
-            responsive
-            breakpoints={{
-              // when window width is >= 480px
-              480: {
-                slidesPerView: 2,
-                //spaceBetween: 40,
-              },
-              // when window width is >= 640px
-              768: {
-                slidesPerView: 3,
-                //spaceBetween: 100,
-              },
-              992: {
-                slidesPerView: 1,
-                // spaceBetween: 40,
-              },
-              1168: {
-                slidesPerView: 1,
-                // spaceBetween: 40,
-              },
-            }}
-          >
-            {newArrival?.map((product) => {
-              return (
-                <SwiperSlide>
-                  <div className="big-card-wrapper">
-                    <ProductCart
-                      image={product.images[0]}
-                      class="big-card"
-                      price={product.price}
-                      title={product.title}
-                    />
-                  </div>
-                </SwiperSlide>
-              );
-            })}
-          </Carousel>
-        </div>
+      <div className="rightt">
+        <h3 className="title">NEW ARRIVAL</h3>
+        <Carousel
+          class="big-card-carousel"
+          responsive
+          breakpoints={{
+            // when window width is >= 480px
+            480: {
+              slidesPerView: 2,
+              //spaceBetween: 40,
+            },
+            // when window width is >= 640px
+            768: {
+              slidesPerView: 3,
+              //spaceBetween: 100,
+            },
+            992: {
+              slidesPerView: 1,
+              // spaceBetween: 40,
+            },
+            1168: {
+              slidesPerView: 1,
+              // spaceBetween: 40,
+            },
+          }}
+        >
+          {newArrival?.map((product) => {
+            return (
+              <SwiperSlide>
+                <div className="big-card-wrapper">
+                  <ProductCart
+                    image={product.images[0]}
+                    class="big-card"
+                    price={product.price}
+                    title={product.title}
+                  />
+                </div>
+              </SwiperSlide>
+            );
+          })}
+        </Carousel>
       </div>
       <div>
         <div>

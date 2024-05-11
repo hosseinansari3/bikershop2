@@ -40,7 +40,7 @@
 }
 
 .gradient-continue {
-  background-image: linear-gradient(rgb(231 231 231), #ffffff);
+  background-image: linear-gradient(rgb(193 57 57), #943939);
 }
 
 .big-card {
@@ -95,4 +95,12 @@
   text-align: center;
   font-style: italic;
   font-weight: 700;
+}
+
+#hot-discount .swiper-slide {
+  width: 210px;
+  min-width: 210px;
+  max-width: 210px;
+  display: flex;
+  align-items: center;
 }

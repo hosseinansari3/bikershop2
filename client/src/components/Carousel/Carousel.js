@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigation } from "swiper";
+import { FreeMode, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Thumbs } from "swiper";
 import { Pagination } from "swiper";
@@ -26,10 +26,11 @@ function Carousel(props) {
         style={props.style}
         className={props.class}
         // install Swiper modules
-        modules={props.pagination ? [Thumbs, Pagination] : [Thumbs]}
+        modules={props.pagination ? [Thumbs, Pagination] : [Thumbs, FreeMode]}
         pagination={{
           dynamicBullets: true,
         }}
+        freeMode={{ enabled: props.freeMode, momentumBounce: false }}
         thumbs={{
           swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
         }}
