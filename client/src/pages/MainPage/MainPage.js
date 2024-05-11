@@ -33,7 +33,7 @@ import { fetchProductBySection } from "../../api";
 import { SECTIONS } from "../../constants/panelConstants";
 import { Axios } from "axios";
 import axios from "axios";
-
+import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 function MainPage() {
   const [hotDiscount, setHotDiscount] = useState(null);
   const [bestSeller, setBestSeller] = useState(null);
@@ -346,6 +346,20 @@ function MainPage() {
             );
           })}
         </Carousel>
+      </div>
+      <div className="flex justify-center">
+        <div className="w-80 h-80 mr-2 bg-slate-400 flex justify-center items-center">
+          <img
+            className="object-cover opacity-50 w-full h-full"
+            src="https://static.scientificamerican.com/sciam/cache/file/6DF070A8-6224-4800-A28028731F787CFD_source.jpg"
+          />
+          <div className="absolute text-[60pt] text-white">
+            <PlayCircleOutlineIcon fontSize="inherit" />
+          </div>
+        </div>
+        <div className="w-80 h-80 mr-2 bg-slate-400"></div>
+        <div className="w-80 h-80 mr-2 bg-slate-400"></div>
+        <div className="w-80 h-80 mr-2 bg-slate-400"></div>
       </div>
       <div>
         <div>
