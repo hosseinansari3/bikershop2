@@ -244,22 +244,22 @@ function MainPage() {
         </div>
       </div>
 
-      <div className="relative">
+      <div className="relative flex items-center justify-center">
         <img
           className="object-cover h-64 w-[86vw] opacity-80  rounded-[10px] h-[200px] mx-auto mb-3"
           src="https://images.giant-bicycles.com/kl3h00cvovzjp3ile6ih/preview.jpg"
         />
-        <div className="absolute left-5 top-5 flex flex-col justify-center items-center left-[120px]">
+        <div className="absolute md:top-5 flex flex-col justify-center items-center md:left-[120px]">
           <p className="font-bold text-white text-[20pt]">
             RIDE TO THE HORIZON
           </p>
-          <button className="border-2 text-white w-[180px] border-solid border-white p-2">
+          <button className="hover:bg-black border-2 text-white w-[180px] border-solid border-white hover:border-black transition-all p-2">
             SHOP NOW
           </button>
         </div>
       </div>
 
-      <div className="p-6 gradient-continue">
+      <div className="p-6 bg-[#f7f7f7]">
         <h3 className="title w-fit border-b-4 border-red-500 rounded-lg mx-auto mb-5">
           BEST SELLER!
         </h3>
@@ -347,57 +347,48 @@ function MainPage() {
           })}
         </Carousel>
       </div>
-      <div className="flex justify-center">
-        <div className="w-80 h-80 mr-2 bg-slate-400 flex justify-center items-center">
-          <img
-            className="object-cover opacity-50 w-full h-full"
-            src="https://static.scientificamerican.com/sciam/cache/file/6DF070A8-6224-4800-A28028731F787CFD_source.jpg"
-          />
-          <div className="absolute text-[60pt] text-white">
-            <PlayCircleOutlineIcon fontSize="inherit" />
+      <div>
+        <h3 className="title w-fit border-b-4 border-red-500 rounded-lg mx-auto mb-5">
+          VIDEOS
+        </h3>
+        <div className="flex justify-center">
+          <div className="cursor-pointer opacity-50 hover:opacity-100 transition-opacity w-80 h-80 mr-2 bg-slate-400 flex justify-center items-center">
+            <img
+              className="object-cover w-full h-full"
+              src="https://static.scientificamerican.com/sciam/cache/file/6DF070A8-6224-4800-A28028731F787CFD_source.jpg"
+            />
+            <div className="absolute text-[60pt] text-white">
+              <PlayCircleOutlineIcon fontSize="inherit" />
+            </div>
+          </div>
+          <div className="cursor-pointer opacity-50 hover:opacity-100 transition-opacity w-80 h-80 mr-2 bg-slate-400 flex justify-center items-center">
+            <img
+              className="object-cover w-full h-full"
+              src="https://billbonebikelaw.com/wp-content/uploads/2014/07/Dave_Zabriskie_-_USA_Pro_Time_Trial.jpg"
+            />
+            <div className="absolute text-[60pt] text-white">
+              <PlayCircleOutlineIcon fontSize="inherit" />
+            </div>
+          </div>
+          <div className="cursor-pointer opacity-50 hover:opacity-100 transition-opacity w-80 h-80 mr-2 bg-slate-400 flex justify-center items-center">
+            <img
+              className="object-cover w-full h-full"
+              src="https://domf5oio6qrcr.cloudfront.net/medialibrary/9288/iStock-147297417-e1508793831461.jpg"
+            />
+            <div className="absolute text-[60pt] text-white">
+              <PlayCircleOutlineIcon fontSize="inherit" />
+            </div>
+          </div>
+          <div className="cursor-pointer opacity-50 hover:opacity-100 transition-opacity w-80 h-80 mr-2 bg-slate-400 flex justify-center items-center">
+            <img
+              className="object-cover w-full h-full"
+              src="https://www.safeguardit.com/blog/image.axd?picture=/Blog%20Images/2020/business-man-riding-bicycle-across-town.jpg"
+            />
+            <div className="absolute text-[60pt] text-white">
+              <PlayCircleOutlineIcon fontSize="inherit" />
+            </div>
           </div>
         </div>
-        <div className="w-80 h-80 mr-2 bg-slate-400"></div>
-        <div className="w-80 h-80 mr-2 bg-slate-400"></div>
-        <div className="w-80 h-80 mr-2 bg-slate-400"></div>
-      </div>
-      <div>
-        <div>
-          <h3 className="title">OUR OFFER!</h3>
-        </div>
-        <Carousel
-          style={{ height: "464px" }}
-          responsive
-          breakpoints={{
-            // when window width is >= 480px
-            480: {
-              slidesPerView: 2,
-              //spaceBetween: 40,
-            },
-            // when window width is >= 640px
-            768: {
-              slidesPerView: 3,
-              //spaceBetween: 100,
-            },
-            992: {
-              slidesPerView: 4,
-              // spaceBetween: 40,
-            },
-          }}
-        >
-          {ourOffer?.map((product) => {
-            return (
-              <SwiperSlide>
-                <ProductCart
-                  className="hover:shadow-xl m-2"
-                  image={product.images[0]}
-                  price={product.price}
-                  title={product.title}
-                />
-              </SwiperSlide>
-            );
-          })}
-        </Carousel>
       </div>
     </>
   );

@@ -20,7 +20,7 @@ function ProductCart(props) {
           />
         </div>
       </Link>
-      <p className="line-clamp-2">{props.title}</p>
+      <p className="line-clamp-2 h-[50px]">{props.title}</p>
       <StarRating rateValue={props.rating} readOnly={true} />
 
       <div className="product-price">{props.price} $</div>

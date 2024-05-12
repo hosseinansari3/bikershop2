@@ -170,7 +170,7 @@ function Header() {
     <header className="header" style={{ zIndex: "30" }}>
       <CartDrawer isOpen={cartDrawerisOpen} setOpen={setCartDrawerOpen} />
       <div
-        className="md:py-8 grid grid-cols-5"
+        className="md:py-8 grid grid-cols-5 px-[8px] pb-[5px] shadow-md"
         style={{ backgroundColor: "black" }}
       >
         <div className="flex  items-center col-span-3 md:col-span-2 lg:col-span-1">
@@ -321,6 +321,8 @@ function Header() {
           </div>
         </div>
       </div>
+      <hr className="md:hidden border-white border-[1px] mb-1" />
+
       <Navbarr />
 
       <div className={isBurgerOpen ? "side active" : "side"}>
