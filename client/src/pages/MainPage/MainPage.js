@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 import CartList from "../../components/CartList/CartList";
 
@@ -39,6 +39,29 @@ function MainPage() {
   const [bestSeller, setBestSeller] = useState(null);
   const [newArrival, setNewArrival] = useState(null);
   const [ourOffer, setOurOffer] = useState(null);
+
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const boxRef = useRef(null);
+
+  const startDragging = (e) => {
+    setIsDragging(true);
+    setStartX(e.pageX - boxRef?.current?.offsetLeft);
+    setScrollLeft(boxRef?.current?.scrollLeft);
+  };
+
+  const stopDragging = () => {
+    setIsDragging(false);
+  };
+
+  const onDrag = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - boxRef?.current?.offsetLeft;
+    const walk = (x - startX) * 3; // Scroll-speed multiplier
+    boxRef.current.scrollLeft = scrollLeft - walk;
+  };
 
   useEffect(() => {
     fetchProductBySection(SECTIONS.Hot_Discount)
@@ -212,6 +235,11 @@ function MainPage() {
       <div className="lg:hidden mb-3 w-full max-w-[1336px] mx-auto">
         <div>
           <div
+            ref={boxRef}
+            onMouseDown={startDragging}
+            onMouseLeave={stopDragging}
+            onMouseUp={stopDragging}
+            onMouseMove={onDrag}
             style={{ scrollbarWidth: "none" }}
             className="gradient-continue py-3 flex flex-nowrap overflow-x-auto"
           >
