@@ -19,10 +19,13 @@ export const fetchProductById = (slug) =>
 export const fetchProductBySection = (section) =>
   axios.get(`${baseUrl}/products/sections/${section}`);
 
-export const fetchProductsByFilters = (filters) =>
-  axios.get(
-    `${baseUrl}/products/getByFilters?filters=${JSON.stringify(filters)}`
-  );
+export const fetchProductsByFilters = (filters, orders) =>
+  axios.get(`${baseUrl}/products/getByFilters/`, {
+    params: {
+      filters: JSON.stringify(filters),
+      orders: JSON.stringify(orders),
+    },
+  });
 
 export const createProduct = (formData) =>
   axios.post(`${baseUrl}/products`, formData, {

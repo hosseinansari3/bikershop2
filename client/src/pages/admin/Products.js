@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deleteProduct,
   getProducts,
+  getProductsByFilter,
   onProductSearch,
 } from "../../actions/products";
 
@@ -11,6 +12,10 @@ import { toast } from "react-toastify";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 import { onUsersSearch } from "../../actions/users";
 import Pagination from "../../components/Pagination/Pagination";
+import { ORDER_STATUS } from "../../constants/panelConstants";
+import { fetchCategories } from "../../actions/categories";
+import { fetchProductsByFilters } from "../../api";
+import { useIsMount } from "../../hooks/useIsMount";
 
 function Products() {
   const apiProduct = useSelector((state) => state.products);
@@ -26,36 +31,70 @@ function Products() {
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
 
+  const [category, setCategory] = useState(["All"]);
+  const [priceOrder, setPriceOrder] = useState();
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+    console.log("catss", categories);
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log("category", category);
+  }, [category]);
+
+  const allCategories = useSelector((state) => state.categories);
+  const { categories } = allCategories;
+
+  const isMount = useIsMount();
 
   useEffect(() => {
     if (isSearch) {
       page && dispatch(onUsersSearch(searchValue, page));
-      console.log("mpage: " + page);
-      console.log("usterrs " + JSON.stringify(products));
     } else {
-      dispatch(getProducts(page));
+      if (!isMount) {
+        dispatch(getProducts(page));
+        console.log("PCHANGED");
+      }
     }
   }, [dispatch, page]);
 
+  //useEffect(() => {
+  //dispatch(getProducts(page));
+  //}, [dispatch]);
+
   useEffect(() => {
-    if (products.length == 0) {
-      dispatch(getProducts(page));
-    }
+    console.log("PR", products);
   }, [products]);
+
+  useEffect(() => {
+    dispatch(
+      getProductsByFilter({ categories: category }, { price: priceOrder })
+    );
+  }, [priceOrder]);
+
+  useEffect(() => {
+    if (category[0] == "All") {
+      dispatch(getProducts(page));
+    } else {
+      dispatch(getProductsByFilter({ categories: category }, {}));
+    }
+  }, [category]);
 
   useEffect(() => {
     setPages(totalPages);
   }, [totalPages]);
 
   useEffect(() => {
-    if (searchValue === "") {
+    if (searchValue == "") {
       setIsSearch(false);
       dispatch(getProducts(1));
       setPage(1);
     }
-
     dispatch(onProductSearch(searchValue, 1));
+    console.log("searchValue", searchValue);
   }, [searchValue]);
 
   const ProductDeletnotif = () => toast("PRODUCT DELETED SUCCESSFULLY!");
@@ -247,13 +286,26 @@ function Products() {
               ></input>
             </div>
             <div className="flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
-              <select className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white">
-                <option value="all">Prgbbnmice</option>
+              <select
+                disabled={loading}
+                onChange={(e) => setCategory([e.target.value])}
+                className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+              >
+                <option hidden>Category</option>
+                <option value={"All"}>All</option>
+                {categories?.map((cat) => {
+                  return <option value={cat?.name}>{cat?.name}</option>;
+                })}
               </select>
             </div>
             <div className="flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
-              <select className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white">
-                <option value="all">Price</option>
+              <select
+                onChange={(e) => setPriceOrder(e.target.value)}
+                className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+              >
+                <option hidden>Price</option>
+                <option value={1}>Ascending Price</option>
+                <option value={-1}>Descending Price</option>
               </select>
             </div>
           </form>
@@ -273,6 +325,8 @@ function Products() {
                     checked={isCheckAll}
                   />
                 </td>
+                <td className="px-4 py-3">PRODUCT IMAEG</td>
+
                 <td className="px-4 py-3">PRODUCT NAME</td>
                 <td className="px-4 py-3">CATEGORY</td>
                 <td className="px-4 py-3">price</td>
@@ -302,24 +356,31 @@ function Products() {
                       <div className="flex items-center">
                         <img
                           src={p?.images[0]}
-                          className="w-24 h-16 object-cover"
+                          className="w-24 h-16 object-contain"
                         />
-                        <div className="w-60 ml-7">
-                          <h2 className="text-sm font-medium">{p.title}</h2>
-                        </div>
+                      </div>
+                    </td>
+
+                    <td className="px-4 py-3">
+                      <div className="w-60">
+                        <h2 className="text-sm font-medium">{p.title}</h2>
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <span className="text-sm">{p.category?.name}</span>
+                      <span className="text-sm">
+                        {category[0] == "All"
+                          ? p?.category?.name
+                          : p?.category[0]?.name}
+                      </span>
                     </td>
                     <td className="px-4 py-3">
                       <span className="text-sm font-semibold">${p.price}</span>
                     </td>
 
                     <td className="px-4 py-3">
-                      {p.variants.map((variant) => {
+                      {p?.variants?.map((variant) => {
                         return (
-                          <div>
+                          <div className="w-max">
                             <span className="text-sm">{variant.size}: </span>
                             <span className="text-sm">{variant.stock}</span>
                           </div>

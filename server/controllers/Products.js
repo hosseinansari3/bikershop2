@@ -159,6 +159,8 @@ const searchProduct = async (req, res) => {
 
     const result = await query.clone();
 
+    console.log("result", result.length);
+
     res.status(200).json({
       status: "success",
       count: result.length,
@@ -180,6 +182,7 @@ const searchProduct = async (req, res) => {
 const getProductsByFilters = async (req, res) => {
   try {
     const filters = JSON.parse(req.query.filters);
+    const orders = JSON.parse(req.query.orders);
 
     let query = {};
     let match = {};
@@ -213,7 +216,7 @@ const getProductsByFilters = async (req, res) => {
       match = { "category.name": { $in: filters.categories } };
     } else match = {};
 
-    const products = await productModel.aggregate([
+    let pipeline = [
       {
         $match: query,
       },
@@ -228,7 +231,19 @@ const getProductsByFilters = async (req, res) => {
       {
         $match: match,
       },
-    ]);
+    ];
+
+    for (let key in orders) {
+      if (!isNaN(orders[key]) && typeof orders[key] === "string") {
+        orders[key] = parseInt(orders[key], 10);
+      }
+    }
+
+    if (Object.keys(orders).length > 0) {
+      pipeline.unshift({ $sort: orders });
+    }
+
+    const products = await productModel.aggregate(pipeline);
 
     //  const products = await productModel.find(query).populate({
     //   path: "category",

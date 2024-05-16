@@ -139,11 +139,8 @@ function Header() {
 
   const renderSuggestion = (suggestion) => (
     <div className=" bg-white  hover:cursor-pointer hover:text-red-400 w-full p-[5px]">
-      <img
-        className="inline w-24 h-16 object-contain"
-        src={suggestion.images[0]}
-      />
-      <span className="font-bold p-2.5">{suggestion.title}</span>
+      <img className="inline w-24 h-16 object-contain" src={"#"} />
+      <span className="font-bold p-2.5">{suggestion?.title}</span>
     </div>
   );
 

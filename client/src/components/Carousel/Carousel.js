@@ -25,6 +25,8 @@ function Carousel(props) {
       <Swiper
         style={props.style}
         className={props.class}
+        resistance={true}
+        resistanceRatio={props?.resistanceRatio}
         // install Swiper modules
         modules={props.pagination ? [Thumbs, Pagination] : [Thumbs, FreeMode]}
         pagination={{

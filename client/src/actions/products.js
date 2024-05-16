@@ -28,12 +28,12 @@ export const getProducts = (page) => async (dispatch) => {
   }
 };
 
-export const getProductsByFilter = (filters) => async (dispatch) => {
+export const getProductsByFilter = (filters, orders) => async (dispatch) => {
   try {
     dispatch({ type: FETCH_ALL_PRODUCTS_REQUEST });
     console.log("action started");
 
-    const response = await api.fetchProductsByFilters(filters);
+    const response = await api.fetchProductsByFilters(filters, orders);
     console.log("res", response.data);
 
     dispatch({ type: FETCH_ALL_PRODUCTS, payload: response.data });
@@ -109,12 +109,12 @@ export const onProductSearch = (value, page) => {
       if (inputValue) {
         const response = await api.searchProductAPI(inputValue, page);
 
+        console.log("response.data", response.data);
+
         dispatch({
           type: PRODUCT_SEARCH_SUCCESS,
           payload: response.data,
         });
-      } else if (inputValue === "") {
-        dispatch(getProducts());
       }
     } catch (error) {
       console.log(error);
@@ -136,6 +136,8 @@ export const onProductSuggestionsFetchRequested = (value) => {
     try {
       if (inputValue) {
         const response = await api.searchProductAPI(inputValue, 1);
+
+        console.log("response.data", response.data);
 
         dispatch({
           type: PRODUCT_SUGGESTIONS_FETCH_REQUEST,

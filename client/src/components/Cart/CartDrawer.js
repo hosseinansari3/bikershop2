@@ -28,7 +28,7 @@ function CartDrawer({ isOpen, setOpen }) {
                     src={item.image}
                     className="h-[12vh] w-[12vh] bg-slate-600"
                   />
-                  <div className="ml-3 ">
+                  <div className="ml-3 w-[200px] min-w-[200px] ">
                     <span className="font-bold">{item.title}</span>
                     <p className="text-sm">price: ${item.price}</p>
                     <p className="text-sm">quantity: {item.quantity}</p>

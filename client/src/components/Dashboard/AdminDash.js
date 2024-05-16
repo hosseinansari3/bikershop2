@@ -563,7 +563,7 @@ function AdminDash() {
                     </td>
                     <td className="px-4 py-3">
                       <span className="font-semibold uppercase text-xs">
-                        {order.createdAt}
+                        {order.createdAt.substring(0, 10)}
                       </span>
                     </td>
                     <td className="px-4 py-3">
