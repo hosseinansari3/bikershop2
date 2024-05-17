@@ -55,7 +55,13 @@ function Products() {
       page && dispatch(onUsersSearch(searchValue, page));
     } else {
       if (!isMount) {
-        dispatch(getProducts(page));
+        dispatch(
+          getProductsByFilter(
+            { categories: category },
+            { price: priceOrder },
+            page
+          )
+        );
         console.log("PCHANGED");
       }
     }
@@ -70,16 +76,28 @@ function Products() {
   }, [products]);
 
   useEffect(() => {
-    dispatch(
-      getProductsByFilter({ categories: category }, { price: priceOrder })
-    );
+    if (!isMount) {
+      if (category[0] == "All") {
+        dispatch(getProductsByFilter({}, { price: priceOrder }, page));
+      } else {
+        dispatch(
+          getProductsByFilter(
+            { categories: category },
+            { price: priceOrder },
+            page
+          )
+        );
+      }
+    }
   }, [priceOrder]);
 
   useEffect(() => {
-    if (category[0] == "All") {
-      dispatch(getProducts(page));
-    } else {
-      dispatch(getProductsByFilter({ categories: category }, {}));
+    if (!isMount) {
+      if (category[0] == "All") {
+        dispatch(getProductsByFilter({}, {}, page));
+      } else {
+        dispatch(getProductsByFilter({ categories: category }, {}, page));
+      }
     }
   }, [category]);
 
@@ -90,7 +108,7 @@ function Products() {
   useEffect(() => {
     if (searchValue == "") {
       setIsSearch(false);
-      dispatch(getProducts(1));
+      dispatch(getProductsByFilter({}, {}, 1));
       setPage(1);
     }
     dispatch(onProductSearch(searchValue, 1));
@@ -367,11 +385,7 @@ function Products() {
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <span className="text-sm">
-                        {category[0] == "All"
-                          ? p?.category?.name
-                          : p?.category[0]?.name}
-                      </span>
+                      <span className="text-sm">{p?.category?.name}</span>
                     </td>
                     <td className="px-4 py-3">
                       <span className="text-sm font-semibold">${p.price}</span>

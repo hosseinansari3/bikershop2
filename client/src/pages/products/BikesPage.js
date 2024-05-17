@@ -158,7 +158,7 @@ function BikesPage() {
 
   useEffect(() => {
     console.log("filters", filters);
-    dispatch(getProductsByFilter(filters));
+    dispatch(getProductsByFilter(filters, {}, 1));
   }, [filters]);
 
   const product = useSelector((state) => state.products);

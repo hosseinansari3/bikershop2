@@ -183,6 +183,7 @@ const getProductsByFilters = async (req, res) => {
   try {
     const filters = JSON.parse(req.query.filters);
     const orders = JSON.parse(req.query.orders);
+    let page = req.query.page;
 
     let query = {};
     let match = {};
@@ -210,7 +211,7 @@ const getProductsByFilters = async (req, res) => {
       query.size = { $in: filters.sizes };
     }
 
-    if (filters.categories) {
+    if (filters.categories && filters.categories[0] != "All") {
       console.log("categories", filters.categories);
       console.log("filters", filters);
       match = { "category.name": { $in: filters.categories } };
@@ -228,6 +229,7 @@ const getProductsByFilters = async (req, res) => {
           as: "category",
         },
       },
+      { $unwind: "$category" },
       {
         $match: match,
       },
@@ -245,15 +247,54 @@ const getProductsByFilters = async (req, res) => {
 
     const products = await productModel.aggregate(pipeline);
 
+    if (page) {
+      console.log("page", page);
+
+      page = parseInt(req.query.page) || 1;
+      const pageSize = parseInt(req.query.limit) || 6;
+      const skip = (page - 1) * pageSize;
+
+      const total = (await productModel.aggregate(pipeline)).length;
+      const pages = Math.ceil(total / pageSize);
+      console.log("total", total);
+
+      pipeline.push({ $skip: skip });
+
+      pipeline.push({ $limit: pageSize });
+
+      console.log("pipe", pipeline);
+
+      const products = await productModel.aggregate(pipeline);
+
+      if (page > pages) {
+        console.log("NOpage");
+
+        return res.status(404).json({
+          status: "fail",
+          message: "No page found",
+        });
+      }
+
+      res.status(200).json({
+        status: "success",
+        count: products.length,
+        page,
+        pages,
+        pageSize,
+        totalProducts: total,
+        products: products,
+      });
+    } else {
+      res.status(200).json({
+        status: "success",
+        products: products,
+      });
+    }
+
     //  const products = await productModel.find(query).populate({
     //   path: "category",
     //   match: match,
     // });
-
-    res.status(200).json({
-      status: "success",
-      products: products,
-    });
   } catch (error) {
     console.log(error);
   }

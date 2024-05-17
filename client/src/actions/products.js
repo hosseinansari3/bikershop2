@@ -28,19 +28,20 @@ export const getProducts = (page) => async (dispatch) => {
   }
 };
 
-export const getProductsByFilter = (filters, orders) => async (dispatch) => {
-  try {
-    dispatch({ type: FETCH_ALL_PRODUCTS_REQUEST });
-    console.log("action started");
+export const getProductsByFilter =
+  (filters, orders, page) => async (dispatch) => {
+    try {
+      dispatch({ type: FETCH_ALL_PRODUCTS_REQUEST });
+      console.log("action started");
 
-    const response = await api.fetchProductsByFilters(filters, orders);
-    console.log("res", response.data);
+      const response = await api.fetchProductsByFilters(filters, orders, page);
+      console.log("res", response.data);
 
-    dispatch({ type: FETCH_ALL_PRODUCTS, payload: response.data });
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+      dispatch({ type: FETCH_ALL_PRODUCTS, payload: response.data });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
 export const getProductById = (slug) => async (dispatch, getState) => {
   dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: slug });

@@ -19,11 +19,12 @@ export const fetchProductById = (slug) =>
 export const fetchProductBySection = (section) =>
   axios.get(`${baseUrl}/products/sections/${section}`);
 
-export const fetchProductsByFilters = (filters, orders) =>
+export const fetchProductsByFilters = (filters, orders, page) =>
   axios.get(`${baseUrl}/products/getByFilters/`, {
     params: {
       filters: JSON.stringify(filters),
       orders: JSON.stringify(orders),
+      page: page,
     },
   });
 
