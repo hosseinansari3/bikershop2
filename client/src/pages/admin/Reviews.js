@@ -75,7 +75,7 @@ function Reviews() {
                 {user.role === ROLES.Admin && (
                   <td className="px-4 py-3">REVIEWER</td>
                 )}
-                <td className="px-4 py-3">REVIEW</td>
+                <td className="px-4 py-3 w-[250px]">REVIEW</td>
                 <td className="px-4 py-3">DATE</td>
 
                 <td className="px-4 py-3">STATUS</td>
@@ -89,13 +89,6 @@ function Reviews() {
                     <tr key={index}>
                       <td className="px-4 py-3 w-64">
                         <div className="flex items-center">
-                          <img
-                            className="w-24 h16"
-                            src={
-                              item?.product?.images.length > 0 &&
-                              item?.product?.images[0]
-                            }
-                          />
                           <span className="font-semibold ml-5 uppercase text-xs">
                             {item.product?.title}
                           </span>
@@ -117,7 +110,9 @@ function Reviews() {
                         <p>{item.review}</p>
                       </td>
                       <td className="px-4 py-3 text-xs">
-                        <span className="text-sm">{item.created}</span>
+                        <span className="text-sm">
+                          {item.created.substring(0, 10)}
+                        </span>
                       </td>
 
                       <td className="px-4 py-3 text-xs">

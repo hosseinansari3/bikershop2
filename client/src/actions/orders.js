@@ -90,23 +90,24 @@ export const listMyOrders = () => async (dispatch, getState) => {
   }
 };
 
-export const listAllOrders = (limit, filters) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: ORDER_LIST_REQUEST });
+export const listAllOrders =
+  (limit, filters, sort) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: ORDER_LIST_REQUEST });
 
-    const { data } = await listAllOrdersAPI(limit, filters);
+      const { data } = await listAllOrdersAPI(limit, filters, sort);
 
-    dispatch({ type: ORDER_ALL_LIST_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: ORDER_LIST_FAILURE,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      dispatch({ type: ORDER_ALL_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: ORDER_LIST_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const onOrderSearch = (value) => {
   const inputValue = value.trim().toLowerCase();

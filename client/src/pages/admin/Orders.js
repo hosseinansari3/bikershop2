@@ -24,7 +24,7 @@ function Orders() {
   const [Orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState([]);
   const [status, setStatus] = useState();
-
+  const [dateSort, setDateSort] = useState(1);
   const [isModalOpen, setModalOpen] = useState(false);
 
   const handleOpenModal = (e, order) => {
@@ -35,11 +35,13 @@ function Orders() {
 
   useEffect(() => {
     if (user.role === ROLES.Admin) {
-      dispatch(listAllOrders(Limit, { status: status }));
+      dispatch(
+        listAllOrders(Limit, { status: status }, { createdAt: dateSort })
+      );
     } else {
       dispatch(listMyOrders());
     }
-  }, [Limit, status]);
+  }, [Limit, status, dateSort]);
 
   useEffect(() => {
     setOrders(orders);
@@ -107,7 +109,15 @@ function Orders() {
                 </select>
               </div>
               <div>
-                <select className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"></select>
+                <select
+                  onChange={(e) => setDateSort(e.target.value)}
+                  className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+                >
+                  <option selected value={1}>
+                    Ascending Date
+                  </option>
+                  <option value={-1}>Descending Date</option>
+                </select>
               </div>
             </div>
           </form>
@@ -168,7 +178,7 @@ function Orders() {
                     </td>
                     <td className="px-4 py-3">
                       <span className="font-semibold uppercase text-xs">
-                        {order.createdAt}
+                        {order.createdAt.substring(0, 10)}
                       </span>
                     </td>
                     <td className="px-4 py-3">
