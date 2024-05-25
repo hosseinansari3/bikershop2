@@ -21,21 +21,22 @@ function CartDrawer({ isOpen, setOpen }) {
         </div>
         <div className="border-b pb-[2vh]">
           <ul className="p-5">
-            {savedCartItems?.map((item) => {
-              return (
-                <li className="flex mb-[2vh]">
-                  <img
-                    src={item.image}
-                    className="h-[12vh] w-[12vh] bg-slate-600"
-                  />
-                  <div className="ml-3 w-[200px] min-w-[200px] ">
-                    <span className="font-bold">{item.title}</span>
-                    <p className="text-sm">price: ${item.price}</p>
-                    <p className="text-sm">quantity: {item.quantity}</p>
-                  </div>
-                </li>
-              );
-            })}
+            {savedCartItems.length > 0 &&
+              savedCartItems?.map((item) => {
+                return (
+                  <li className="flex mb-[2vh]">
+                    <img
+                      src={item.image}
+                      className="h-[12vh] w-[12vh] bg-slate-600"
+                    />
+                    <div className="ml-3 w-[200px] min-w-[200px] ">
+                      <span className="font-bold">{item.title}</span>
+                      <p className="text-sm">price: ${item.price}</p>
+                      <p className="text-sm">quantity: {item.quantity}</p>
+                    </div>
+                  </li>
+                );
+              })}
           </ul>
         </div>
         <div className="flex flex-col justify-center mt-[15vh]">

@@ -3,9 +3,9 @@ import {
   SHOW_ADDRESS_MODAL,
 } from "../constants/actionTypes";
 
-export const showAddressModal = (order) => ({
+export const showAddressModal = (addressId) => ({
   type: SHOW_ADDRESS_MODAL,
-  order,
+  payload: addressId,
 });
 
 export const hideAddressModal = () => {

@@ -114,7 +114,7 @@ function Checkout() {
             </div>
           }
         </div>
-      ) : user?.address?.length < 0 ? (
+      ) : user?.address?.length == 0 ? (
         <div>
           <div className="px-6 pt-8 flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
             <form onSubmit={handleSubmit(onSubmit)}>

@@ -12,7 +12,7 @@ function AccountInfo() {
 
   const [lastName, setLastName] = useState("");
 
-  const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState();
 
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -114,7 +114,7 @@ function AccountInfo() {
               >
                 {preview !== undefined && preview.length !== 0 ? (
                   <img className="w-28 h-28" src={preview} />
-                ) : avatar !== "" ? (
+                ) : avatar ? (
                   <img className="w-28 h-28" src={avatar} />
                 ) : (
                   <img className="w-28 h-28" src={defaultAvatar} />

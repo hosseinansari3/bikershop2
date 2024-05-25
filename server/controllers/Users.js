@@ -85,7 +85,9 @@ const register = async (req, res) => {
     return res.status(400).json({ error: "Email already exists" });
   } else {
     const newUser = new User({
-      name: req.body.name,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      phoneNumber: req.body.phoneNumber,
       email: req.body.email,
       password: req.body.password,
     });

@@ -1,15 +1,142 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SwiperSlide } from "swiper/react";
 import ProductCart from "../Body/ProductCart";
 import Carousel from "../Carousel/Carousel";
 import img from "../../assets/images/mondraker-01022382-20126475-DUSK-R_300x300@2x.jpg";
 import CartList from "../CartList/CartList";
+import EditIcon from "@mui/icons-material/Edit";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProfile } from "../../actions/account";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
+import { showAddressModal } from "../../actions/addressModal";
 
 function CustomerDash() {
+  const account = useSelector((state) => state.account);
+  const { user, loading } = account;
+  const [defaultAddress, setDefaultAddress] = useState();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchProfile());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (user?.address?.length > 0) {
+      const defaultAddressArr = user?.address?.filter(
+        (address) => address.default == true
+      );
+      setDefaultAddress(defaultAddressArr[0]);
+    }
+  }, [user]);
+
   return (
     <div>
+      <div className="grid gap-4 md:grid-cols-2  grid-cols-1">
+        <div className="  bg-white rounded-md m-2 justify-center">
+          <div className="border-l-2 border-black flex justify-between p-3">
+            <div>
+              <p className="ml-2">Customer Info</p>
+            </div>
+            <div>
+              <p className="mr-2">
+                <EditIcon fontSize="small" /> Edit
+              </p>
+            </div>
+          </div>
+          <div className="p-2 mt-4">
+            <div className="grid gap-6 grid-cols-2 mb-5 pl-12">
+              <div className="text-left">
+                <p>First Name:</p>
+                <p className="font-bold">{user.firstName}</p>
+              </div>
+              <div className="text-left">
+                <p>Last Name:</p>
+                <p className="font-bold">{user.lastName}</p>
+              </div>
+            </div>
+            <div className="grid gap-6 grid-cols-2 mb-3 pl-12">
+              <div className="text-left">
+                <p>Email:</p>
+                <p className="font-bold">{user.email}</p>
+              </div>
+              <div className="text-left">
+                <p>Phone Number:</p>
+                <p className="font-bold">{user.phoneNumber}</p>
+              </div>
+            </div>
+            <div className="grid gap-6 grid-cols-2 mb-3 pl-12">
+              <div className="text-left">
+                <p>referal code:</p>
+                <p className="font-bold">R43EUX72C</p>
+              </div>{" "}
+              <div className="text-left">
+                <p>Level:</p>
+                <p className="font-bold">5</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="  bg-white rounded-md m-2 justify-center">
+          <div className="border-l-2 border-black flex justify-between p-3">
+            <div>
+              <p className="ml-2">Addresses</p>
+            </div>
+            <div>
+              <button onClick={() => dispatch(showAddressModal("new"))}>
+                <p className="mr-2">
+                  <AddCircleOutlineIcon fontSize="small" /> Add new Address
+                </p>
+              </button>
+            </div>
+          </div>
+          <div className="p-2 mt-4 border-black border-[1px] border-solid m-5 rounded-md">
+            <div className=" flex justify-between p-3 mb-3">
+              <div>
+                <p className="ml-2">My Address</p>
+              </div>
+              <div>
+                <button
+                  onClick={() => dispatch(showAddressModal(defaultAddress._id))}
+                >
+                  <p className="mr-2">
+                    <EditIcon fontSize="small" /> Edit
+                  </p>
+                </button>
+              </div>
+            </div>
+            <div className="mb-3">
+              <PermIdentityIcon />{" "}
+              <span>
+                {user.firstName} {user.lastName}
+              </span>
+            </div>
+            {user?.address?.length == 0 ? (
+              <div>the is no address</div>
+            ) : (
+              <div className="">
+                <p className="mb-3">
+                  <LocationOnOutlinedIcon />
+                  {defaultAddress?.province}/{defaultAddress?.city}/
+                  {defaultAddress?.street}
+                </p>
+                <div className="flex justify-between">
+                  <p>
+                    <LocalPhoneOutlinedIcon /> {user.phoneNumber}
+                  </p>
+                  <p>Postal Code: {defaultAddress?.postalCode}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
       <div className="bg-white rounded-lg w-full">
-        <div className="flex justify-between p-4 border-b-4 border-black">
+        <div className="flex justify-between p-4 ">
           <h4>My Orders</h4>
           <span>Show All</span>
         </div>
@@ -80,7 +207,7 @@ function CustomerDash() {
       </div>
 
       <div className="my-4 bg-white rounded-lg w-full">
-        <div className="flex justify-between p-4 border-b-4 border-black">
+        <div className="flex justify-between p-4">
           <h4>Recent Purchases</h4>
           <span>Show All</span>
         </div>

@@ -5,8 +5,20 @@ const baseUrl = "http://localhost:5000";
 export const signIn = (email, password) =>
   axios.post(`${baseUrl}/users/signin`, { email, password });
 
-export const registerUser = (name, email, password) =>
-  axios.post(`${baseUrl}/users/register`, { name, email, password });
+export const registerUser = (
+  firstName,
+  lastName,
+  phoneNumber,
+  email,
+  password
+) =>
+  axios.post(`${baseUrl}/users/register`, {
+    firstName,
+    lastName,
+    phoneNumber,
+    email,
+    password,
+  });
 
 export const fetchUsers = (page) => axios.get(`${baseUrl}/users?page=${page}`);
 export const getCurrentUserAPI = (config) =>

@@ -8,7 +8,10 @@ import { register } from "../../actions/users";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 
 function RegisterPage() {
-  const [Username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
@@ -24,7 +27,9 @@ function RegisterPage() {
       alert("password and confirm password do not match");
     } else {
       // register action here
-      dispatch(register(Username, Email, Password, navigate));
+      dispatch(
+        register(firstName, lastName, phoneNumber, Email, Password, navigate)
+      );
     }
   };
 
@@ -64,24 +69,66 @@ function RegisterPage() {
               </div>
               <div>
                 <label
-                  for="email"
+                  for="firstName"
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Your name
+                  Your firstName
                 </label>
                 <input
-                  onChange={(e) => setUsername(e.target.value)}
-                  type="username"
-                  name="username"
-                  id="username"
+                  onChange={(e) => setFirstName(e.target.value)}
+                  type="text"
+                  name="firstName"
+                  id="firstName"
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="username"
+                  placeholder="firstName"
                   required=""
                 />
                 <span className="text-red-400">
                   {userRegister.formErrors && userRegister.formErrors.name}
                 </span>
               </div>
+              <div>
+                <label
+                  for="lastName"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Your lastName
+                </label>
+                <input
+                  onChange={(e) => setLastName(e.target.value)}
+                  type="text"
+                  name="lastName"
+                  id="lastName"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="lastName"
+                  required=""
+                />
+                <span className="text-red-400">
+                  {userRegister.formErrors && userRegister.formErrors.name}
+                </span>
+              </div>
+
+              <div>
+                <label
+                  for="lastName"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Your phoneNumber
+                </label>
+                <input
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  type="tel"
+                  name="phoneNumber"
+                  id="phoneNumber"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="phoneNumber"
+                  required=""
+                />
+                <span className="text-red-400">
+                  {userRegister.formErrors && userRegister.formErrors.name}
+                </span>
+              </div>
+
               <div>
                 <label
                   for="password"

@@ -6,13 +6,16 @@ import {
 // reducers/modalReducer.js
 const initialState = {
   isOpen: false,
+  addressId: "",
 };
 
 const addressModalReducer = (state = initialState, action) => {
   switch (action.type) {
     case SHOW_ADDRESS_MODAL:
+      console.log("AY", action.payload);
       return {
         isOpen: true,
+        addressId: action.payload,
       };
     case HIDE_ADDRESS_MODAL:
       return {

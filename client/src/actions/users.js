@@ -91,35 +91,48 @@ export const signin = (email, password) => async (dispatch) => {
 };
 
 export const register =
-  (name, email, password, navigate) => async (dispatch) => {
+  (firstName, lastName, phoneNumber, email, password, navigate) =>
+  async (dispatch) => {
     dispatch({
       type: USER_REGISTER_REQUEST,
-      payload: { name, email, password },
+      payload: { firstName, lastName, email, password },
     });
 
     try {
       const newUser = {
-        name: name,
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phoneNumber,
         email: email,
         password: password,
       };
       const rules = {
         email: "required|email",
         password: "required|min:6",
-        name: "required",
+        firstName: "required",
+        lastName: "required",
+        phoneNumber: "required",
       };
 
       const { isValid, errors } = allFieldsValidation(newUser, rules, {
         "required.email": "Email is required.",
         "required.password": "Password is required.",
-        "required.name": "name is required.",
+        "required.firstName": "firstName is required.",
+        "required.lastName": "lastName is required.",
+        "required.phoneNumber": "phoneNumber is required.",
       });
 
       if (!isValid) {
         return dispatch({ type: SET_SIGNUP_FORM_ERRORS, payload: errors });
       }
 
-      const { data } = await api.registerUser(name, email, password);
+      const { data } = await api.registerUser(
+        firstName,
+        lastName,
+        phoneNumber,
+        email,
+        password
+      );
       dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
       navigate("/login");
       toast("Registered SUCCESSFULLY!");

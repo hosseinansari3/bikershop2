@@ -9,6 +9,12 @@ import { editeAddress, updateUserAddress } from "../../actions/account";
 import { editeAddressAPI } from "../../api";
 
 function AddressModal() {
+  const user = useSelector((state) => state.account.user);
+  const userInfo = useSelector((state) => state.usersSignin.userInfo);
+  console.log("userInfo", userInfo);
+  const modal = useSelector((state) => state.addressModal);
+  const { addressId, isOpen } = modal;
+
   const [currentPage, setCurrentPage] = useState("addresses");
   const [addressToEdite, setAddressToEdite] = useState({});
 
@@ -30,19 +36,19 @@ function AddressModal() {
 
   const province = watch(
     "province",
-    currentPage == "editeAddress" ? addressToEdite.province : null
+    currentPage == "editeAddress" ? addressToEdite?.province : null
   );
   const city = watch(
     "city",
-    currentPage == "editeAddress" ? addressToEdite.city : null
+    currentPage == "editeAddress" ? addressToEdite?.city : null
   );
   const street = watch(
     "street",
-    currentPage == "editeAddress" ? addressToEdite.street : null
+    currentPage == "editeAddress" ? addressToEdite?.street : null
   );
   const postalCode = watch(
     "postalCode",
-    currentPage == "editeAddress" ? addressToEdite.postalCode : null
+    currentPage == "editeAddress" ? addressToEdite?.postalCode : null
   );
 
   const addOnSubmit = (e) => {
@@ -72,7 +78,8 @@ function AddressModal() {
   };
 
   useEffect(() => {
-    console.log("addressToEdite", addressToEdite);
+    console.log("addressToEdite", province);
+    console.log("eeed");
   }, [addressToEdite]);
 
   useEffect(() => {
@@ -80,14 +87,18 @@ function AddressModal() {
   }, [currentPage]);
 
   useEffect(() => {
+    console.log("currentPage", currentPage);
+  }, [currentPage]);
+
+  useEffect(() => {
     let defaultValues = {};
-    defaultValues.province = addressToEdite.province;
-    defaultValues.city = addressToEdite.city;
-    defaultValues.street = addressToEdite.street;
-    defaultValues.postalCode = addressToEdite.postalCode;
+    defaultValues.province = addressToEdite?.province;
+    defaultValues.city = addressToEdite?.city;
+    defaultValues.street = addressToEdite?.street;
+    defaultValues.postalCode = addressToEdite?.postalCode;
 
     reset({ ...defaultValues });
-  }, [addressToEdite]);
+  }, [addressToEdite, addressId]);
 
   const goToNewAddress = () => {
     setCurrentPage("newAddress");
@@ -100,16 +111,26 @@ function AddressModal() {
     setAddressToEdite(selectedObjArr[0]);
   };
 
-  const user = useSelector((state) => state.account.user);
-  const userInfo = useSelector((state) => state.usersSignin.userInfo);
-  console.log("userInfo", userInfo);
-  const modal = useSelector((state) => state.addressModal);
-  const { isOpen } = modal;
+  useEffect(() => {
+    console.log("addressId", addressId);
+    if (addressId) {
+      if (addressId == "new") {
+        goToNewAddress();
+      } else {
+        goToEditeAddress(addressId);
+      }
+    }
+    console.log("addressto", addressToEdite);
+    console.log("parav", province);
+  }, [addressId]);
+
   const dispatch = useDispatch();
 
   const handleCloseModal = () => {
+    console.log("close");
     dispatch(hideAddressModal());
     setCurrentPage("addresses");
+    setAddressToEdite({});
     let defaultValues = {};
     defaultValues.province = "";
     defaultValues.city = "";
@@ -228,7 +249,7 @@ function AddressModal() {
                   className="bg-black text-white p-2 w-fit h-14 rounded "
                   type="submit"
                 >
-                  Submit Order
+                  Add
                 </button>
               </form>
             </div>
@@ -311,7 +332,7 @@ function AddressModal() {
                   className="bg-black text-white p-2 w-fit h-14 rounded "
                   type="submit"
                 >
-                  Submit Order
+                  Edite
                 </button>
               </form>
             </div>
