@@ -176,14 +176,17 @@ const updateOrderToDelivered = async (req, res) => {
 const GetMyOrders = async (req, res) => {
   const user = req.user;
   userObjId = mongoose.Types.ObjectId(user.id);
+  let limit = req.query.limit ? parseInt(req.query.limit) : 0;
 
   const orders = await Order.find({
     user: userObjId,
-  }).populate({
-    path: "user",
-    select: "firstName",
-  });
-  console.log("myOrders:" + orders);
+  })
+    .populate({
+      path: "user",
+      select: "firstName",
+    })
+    .sort("-createdAt")
+    .limit(limit);
   res.json(orders);
 };
 
