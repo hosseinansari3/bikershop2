@@ -56,7 +56,7 @@ const fetchWishlist = async (req, res) => {
     const wishlist = await Wishlist.find({ user: userObjId })
       .populate({
         path: "product",
-        select: "title price image",
+        select: "title price images",
       })
       .sort("updatedAt");
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfile, updateProfile } from "../../actions/account";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
@@ -18,6 +18,15 @@ function AccountInfo() {
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const dispatch = useDispatch();
+
+  const myDivRef = useRef();
+
+  const handleScrollToBottom = () => {
+    if (myDivRef.current) {
+      myDivRef.current.scrollIntoView(false);
+      console.log("scrolled");
+    }
+  };
 
   useEffect(() => {
     if (user) {
@@ -64,7 +73,10 @@ function AccountInfo() {
 
   return (
     <div className="px-6 pt-8 flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
-      <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+      <div
+        ref={myDivRef}
+        className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6"
+      >
         <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
           First Name
         </label>
@@ -189,6 +201,13 @@ function AccountInfo() {
           variant="contained"
         >
           Update Profile Info
+        </button>
+        <button
+          className="bg-blue-300 p-4 text-white rounded mt-8
+          "
+          onClick={handleScrollToBottom}
+        >
+          SCROLL
         </button>
       </div>
     </div>

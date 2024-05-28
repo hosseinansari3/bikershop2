@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SwiperSlide } from "swiper/react";
 import ProductCart from "../Body/ProductCart";
 import Carousel from "../Carousel/Carousel";
@@ -15,6 +15,8 @@ import { showAddressModal } from "../../actions/addressModal";
 import { listAllOrdersAPI, listUserOrdersAPI } from "../../api";
 import { ORDER_STATUS } from "../../constants/panelConstants";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { fetchWishlist } from "../../actions/wishlist";
 
 function CustomerDash() {
   const account = useSelector((state) => state.account);
@@ -25,6 +27,27 @@ function CustomerDash() {
   const [defaultAddress, setDefaultAddress] = useState();
   const [recentOrder, setRecentOrder] = useState();
   const [showDetails, setShowDetails] = useState(false);
+
+  const wishlist = useSelector((state) => state.wishlist);
+
+  const myDivRef = useRef();
+
+  const handleScrollToBottom = () => {
+    setTimeout(function () {
+      if (myDivRef.current) {
+        myDivRef.current.scrollIntoView(false, { behavior: "smooth" });
+        console.log("scrolled");
+      }
+    }, 100);
+  };
+
+  useEffect(() => {
+    dispatch(fetchWishlist());
+  }, []);
+
+  useEffect(() => {
+    console.log("wishlist", wishlist);
+  }, [wishlist]);
 
   const config = {
     headers: {
@@ -130,7 +153,10 @@ function CustomerDash() {
               <p className="ml-2">Addresses</p>
             </div>
             <div>
-              <button onClick={() => dispatch(showAddressModal("new"))}>
+              <button
+                className="hover:bg-gray-50 p-2 rounded-md transition-all"
+                onClick={() => dispatch(showAddressModal("new"))}
+              >
                 <p className="mr-2">
                   <AddCircleOutlineIcon fontSize="small" /> Add new Address
                 </p>
@@ -179,7 +205,7 @@ function CustomerDash() {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg w-full">
+      <div className="bg-white rounded-lg w-full mb-6">
         <div className="border-l-2 border-black flex justify-between p-3">
           <h4>YOUR LATEST ORDER</h4>
           <span>SHOW ALL</span>
@@ -246,11 +272,19 @@ function CustomerDash() {
           </tbody>
         </table>
         <div className="w-full flex justify-center">
-          <button onClick={(e) => setShowDetails(!showDetails)}>
+          <button
+            onClick={(e) => {
+              setShowDetails(!showDetails);
+              handleScrollToBottom();
+            }}
+          >
             show details <KeyboardArrowDownIcon />{" "}
           </button>
         </div>
-        <div className={`${showDetails ? "block" : "hidden"} w-full p-3`}>
+        <div
+          ref={myDivRef}
+          className={`${showDetails ? "block" : "hidden"} w-full p-3`}
+        >
           {recentOrder?.orderItems.map((item) => {
             return (
               <div>
@@ -269,18 +303,6 @@ function CustomerDash() {
               </div>
             );
           })}
-        </div>
-      </div>
-
-      <div className="my-4 bg-white rounded-lg w-full">
-        <div className="flex justify-between p-4">
-          <h4>Recent Purchases</h4>
-          <span>Show All</span>
-        </div>
-        <div className="grid grid-cols-1">
-          <div>
-            <CartList carousel={true} Title="Apparel" />
-          </div>
         </div>
       </div>
     </div>
