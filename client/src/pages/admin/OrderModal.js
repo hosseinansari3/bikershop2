@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./OrderModal.css";
-import { ORDER_STATUS } from "../../constants/panelConstants";
+import { ORDER_STATUS, ROLES } from "../../constants/panelConstants";
 import { useDispatch, useSelector } from "react-redux";
 import { updateOrder } from "../../actions/orders";
 import { hideOrderModal } from "../../actions/orderModal";
 
 function OrderModal() {
   const modal = useSelector((state) => state.orderModal);
+  const user = useSelector((state) => state.usersSignin.userInfo.user);
+
   const { isOpen, order } = modal;
   const dispatch = useDispatch();
 
@@ -92,71 +94,75 @@ function OrderModal() {
             </tbody>
           </table>
         </div>
-        <div id="status" className="flex justify-center mt-7">
-          <input
-            checked={status == "Pending"}
-            onChange={(e) => setStatus(e.target.value)}
-            type="radio"
-            id="Pending"
-            name="fav_language"
-            value={ORDER_STATUS.Pending}
-          />
+        {user.role === ROLES.Admin && (
+          <div>
+            <div id="status" className="flex justify-center mt-7">
+              <input
+                checked={status == "Pending"}
+                onChange={(e) => setStatus(e.target.value)}
+                type="radio"
+                id="Pending"
+                name="fav_language"
+                value={ORDER_STATUS.Pending}
+              />
 
-          <label for="Pending">
-            <span>Pending</span>
-          </label>
+              <label for="Pending">
+                <span>Pending</span>
+              </label>
 
-          <input
-            checked={status == "Processing"}
-            onChange={(e) => setStatus(e.target.value)}
-            type="radio"
-            id="Processing"
-            name="fav_language"
-            value={ORDER_STATUS.Processing}
-          />
-          <label for="Processing">
-            <span>Processing {status}</span>
-          </label>
+              <input
+                checked={status == "Processing"}
+                onChange={(e) => setStatus(e.target.value)}
+                type="radio"
+                id="Processing"
+                name="fav_language"
+                value={ORDER_STATUS.Processing}
+              />
+              <label for="Processing">
+                <span>Processing {status}</span>
+              </label>
 
-          <input
-            checked={status == "Shipped"}
-            onChange={(e) => setStatus(e.target.value)}
-            type="radio"
-            id="Shipped"
-            name="fav_language"
-            value={ORDER_STATUS.Shipped}
-          />
-          <label for="Shipped">
-            <span>Shipped</span>
-          </label>
-          <input
-            checked={status == "Delivered"}
-            onChange={(e) => setStatus(e.target.value)}
-            type="radio"
-            id="Delivered"
-            name="fav_language"
-            value={ORDER_STATUS.Delivered}
-          />
-          <label for="Delivered">
-            <span>Delivered</span>
-          </label>
-          <input
-            checked={status == "Cancelled"}
-            onChange={(e) => setStatus(e.target.value)}
-            type="radio"
-            id="Cancelled"
-            name="fav_language"
-            value="Cancelled"
-          />
-          <label for="Cancelled">
-            <span>Cancelled </span>
-          </label>
-        </div>
-        <div className="flex justify-center mt-5">
-          <button onClick={saveHandler} className="border-2 rounded-lg p-2">
-            save
-          </button>
-        </div>
+              <input
+                checked={status == "Shipped"}
+                onChange={(e) => setStatus(e.target.value)}
+                type="radio"
+                id="Shipped"
+                name="fav_language"
+                value={ORDER_STATUS.Shipped}
+              />
+              <label for="Shipped">
+                <span>Shipped</span>
+              </label>
+              <input
+                checked={status == "Delivered"}
+                onChange={(e) => setStatus(e.target.value)}
+                type="radio"
+                id="Delivered"
+                name="fav_language"
+                value={ORDER_STATUS.Delivered}
+              />
+              <label for="Delivered">
+                <span>Delivered</span>
+              </label>
+              <input
+                checked={status == "Cancelled"}
+                onChange={(e) => setStatus(e.target.value)}
+                type="radio"
+                id="Cancelled"
+                name="fav_language"
+                value="Cancelled"
+              />
+              <label for="Cancelled">
+                <span>Cancelled </span>
+              </label>
+            </div>
+            <div className="flex justify-center mt-5">
+              <button onClick={saveHandler} className="border-2 rounded-lg p-2">
+                save
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

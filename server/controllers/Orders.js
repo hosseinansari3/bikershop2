@@ -178,14 +178,24 @@ const GetMyOrders = async (req, res) => {
   userObjId = mongoose.Types.ObjectId(user.id);
   let limit = req.query.limit ? parseInt(req.query.limit) : 0;
 
+  const filters = req.query.filters;
+  const sort = req.query.sort;
+
+  let query = {};
+
+  if (filters?.status && filters?.status != "") {
+    query.status = { $in: filters.status };
+  }
+
   const orders = await Order.find({
     user: userObjId,
+    ...query,
   })
     .populate({
       path: "user",
       select: "firstName",
     })
-    .sort("-createdAt")
+    .sort(sort)
     .limit(limit);
   res.json(orders);
 };

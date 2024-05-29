@@ -1,6 +1,9 @@
 import { toast } from "react-toastify";
-import { fetchWishlistAPI, updateWishlistAPI } from "../api";
+import { deleteWishlistAPI, fetchWishlistAPI, updateWishlistAPI } from "../api";
 import {
+  DELETE_WISHLIST_FAIL,
+  DELETE_WISHLIST_REQUEST,
+  DELETE_WISHLIST_SUCCESS,
   FETCH_WISHLIST,
   FETCH_WISHLIST_REQUEST,
 } from "../constants/actionTypes";
@@ -50,4 +53,19 @@ export const fetchWishlist = () => {
       console.log(error);
     }
   };
+};
+
+export const deleteWishlist = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_WISHLIST_REQUEST });
+    const { data } = await deleteWishlistAPI(id);
+    console.log("deleted: " + JSON.stringify(data));
+
+    dispatch({
+      type: DELETE_WISHLIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({ type: DELETE_WISHLIST_FAIL, payload: error.message });
+  }
 };

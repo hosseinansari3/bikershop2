@@ -54,7 +54,7 @@ function CustomerDash() {
       "Content-Type": "application/json",
       Authorization: `Bearer ${userInfo.token}`,
     },
-    params: { limit: 1 },
+    params: { limit: 1, sort: { createdAt: -1 } },
   };
 
   const fetchRecentOrders = async () => {

@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchWishlist } from "../../actions/wishlist";
+import { deleteWishlist, fetchWishlist } from "../../actions/wishlist";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Wishlist() {
   const userId = useSelector((state) => state.usersSignin.userInfo.user.id);
@@ -9,9 +11,21 @@ function Wishlist() {
 
   const dispatch = useDispatch();
 
+  const ProductDeletnotif = () => toast("wishlist DELETED SUCCESSFULLY!");
+
+  const handleDelet = (e, id) => {
+    e.preventDefault();
+    dispatch(deleteWishlist(id));
+    ProductDeletnotif();
+  };
+
   useEffect(() => {
     dispatch(fetchWishlist());
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log("wishlist", wishlist);
+  }, [wishlist]);
 
   return (
     <div className="container grid px-6 mx-auto">
@@ -25,7 +39,6 @@ function Wishlist() {
             <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
               <tr>
                 <td className="px-4 py-3">PRODUCT TITLE</td>
-                <td className="px-4 py-3">PRODUCT IMAGE</td>
                 <td className="px-4 py-3">WISHLIST DATE</td>
 
                 <td className="px-4 py-3">ACTION</td>
@@ -36,16 +49,19 @@ function Wishlist() {
                 return (
                   <tr>
                     <td className="px-4 py-3">
-                      <span className="font-semibold uppercase text-xs">
-                        {item.product?.title}
-                      </span>
+                      <Link to={`/product/${item.product.slug}`}>
+                        <div className="flex items-center">
+                          <img
+                            className="w-12 h-12 object-contain"
+                            src={item.product?.images[0]}
+                          />
+                          <span className="font-semibold uppercase ml-2 text-xs">
+                            {item.product?.title}
+                          </span>
+                        </div>
+                      </Link>
                     </td>
-                    <td className="px-4 py-3">
-                      <img
-                        className="w-12 h-12 object-contain"
-                        src={item.product?.image}
-                      />
-                    </td>
+
                     <td className="px-4 py-3 text-xs">
                       <span className="text-sm">{item.created}</span>
                     </td>
@@ -53,8 +69,8 @@ function Wishlist() {
                     <td className="px-4 py-3 text-right flex">
                       <div className="flex justify-between items-center">
                         <button
-                          type="button"
-                          className="ml-2 p-2 cursor-pointer text-gray-500 hover:text-green-600 focus:outline-none"
+                          onClick={(e) => handleDelet(e, [item._id])}
+                          className="p-2 cursor-pointer text-gray-400 hover:text-red-600 focus:outline-none"
                         >
                           <p>
                             <svg
@@ -68,9 +84,10 @@ function Wishlist() {
                               width="1em"
                               xmlns="http://www.w3.org/2000/svg"
                             >
-                              <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-                              <rect x="6" y="14" width="12" height="8"></rect>
+                              <polyline points="3 6 5 6 21 6"></polyline>
+                              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                              <line x1="10" y1="11" x2="10" y2="17"></line>
+                              <line x1="14" y1="11" x2="14" y2="17"></line>
                             </svg>
                           </p>
                         </button>

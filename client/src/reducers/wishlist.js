@@ -1,4 +1,5 @@
 import {
+  DELETE_WISHLIST_SUCCESS,
   FETCH_WISHLIST,
   FETCH_WISHLIST_REQUEST,
   SET_WISHLIST_LOADING,
@@ -21,6 +22,14 @@ const wishListReducer = (state = initialState, action) => {
         ...state,
         wishlistItems: action.payload,
         loading: false,
+      };
+
+    case DELETE_WISHLIST_SUCCESS:
+      return {
+        ...state,
+        wishlistItems: state.wishlistItems.filter(
+          (wishlistItem) => !action.payload.includes(wishlistItem._id)
+        ),
       };
 
     default:

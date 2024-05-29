@@ -63,32 +63,34 @@ export const updateOrder = (id, updated) => async (dispatch) => {
   }
 };
 
-export const listMyOrders = () => async (dispatch, getState) => {
-  try {
-    dispatch({ type: ORDER_LIST_REQUEST });
+export const listMyOrders =
+  (limit, filters, sort) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: ORDER_LIST_REQUEST });
 
-    const userinfo = getState().usersSignin.userInfo;
+      const userinfo = getState().usersSignin.userInfo;
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userinfo.token}`,
-      },
-    };
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userinfo.token}`,
+        },
+        params: { limit: limit, filters: filters, sort: sort },
+      };
 
-    const { data } = await listUserOrdersAPI(config);
+      const { data } = await listUserOrdersAPI(config);
 
-    dispatch({ type: ORDER_USER_LIST_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: ORDER_LIST_FAILURE,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      dispatch({ type: ORDER_USER_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: ORDER_LIST_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const listAllOrders =
   (limit, filters, sort) => async (dispatch, getState) => {

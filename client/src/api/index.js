@@ -89,6 +89,9 @@ export const updateWishlistAPI = (item, config) =>
 export const fetchWishlistAPI = (config) =>
   axios.get(`${baseUrl}/wishlist`, config);
 
+export const deleteWishlistAPI = (id) =>
+  axios.delete(`${baseUrl}/wishlist/${id}`);
+
 export const addReviewAPI = (santizedReview, config) =>
   axios.post(`${baseUrl}/review/add`, santizedReview, config);
 

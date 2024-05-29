@@ -56,7 +56,7 @@ const fetchWishlist = async (req, res) => {
     const wishlist = await Wishlist.find({ user: userObjId })
       .populate({
         path: "product",
-        select: "title price images",
+        select: "title price images slug",
       })
       .sort("updatedAt");
 
@@ -70,4 +70,17 @@ const fetchWishlist = async (req, res) => {
   }
 };
 
-module.exports = { fetchWishlist, updateWishlist };
+const deleteWishlist = async (req, res) => {
+  const ids = req.params.id;
+  var idsArr = ids.split(",");
+
+  try {
+    deletedWishlist = await Wishlist.deleteMany({ _id: { $in: idsArr } });
+    res.status(200).json(idsArr);
+  } catch (error) {
+    res.status(409).json({
+      message: error.message,
+    });
+  }
+};
+module.exports = { fetchWishlist, updateWishlist, deleteWishlist };
