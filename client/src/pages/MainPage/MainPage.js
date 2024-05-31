@@ -197,7 +197,7 @@ function MainPage() {
 
       <div
         id="hot-discount"
-        className="rounded-[20px] mb-3 w-[86vw] gradient-continue hidden lg:block w-full  mx-auto"
+        className="rounded-[20px] mb-3 w-[86vw] gradient-continue hidden lg:block  mx-auto"
       >
         <Carousel freeMode spv={4} space={10} class={"h-60 md:h-72 "}>
           <SwiperSlide>

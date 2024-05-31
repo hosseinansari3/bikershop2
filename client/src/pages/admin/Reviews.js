@@ -79,7 +79,9 @@ function Reviews() {
                 <td className="px-4 py-3">DATE</td>
 
                 <td className="px-4 py-3">STATUS</td>
-                <td className="px-4 py-3">ACTION</td>
+                {user.role === ROLES.Admin && (
+                  <td className="px-4 py-3">ACTION</td>
+                )}
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
@@ -122,65 +124,67 @@ function Reviews() {
                           </span>
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-right flex">
-                        <div className="relative">
-                          <button onClick={() => toggleActionBtn(index)}>
-                            <svg
-                              class="w-6 h-6 text-gray-800 dark:text-white"
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-width="3"
-                                d="M12 6h.01M12 12h.01M12 18h.01"
-                              />
-                            </svg>
-                          </button>
+                      {user.role === ROLES.Admin && (
+                        <td className="px-4 py-3 text-right flex">
+                          <div className="relative">
+                            <button onClick={() => toggleActionBtn(index)}>
+                              <svg
+                                class="w-6 h-6 text-gray-800 dark:text-white"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  stroke="currentColor"
+                                  stroke-linecap="round"
+                                  stroke-width="3"
+                                  d="M12 6h.01M12 12h.01M12 18h.01"
+                                />
+                              </svg>
+                            </button>
 
-                          {showActions.includes(index) && (
-                            <div
-                              className={` absolute right-[-28px] bg-gray-100 rounded w-20 h-auto text-center`}
-                            >
-                              <ul>
-                                <li
-                                  onClick={() => {
-                                    dispatch(
-                                      updateReview(item._id, {
-                                        ...item,
-                                        status: REVIEW_STATUS.Approved,
-                                      })
-                                    );
-                                    toggleActionBtn(index);
-                                  }}
-                                  className="hover:bg-gray-50 hover:cursor-pointer p-1.5"
-                                >
-                                  Approve
-                                </li>
-                                <li
-                                  onClick={() => {
-                                    dispatch(
-                                      updateReview(item._id, {
-                                        ...item,
-                                        status: REVIEW_STATUS.Rejected,
-                                      })
-                                    );
-                                    toggleActionBtn(index);
-                                  }}
-                                  className="hover:bg-gray-50 hover:cursor-pointer p-1.5"
-                                >
-                                  Reject
-                                </li>
-                              </ul>
-                            </div>
-                          )}
-                        </div>
-                      </td>
+                            {showActions.includes(index) && (
+                              <div
+                                className={` absolute right-[-28px] bg-gray-100 rounded w-20 h-auto text-center`}
+                              >
+                                <ul>
+                                  <li
+                                    onClick={() => {
+                                      dispatch(
+                                        updateReview(item._id, {
+                                          ...item,
+                                          status: REVIEW_STATUS.Approved,
+                                        })
+                                      );
+                                      toggleActionBtn(index);
+                                    }}
+                                    className="hover:bg-gray-50 hover:cursor-pointer p-1.5"
+                                  >
+                                    Approve
+                                  </li>
+                                  <li
+                                    onClick={() => {
+                                      dispatch(
+                                        updateReview(item._id, {
+                                          ...item,
+                                          status: REVIEW_STATUS.Rejected,
+                                        })
+                                      );
+                                      toggleActionBtn(index);
+                                    }}
+                                    className="hover:bg-gray-50 hover:cursor-pointer p-1.5"
+                                  >
+                                    Reject
+                                  </li>
+                                </ul>
+                              </div>
+                            )}
+                          </div>
+                        </td>
+                      )}
                     </tr>
                   );
                 })}
