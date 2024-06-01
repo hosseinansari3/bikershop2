@@ -138,15 +138,16 @@ function Header() {
   };
 
   const renderSuggestion = (suggestion) => (
-    <div className=" bg-white  hover:cursor-pointer hover:text-red-400 w-full p-[5px]">
-      <img className="inline w-24 h-16 object-contain" src={"#"} />
-      <span className="font-bold p-2.5">{suggestion?.title}</span>
+    <div
+      id="Suggestion"
+      className=" bg-white flex items-center justify-center  hover:cursor-pointer w-full p-[5px]"
+    >
+      <img className=" w-24 h-16 object-contain" src={suggestion.images[0]} />
+      <p className="font-bold w-[600px] p-2.5 whitespace-nowrap overflow-hidden text-ellipsis">
+        {suggestion?.title}
+      </p>
     </div>
   );
-
-  // const onChange = (e, { newValue }) => {
-  //  dispatch(onChange(newValue));
-  // };
 
   const inputProps = {
     className: "w-full pl-2",
@@ -190,7 +191,7 @@ function Header() {
           </div>
         </div>
 
-        <div className="hidden md:flex  justify-center items-center col-span-2 lg:col-span-3">
+        <div className="hidden sha md:flex  justify-center items-center col-span-2 lg:col-span-3">
           <div className="SearchContainer">
             <Autosuggest
               suggestions={suggestions ? suggestions : null}
@@ -204,7 +205,7 @@ function Header() {
                 window.location.replace(`/product/${item.suggestion.slug}`);
               }}
             />{" "}
-            <div className="search-icon">
+            <div className="search-icon sha">
               <Search />
             </div>
           </div>
