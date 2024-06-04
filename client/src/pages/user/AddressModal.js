@@ -7,6 +7,9 @@ import { hideAddressModal } from "../../actions/addressModal";
 import { useForm } from "react-hook-form";
 import { editeAddress, updateUserAddress } from "../../actions/account";
 import { editeAddressAPI } from "../../api";
+import EditIcon from "@mui/icons-material/Edit";
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
 
 function AddressModal() {
   const user = useSelector((state) => state.account.user);
@@ -151,20 +154,39 @@ function AddressModal() {
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="p-9 bg-white w-3/5 shadow h-[500px] overflow-hidden border border-gray-900 dark:border-gray-700 rounded-lg ring-1 ring-black ring-opacity-5 mb-8"
+        className="py-6 w-[100vw] h-[100vh] md:w-[80%]  p-4 bg-white  shadow md:h-[500px] border border-gray-900 dark:border-gray-700 md:rounded-lg ring-1 ring-black ring-opacity-5"
       >
+        {currentPage == "addresses" && (
+          <div className="h-[70px] items-center flex justify-between">
+            <button
+              className="bg-black rounded-md h-[50px] p-2 text-white mt-1"
+              onClick={() => goToNewAddress()}
+            >
+              add new address <AddIcon />
+            </button>
+            <button onClick={handleCloseModal}>
+              <CloseIcon />
+            </button>
+          </div>
+        )}
+
         {currentPage == "addresses" ? (
-          <div>
-            <button onClick={() => goToNewAddress()}>add new address</button>
+          <div className="overflow-y-auto h-[75vh] md:h-[400px]">
             {user?.address?.length > 0 && (
-              <div className="p-6 bg-gray-200">
+              <div className="p-2">
                 {user?.address?.map((address) => {
                   return (
-                    <div className="p-4 mb-4 bg-white">
-                      {address.province}/{address.city}/{address.street} /{" "}
-                      {address.postalCode}{" "}
-                      <button onClick={() => goToEditeAddress(address?._id)}>
-                        edite address
+                    <div className="p-4 mb-4 bg-white border-gray-200 border-b-2">
+                      {" "}
+                      <p className="break-words">
+                        {address.province}/{address.city}/{address.street} /{" "}
+                        {address.postalCode}{" "}
+                      </p>
+                      <button
+                        className="bg-black rounded-md p-2 text-white mt-1 "
+                        onClick={() => goToEditeAddress(address?._id)}
+                      >
+                        edite address <EditIcon fontSize="inherit" />
                       </button>
                     </div>
                   );
