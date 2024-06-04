@@ -222,7 +222,7 @@ function Header() {
           >
             <ShoppingCart fontSize="large" />
             {cartIsOpen &&
-              savedCartItems?.length !== 0 &&
+              savedCartItems?.length > 0 &&
               savedCartItems !== undefined && (
                 <div className="hidden md:block card-dropdown shadow-xl">
                   <>
@@ -257,14 +257,14 @@ function Header() {
                         })}
                     </ul>
                     <div className="flex justify-center bg-gray-300 font-bold p-2 text-white mb-2">
-                      <span>subtotal:</span>
+                      <span>SUBTOTAL:</span>
                       <span>${total}</span>
                     </div>
                   </>
 
                   <div className="card-dropdown-bottom border-top">
                     <Link to="/cart">
-                      <button className="bg-gray-100">view Cart</button>
+                      <button className="bg-gray-100">VIEW CART</button>
                     </Link>
                   </div>
                 </div>

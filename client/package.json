@@ -38,6 +38,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.4.1",
     "run": "^1.4.0",
+    "sass": "^1.77.4",
     "swiper": "^8.4.6",
     "validatorjs": "^3.22.1",
     "web-vitals": "^2.1.4",

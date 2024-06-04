@@ -98,7 +98,11 @@
 }
 
 .product-images-Carousel img {
-  object-fit: cover;
+  object-fit: contain;
   width: 100%;
   height: 100%;
+}
+
+.product-images-Carousel .main {
+  height: 350px;
 }

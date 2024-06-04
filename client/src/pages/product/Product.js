@@ -170,7 +170,7 @@ function Product() {
           <div className="grid grid-cols-1 lg:grid-cols-2 p-5">
             <div className="product-images-Carousel">
               <Carousel
-                class="hidden md:block"
+                class="main hidden md:block"
                 spv={1}
                 space={20}
                 thumb={true}
@@ -891,7 +891,7 @@ function Product() {
                             <div className="col-md-6">
                               <div className=" rating-form-style mb-10">
                                 <input
-                                  className="bg-gray-100"
+                                  className="bg-gray-100 p-1"
                                   placeholder="Enter Review Title"
                                   name="title"
                                   type="text"
@@ -908,7 +908,7 @@ function Product() {
                             <div className="col-md-12">
                               <div className="rating-form-style form-submit">
                                 <textarea
-                                  className="bg-gray-100"
+                                  className="bg-gray-100 p-1"
                                   name="review"
                                   placeholder="Write a Review"
                                   onChange={(e) =>
