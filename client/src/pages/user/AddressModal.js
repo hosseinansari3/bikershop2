@@ -202,7 +202,7 @@ function AddressModal() {
           </div>
         ) : currentPage == "newAddress" ? (
           <div>
-            <div className="px-6 flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
+            <div className="px-6 flex-grow w-full h-full max-h-full md:pb-32">
               <div className="mb-9 items-center flex justify-between">
                 <button onClick={() => goToAddresses()}>
                   <KeyboardBackspaceIcon />
@@ -293,7 +293,7 @@ function AddressModal() {
           </div>
         ) : currentPage == "editeAddress" ? (
           <div>
-            <div className="px-6  flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
+            <div className="px-6  flex-grow w-full h-full max-h-full">
               <div className="mb-9 items-center flex justify-between">
                 <button onClick={() => goToAddresses()}>
                   <KeyboardBackspaceIcon />
