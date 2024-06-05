@@ -10,6 +10,7 @@ import { editeAddressAPI } from "../../api";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
 function AddressModal() {
   const user = useSelector((state) => state.account.user);
@@ -107,6 +108,10 @@ function AddressModal() {
     setCurrentPage("newAddress");
   };
 
+  const goToAddresses = () => {
+    setCurrentPage("addresses");
+  };
+
   const goToEditeAddress = (addressId) => {
     setCurrentPage("editeAddress");
     const selectedObjArr = user?.address?.filter((obj) => obj._id == addressId);
@@ -154,7 +159,7 @@ function AddressModal() {
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="py-6 w-[100vw] h-[100vh] md:w-[80%]  p-4 bg-white  shadow md:h-[500px] border border-gray-900 dark:border-gray-700 md:rounded-lg ring-1 ring-black ring-opacity-5"
+        className="py-6 w-[100vw] h-[100vh] md:w-[650px]  p-4 bg-white  shadow md:h-auto border border-gray-900 dark:border-gray-700 md:rounded-lg ring-1 ring-black ring-opacity-5"
       >
         {currentPage == "addresses" && (
           <div className="h-[70px] items-center flex justify-between">
@@ -186,7 +191,8 @@ function AddressModal() {
                         className="bg-black rounded-md p-2 text-white mt-1 "
                         onClick={() => goToEditeAddress(address?._id)}
                       >
-                        edite address <EditIcon fontSize="inherit" />
+                        edite and select the address{" "}
+                        <EditIcon fontSize="inherit" />
                       </button>
                     </div>
                   );
@@ -196,7 +202,16 @@ function AddressModal() {
           </div>
         ) : currentPage == "newAddress" ? (
           <div>
-            <div className="px-6 pt-8 flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
+            <div className="px-6 flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
+              <div className="mb-9 items-center flex justify-between">
+                <button onClick={() => goToAddresses()}>
+                  <KeyboardBackspaceIcon />
+                </button>
+                <button onClick={handleCloseModal}>
+                  <CloseIcon />
+                </button>
+              </div>
+
               <form onSubmit={handleSubmit(addOnSubmit)}>
                 <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
@@ -268,7 +283,7 @@ function AddressModal() {
                 </div>
 
                 <button
-                  className="bg-black text-white p-2 w-fit h-14 rounded "
+                  className="bg-black text-white p-2 w-fit rounded "
                   type="submit"
                 >
                   Add
@@ -278,7 +293,15 @@ function AddressModal() {
           </div>
         ) : currentPage == "editeAddress" ? (
           <div>
-            <div className="px-6 pt-8 flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
+            <div className="px-6  flex-grow w-full h-full max-h-full pb-40 md:pb-32 lg:pb-32 xl:pb-32">
+              <div className="mb-9 items-center flex justify-between">
+                <button onClick={() => goToAddresses()}>
+                  <KeyboardBackspaceIcon />
+                </button>
+                <button onClick={handleCloseModal}>
+                  <CloseIcon />
+                </button>
+              </div>
               <form
                 onSubmit={() => handleSubmit(editeOnSubmit(addressToEdite._id))}
               >
@@ -351,10 +374,10 @@ function AddressModal() {
                 </div>
 
                 <button
-                  className="bg-black text-white p-2 w-fit h-14 rounded "
+                  className="bg-black text-white p-2 w-fit rounded "
                   type="submit"
                 >
-                  Edite
+                  Edite and Select
                 </button>
               </form>
             </div>

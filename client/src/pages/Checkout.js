@@ -6,6 +6,7 @@ import { createOrder } from "../actions/orders";
 import AddressModal from "./user/AddressModal";
 import { showAddressModal } from "../actions/addressModal";
 import { useNavigate } from "react-router-dom";
+import EditIcon from "@mui/icons-material/Edit";
 
 function Checkout() {
   const {
@@ -95,17 +96,24 @@ function Checkout() {
     <div className="relative ">
       {console.log("REEEDNDERRR")}
       {user?.address?.length > 0 ? (
-        <div className="p-6 bg-gray-200">
+        <div className="p-6">
           {
             <div className="p-4 bg-white">
-              {selectedAddress?.province}/{selectedAddress?.city}/
-              {selectedAddress?.street} / {selectedAddress?.postalCode}
+              <p className="font-bold mb-3">
+                YOUR ORDER WILL BE SHIPPED TO THIS ADDRESS:
+              </p>
+              <span className="">
+                {selectedAddress?.province}/{selectedAddress?.city}/
+                {selectedAddress?.street} / {selectedAddress?.postalCode}
+              </span>
               <button onClick={() => dispatch(showAddressModal())}>
-                <span className="ml-4">edite or change the address</span>
+                <span className="ml-4 border-b-2 border-black">
+                  edite or change the address <EditIcon fontSize="inherit" />
+                </span>
               </button>
               <div>
                 <button
-                  className="bg-black text-white mt-10 p-2 w-fit h-14 rounded "
+                  className="bg-black text-white mt-10 p-2 w-fit rounded "
                   onClick={(e) => handleOrder(e)}
                 >
                   Submit Order
