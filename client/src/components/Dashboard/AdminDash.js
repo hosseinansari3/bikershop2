@@ -204,7 +204,7 @@ function AdminDash() {
   return (
     <>
       <h1 className="my-4 fs-2 fw-bold">Dashboard</h1>
-      <div className="grid gap-4 mb-8 md:grid-cols-4 xl:grid-cols-4">
+      <div className="px-7 md:px-0 grid gap-4 mb-8  md:grid-cols-4 xl:grid-cols-4">
         <div className="min-w-0 rounded-lg   overflow-hidden bg-white dark:bg-gray-800 flex justify-center h-full">
           <div className="p-4 border border-gray-200 justify-between dark:border-gray-800 w-full p-6 rounded-lg text-white dark:text-green-100 bg-teal-500">
             <div className="text-center xl:mb-0 mb-3">
@@ -229,10 +229,10 @@ function AdminDash() {
                   ${todayTotal}
                 </p>
               </div>
-              <div className="flex text-center text-xs font-normal text-gray-50 dark:text-gray-100">
-                <div className="px-1 mt-3">Cash : $0.00</div>
-                <div className="px-1 mt-3">card : $0.00</div>
-                <div className="px-1 mt-3">Credit : $0.00</div>
+              <div className="flex justify-center text-center text-xs font-normal text-gray-50 dark:text-gray-100">
+                <div className="px-1 mt-3">Cash : 30%</div>
+                <div className="px-1 mt-3">card : 30%</div>
+                <div className="px-1 mt-3">Credit : 40%</div>
               </div>
             </div>
           </div>
@@ -262,10 +262,10 @@ function AdminDash() {
                   ${yesterdayTotal}
                 </p>
               </div>
-              <div className="flex text-center text-xs font-normal text-gray-50 dark:text-gray-100">
-                <div className="px-1 mt-3">Cash : $0.00</div>
-                <div className="px-1 mt-3">card : $0.00</div>
-                <div className="px-1 mt-3">Credit : $0.00</div>
+              <div className="flex justify-center text-center text-xs font-normal text-gray-50 dark:text-gray-100">
+                <div className="px-1 mt-3">Cash : 20%</div>
+                <div className="px-1 mt-3">card : 50%</div>
+                <div className="px-1 mt-3">Credit : 30%</div>
               </div>
             </div>
           </div>
@@ -294,10 +294,10 @@ function AdminDash() {
                   ${thisMonthTotal}
                 </p>
               </div>
-              <div className="flex text-center text-xs font-normal text-gray-50 dark:text-gray-100">
-                <div className="px-1 mt-3">Cash : $0.00</div>
-                <div className="px-1 mt-3">card : $0.00</div>
-                <div className="px-1 mt-3">Credit : $0.00</div>
+              <div className="flex justify-center text-center text-xs font-normal text-gray-50 dark:text-gray-100">
+                <div className="px-1 mt-3">Cash : 20%</div>
+                <div className="px-1 mt-3">card : 20%</div>
+                <div className="px-1 mt-3">Credit : 60%</div>
               </div>
             </div>
           </div>
@@ -326,17 +326,17 @@ function AdminDash() {
                   ${allTimeTotal}
                 </p>
               </div>
-              <div className="flex text-center text-xs font-normal text-gray-50 dark:text-gray-100">
-                <div className="px-1 mt-3">Cash : $0.00</div>
-                <div className="px-1 mt-3">card : $0.00</div>
-                <div className="px-1 mt-3">Credit : $0.00</div>
+              <div className="flex text-center justify-center text-xs font-normal text-gray-50 dark:text-gray-100">
+                <div className="px-1 mt-3">Cash : 25%</div>
+                <div className="px-1 mt-3">card : 25%</div>
+                <div className="px-1 mt-3">Credit : 50%</div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 grid-cols-2 xl:grid-cols-4">
         <div className="min-w-0 rounded-lg   overflow-hidden bg-white dark:bg-gray-800 flex h-full">
           <div className="p-4 flex items-center border border-gray-200 dark:border-gray-800 w-full rounded-lg">
             <div className="flex items-center justify-center p-3 rounded-full h-12 w-12 text-center mr-4 text-lg text-orange-600 dark:text-orange-100 bg-orange-100 dark:bg-orange-500">
@@ -383,9 +383,6 @@ function AdminDash() {
             <div>
               <h6 className="text-sm mb-1 font-medium text-gray-600 dark:text-gray-400">
                 <span>Orders Pending</span>
-                <span className="text-red-500 text-sm font-semibold">
-                  (4420.77)
-                </span>
               </h6>
               <p className="text-2xl font-bold leading-none text-gray-600 dark:text-gray-200">
                 {pendingOrders?.length}
@@ -447,8 +444,8 @@ function AdminDash() {
 
       <div className="grid gap-4 md:grid-cols-2 my-8">
         <div className="shadow-lg min-w-0  bg-white rounded-lg shadow-xs dark:bg-gray-800">
-          <h3 className="pt-4 pl-4 font-bold text-xl">last 7 days sales</h3>
-          <div className="flex h-fit justify-center">
+          <h3 className="pt-4 pl-4 font-bold text-xl">LAST 7 DAYS SALES</h3>
+          <div className="flex px-2 h-fit justify-center">
             <LineChart
               xAxis={[{ data: lastSevenDays, scaleType: "time" }]}
               sx={{
@@ -484,9 +481,9 @@ function AdminDash() {
           </div>
         </div>
         <div className=" shadow-lg min-w-0  bg-white rounded-lg shadow-xs dark:bg-gray-800 ">
-          <h3 className="p-4 font-bold text-xl">sales source</h3>
+          <h3 className="p-4 font-bold text-xl">SALES SOURCE</h3>
 
-          <div className="flex h-fit justify-center">
+          <div className="flex py-2 h-fit justify-center">
             <PieChart
               series={[
                 {
@@ -501,7 +498,7 @@ function AdminDash() {
                   cornerRadius: 4,
                   startAngle: -180,
                   endAngle: 180,
-                  cx: 150,
+                  cx: 110,
                   cy: 100,
                 },
               ]}
@@ -525,8 +522,6 @@ function AdminDash() {
                 <td className="px-4 py-3">CUSTOMER</td>
                 <td className="px-4 py-3">AMOUNT</td>
                 <td className="px-4 py-3">STATUS</td>
-
-                <td className="px-4 py-3">INVOICE</td>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
@@ -593,59 +588,6 @@ function AdminDash() {
                           {order.status}
                         </span>
                       </span>
-                    </td>
-                    <td className="px-4 py-3 text-right flex">
-                      <div className="flex justify-between items-center">
-                        <button
-                          type="button"
-                          className="ml-2 p-2 cursor-pointer text-gray-500 hover:text-green-600 focus:outline-none"
-                        >
-                          <p>
-                            <svg
-                              stroke="currentColor"
-                              fill="none"
-                              stroke-width="2"
-                              viewBox="0 0 24 24"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              height="1em"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-                              <rect x="6" y="14" width="12" height="8"></rect>
-                            </svg>
-                          </p>
-                        </button>
-                        <span className="p-2 cursor-pointer text-gray-400 hover:text-green-600">
-                          <a href="#">
-                            <p>
-                              <svg
-                                stroke="currentColor"
-                                fill="none"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                height="1em"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line
-                                  x1="21"
-                                  y1="21"
-                                  x2="16.65"
-                                  y2="16.65"
-                                ></line>
-                                <line x1="11" y1="8" x2="11" y2="14"></line>
-                                <line x1="8" y1="11" x2="14" y2="11"></line>
-                              </svg>
-                            </p>
-                          </a>
-                        </span>
-                      </div>
                     </td>
                   </tr>
                 );

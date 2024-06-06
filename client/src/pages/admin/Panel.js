@@ -171,7 +171,7 @@ function Panel() {
           </div>
         </header>
         <main className="h-full overflow-y-auto">
-          <div className="container grid px-6 mx-auto">
+          <div className="container grid px-2  md:px-6 mx-auto">
             <Outlet />
           </div>
         </main>

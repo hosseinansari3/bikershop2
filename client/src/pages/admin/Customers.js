@@ -73,7 +73,7 @@ function Customers() {
   };
 
   return (
-    <div className="container grid px-6 mx-auto">
+    <div className="container grid px-2 md:px-6 mx-auto">
       {console.log("1pagessss: " + pages)}
       {console.log("1totalUsers: " + totalUsers)}
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
@@ -272,7 +272,7 @@ function Customers() {
                     </td>
                     <td className="px-4 py-3">
                       <span className="bg-blue-500 text-white rounded-full px-2 text-xs font-medium leading-5">
-                        {user.role.substring(5)}
+                        {user?.role?.substring(5)}
                       </span>
                     </td>
                     <td className="px-4 py-3">

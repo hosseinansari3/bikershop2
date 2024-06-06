@@ -69,7 +69,7 @@ function Categories() {
   };
 
   return (
-    <div className="container grid px-6 mx-auto">
+    <div className="container grid px-2 md:px-6 mx-auto">
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Categories
       </h1>
@@ -254,15 +254,15 @@ function Categories() {
           </form>
         </div>
       </div>
-      <div className="w-full grid grid-cols-5">
+      <div className="w-full grid grid-cols-2 sm:grid-cols-3  md:grid-cols-5">
         {categories?.map((cat) => {
           return (
             <div
               className={`${
                 isCheck.includes(cat._id)
                   ? "border-red-500 bg-[#ff8787] border-2 text-white"
-                  : "border-black"
-              } flex hover:border-red-500 transition-all cursor-pointer relative bg-white mb-1 mr-1 border-[1.5px] rounded-2xl`}
+                  : "border-black bg-white"
+              } flex hover:border-red-500 transition-all cursor-pointer relative mb-1 mr-1 border-[1.5px] rounded-2xl`}
             >
               <div className="w-full h-full flex justify-center py-3">
                 <span className="text-sm font-semibold">{cat.name}</span>

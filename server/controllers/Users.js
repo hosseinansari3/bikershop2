@@ -299,7 +299,7 @@ const searchUser = async (req, res) => {
           { firstName: { $regex: new RegExp(name), $options: "is" } },
         ],
       },
-      { email: 1, firstName: 1, avatar: 1, _id: 1 }
+      { email: 1, firstName: 1, avatar: 1, _id: 1, role: 1 }
     );
 
     const page = parseInt(req.query.page) || 1;
