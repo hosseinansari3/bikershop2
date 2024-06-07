@@ -8,6 +8,7 @@ import {
   CATEGORY_DELETE_REQUEST,
   CATEGORY_DELETE_SUCCESS,
   CATEGORY_DELETE_FAILURE,
+  CATEGORIES_SEARCH_SUCCESS,
 } from "../constants/actionTypes";
 import * as api from "../api/index";
 import { toast } from "react-toastify";
@@ -48,4 +49,25 @@ export const deleteCategory = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: CATEGORY_DELETE_FAILURE, payload: error.message });
   }
+};
+
+export const onCategorySearch = (value) => {
+  const inputValue = value.trim().toLowerCase();
+
+  return async (dispatch, getState) => {
+    try {
+      if (inputValue) {
+        const response = await api.searchCategoryAPI(inputValue);
+
+        console.log("response.data", response.data);
+
+        dispatch({
+          type: CATEGORIES_SEARCH_SUCCESS,
+          payload: response.data.categories,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };

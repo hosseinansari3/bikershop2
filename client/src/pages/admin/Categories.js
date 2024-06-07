@@ -6,12 +6,14 @@ import {
   createCategory,
   deleteCategory,
   fetchCategories,
+  onCategorySearch,
 } from "../../actions/categories";
 
 function Categories() {
   const dispatch = useDispatch();
   const [isAddCatOpen, setAddCatOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [searchValue, setSearchValue] = useState("");
 
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
@@ -27,6 +29,13 @@ function Categories() {
   useEffect(() => {
     console.log(inputValue);
   }, [inputValue]);
+
+  useEffect(() => {
+    if (searchValue == "") {
+      dispatch(fetchCategories());
+    }
+    dispatch(onCategorySearch(searchValue));
+  }, [searchValue]);
 
   console.log("FETHEDCATS", categories);
   const handleCreateCategory = (e, category) => {
@@ -245,6 +254,7 @@ function Categories() {
           <form className="py-3 grid gap-4 lg:gap-6 xl:gap-6 md:flex xl:flex">
             <div className="flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
               <input
+                onChange={(e) => setSearchValue(e.target.value)}
                 type="search"
                 name="search"
                 placeholder="search by Category name"

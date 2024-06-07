@@ -42,4 +42,31 @@ const deleteCategory = async (req, res) => {
   }
 };
 
-module.exports = { addCategory, getCategories, deleteCategory };
+const searchCategory = async (req, res) => {
+  try {
+    const name = req.params.name;
+
+    let query = Category.find({
+      name: { $regex: new RegExp(name), $options: "is" },
+    });
+
+    const result = await query;
+
+    console.log("result", result.length);
+
+    res.status(200).json({
+      status: "success",
+      count: result.length,
+
+      categories: result,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "error",
+      message: "Server Error",
+    });
+  }
+};
+
+module.exports = { addCategory, searchCategory, getCategories, deleteCategory };

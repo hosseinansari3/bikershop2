@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://192.168.1.102:5000";
+const baseUrl = "http://localhost:5000";
 
 export const signIn = (email, password) =>
   axios.post(`${baseUrl}/users/signin`, { email, password });
@@ -126,6 +126,9 @@ export const createCategoryAPI = (category) =>
   axios.post(`${baseUrl}/categories/add`, category);
 
 export const fetchCategoriesAPI = () => axios.get(`${baseUrl}/categories`);
+
+export const searchCategoryAPI = (inputValue) =>
+  axios.get(`${baseUrl}/categories/search/${inputValue}`);
 
 export const deleteCategoryAPI = (id) =>
   axios.delete(`${baseUrl}/categories/${id}`);

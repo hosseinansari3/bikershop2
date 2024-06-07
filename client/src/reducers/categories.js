@@ -5,6 +5,7 @@ import {
   CATEGORIES_FETCH_REQUEST,
   CATEGORIES_FETCH_SUCCESS,
   CATEGORY_DELETE_SUCCESS,
+  CATEGORIES_SEARCH_SUCCESS,
 } from "../constants/actionTypes";
 
 const initialState = {
@@ -35,6 +36,9 @@ export const categoriesReducer = (state = initialState, action) => {
           (category) => !action.payload.includes(category._id)
         ),
       };
+    case CATEGORIES_SEARCH_SUCCESS:
+      return { loading: false, categories: action.payload };
+
     default:
       return state;
   }
