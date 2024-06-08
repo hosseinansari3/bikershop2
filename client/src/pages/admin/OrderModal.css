@@ -1,14 +1,60 @@
+.overlay {
+  animation: fadein 0.5s;
+}
+
 #status input[type="radio"] {
   display: none;
 }
 
 #status input[type="radio"]:checked + label span {
-  border-width: 9px;
+  border-width: 4px;
 }
 
 #status label span {
-  border-width: 2px;
+  border-width: 1px;
+  font-size: 10pt;
   border-radius: 25px;
   padding: 6px;
-  margin: 5px;
+  margin: 2px;
+}
+
+#status label {
+  margin-bottom: 15px;
+}
+
+.close {
+  animation: slide-down 0.3s ease-out forwards;
+}
+
+@media only screen and (max-width: 768px) {
+  .open {
+    animation: slide-up 0.3s ease-out forwards;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

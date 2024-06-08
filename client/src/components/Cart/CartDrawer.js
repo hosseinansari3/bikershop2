@@ -21,7 +21,7 @@ function CartDrawer({ isOpen, setOpen }) {
         </div>
         <div className="border-b pb-[2vh]">
           <ul className="p-5">
-            {savedCartItems.length > 0 &&
+            {savedCartItems?.length > 0 &&
               savedCartItems?.map((item) => {
                 return (
                   <li className="flex mb-[2vh]">

@@ -26,6 +26,7 @@ import Checkout from "./pages/Checkout";
 import AddressModal from "./pages/user/AddressModal";
 import ProtectedRoute from "./components/route/ProtectedRoute";
 import OrderSuccess from "./pages/OrderSuccess";
+import OrderModal from "./pages/admin/OrderModal";
 
 function App() {
   const location = useLocation();
@@ -39,6 +40,7 @@ function App() {
     >
       <ToastContainer />
       <AddressModal />
+      <OrderModal />
 
       {!location.pathname.includes("/panel") &&
       location.pathname !== "/user" &&

@@ -76,8 +76,6 @@ function Panel() {
   };
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900 false">
-      <OrderModal />
-
       {user?.role !== undefined && user?.role === ROLES.Admin ? (
         <Admin
           user={user}
