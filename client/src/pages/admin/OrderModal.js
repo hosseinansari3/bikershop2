@@ -42,7 +42,7 @@ function OrderModal() {
         onClick={handleCloseModal}
         className={`${
           isOpen ? "flex" : " hidden"
-        } overlay absolute    z-50 justify-center items-center w-full h-full bg-gray-500/70`}
+        } overlay absolute transition-all duration-[5s]  z-50 justify-center items-center w-full h-full bg-gray-500/70`}
       >
         {" "}
         <div

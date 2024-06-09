@@ -75,7 +75,14 @@ function Panel() {
     setSideOpen(!sideOpen);
   };
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 false">
+    <div className={`  flex h-screen bg-gray-50 dark:bg-gray-900 false`}>
+      <div
+        onClick={sidebareToggle}
+        className={` ${
+          sideOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        } fixed z-10 md:hidden transition-all duration-[0.5s] top-0 left-0 bg-black/60 h-full w-full`}
+      ></div>
+
       {user?.role !== undefined && user?.role === ROLES.Admin ? (
         <Admin
           user={user}
