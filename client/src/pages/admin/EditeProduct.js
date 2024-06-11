@@ -356,69 +356,75 @@ function EditeProduct() {
             onDrop={handleDrop}
             className="w-full text-center"
           >
-            <div className="flex justify-between">
-              <label
-                for="file0"
-                className="flex justify-center items-center w-[30%] aspect-square border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer px-6 pt-5 pb-6"
-              >
-                {mainPreview?.length == "" ? (
-                  <>
-                    <span>main image here</span>
-                  </>
-                ) : (
-                  <img className="w-32 h-32 object-cover" src={mainPreview} />
-                )}
-                <input
-                  onChange={(e) => {
-                    e.target.files.length != 0 &&
-                      setMainImgFile(e.target.files[0]);
-                  }}
-                  id="file0"
-                  tabIndex="-1"
-                  accept="image/*"
-                  type="file"
-                  autoComplete="off"
-                  style={{ display: "none" }}
-                />
-              </label>
-
-              <label
-                for="file1"
-                className="flex justify-center items-center w-[65%]  border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer px-6 pt-5 pb-6"
-              >
-                <input
-                  onChange={(e) => {
-                    e.target.files.length != 0 &&
-                      setOtherImgsFiles(e.target.files);
-                  }}
-                  id="file1"
-                  tabIndex="-1"
-                  accept="image/*"
-                  multiple
-                  type="file"
-                  autoComplete="off"
-                  style={{ display: "none" }}
-                />
-                {othersPreview?.length == 0 ? (
-                  <>
-                    <span>other images here</span>
-                  </>
-                ) : (
-                  <div className="grid gap-4 md:grid-cols-3 xl:grid-cols-3">
-                    {othersPreview?.map((image, i) => {
-                      while (i < othersPreview.length) {
-                        return (
-                          <img
-                            className="w-32 h-32 object-cover"
-                            key={i}
-                            src={image}
-                          />
-                        );
-                      }
-                    })}
-                  </div>
-                )}
-              </label>
+            <div className="grid gap-1 grid-cols-8">
+              <div className="col-span-6 min-[470px]:col-span-2 md:col-span-2 ">
+                <label
+                  for="file0"
+                  className="flex p-1.5 justify-center items-center border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer"
+                >
+                  {mainPreview?.length == "" ? (
+                    <>
+                      <span>main image here</span>
+                    </>
+                  ) : (
+                    <img
+                      className="w-full h-32 object-cover"
+                      src={mainPreview}
+                    />
+                  )}
+                  <input
+                    onChange={(e) => {
+                      e.target.files.length != 0 &&
+                        setMainImgFile(e.target.files[0]);
+                    }}
+                    id="file0"
+                    tabIndex="-1"
+                    accept="image/*"
+                    type="file"
+                    autoComplete="off"
+                    style={{ display: "none" }}
+                  />
+                </label>
+              </div>
+              <div className="col-span-6 min-[470px]:col-span-6 md:col-span-6">
+                <label
+                  for="file1"
+                  className="flex  justify-center items-center   border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer p-1.5"
+                >
+                  <input
+                    onChange={(e) => {
+                      e.target.files.length != 0 &&
+                        setOtherImgsFiles(e.target.files);
+                    }}
+                    id="file1"
+                    tabIndex="-1"
+                    accept="image/*"
+                    multiple
+                    type="file"
+                    autoComplete="off"
+                    style={{ display: "none" }}
+                  />
+                  {othersPreview?.length == 0 ? (
+                    <>
+                      <span>other images here</span>
+                    </>
+                  ) : (
+                    <div className="grid gap-1.5 grid-cols-3 xl:grid-cols-3">
+                      {othersPreview?.map((image, i) => {
+                        while (i < othersPreview.length) {
+                          return (
+                            <img
+                              className=" h-32 object-cover"
+                              key={i}
+                              src={image}
+                            />
+                          );
+                        }
+                      })}
+                    </div>
+                  )}
+                </label>
+              </div>
             </div>
           </div>
         </div>
@@ -617,101 +623,115 @@ function EditeProduct() {
         <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
           Product Variants
         </label>
-        <div className="flex grid grid-cols-3 col-span-4 sm:col-span-4">
-          {variants?.map(
-            (variant, index) =>
-              variants[index] && (
-                <div
-                  key={index}
-                  className="block mr-4 mb-4 flex-row w-40 h-[215px] border border-green-400 shadow-md bg-green-200 rounded"
+        <div className="col-span-8 sm:col-span-4">
+          <div className="grid justify-items-center grid-cols-1 min-[400px]:grid-cols-2 min-[860px]:grid-cols-3">
+            {variants?.map(
+              (variant, index) =>
+                variants[index] && (
+                  <div
+                    key={index}
+                    className="block mr-4 mb-4 flex-row w-40 h-[215px] border border-green-400 shadow-md bg-green-200 rounded"
+                  >
+                    <div className="flex mt-4 items-center h-fit px-1.5">
+                      <span className="mr-1">quantity:</span>
+                      <input
+                        disabled={index < variants.length}
+                        value={variant.stock}
+                        defaultValue={variant.stock}
+                        onChange={(e) => {
+                          setStock(e.target.value);
+                        }}
+                        type="number"
+                        className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
+                      ></input>
+                    </div>
+
+                    <div className="flex mt-4 items-center h-fit px-1.5">
+                      <span className="mr-1">size:</span>
+                      <select
+                        disabled={index < variants.length}
+                        onChange={(e) =>
+                          setSize(e.target.options[e.target.selectedIndex].text)
+                        }
+                        className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+                      >
+                        <option
+                          selected={variant.size == "48cm"}
+                          value={"48cm"}
+                        >
+                          48cm
+                        </option>
+                        <option
+                          selected={variant.size == "54cm"}
+                          value={"54cm"}
+                        >
+                          54cm
+                        </option>
+                        ;
+                        <option
+                          selected={variant.size == "58cm"}
+                          value={"58cm"}
+                        >
+                          58cm
+                        </option>
+                        ;
+                        <option
+                          selected={variant.size == "62cm"}
+                          value={"62cm"}
+                        >
+                          62cm
+                        </option>
+                      </select>
+                    </div>
+                    <div className="flex mt-4 justify-center items-center h-fit px-1.5">
+                      <button
+                        onClick={() => {
+                          delete variants[index];
+                          const newArr = [...variants];
+                          setVariants(newArr);
+                        }}
+                        className="px-10 py-2 rounded bg-blue-500"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                )
+            )}
+
+            <div className="block mr-4 mb-4 flex-row w-40 h-[215px] border-[3px] border-dashed border-gray-200 rounded">
+              <div className="flex mt-4 items-center h-fit px-1.5">
+                <span className="mr-1">quantity:</span>
+                <input
+                  defaultValue={stock}
+                  onChange={(e) => setStock(e.target.value)}
+                  type="number"
+                  className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
+                ></input>
+              </div>
+
+              <div className="flex mt-4 items-center h-fit px-1.5">
+                <span className="mr-1">size:</span>
+                <select
+                  onChange={(e) =>
+                    setSize(e.target.options[e.target.selectedIndex].text)
+                  }
+                  className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
                 >
-                  <div className="flex mt-4 items-center h-fit px-1.5">
-                    <span className="mr-1">quantity:</span>
-                    <input
-                      disabled={index < variants.length}
-                      value={variant.stock}
-                      defaultValue={variant.stock}
-                      onChange={(e) => {
-                        setStock(e.target.value);
-                      }}
-                      type="number"
-                      className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
-                    ></input>
-                  </div>
-
-                  <div className="flex mt-4 items-center h-fit px-1.5">
-                    <span className="mr-1">size:</span>
-                    <select
-                      disabled={index < variants.length}
-                      onChange={(e) =>
-                        setSize(e.target.options[e.target.selectedIndex].text)
-                      }
-                      className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-                    >
-                      <option selected={variant.size == "48cm"} value={"48cm"}>
-                        48cm
-                      </option>
-                      <option selected={variant.size == "54cm"} value={"54cm"}>
-                        54cm
-                      </option>
-                      ;
-                      <option selected={variant.size == "58cm"} value={"58cm"}>
-                        58cm
-                      </option>
-                      ;
-                      <option selected={variant.size == "62cm"} value={"62cm"}>
-                        62cm
-                      </option>
-                    </select>
-                  </div>
-                  <div className="flex mt-4 justify-center items-center h-fit px-1.5">
-                    <button
-                      onClick={() => {
-                        delete variants[index];
-                        const newArr = [...variants];
-                        setVariants(newArr);
-                      }}
-                      className="px-10 py-2 rounded bg-blue-500"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              )
-          )}
-
-          <div className="block mr-4 mb-4 flex-row w-40 h-[215px] border-[3px] border-dashed border-gray-200 rounded">
-            <div className="flex mt-4 items-center h-fit px-1.5">
-              <span className="mr-1">quantity:</span>
-              <input
-                defaultValue={stock}
-                onChange={(e) => setStock(e.target.value)}
-                type="number"
-                className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
-              ></input>
-            </div>
-
-            <div className="flex mt-4 items-center h-fit px-1.5">
-              <span className="mr-1">size:</span>
-              <select
-                onChange={(e) =>
-                  setSize(e.target.options[e.target.selectedIndex].text)
-                }
-                className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-              >
-                <option value={"48cm"}>48cm</option>
-                <option value={"54cm"}>54cm</option>;
-                <option value={"58cm"}>58cm</option>;
-                <option value={"62cm"}>62cm</option>
-              </select>
-            </div>
-            <div className="flex mt-4 justify-center items-center h-fit px-1.5">
-              <button
-                onClick={(e) => handleAdd(e)}
-                className="px-10 py-2 rounded bg-blue-500"
-              >
-                Add
-              </button>
+                  <option value={"48cm"}>48cm</option>
+                  <option value={"54cm"}>54cm</option>;
+                  <option value={"58cm"}>58cm</option>;
+                  <option value={"62cm"}>62cm</option>
+                </select>
+              </div>
+              <div className="flex mt-4 justify-center items-center h-fit px-1.5">
+                <button
+                  onClick={(e) => handleAdd(e)}
+                  className="px-10 py-2 rounded bg-blue-500"
+                >
+                  Add
+                </button>
+              </div>
             </div>
           </div>
         </div>

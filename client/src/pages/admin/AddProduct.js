@@ -673,112 +673,114 @@ function AddProduct() {
           <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
             Product Variants
           </label>
-          <div className="flex grid grid-cols-3 col-span-4 sm:col-span-4">
-            {variants?.map(
-              (variant, index) =>
-                variants[index] && (
-                  <div
-                    key={index}
-                    className="block mr-4 mb-4 flex-row w-40 h-[215px] border border-green-400 shadow-md bg-green-200 rounded"
-                  >
-                    <div className="flex mt-4 items-center h-fit px-1.5">
-                      <span className="mr-1">stock:</span>
-                      <input
-                        disabled={index < variants.length}
-                        value={variant.stock}
-                        defaultValue={variant.stock}
-                        type="number"
-                        className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
-                      ></input>
-                    </div>
+          <div className="col-span-8 sm:col-span-4">
+            <div className="grid justify-items-center grid-cols-1 min-[400px]:grid-cols-2 min-[860px]:grid-cols-3">
+              {variants?.map(
+                (variant, index) =>
+                  variants[index] && (
+                    <div
+                      key={index}
+                      className="block mr-4 mb-4 flex-row w-40 h-[215px] border border-green-400 shadow-md bg-green-200 rounded"
+                    >
+                      <div className="flex mt-4 items-center h-fit px-1.5">
+                        <span className="mr-1">stock:</span>
+                        <input
+                          disabled={index < variants.length}
+                          value={variant.stock}
+                          defaultValue={variant.stock}
+                          type="number"
+                          className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
+                        ></input>
+                      </div>
 
-                    <div className="flex mt-4 items-center h-fit px-1.5">
-                      <span className="mr-1">size:</span>
-                      <select
-                        disabled={index < variants.length}
-                        className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-                      >
-                        <option
-                          selected={variant.size == "48cm"}
-                          value={"48cm"}
+                      <div className="flex mt-4 items-center h-fit px-1.5">
+                        <span className="mr-1">size:</span>
+                        <select
+                          disabled={index < variants.length}
+                          className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
                         >
-                          48cm
-                        </option>
-                        <option
-                          selected={variant.size == "54cm"}
-                          value={"54cm"}
+                          <option
+                            selected={variant.size == "48cm"}
+                            value={"48cm"}
+                          >
+                            48cm
+                          </option>
+                          <option
+                            selected={variant.size == "54cm"}
+                            value={"54cm"}
+                          >
+                            54cm
+                          </option>
+                          ;
+                          <option
+                            selected={variant.size == "58cm"}
+                            value={"58cm"}
+                          >
+                            58cm
+                          </option>
+                          ;
+                          <option
+                            selected={variant.size == "62cm"}
+                            value={"62cm"}
+                          >
+                            62cm
+                          </option>
+                        </select>
+                      </div>
+                      <div className="flex mt-4 justify-center items-center h-fit px-1.5">
+                        <button
+                          onClick={() => {
+                            delete variants[index];
+                            const newArr = [...variants];
+                            setVariants(newArr);
+                          }}
+                          className="px-10 py-2 rounded bg-blue-500"
                         >
-                          54cm
-                        </option>
-                        ;
-                        <option
-                          selected={variant.size == "58cm"}
-                          value={"58cm"}
-                        >
-                          58cm
-                        </option>
-                        ;
-                        <option
-                          selected={variant.size == "62cm"}
-                          value={"62cm"}
-                        >
-                          62cm
-                        </option>
-                      </select>
+                          Delete
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex mt-4 justify-center items-center h-fit px-1.5">
-                      <button
-                        onClick={() => {
-                          delete variants[index];
-                          const newArr = [...variants];
-                          setVariants(newArr);
-                        }}
-                        className="px-10 py-2 rounded bg-blue-500"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                )
-            )}
-
-            <div className="block mr-4 mb-4 flex-row w-40 h-[215px] border-[3px] border-dashed border-gray-200 rounded">
-              <div className="flex mt-4 items-center h-fit px-1.5">
-                <span className="mr-1">stock:</span>
-                <input
-                  defaultValue={stock}
-                  //onChange={(e) => setStock(e.target.value)}
-                  {...register("stock", { required: true })}
-                  type="number"
-                  className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
-                ></input>
-              </div>
-
-              <div className="flex mt-4 items-center h-fit px-1.5">
-                <span className="mr-1">size:</span>
-                <select
-                  {...register("size", { required: true })}
-                  className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
-                >
-                  <option value={"48cm"}>48cm</option>
-                  <option value={"54cm"}>54cm</option>;
-                  <option value={"58cm"}>58cm</option>;
-                  <option value={"62cm"}>62cm</option>
-                </select>
-              </div>
-              <div className="flex mt-4 justify-center items-center h-fit px-1.5">
-                <button
-                  onClick={(e) => handleAdd(e)}
-                  className="px-10 py-2 rounded bg-blue-500"
-                >
-                  Add
-                </button>
-              </div>
-              {errors.variant && (
-                <p className="text-red-600">
-                  you must choose at least one variant
-                </p>
+                  )
               )}
+
+              <div className="block mr-4 mb-4 flex-row w-40 h-[215px] border-[3px] border-dashed border-gray-200 rounded">
+                <div className="flex mt-4 items-center h-fit px-1.5">
+                  <span className="mr-1">stock:</span>
+                  <input
+                    defaultValue={stock}
+                    //onChange={(e) => setStock(e.target.value)}
+                    {...register("stock", { required: true })}
+                    type="number"
+                    className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md  border-gray-200 dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 bg-gray-50 mr-2 rounded  w-full h-8 p-2 text-sm border border-gray-300 focus:bg-white  focus:outline-none"
+                  ></input>
+                </div>
+
+                <div className="flex mt-4 items-center h-fit px-1.5">
+                  <span className="mr-1">size:</span>
+                  <select
+                    {...register("size", { required: true })}
+                    className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-8 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+                  >
+                    <option value={"48cm"}>48cm</option>
+                    <option value={"54cm"}>54cm</option>;
+                    <option value={"58cm"}>58cm</option>;
+                    <option value={"62cm"}>62cm</option>
+                  </select>
+                </div>
+                <div className="flex mt-4 justify-center items-center h-fit px-1.5">
+                  <button
+                    onClick={(e) => handleAdd(e)}
+                    className="px-10 py-2 rounded bg-blue-500"
+                  >
+                    Add
+                  </button>
+                </div>
+                {errors.variant && (
+                  <p className="text-red-600">
+                    you must choose at least one variant
+                  </p>
+                )}
+              </div>
             </div>
           </div>
         </div>
