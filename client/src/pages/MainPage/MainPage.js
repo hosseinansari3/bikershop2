@@ -34,6 +34,9 @@ import { SECTIONS } from "../../constants/panelConstants";
 import { Axios } from "axios";
 import axios from "axios";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+import Skeleton from "@mui/material/Skeleton";
+import CartSkeleton from "../../components/Body/CartSkeleton";
+
 function MainPage() {
   const [hotDiscount, setHotDiscount] = useState(null);
   const [bestSeller, setBestSeller] = useState(null);
@@ -211,7 +214,28 @@ function MainPage() {
                 HOT DISCOUNT
               </h3>
             </div>
+            {hotDiscount == null && (
+              <div className="flex justify-center ">
+                <CartSkeleton
+                  className="ml-4 shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
+                  imgClass="w-[180px] h-[110px] md:h-[100px] object-contain"
+                />
+                <CartSkeleton
+                  className="ml-4 shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
+                  imgClass="w-[180px] h-[110px] md:h-[100px] object-contain"
+                />
+                <CartSkeleton
+                  className="ml-4 shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
+                  imgClass="w-[180px] h-[110px] md:h-[100px] object-contain"
+                />
+                <CartSkeleton
+                  className="ml-4 shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
+                  imgClass="w-[180px] h-[110px] md:h-[100px] object-contain"
+                />
+              </div>
+            )}
           </SwiperSlide>
+
           {hotDiscount?.map((product) => {
             return (
               <SwiperSlide>
@@ -253,6 +277,22 @@ function MainPage() {
                 HOT DISCOUNT
               </h3>
             </div>
+            {hotDiscount == null && (
+              <>
+                <CartSkeleton
+                  className="mr-1.5 shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
+                  imgClass="w-[180px] h-[110px] md:h-[100px] object-contain"
+                />
+                <CartSkeleton
+                  className="mr-1.5 shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
+                  imgClass="w-[180px] h-[110px] md:h-[100px] object-contain"
+                />
+                <CartSkeleton
+                  className="mr-1.5 shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
+                  imgClass="w-[180px] h-[110px] md:h-[100px] object-contain"
+                />
+              </>
+            )}
             {hotDiscount?.map((product) => {
               return (
                 <div className="flex justify-center">
@@ -291,6 +331,7 @@ function MainPage() {
         <h3 className="title w-fit border-b-4 border-red-500 rounded-lg mx-auto mb-5">
           BEST SELLER!
         </h3>
+
         <Carousel
           spv={2}
           space={6}
@@ -313,22 +354,47 @@ function MainPage() {
             },
           }}
         >
-          {bestSeller?.map((product) => {
-            return (
+          {bestSeller == null ? (
+            <div className="flex justify-center">
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <ProductCart
-                    className="shadow-lg hover:shadow-none w-[230px]"
-                    image={product.images[0]}
-                    price={product.price}
-                    title={product.title}
-                    slug={product.slug}
-                    rating={product?.rating}
-                  />
+                  <CartSkeleton className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] " />
                 </div>
               </SwiperSlide>
-            );
-          })}
+              <SwiperSlide>
+                <div className="flex justify-center">
+                  <CartSkeleton className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] " />
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="flex justify-center">
+                  <CartSkeleton className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] " />
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="flex justify-center">
+                  <CartSkeleton className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] " />
+                </div>
+              </SwiperSlide>
+            </div>
+          ) : (
+            bestSeller?.map((product) => {
+              return (
+                <SwiperSlide>
+                  <div className="flex justify-center">
+                    <ProductCart
+                      className="shadow-lg hover:shadow-none w-[230px]"
+                      image={product.images[0]}
+                      price={product.price}
+                      title={product.title}
+                      slug={product.slug}
+                      rating={product?.rating}
+                    />
+                  </div>
+                </SwiperSlide>
+              );
+            })
+          )}
         </Carousel>
       </div>
       <div className="rightt">
@@ -357,22 +423,47 @@ function MainPage() {
             },
           }}
         >
-          {newArrival?.map((product) => {
-            return (
+          {newArrival == null ? (
+            <div className="flex justify-center">
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <ProductCart
-                    className="shadow-lg hover:shadow-none w-[230px]"
-                    image={product.images[0]}
-                    price={product.price}
-                    title={product.title}
-                    slug={product.slug}
-                    rating={product?.rating}
-                  />
+                  <CartSkeleton className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] " />
                 </div>
               </SwiperSlide>
-            );
-          })}
+              <SwiperSlide>
+                <div className="flex justify-center">
+                  <CartSkeleton className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] " />
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="flex justify-center">
+                  <CartSkeleton className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] " />
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="flex justify-center">
+                  <CartSkeleton className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] " />
+                </div>
+              </SwiperSlide>
+            </div>
+          ) : (
+            newArrival?.map((product) => {
+              return (
+                <SwiperSlide>
+                  <div className="flex justify-center">
+                    <ProductCart
+                      className="shadow-lg hover:shadow-none w-[230px]"
+                      image={product.images[0]}
+                      price={product.price}
+                      title={product.title}
+                      slug={product.slug}
+                      rating={product?.rating}
+                    />
+                  </div>
+                </SwiperSlide>
+              );
+            })
+          )}
         </Carousel>
       </div>
       <div>

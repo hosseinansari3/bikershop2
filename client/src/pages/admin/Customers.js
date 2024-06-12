@@ -316,7 +316,7 @@ function Customers() {
           )}
         </div>
         <Pagination
-          totalUsers={totalUsers}
+          totalItems={totalUsers}
           pageSize={pageSize}
           page={page}
           pages={pages}

@@ -136,9 +136,6 @@ function Orders() {
           <table className="w-full whitespace-no-wrap">
             <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
               <tr>
-                <td className="px-4 py-3">
-                  <input id="selectAll" name="selectAll" type="checkbox" />
-                </td>
                 <td className="px-4 py-3">ID</td>
                 <td className="px-4 py-3">ITEMS</td>
                 <td className="px-4 py-3">DATE</td>
@@ -166,9 +163,6 @@ function Orders() {
                     onClick={(e) => handleOpenModal(e, order)}
                     className="hover:bg-gray-50 transition-all cursor-pointer"
                   >
-                    <td className="px-4 py-3">
-                      <input id="selectAll" name="selectAll" type="checkbox" />
-                    </td>
                     <td className="px-4 py-3">
                       <span className="font-semibold uppercase text-xs">
                         {order?.orderId}
@@ -215,7 +209,9 @@ function Orders() {
                             (order.status == ORDER_STATUS.Shipped &&
                               "bg-blue-200 text-blue-700") ||
                             (order.status == ORDER_STATUS.Delivered &&
-                              "bg-green-800 text-green-200")
+                              "bg-green-800 text-green-200") ||
+                            (order.status == ORDER_STATUS.Cancelled &&
+                              "bg-red-600 text-red-200")
                           } bg-green-100 dark:bg-green-800 dark:text-green-100`}
                         >
                           {order.status}

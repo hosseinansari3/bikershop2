@@ -119,7 +119,16 @@ function Reviews() {
 
                       <td className="px-4 py-3 text-xs">
                         <span className="font-serif">
-                          <span className="inline-flex px-2 text-xs font-medium leading-5 rounded-full text-green-500 bg-green-100 dark:bg-green-800 dark:text-green-100">
+                          <span
+                            className={` ${
+                              (item?.status == "Rejected" &&
+                                "bg-red-600 text-red-200") ||
+                              (item?.status == "Approved" &&
+                                "bg-green-800 text-green-200") ||
+                              (item?.status == "Pending" &&
+                                "bg-yellow-200 text-yellow-700")
+                            } inline-flex px-2 text-xs font-medium leading-5 rounded-full text-green-500 bg-green-100 dark:bg-green-800 dark:text-green-100`}
+                          >
                             {item?.status}
                           </span>
                         </span>
