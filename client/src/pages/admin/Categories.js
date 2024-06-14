@@ -8,6 +8,7 @@ import {
   fetchCategories,
   onCategorySearch,
 } from "../../actions/categories";
+import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 
 function Categories() {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ function Categories() {
   const [isCheck, setIsCheck] = useState([]);
 
   const allCategories = useSelector((state) => state.categories);
-  const { categories } = allCategories;
+  const { categories, loading } = allCategories;
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -264,30 +265,36 @@ function Categories() {
           </form>
         </div>
       </div>
-      <div className="w-full grid grid-cols-2 sm:grid-cols-3  md:grid-cols-5">
-        {categories?.map((cat) => {
-          return (
-            <div
-              className={`${
-                isCheck.includes(cat._id)
-                  ? "border-red-500 bg-[#ff8787] border-2 text-white"
-                  : "border-black bg-white"
-              } flex hover:border-red-500 transition-all cursor-pointer relative mb-1 mr-1 border-[1.5px] rounded-2xl`}
-            >
-              <div className="w-full h-full flex justify-center py-3">
-                <span className="text-sm font-semibold">{cat.name}</span>
-              </div>
-
+      {loading ? (
+        <div className="flex justify-center">
+          <LoadingIndicator />
+        </div>
+      ) : (
+        <div className="w-full grid grid-cols-2 sm:grid-cols-3  md:grid-cols-5">
+          {categories?.map((cat) => {
+            return (
               <div
-                id={cat._id}
-                key={cat._id}
-                onClick={(e) => handleClickb(e)}
-                className="absolute cursor-pointer w-full h-full"
-              ></div>
-            </div>
-          );
-        })}
-      </div>
+                className={`${
+                  isCheck.includes(cat._id)
+                    ? "border-red-500 bg-[#ff8787] border-2 text-white"
+                    : "border-black bg-white"
+                } flex hover:border-red-500 transition-all cursor-pointer relative mb-1 mr-1 border-[1.5px] rounded-2xl`}
+              >
+                <div className="w-full h-full flex justify-center py-3">
+                  <span className="text-sm font-semibold">{cat.name}</span>
+                </div>
+
+                <div
+                  id={cat._id}
+                  key={cat._id}
+                  onClick={(e) => handleClickb(e)}
+                  className="absolute cursor-pointer w-full h-full"
+                ></div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

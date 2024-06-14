@@ -277,6 +277,7 @@ const getCurrentUser = async (req, res) => {
   try {
     const user = req.user.id;
     const userDoc = await User.findById(user, { password: 0 });
+    console.log("USE", user);
 
     res.status(200).json({
       user: userDoc,

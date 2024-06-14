@@ -31,9 +31,6 @@ function Header() {
   const dispatch = useDispatch();
 
   const userInfo = useSelector((state) => state?.account);
-  useEffect(() => {
-    dispatch(fetchProfile());
-  }, []);
 
   const cart = useSelector((state) => state.cart);
   const suggestions = useSelector((state) => state.products.searchSuggestions);

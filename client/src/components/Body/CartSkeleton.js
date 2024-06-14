@@ -7,7 +7,7 @@ import Skeleton from "@mui/material/Skeleton";
 function CartSkeleton(props) {
   return (
     <div className={`product-cart ${props.className}`}>
-      <div>
+      <div className="flex justify-center">
         <Skeleton variant="rounded">
           <div
             className={

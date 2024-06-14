@@ -83,7 +83,6 @@ function Customers() {
       {console.log("is search:" + isSearch)}
       {console.log("search value:" + searchValue)}
 
-      {loading && <LoadingIndicator />}
       <div className="min-w-0 rounded-lg ring-1 ring-black ring-opacity-4 overflow-hidden bg-white dark:bg-gray-800 min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
         <div className="p-4">
           <form className="py-3 md:pb-0 grid gap-4 lg:gap-6 xl:gap-6  xl:flex">
@@ -212,117 +211,124 @@ function Customers() {
           </form>
         </div>
       </div>
-      <div className="w-full overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg ring-1 ring-black ring-opacity-5 mb-8 rounded-b-lg">
-        <div className="w-full overflow-x-auto">
-          <table className="w-full whitespace-no-wrap">
-            <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
-              <tr>
-                <td className="px-4 py-3">
-                  <input
-                    onChange={handleSelectAll}
-                    checked={isCheckAll}
-                    id="selectAll"
-                    name="selectAll"
-                    type="checkbox"
-                  />
-                </td>
-                <td className="px-4 py-3">NAME</td>
-                <td className="px-4 py-3">PICTURE</td>
-                <td className="px-4 py-3">EMAIL</td>
-                <td className="px-4 py-3">ROLE</td>
-                <td className="px-4 py-3">ACTIONS</td>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400">
-              {users?.map((user) => {
-                return (
-                  <tr>
-                    <td className="px-4 py-3">
-                      <input
-                        checked={isCheck.includes(user._id)}
-                        id={user._id}
-                        key={user._id}
-                        onChange={handleClick}
-                        name={user.title}
-                        type="checkbox"
-                      />
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center">
-                        <div>
-                          <h2 className="text-sm font-medium">
-                            {user.firstName}
-                          </h2>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="relative rounded-full inline-block w-8 h-8 hidden p-1 mr-2 md:block bg-gray-50 shadow-none">
-                        <img
-                          src={user.avatar}
-                          className="object-cover w-full h-full rounded-full"
-                        />
-                        <div className="absolute inset-0 rounded-full shadow-inner"></div>
-                      </div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className="text-sm font-semibold">
-                        {user.email}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className="bg-blue-500 text-white rounded-full px-2 text-xs font-medium leading-5">
-                        {user?.role?.substring(5)}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex text-right">
-                        <button
-                          onClick={(e) => handleDelet(e, [user._id])}
-                          className="p-2 cursor-pointer text-gray-400 hover:text-red-600 focus:outline-none"
-                        >
-                          <p>
-                            <svg
-                              stroke="currentColor"
-                              fill="none"
-                              stroke-width="2"
-                              viewBox="0 0 24 24"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              height="1em"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <polyline points="3 6 5 6 21 6"></polyline>
-                              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                              <line x1="10" y1="11" x2="10" y2="17"></line>
-                              <line x1="14" y1="11" x2="14" y2="17"></line>
-                            </svg>
-                          </p>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          {users?.length === 0 && (
-            <div className="flex justify-center">
-              <p className="text-3xl p-10 text-gray-400	">
-                THERE IS NOTHING HERE YET!
-              </p>
-            </div>
-          )}
+      {loading ? (
+        <div className="flex justify-center">
+          <LoadingIndicator />
         </div>
-        <Pagination
-          totalItems={totalUsers}
-          pageSize={pageSize}
-          page={page}
-          pages={pages}
-          changePage={setPage}
-        />
-      </div>
+      ) : (
+        <div className="w-full overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg ring-1 ring-black ring-opacity-5 mb-8 rounded-b-lg">
+          <div className="w-full overflow-x-auto">
+            <table className="w-full whitespace-no-wrap">
+              <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
+                <tr>
+                  <td className="px-4 py-3">
+                    <input
+                      onChange={handleSelectAll}
+                      checked={isCheckAll}
+                      id="selectAll"
+                      name="selectAll"
+                      type="checkbox"
+                    />
+                  </td>
+                  <td className="px-4 py-3">NAME</td>
+                  <td className="px-4 py-3">PICTURE</td>
+                  <td className="px-4 py-3">EMAIL</td>
+                  <td className="px-4 py-3">ROLE</td>
+                  <td className="px-4 py-3">ACTIONS</td>
+                </tr>
+              </thead>
+
+              <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400">
+                {users?.map((user) => {
+                  return (
+                    <tr>
+                      <td className="px-4 py-3">
+                        <input
+                          checked={isCheck.includes(user._id)}
+                          id={user._id}
+                          key={user._id}
+                          onChange={handleClick}
+                          name={user.title}
+                          type="checkbox"
+                        />
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center">
+                          <div>
+                            <h2 className="text-sm font-medium">
+                              {user.firstName}
+                            </h2>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="relative rounded-full inline-block w-8 h-8 hidden p-1 mr-2 md:block bg-gray-50 shadow-none">
+                          <img
+                            src={user.avatar}
+                            className="object-cover w-full h-full rounded-full"
+                          />
+                          <div className="absolute inset-0 rounded-full shadow-inner"></div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="text-sm font-semibold">
+                          {user.email}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="bg-blue-500 text-white rounded-full px-2 text-xs font-medium leading-5">
+                          {user?.role?.substring(5)}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex text-right">
+                          <button
+                            onClick={(e) => handleDelet(e, [user._id])}
+                            className="p-2 cursor-pointer text-gray-400 hover:text-red-600 focus:outline-none"
+                          >
+                            <p>
+                              <svg
+                                stroke="currentColor"
+                                fill="none"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                height="1em"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                              </svg>
+                            </p>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            {users?.length === 0 && (
+              <div className="flex justify-center">
+                <p className="text-3xl p-10 text-gray-400	">
+                  THERE IS NOTHING HERE YET!
+                </p>
+              </div>
+            )}
+          </div>
+          <Pagination
+            totalItems={totalUsers}
+            pageSize={pageSize}
+            page={page}
+            pages={pages}
+            changePage={setPage}
+          />
+        </div>
+      )}
     </div>
   );
 }

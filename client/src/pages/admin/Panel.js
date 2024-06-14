@@ -16,19 +16,17 @@ import { fetchProfile } from "../../actions/account";
 import defaultAvatar from "../../assets/images/Circle-icons-profile.svg.png";
 import OrderModal from "./OrderModal";
 import { listAllOrders, listMyOrders } from "../../actions/orders";
+import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 function Panel() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(fetchProfile());
-  }, []);
-
-  const user = useSelector((state) => state.account.user);
+  //const user = useSelector((state) => state.account.user);
   const account = useSelector((state) => state.account);
 
+  const { user, loading } = account;
+
   console.log("usermozer", user);
-  console.log("acmozer", account);
 
   const [sideOpen, setSideOpen] = useState(false);
   const [profiletIsOpen, setProfileIsOpen] = useState(false);
@@ -42,11 +40,11 @@ function Panel() {
     }
   }, []);
 
-  useEffect(() => {
-    if (!account?.user) {
-      navigate("/login");
-    }
-  }, [account]);
+  //  useEffect(() => {
+  //  if (!user) {
+  //  navigate("/login");
+  //}
+  //}, [user]);
 
   const toggleProfile = () => {
     setProfileIsOpen(!profiletIsOpen);

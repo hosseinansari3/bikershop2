@@ -24,6 +24,7 @@ import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator
 import Pagination from "../../components/Pagination/Pagination";
 import axios from "axios";
 import { fetchCategories } from "../../actions/categories";
+import CartSkeleton from "../../components/Body/CartSkeleton";
 
 function BikesPage() {
   const dispatch = useDispatch();
@@ -448,19 +449,30 @@ function BikesPage() {
           </div>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 BikesPage">
-          {products.map((p) => {
-            return (
-              <ProductCart
-                key={p._id}
-                price={p.price}
-                title={p.title}
-                image={p.images[0]}
-                slug={p.slug}
-                rating={p.rating}
-              />
-            );
-          })}
+          {loading ? (
+            <>
+              <CartSkeleton imgClass="w-[160px] md:w-[260px] h-[110px] md:h-[190px]" />
+              <CartSkeleton imgClass="w-[160px] md:w-[260px] h-[110px] md:h-[190px]" />
+
+              <CartSkeleton imgClass="w-[160px] md:w-[260px] h-[110px] md:h-[190px]" />
+              <CartSkeleton imgClass="w-[160px] md:w-[260px] h-[110px] md:h-[190px]" />
+            </>
+          ) : (
+            products.map((p) => {
+              return (
+                <ProductCart
+                  key={p._id}
+                  price={p.price}
+                  title={p.title}
+                  image={p.images[0]}
+                  slug={p.slug}
+                  rating={p.rating}
+                />
+              );
+            })
+          )}
         </div>
+
         <Pagination
           totalItems={totalProducts}
           pageSize={pageSize}

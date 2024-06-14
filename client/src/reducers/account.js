@@ -26,6 +26,7 @@ export const accountReducer = (state = initialState, action) => {
         loading: false,
       };
     case NOT_AUTHORIZED:
+      console.log("not auth");
       return {
         loading: false,
       };

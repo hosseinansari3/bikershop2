@@ -70,7 +70,6 @@ function Orders() {
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Orders
       </h1>
-      {loading && <LoadingIndicator />}
       <div className="min-w-0 rounded-lg ring-0 ring-black ring-opacity-4 overflow-hidden bg-white dark:bg-gray-800 min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
         <div className="p-4">
           <form>
@@ -131,113 +130,120 @@ function Orders() {
           </form>
         </div>
       </div>
-      <div className="w-full overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg ring-1 ring-black ring-opacity-5 mb-8 dark:bg-gray-900">
-        <div className="w-full overflow-x-auto">
-          <table className="w-full whitespace-no-wrap">
-            <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
-              <tr>
-                <td className="px-4 py-3">ID</td>
-                <td className="px-4 py-3">ITEMS</td>
-                <td className="px-4 py-3">DATE</td>
-                {user.role === ROLES.Admin && (
-                  <td className="px-4 py-3">CUSTOMER</td>
-                )}
-                <td className="px-4 py-3">AMOUNT</td>
-                <td className="px-4 py-3">STATUS</td>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
-              {orders?.map((order, index) => {
-                let total = 0;
-                order.orderItems?.map((item) => {
-                  let itemPrice = parseFloat(item.price);
-                  let itemTotal = itemPrice * parseFloat(item.quantity);
 
-                  total = itemTotal + total;
+      {loading ? (
+        <div className="flex justify-center">
+          <LoadingIndicator />
+        </div>
+      ) : (
+        <div className="w-full overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg ring-1 ring-black ring-opacity-5 mb-8 dark:bg-gray-900">
+          <div className="w-full overflow-x-auto">
+            <table className="w-full whitespace-no-wrap">
+              <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
+                <tr>
+                  <td className="px-4 py-3">ID</td>
+                  <td className="px-4 py-3">ITEMS</td>
+                  <td className="px-4 py-3">DATE</td>
+                  {user.role === ROLES.Admin && (
+                    <td className="px-4 py-3">CUSTOMER</td>
+                  )}
+                  <td className="px-4 py-3">AMOUNT</td>
+                  <td className="px-4 py-3">STATUS</td>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
+                {orders?.map((order, index) => {
+                  let total = 0;
+                  order.orderItems?.map((item) => {
+                    let itemPrice = parseFloat(item.price);
+                    let itemTotal = itemPrice * parseFloat(item.quantity);
 
-                  return null;
-                });
+                    total = itemTotal + total;
 
-                return (
-                  <tr
-                    onClick={(e) => handleOpenModal(e, order)}
-                    className="hover:bg-gray-50 transition-all cursor-pointer"
-                  >
-                    <td className="px-4 py-3">
-                      <span className="font-semibold uppercase text-xs">
-                        {order?.orderId}
-                      </span>
-                    </td>
+                    return null;
+                  });
 
-                    <td className="px-4 py-3">
-                      <div className="w-[155px] overflow-x-auto flex">
-                        {order.orderItems.map((item) => {
-                          return (
-                            <img
-                              className="w-12 h-12 mx-0.5 border-2 border-solid object-cover rounded-sm	inline-block"
-                              src={item.image}
-                            />
-                          );
-                        })}
-                      </div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className="font-semibold uppercase text-xs">
-                        {order.createdAt.substring(0, 10)}
-                      </span>
-                    </td>
-                    {user.role === ROLES.Admin && (
+                  return (
+                    <tr
+                      onClick={(e) => handleOpenModal(e, order)}
+                      className="hover:bg-gray-50 transition-all cursor-pointer"
+                    >
                       <td className="px-4 py-3">
-                        <span className="text-sm font-semibold">
-                          {order.user?.firstName}
+                        <span className="font-semibold uppercase text-xs">
+                          {order?.orderId}
                         </span>
                       </td>
-                    )}
 
-                    <td className="px-4 py-3">
-                      {}
-                      <span className="text-sm font-semibold">${total}</span>
-                    </td>
-                    <td className="px-4 py-3 text-xs">
-                      <span className="font-serif">
-                        <span
-                          className={`inline-flex px-2 text-xs font-medium leading-5 rounded-full  ${
-                            (order.status == ORDER_STATUS.Pending &&
-                              "bg-yellow-200 text-yellow-700") ||
-                            (order.status == ORDER_STATUS.Processing &&
-                              "bg-green-200 text-green-700") ||
-                            (order.status == ORDER_STATUS.Shipped &&
-                              "bg-blue-200 text-blue-700") ||
-                            (order.status == ORDER_STATUS.Delivered &&
-                              "bg-green-800 text-green-200") ||
-                            (order.status == ORDER_STATUS.Cancelled &&
-                              "bg-red-600 text-red-200")
-                          } bg-green-100 dark:bg-green-800 dark:text-green-100`}
-                        >
-                          {order.status}
+                      <td className="px-4 py-3">
+                        <div className="w-[155px] overflow-x-auto flex">
+                          {order.orderItems.map((item) => {
+                            return (
+                              <img
+                                className="w-12 h-12 mx-0.5 border-2 border-solid object-cover rounded-sm	inline-block"
+                                src={item.image}
+                              />
+                            );
+                          })}
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="font-semibold uppercase text-xs">
+                          {order.createdAt.substring(0, 10)}
                         </span>
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          {Orders.length >= Limit && (
-            <div className="flex justify-center">
-              <button onClick={onLoadMore}>load more</button>
-            </div>
-          )}
+                      </td>
+                      {user.role === ROLES.Admin && (
+                        <td className="px-4 py-3">
+                          <span className="text-sm font-semibold">
+                            {order.user?.firstName}
+                          </span>
+                        </td>
+                      )}
 
-          {Orders?.length === 0 && (
-            <div className="flex justify-center">
-              <p className="text-3xl p-10 text-gray-400	">
-                THERE IS NOTHING HERE YET!
-              </p>
-            </div>
-          )}
+                      <td className="px-4 py-3">
+                        {}
+                        <span className="text-sm font-semibold">${total}</span>
+                      </td>
+                      <td className="px-4 py-3 text-xs">
+                        <span className="font-serif">
+                          <span
+                            className={`inline-flex px-2 text-xs font-medium leading-5 rounded-full  ${
+                              (order.status == ORDER_STATUS.Pending &&
+                                "bg-yellow-200 text-yellow-700") ||
+                              (order.status == ORDER_STATUS.Processing &&
+                                "bg-green-200 text-green-700") ||
+                              (order.status == ORDER_STATUS.Shipped &&
+                                "bg-blue-200 text-blue-700") ||
+                              (order.status == ORDER_STATUS.Delivered &&
+                                "bg-green-800 text-green-200") ||
+                              (order.status == ORDER_STATUS.Cancelled &&
+                                "bg-red-600 text-red-200")
+                            } bg-green-100 dark:bg-green-800 dark:text-green-100`}
+                          >
+                            {order.status}
+                          </span>
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            {Orders.length >= Limit && (
+              <div className="flex justify-center">
+                <button onClick={onLoadMore}>load more</button>
+              </div>
+            )}
+
+            {Orders?.length === 0 && (
+              <div className="flex justify-center">
+                <p className="text-3xl p-10 text-gray-400	">
+                  THERE IS NOTHING HERE YET!
+                </p>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -87,6 +87,8 @@ export const editeAddress = (addressId, address) => {
 export const fetchProfile = () => {
   return async (dispatch, getState) => {
     try {
+      dispatch({ type: FETCH_PROFILE_REQUEST });
+
       const userinfo = getState().usersSignin.userInfo;
 
       const config = {
@@ -101,9 +103,8 @@ export const fetchProfile = () => {
       dispatch({ type: FETCH_PROFILE, payload: response.data.user });
     } catch (error) {
       console.log(error);
-      if (error?.response?.status === 401) {
-        dispatch({ type: NOT_AUTHORIZED });
-      }
+
+      dispatch({ type: NOT_AUTHORIZED });
     }
   };
 };

@@ -358,22 +358,34 @@ function MainPage() {
             <div className="flex justify-center">
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <CartSkeleton className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] " />
+                  <CartSkeleton
+                    imgClass="w-[230px] h-[110px] md:h-[190px]"
+                    className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] "
+                  />
                 </div>
               </SwiperSlide>
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <CartSkeleton className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] " />
+                  <CartSkeleton
+                    imgClass="w-[230px] h-[110px] md:h-[190px]"
+                    className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] "
+                  />
                 </div>
               </SwiperSlide>
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <CartSkeleton className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] " />
+                  <CartSkeleton
+                    imgClass="w-[230px] h-[110px] md:h-[190px]"
+                    className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] "
+                  />
                 </div>
               </SwiperSlide>
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <CartSkeleton className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] " />
+                  <CartSkeleton
+                    imgClass="w-[230px] h-[110px] md:h-[190px]"
+                    className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] "
+                  />
                 </div>
               </SwiperSlide>
             </div>
@@ -427,22 +439,34 @@ function MainPage() {
             <div className="flex justify-center">
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <CartSkeleton className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] " />
+                  <CartSkeleton
+                    imgClass="w-[230px] h-[110px] md:h-[190px]"
+                    className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] "
+                  />
                 </div>
               </SwiperSlide>
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <CartSkeleton className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] " />
+                  <CartSkeleton
+                    imgClass="w-[230px] h-[110px] md:h-[190px]"
+                    className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] "
+                  />
                 </div>
               </SwiperSlide>
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <CartSkeleton className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] " />
+                  <CartSkeleton
+                    imgClass="w-[230px] h-[110px] md:h-[190px]"
+                    className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] "
+                  />
                 </div>
               </SwiperSlide>
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <CartSkeleton className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] " />
+                  <CartSkeleton
+                    imgClass="w-[230px] h-[110px] md:h-[190px]"
+                    className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] "
+                  />
                 </div>
               </SwiperSlide>
             </div>

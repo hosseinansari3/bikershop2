@@ -148,7 +148,6 @@ function Products() {
 
   return (
     <div className="container grid px-2 md:px-6 mx-auto">
-      {loading && <LoadingIndicator />}
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">
         Products
       </h1>
@@ -329,87 +328,117 @@ function Products() {
           </form>
         </div>
       </div>
-      <div className="w-full overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg ring-1 ring-black ring-opacity-5 mb-8 rounded-b-lg">
-        <div className="w-full overflow-x-auto">
-          <table className="w-full whitespace-no-wrap">
-            <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
-              <tr>
-                <td className="px-4 py-3">
-                  <input
-                    onChange={handleSelectAll}
-                    id="selectAll"
-                    name="selectAll"
-                    type="checkbox"
-                    checked={isCheckAll}
-                  />
-                </td>
-                <td className="px-4 py-3">PRODUCT IMAEG</td>
 
-                <td className="px-4 py-3">PRODUCT NAME</td>
-                <td className="px-4 py-3">CATEGORY</td>
-                <td className="px-4 py-3">price</td>
+      {loading ? (
+        <div className="flex justify-center">
+          <LoadingIndicator />
+        </div>
+      ) : (
+        <div className="w-full overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg ring-1 ring-black ring-opacity-5 mb-8 rounded-b-lg">
+          <div className="w-full overflow-x-auto">
+            <table className="w-full whitespace-no-wrap">
+              <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
+                <tr>
+                  <td className="px-4 py-3">
+                    <input
+                      onChange={handleSelectAll}
+                      id="selectAll"
+                      name="selectAll"
+                      type="checkbox"
+                      checked={isCheckAll}
+                    />
+                  </td>
+                  <td className="px-4 py-3">PRODUCT IMAEG</td>
 
-                <td className="px-4 py-3">STOCK</td>
-                <td className="px-4 py-3">STATUS</td>
-                <td className="px-4 py-3 text-center">ACTIONS</td>
-              </tr>
-            </thead>
+                  <td className="px-4 py-3">PRODUCT NAME</td>
+                  <td className="px-4 py-3">CATEGORY</td>
+                  <td className="px-4 py-3">price</td>
 
-            <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400">
-              {products.map((p) => {
-                return (
-                  <tr>
-                    <td className="px-4 py-3">
-                      <input
-                        checked={isCheck.includes(p._id)}
-                        id={p._id}
-                        key={p._id}
-                        onChange={handleClick}
-                        name={p.title}
-                        type="checkbox"
-                      />
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center">
-                        <img
-                          src={p?.images[0]}
-                          className="w-24 h-16 object-contain"
+                  <td className="px-4 py-3">STOCK</td>
+                  <td className="px-4 py-3">STATUS</td>
+                  <td className="px-4 py-3 text-center">ACTIONS</td>
+                </tr>
+              </thead>
+
+              <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400">
+                {products.map((p) => {
+                  return (
+                    <tr>
+                      <td className="px-4 py-3">
+                        <input
+                          checked={isCheck.includes(p._id)}
+                          id={p._id}
+                          key={p._id}
+                          onChange={handleClick}
+                          name={p.title}
+                          type="checkbox"
                         />
-                      </div>
-                    </td>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center">
+                          <img
+                            src={p?.images[0]}
+                            className="w-24 h-16 object-contain"
+                          />
+                        </div>
+                      </td>
 
-                    <td className="px-4 py-3">
-                      <div className="w-60">
-                        <h2 className="text-sm font-medium">{p.title}</h2>
-                      </div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className="text-sm">{p?.category?.name}</span>
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className="text-sm font-semibold">${p.price}</span>
-                    </td>
+                      <td className="px-4 py-3">
+                        <div className="w-60">
+                          <h2 className="text-sm font-medium">{p.title}</h2>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="text-sm">{p?.category?.name}</span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="text-sm font-semibold">
+                          ${p.price}
+                        </span>
+                      </td>
 
-                    <td className="px-4 py-3">
-                      {p?.variants?.map((variant) => {
-                        return (
-                          <div className="w-max">
-                            <span className="text-sm">{variant.size}: </span>
-                            <span className="text-sm">{variant.stock}</span>
-                          </div>
-                        );
-                      })}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className="inline-flex px-2 text-xs font-medium leading-5 rounded-full text-green-500 bg-green-100 dark:bg-green-800 dark:text-green-100">
-                        Selling
-                      </span>
-                    </td>
+                      <td className="px-4 py-3">
+                        {p?.variants?.map((variant) => {
+                          return (
+                            <div className="w-max">
+                              <span className="text-sm">{variant.size}: </span>
+                              <span className="text-sm">{variant.stock}</span>
+                            </div>
+                          );
+                        })}
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="inline-flex px-2 text-xs font-medium leading-5 rounded-full text-green-500 bg-green-100 dark:bg-green-800 dark:text-green-100">
+                          Selling
+                        </span>
+                      </td>
 
-                    <td className="px-4 py-3">
-                      <div className="flex justify-end text-right">
-                        <Link to={`../EditeProduct/${p.slug}`}>
-                          <button className="p-2 cursor-pointer text-gray-400 hover:text-green-600 focus:outline-none">
+                      <td className="px-4 py-3">
+                        <div className="flex justify-end text-right">
+                          <Link to={`../EditeProduct/${p.slug}`}>
+                            <button className="p-2 cursor-pointer text-gray-400 hover:text-green-600 focus:outline-none">
+                              <p>
+                                <svg
+                                  stroke="currentColor"
+                                  fill="none"
+                                  stroke-width="2"
+                                  viewBox="0 0 24 24"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  height="1em"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
+                              </p>
+                            </button>
+                          </Link>
+                          <button
+                            onClick={(e) => handleDelet(e, [p._id])}
+                            className="p-2 cursor-pointer text-gray-400 hover:text-red-600 focus:outline-none"
+                          >
                             <p>
                               <svg
                                 stroke="currentColor"
@@ -422,58 +451,37 @@ function Products() {
                                 width="1em"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                <line x1="14" y1="11" x2="14" y2="17"></line>
                               </svg>
                             </p>
                           </button>
-                        </Link>
-                        <button
-                          onClick={(e) => handleDelet(e, [p._id])}
-                          className="p-2 cursor-pointer text-gray-400 hover:text-red-600 focus:outline-none"
-                        >
-                          <p>
-                            <svg
-                              stroke="currentColor"
-                              fill="none"
-                              stroke-width="2"
-                              viewBox="0 0 24 24"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              height="1em"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <polyline points="3 6 5 6 21 6"></polyline>
-                              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                              <line x1="10" y1="11" x2="10" y2="17"></line>
-                              <line x1="14" y1="11" x2="14" y2="17"></line>
-                            </svg>
-                          </p>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          {products?.length === 0 && (
-            <div className="flex justify-center">
-              <p className="text-3xl p-10 text-gray-400	">
-                THERE IS NOTHING HERE YET!
-              </p>
-            </div>
-          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            {products?.length === 0 && (
+              <div className="flex justify-center">
+                <p className="text-3xl p-10 text-gray-400	">
+                  THERE IS NOTHING HERE YET!
+                </p>
+              </div>
+            )}
+          </div>
+          <Pagination
+            totalItems={totalProducts}
+            pageSize={pageSize}
+            page={page}
+            pages={pages}
+            changePage={setPage}
+          />
         </div>
-        <Pagination
-          totalItems={totalProducts}
-          pageSize={pageSize}
-          page={page}
-          pages={pages}
-          changePage={setPage}
-        />
-      </div>
+      )}
     </div>
   );
 }

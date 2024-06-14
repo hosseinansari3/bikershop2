@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import MainPage from "./pages/MainPage/MainPage";
@@ -27,11 +27,27 @@ import AddressModal from "./pages/user/AddressModal";
 import ProtectedRoute from "./components/route/ProtectedRoute";
 import OrderSuccess from "./pages/OrderSuccess";
 import OrderModal from "./pages/admin/OrderModal";
+import { fetchProfile } from "./actions/account";
+import LoadingIndicator from "./components/LoadingIndicator/LoadingIndicator";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchProfile());
+  }, []);
+
+  const account = useSelector((state) => state.account);
+
+  const { user, loading } = account;
+
   const location = useLocation();
   const addressModal = useSelector((state) => state.addressModal);
   const { isOpen } = addressModal;
+
+  useEffect(() => {
+    console.log("GOAT", loading);
+  }, [loading]);
 
   return (
     <div
