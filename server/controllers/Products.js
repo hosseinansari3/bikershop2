@@ -248,15 +248,6 @@ const getProductsByFilters = async (req, res) => {
 
       const products = await productModel.aggregate(pipeline);
 
-      if (page > pages) {
-        console.log("NOpage");
-
-        return res.status(404).json({
-          status: "fail",
-          message: "No page found",
-        });
-      }
-
       res.status(200).json({
         status: "success",
         count: products.length,
@@ -272,11 +263,6 @@ const getProductsByFilters = async (req, res) => {
         products: products,
       });
     }
-
-    //  const products = await productModel.find(query).populate({
-    //   path: "category",
-    //   match: match,
-    // });
   } catch (error) {
     console.log(error);
   }

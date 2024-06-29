@@ -40,6 +40,7 @@ export const getProductsByFilter =
       dispatch({ type: FETCH_ALL_PRODUCTS, payload: response.data });
     } catch (error) {
       console.log(error.message);
+      console.log("nashod");
     }
   };
 

@@ -6,8 +6,8 @@ import StarRating from "../StarRating";
 
 function ProductCart(props) {
   return (
-    <div className={`product-cart ${props.className}`}>
-      <Link to={props.slug ? `/product/${props.slug}` : "#"}>
+    <Link to={props.slug ? `/product/${props.slug}` : "#"}>
+      <div className={`product-cart ${props.className}`}>
         <div>
           <img
             className={
@@ -19,12 +19,13 @@ function ProductCart(props) {
             alt="ddsdfsfd"
           />
         </div>
-      </Link>
-      <p className="line-clamp-2 h-[50px]">{props.title}</p>
-      <StarRating rateValue={props.rating} readOnly={true} />
+        <p className="line-clamp-2 h-[50px]">{props.title}</p>
 
-      <div className="product-price">{props.price} $</div>
-    </div>
+        <StarRating rateValue={props.rating} readOnly={true} />
+
+        <div className="product-price">{props.price} $</div>
+      </div>
+    </Link>
   );
 }
 

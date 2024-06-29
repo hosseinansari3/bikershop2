@@ -25,6 +25,8 @@ import Pagination from "../../components/Pagination/Pagination";
 import axios from "axios";
 import { fetchCategories } from "../../actions/categories";
 import CartSkeleton from "../../components/Body/CartSkeleton";
+import SearchOffIcon from "@mui/icons-material/SearchOff";
+import { useIsMount } from "../../hooks/useIsMount";
 
 function BikesPage() {
   const dispatch = useDispatch();
@@ -37,6 +39,8 @@ function BikesPage() {
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [filters, setFilters] = useState({});
+
+  const isMount = useIsMount();
 
   const allCategories = useSelector((state) => state.categories);
   const { categories } = allCategories;
@@ -159,6 +163,7 @@ function BikesPage() {
 
   useEffect(() => {
     console.log("filters", filters);
+    setPage(1);
     dispatch(getProductsByFilter(filters, {}, 1));
   }, [filters]);
 
@@ -173,7 +178,9 @@ function BikesPage() {
   const [pages, setPages] = useState();
 
   useEffect(() => {
-    dispatch(getProducts(page));
+    // dispatch(getProducts(page));
+    dispatch(getProductsByFilter(filters, {}, page));
+
     window.scrollTo({ top: 120, left: 0, behavior: "smooth" });
   }, [dispatch, page]);
 
@@ -199,7 +206,6 @@ function BikesPage() {
 
   return (
     <div className="grid md:grid-cols-3 lg:grid-cols-4">
-      {loading && <LoadingIndicator />}
       <div
         className={`filter-products relative w-60 ${
           filterOpen ? "filter-open" : "filter-close"
@@ -397,6 +403,27 @@ function BikesPage() {
               }
               label="SCOTT"
             />
+            <FormControlLabel
+              control={
+                <Checkbox onChange={(e) => handleBrandChange(e)} value="CUBE" />
+              }
+              label="CUBE"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  onChange={(e) => handleBrandChange(e)}
+                  value="Cannondale"
+                />
+              }
+              label="Cannondale"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox onChange={(e) => handleBrandChange(e)} value="BMC" />
+              }
+              label="BMC"
+            />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -448,6 +475,14 @@ function BikesPage() {
             <span>Filter</span>
           </div>
         </div>
+        {products.length == 0 && !loading && !isMount && (
+          <div className="text-[40pt] mt-[130px]">
+            <p className="text-center">NO PRODUCT FOUND!</p>
+            <p className="text-center text-[50pt]">
+              <SearchOffIcon fontSize="inherit" />
+            </p>
+          </div>
+        )}
         <div className="grid grid-cols-2 md:grid-cols-3 BikesPage">
           {loading ? (
             <>

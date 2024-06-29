@@ -139,7 +139,7 @@ function Header() {
       id="Suggestion"
       className=" bg-white flex items-center justify-center  hover:cursor-pointer w-full p-[5px]"
     >
-      <img className=" w-24 h-16 object-contain" src={suggestion.images[0]} />
+      <img className=" w-24 h-16 object-contain" src={suggestion?.images[0]} />
       <p className="font-bold w-[600px] p-2.5 whitespace-nowrap overflow-hidden text-ellipsis">
         {suggestion?.title}
       </p>
