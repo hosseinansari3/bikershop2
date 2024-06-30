@@ -9,7 +9,7 @@ import {
   Logout,
   FavoriteBorder,
 } from "@mui/icons-material";
-
+import CloseIcon from "@mui/icons-material/Close";
 import { useSelector, useDispatch } from "react-redux";
 import Navbarr from "./Navbarr";
 import { logout } from "../../actions/users";
@@ -37,6 +37,8 @@ function Header() {
   const searchValue = useSelector((state) => state.products.searchValue);
 
   const [cartIsOpen, setCartIsOpen] = useState(false);
+  const [searchIsOpen, setSearchIsOpen] = useState(false);
+
   const [profiletIsOpen, setProfileIsOpen] = useState(false);
 
   const [userName, setuserName] = useState("");
@@ -147,7 +149,7 @@ function Header() {
   );
 
   const inputProps = {
-    className: "w-full pl-2",
+    className: "w-full pl-7",
     placeholder: "Search Products",
     value: searchValue,
     onChange: (e, { newValue }) => {
@@ -164,6 +166,36 @@ function Header() {
   return (
     <header className="header" style={{ zIndex: "30" }}>
       <CartDrawer isOpen={cartDrawerisOpen} setOpen={setCartDrawerOpen} />
+
+      <div
+        className={`${
+          searchIsOpen ? "visible opacity-100" : "invisible opacity-0"
+        } absolute bg-black flex transition-all duration-[0.2s] py-2 w-full z-10 justify-center items-center col-span-2 lg:col-span-3`}
+      >
+        <div className="SearchContainer">
+          <div className="absolute left-1">
+            <Search />
+          </div>
+          <div className="absolute right-1">
+            <button onClick={() => setSearchIsOpen(false)}>
+              <CloseIcon />
+            </button>
+          </div>
+          <Autosuggest
+            suggestions={suggestions ? suggestions : null}
+            onSuggestionsFetchRequested={ProductSuggestionsFetchRequested}
+            onSuggestionsClearRequested={ProductSuggestionsClearRequested}
+            getSuggestionValue={getSuggestionValue}
+            renderSuggestion={renderSuggestion}
+            inputProps={inputProps}
+            containerProps={containerProps}
+            onSuggestionSelected={(_, item) => {
+              window.location.replace(`/product/${item.suggestion.slug}`);
+            }}
+          />{" "}
+        </div>
+      </div>
+
       <div
         className="md:py-8 grid grid-cols-5 px-[8px] pb-[5px] shadow-md"
         style={{ backgroundColor: "black" }}
@@ -188,7 +220,7 @@ function Header() {
           </div>
         </div>
 
-        <div className="hidden sha md:flex  justify-center items-center col-span-2 lg:col-span-3">
+        <div className="hidden md:flex  justify-center items-center col-span-2 lg:col-span-3">
           <div className="SearchContainer">
             <Autosuggest
               suggestions={suggestions ? suggestions : null}
@@ -309,10 +341,15 @@ function Header() {
               </Link>
             </div>
           )}
-          <div className="AccountCircleIcon">
+          <div className="hidden md:block mx-[10px] text-white">
             <Link to="/">
               <FavoriteBorder fontSize="large" />
             </Link>
+          </div>
+          <div className=" md:hidden mx-[10px] text-white">
+            <button onClick={() => setSearchIsOpen(true)}>
+              <Search fontSize="large" />
+            </button>
           </div>
         </div>
       </div>
