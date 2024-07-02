@@ -9,6 +9,7 @@ import {
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 import { ORDER_STATUS, ROLES } from "../../constants/panelConstants";
 import { showOrderModal } from "../../actions/orderModal";
+import { useIsMount } from "../../hooks/useIsMount";
 
 function Orders() {
   const user = useSelector((state) => state.usersSignin.userInfo.user);
@@ -21,6 +22,8 @@ function Orders() {
   const dispatch = useDispatch();
 
   const [Limit, setLimit] = useState(4);
+  const [skip, setSkip] = useState(0);
+
   const [Orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState([]);
   const [status, setStatus] = useState();
@@ -36,14 +39,14 @@ function Orders() {
   useEffect(() => {
     if (user.role === ROLES.Admin) {
       dispatch(
-        listAllOrders(Limit, { status: status }, { createdAt: dateSort })
+        listAllOrders(skip, Limit, { status: status }, { createdAt: dateSort })
       );
     } else {
       dispatch(
         listMyOrders(Limit, { status: status }, { createdAt: dateSort })
       );
     }
-  }, [Limit, status, dateSort]);
+  }, [skip, status, dateSort]);
 
   useEffect(() => {
     setOrders(orders);
@@ -62,8 +65,10 @@ function Orders() {
   };
 
   const onLoadMore = () => {
-    setLimit(Limit + 4);
+    setSkip(skip + 4);
   };
+
+  const isMount = useIsMount();
 
   return (
     <div className="relative container grid px-2 md:px-6 mx-auto">
@@ -131,7 +136,7 @@ function Orders() {
         </div>
       </div>
 
-      {loading ? (
+      {loading && orders.length == 0 ? (
         <div className="flex justify-center">
           <LoadingIndicator />
         </div>
@@ -228,9 +233,11 @@ function Orders() {
                 })}
               </tbody>
             </table>
-            {Orders.length >= Limit && (
+            {Orders.length >= skip && (
               <div className="flex justify-center">
-                <button onClick={onLoadMore}>load more</button>
+                <button onClick={onLoadMore}>
+                  {loading ? <LoadingIndicator /> : <span>load more</span>}
+                </button>
               </div>
             )}
 

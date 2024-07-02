@@ -49,9 +49,12 @@ export const orderListUserReducer = (state = { orders: [] }, action) => {
         orders: action.payload,
       };
     case ORDER_ALL_LIST_SUCCESS:
+      console.log("state", state);
+      console.log("action.payload", action.payload);
+
       return {
         loading: false,
-        orders: action.payload,
+        orders: [...state.orders, ...action.payload],
       };
     case ORDER_ALL_LIST_UPDAT:
       const updated = state.orders.map((order) =>

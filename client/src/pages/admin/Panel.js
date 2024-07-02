@@ -32,13 +32,8 @@ function Panel() {
   const [profiletIsOpen, setProfileIsOpen] = useState(false);
   const [avatar, setAvatar] = useState("");
 
-  useEffect(() => {
-    if (user?.role === ROLES.Admin) {
-      dispatch(listAllOrders(0, {}));
-    } else {
-      dispatch(listMyOrders());
-    }
-  }, []);
+  const location = useLocation();
+  const { pathname } = location;
 
   //  useEffect(() => {
   //  if (!user) {
@@ -57,8 +52,6 @@ function Panel() {
     toggleProfile();
   };
 
-  const location = useLocation();
-  const { pathname } = location;
   const splitLocation = pathname.split("/");
 
   useEffect(() => {

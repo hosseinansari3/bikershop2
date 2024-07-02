@@ -11,6 +11,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import { useLocation } from "react-router";
 
 function AddressModal() {
   const user = useSelector((state) => state.account.user);
@@ -133,27 +134,30 @@ function AddressModal() {
   }, [addressId]);
 
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const handleCloseModal = () => {
     console.log("close");
     dispatch(hideAddressModal());
-    setCurrentPage("addresses");
-    setAddressToEdite({});
-    let defaultValues = {};
-    defaultValues.province = "";
-    defaultValues.city = "";
-    defaultValues.street = "";
-    defaultValues.postalCode = "";
 
-    reset({ ...defaultValues });
+    setTimeout(() => {
+      setAddressToEdite({});
+      let defaultValues = {};
+      defaultValues.province = "";
+      defaultValues.city = "";
+      defaultValues.street = "";
+      defaultValues.postalCode = "";
+      reset({ ...defaultValues });
+      setCurrentPage("addresses");
+    }, 500);
   };
 
   return (
     <div
       onClick={handleCloseModal}
       className={`${
-        isOpen ? "flex" : "hidden"
-      } absolute z-50 justify-center items-center w-full h-full bg-gray-500/50`}
+        isOpen ? "visible opacity-100" : "invisible opacity-0"
+      } absolute flex z-50 transition-all duration-[.5s] justify-center items-center w-full h-full bg-gray-500/50`}
     >
       <div
         onClick={(e) => {

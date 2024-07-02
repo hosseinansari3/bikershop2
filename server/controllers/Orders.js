@@ -206,6 +206,8 @@ const GetMyOrders = async (req, res) => {
 const GetOrders = async (req, res) => {
   let limit = req.query.limit ? parseInt(req.query.limit) : 0;
 
+  let skip = req.query.skip ? parseInt(req.query.skip) : 0;
+
   const filters = req.query.filters;
   const sort = req.query.sort;
 
@@ -221,6 +223,7 @@ const GetOrders = async (req, res) => {
       select: "firstName",
     })
     .sort(sort)
+    .skip(skip)
     .limit(limit);
   console.log("ALLOrders:" + JSON.stringify(orders));
 
