@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   listAllOrders,
@@ -66,9 +66,27 @@ function Orders() {
 
   const onLoadMore = () => {
     setSkip(skip + 4);
+    !loading &&
+      setTimeout(function () {
+        if (myDivRef.current) {
+          myDivRef.current.scrollIntoView({ behavior: "smooth" });
+          console.log("scrolled");
+        }
+      }, 1200);
   };
 
   const isMount = useIsMount();
+
+  const myDivRef = useRef();
+
+  const handleScrollToBottom = () => {
+    setTimeout(function () {
+      if (myDivRef.current) {
+        myDivRef.current.scrollIntoView(false, { behavior: "smooth" });
+        console.log("scrolled");
+      }
+    }, 100);
+  };
 
   return (
     <div className="relative container grid px-2 md:px-6 mx-auto">
@@ -234,7 +252,7 @@ function Orders() {
               </tbody>
             </table>
             {Orders.length >= skip && (
-              <div className="flex justify-center">
+              <div ref={myDivRef} className="flex justify-center">
                 <button onClick={onLoadMore}>
                   {loading ? <LoadingIndicator /> : <span>load more</span>}
                 </button>
