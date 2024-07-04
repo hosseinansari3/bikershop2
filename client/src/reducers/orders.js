@@ -1,6 +1,7 @@
 import {
   ORDER_ALL_LIST_SUCCESS,
   ORDER_ALL_LIST_UPDAT,
+  ORDER_ALL_LOAD_MORE_SUCCESS,
   ORDER_CREATE_FAILURE,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
@@ -54,8 +55,17 @@ export const orderListUserReducer = (state = { orders: [] }, action) => {
 
       return {
         loading: false,
+        orders: action.payload,
+      };
+    case ORDER_ALL_LOAD_MORE_SUCCESS:
+      //console.log("state", state);
+      //console.log("action.payload", action.payload);
+
+      return {
+        loading: false,
         orders: [...state.orders, ...action.payload],
       };
+
     case ORDER_ALL_LIST_UPDAT:
       const updated = state.orders.map((order) =>
         order._id === action.payload._id ? action.payload : order

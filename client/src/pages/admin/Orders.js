@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   listAllOrders,
   listMyOrders,
+  loadMoreOrders,
   onOrderSearch,
   updateOrder,
 } from "../../actions/orders";
@@ -23,6 +24,7 @@ function Orders() {
 
   const [Limit, setLimit] = useState(4);
   const [skip, setSkip] = useState(0);
+  const [skipCounter, setSkipCounter] = useState(0);
 
   const [Orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState([]);
@@ -37,16 +39,25 @@ function Orders() {
   };
 
   useEffect(() => {
+    setSkip(0);
     if (user.role === ROLES.Admin) {
       dispatch(
-        listAllOrders(skip, Limit, { status: status }, { createdAt: dateSort })
+        listAllOrders(0, Limit, { status: status }, { createdAt: dateSort })
       );
     } else {
       dispatch(
         listMyOrders(Limit, { status: status }, { createdAt: dateSort })
       );
     }
-  }, [skip, status, dateSort]);
+  }, [status, dateSort]);
+
+  useEffect(() => {
+    console.log("skip");
+    !isMount &&
+      dispatch(
+        loadMoreOrders(skip, Limit, { status: status }, { createdAt: dateSort })
+      );
+  }, [skipCounter]);
 
   useEffect(() => {
     setOrders(orders);
@@ -66,6 +77,8 @@ function Orders() {
 
   const onLoadMore = () => {
     setSkip(skip + 4);
+    setSkipCounter(skipCounter + 4);
+
     !loading &&
       setTimeout(function () {
         if (myDivRef.current) {
@@ -140,7 +153,9 @@ function Orders() {
               </div>
               <div>
                 <select
-                  onChange={(e) => setDateSort(e.target.value)}
+                  onChange={(e) => {
+                    setDateSort(e.target.value);
+                  }}
                   className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
                 >
                   <option selected value={1}>

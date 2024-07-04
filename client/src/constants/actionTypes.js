@@ -78,6 +78,8 @@ export const ORDER_LIST_FAILURE = "ORDER_LIST_FAILURE";
 
 export const ORDER_SEARCH_SUCCESS = "ORDER_SEARCH_SUCCESS";
 
+export const ORDER_ALL_LOAD_MORE_SUCCESS = "ORDER_ALL_LOAD_MORE_SUCCESS";
+
 /*
  *
  * Wishlist constants

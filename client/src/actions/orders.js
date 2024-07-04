@@ -10,6 +10,7 @@ import {
 import {
   ORDER_ALL_LIST_SUCCESS,
   ORDER_ALL_LIST_UPDAT,
+  ORDER_ALL_LOAD_MORE_SUCCESS,
   ORDER_CREATE_FAILURE,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
@@ -102,6 +103,27 @@ export const listAllOrders =
       const { data } = await listAllOrdersAPI(skip, limit, filters, sort);
 
       dispatch({ type: ORDER_ALL_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: ORDER_LIST_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const loadMoreOrders =
+  (skip, limit, filters, sort) => async (dispatch, getState) => {
+    try {
+      console.log("getState", getState().orderListUser);
+
+      dispatch({ type: ORDER_LIST_REQUEST });
+
+      const { data } = await listAllOrdersAPI(skip, limit, filters, sort);
+
+      dispatch({ type: ORDER_ALL_LOAD_MORE_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
         type: ORDER_LIST_FAILURE,
