@@ -103,8 +103,10 @@ export const fetchProductReviewsAPI = (slug, filters) =>
 export const fetchMyReviewsAPI = (config, limit) =>
   axios.get(`${baseUrl}/review/myReviews?limit=${limit}`, config);
 
-export const fetchAllReviewsAPI = (limit) =>
-  axios.get(`${baseUrl}/review?limit=${limit}`);
+export const fetchAllReviewsAPI = (skip, limit) =>
+  axios.get(`${baseUrl}/review`, {
+    params: { skip: skip, limit: limit },
+  });
 
 export const updateReviewAPI = (id, updated) =>
   axios.put(`${baseUrl}/review/${id}`, updated);

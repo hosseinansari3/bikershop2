@@ -1,20 +1,26 @@
 import { lime } from "@mui/material/colors";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchMyReviews,
   fetchReviews,
+  loadMoreReviews,
   updateReview,
 } from "../../actions/reviews";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 import { REVIEW_STATUS, ROLES } from "../../constants/panelConstants";
 
 import Rating from "@mui/material/Rating";
+import { useIsMount } from "../../hooks/useIsMount";
 
 function Reviews() {
   const dispatch = useDispatch();
+  const isMount = useIsMount();
+  const myDivRef = useRef();
 
   const [Limit, setLimit] = useState(4);
+  const [skip, setSkip] = useState(0);
+
   const [Reviews, setReviews] = useState([]);
   const [showActions, setShowActions] = useState([]);
 
@@ -32,11 +38,11 @@ function Reviews() {
   useEffect(() => {
     console.log("dispatch");
     if (user.role === ROLES.Admin) {
-      dispatch(fetchReviews(Limit));
+      dispatch(fetchReviews(skip, Limit));
     } else {
       dispatch(fetchMyReviews(Limit));
     }
-  }, [Limit]);
+  }, []);
 
   const AllReviews = useSelector((state) => state.review);
 
@@ -48,8 +54,20 @@ function Reviews() {
 
   const user = useSelector((state) => state.usersSignin.userInfo.user);
 
+  useEffect(() => {
+    !isMount && dispatch(loadMoreReviews(skip, Limit));
+  }, [skip]);
+
   const onLoadMore = () => {
-    setLimit(Limit + 4);
+    setSkip(skip + 4);
+
+    !loading &&
+      setTimeout(function () {
+        if (myDivRef.current) {
+          myDivRef.current.scrollIntoView({ behavior: "smooth" });
+          console.log("scrolled");
+        }
+      }, 1200);
   };
 
   return (
@@ -64,7 +82,7 @@ function Reviews() {
           My Reviews
         </h1>
       )}
-      {loading ? (
+      {loading && Reviews.length == 0 ? (
         <div className="flex justify-center">
           <LoadingIndicator />
         </div>
@@ -203,8 +221,10 @@ function Reviews() {
               </tbody>
             </table>
             {Reviews.length >= Limit && (
-              <div className="flex justify-center">
-                <button onClick={onLoadMore}>load more</button>
+              <div ref={myDivRef} className="flex justify-center">
+                <button onClick={onLoadMore}>
+                  {loading ? <LoadingIndicator /> : <span>load more</span>}
+                </button>
               </div>
             )}
             {Reviews?.length === 0 && (

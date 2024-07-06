@@ -92,15 +92,6 @@ function Orders() {
 
   const myDivRef = useRef();
 
-  const handleScrollToBottom = () => {
-    setTimeout(function () {
-      if (myDivRef.current) {
-        myDivRef.current.scrollIntoView(false, { behavior: "smooth" });
-        console.log("scrolled");
-      }
-    }, 100);
-  };
-
   return (
     <div className="relative container grid px-2 md:px-6 mx-auto">
       <h1 className="my-6 text-lg font-bold text-gray-700 dark:text-gray-300">

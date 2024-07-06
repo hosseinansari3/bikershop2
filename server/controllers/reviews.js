@@ -133,6 +133,8 @@ const fetchAllReviews = async (req, res) => {
   try {
     let limit = req.query.limit ? parseInt(req.query.limit) : 100;
 
+    let skip = req.query.skip ? parseInt(req.query.skip) : 0;
+
     const reviews = await Review.find()
       .sort("-created")
       .populate({
@@ -143,6 +145,7 @@ const fetchAllReviews = async (req, res) => {
         path: "product",
         select: "title slug images",
       })
+      .skip(skip)
       .limit(limit);
 
     const count = await Review.countDocuments();

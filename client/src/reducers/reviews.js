@@ -10,6 +10,7 @@ import {
   FETCH_PRODUCT_REVIEWS,
   FETCH_REVIEWS,
   FETCH_REVIEWS_REQUEST,
+  LOAD_MORE_REVIEWS,
   REMOVE_REVIEW,
   RESET_REVIEW,
   REVIEW_CHANGE,
@@ -48,6 +49,12 @@ const reviewReducer = (state = initialState, action) => {
         loading: false,
       };
 
+    case LOAD_MORE_REVIEWS:
+      return {
+        ...state,
+        reviews: [...state.reviews, ...action.payload],
+        loading: false,
+      };
     case UPDATE_REVIEW:
       const updated = state.reviews.map((review) =>
         review._id === action.payload._id ? action.payload : review

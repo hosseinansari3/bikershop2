@@ -112,6 +112,8 @@ export const SET_REVIEWS_LOADING = "SET_REVIEWS_LOADING";
 export const FETCH_REVIEWS = "FETCH_REVIEWS";
 export const UPDATE_REVIEW = "UPDATE_REVIEW";
 
+export const LOAD_MORE_REVIEWS = "LOAD_MORE_REVIEWS";
+
 /*
  *
  * Account constants

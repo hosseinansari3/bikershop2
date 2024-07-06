@@ -11,6 +11,7 @@ import {
   FETCH_PRODUCT_REVIEWS,
   FETCH_REVIEWS,
   FETCH_REVIEWS_REQUEST,
+  LOAD_MORE_REVIEWS,
   RESET_REVIEW,
   REVIEW_CHANGE,
   SET_REVIEWS_LOADING,
@@ -136,18 +137,38 @@ export const fetchMyReviews = (limit) => {
 };
 
 // fetch reviews api
-export const fetchReviews = (limit) => {
+export const fetchReviews = (skip, limit) => {
   return async (dispatch, getState) => {
     dispatch({ type: FETCH_REVIEWS_REQUEST });
 
     try {
       dispatch({ type: SET_REVIEWS_LOADING, payload: true });
 
-      const response = await fetchAllReviewsAPI(limit);
+      const response = await fetchAllReviewsAPI(skip, limit);
 
       const { reviews } = response.data;
 
       dispatch({ type: FETCH_REVIEWS, payload: reviews });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: SET_REVIEWS_LOADING, payload: false });
+    }
+  };
+};
+
+export const loadMoreReviews = (skip, limit) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: FETCH_REVIEWS_REQUEST });
+
+    try {
+      dispatch({ type: SET_REVIEWS_LOADING, payload: true });
+
+      const response = await fetchAllReviewsAPI(skip, limit);
+
+      const { reviews } = response.data;
+
+      dispatch({ type: LOAD_MORE_REVIEWS, payload: reviews });
     } catch (error) {
       console.log(error);
     } finally {
