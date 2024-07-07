@@ -206,7 +206,7 @@ function AddressModal() {
           </div>
         ) : currentPage == "newAddress" ? (
           <div>
-            <div className="px-6 flex-grow w-full h-full max-h-full md:pb-32">
+            <div className="px-6 flex-grow w-full h-full max-h-full">
               <div className="mb-9 items-center flex justify-between">
                 <button onClick={() => goToAddresses()}>
                   <KeyboardBackspaceIcon />

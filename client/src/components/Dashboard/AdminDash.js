@@ -10,24 +10,19 @@ import { listAllOrdersAPI } from "../../api";
 
 function AdminDash() {
   const orderList = useSelector((state) => state.orderListUser);
-  const [recentOrders, setRecentOrders] = useState([]);
-
-  const fetchRecentOrders = async () => {
-    const { data } = await listAllOrdersAPI(7, {});
-
-    setRecentOrders(data);
-  };
-
-  useEffect(() => {
-    fetchRecentOrders();
-  }, []);
 
   const { orders, loading } = orderList;
+
+  const [recentOrders, setRecentOrders] = useState([]);
+
+  const recent = orders.slice(0, 7);
+
+  console.log("recent", recent);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(listAllOrders(0, {}, { total: 1, status: 1 }));
+    dispatch(listAllOrders(0, 0, {}, { createdAt: -1 }));
   }, []);
 
   // Calculate the date 7 days ago as the starting point
@@ -525,7 +520,7 @@ function AdminDash() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-100 dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 dark:bg-gray-900">
-              {recentOrders?.map((order, index) => {
+              {recent?.map((order, index) => {
                 let total = 0;
                 order.orderItems?.map((item) => {
                   let itemPrice = parseFloat(item.price);

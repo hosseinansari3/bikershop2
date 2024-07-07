@@ -220,7 +220,7 @@ function Reviews() {
                   })}
               </tbody>
             </table>
-            {Reviews.length >= Limit && (
+            {Reviews.length >= skip && (
               <div ref={myDivRef} className="flex justify-center">
                 <button onClick={onLoadMore}>
                   {loading ? <LoadingIndicator /> : <span>load more</span>}

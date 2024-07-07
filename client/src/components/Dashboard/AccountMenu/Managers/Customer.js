@@ -12,17 +12,21 @@ import MenuIcon from "@mui/icons-material/Menu";
 function Customer(props) {
   return (
     <aside
-      className={`absolute h-full top-14 transition-all  z-30 flex-shrink-0 shadow-sm  overflow-y-auto bg-white dark:bg-gray-800 block lg:relative lg:top-0 ${
-        !props.sideOpen ? "w-0" : "w-64"
+      className={`fixed md:absolute  h-full top-14 transition-all duration-[0.5s]  z-30 flex-shrink-0 shadow-sm  overflow-y-auto bg-white dark:bg-gray-800 block lg:relative lg:top-0 ${
+        props.sideOpen ? "left-0 md:w-[220px]" : "left-[-100%] md:w-0 md:left-0"
       } `}
     >
       <div className="py-4 text-gray-500 dark:text-gray-400">
         <div>
-          <p className="text-center	text-3xl font-bold">BIKER-SHOP</p>
-          <p className="text-center	text-lg font-bold">Customer Dashboard</p>
+          <p className="w-[200px] min-w-[200px] text-center	text-3xl font-bold">
+            BIKER-SHOP
+          </p>
+          <p className="w-[200px] min-w-[200px] text-center	text-lg font-bold">
+            Customer Dashboard
+          </p>
         </div>
 
-        <ul className="mt-2">
+        <ul className="mt-2 w-[200px] min-w-[200px]">
           {props.links.map((link) => {
             return (
               <li className="relative">
