@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchMyReviews,
   fetchReviews,
+  loadMoreMyReviews,
   loadMoreReviews,
   updateReview,
 } from "../../actions/reviews";
@@ -20,6 +21,7 @@ function Reviews() {
 
   const [Limit, setLimit] = useState(4);
   const [skip, setSkip] = useState(0);
+  const [skipCounter, setSkipCounter] = useState(0);
 
   const [Reviews, setReviews] = useState([]);
   const [showActions, setShowActions] = useState([]);
@@ -55,11 +57,18 @@ function Reviews() {
   const user = useSelector((state) => state.usersSignin.userInfo.user);
 
   useEffect(() => {
-    !isMount && dispatch(loadMoreReviews(skip, Limit));
-  }, [skip]);
+    console.log("skip");
+
+    if (user.role === ROLES.Admin) {
+      !isMount && dispatch(loadMoreReviews(skip, Limit));
+    } else {
+      !isMount && dispatch(loadMoreMyReviews(skip, Limit));
+    }
+  }, [skipCounter]);
 
   const onLoadMore = () => {
     setSkip(skip + 4);
+    setSkipCounter(skipCounter + 4);
 
     !loading &&
       setTimeout(function () {
@@ -220,13 +229,15 @@ function Reviews() {
                   })}
               </tbody>
             </table>
-            {Reviews.length >= skip && (
-              <div ref={myDivRef} className="flex justify-center">
+
+            <div ref={myDivRef} className="flex justify-center my-2">
+              {loading && <LoadingIndicator />}
+              {Reviews?.length >= skipCounter + 4 && (
                 <button onClick={onLoadMore}>
-                  {loading ? <LoadingIndicator /> : <span>load more</span>}
+                  <span>load more</span>
                 </button>
-              </div>
-            )}
+              )}
+            </div>
             {Reviews?.length === 0 && (
               <div className="flex justify-center">
                 <p className="text-3xl p-10 text-gray-400	">

@@ -10,7 +10,7 @@ const {
 const { protectRoute } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
-router.get("/myReviews", protectRoute, fetchMyReviews);
+router.get("/myReviews/", protectRoute, fetchMyReviews);
 
 router.get("/:slug", getProductReviews);
 router.get("/", fetchAllReviews);

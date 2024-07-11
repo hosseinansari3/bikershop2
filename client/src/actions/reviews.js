@@ -12,6 +12,7 @@ import {
   FETCH_REVIEWS,
   FETCH_REVIEWS_REQUEST,
   LOAD_MORE_REVIEWS,
+  MY_REVIEWS_LOAD_MORE_SUCCESS,
   RESET_REVIEW,
   REVIEW_CHANGE,
   SET_REVIEWS_LOADING,
@@ -122,9 +123,10 @@ export const fetchMyReviews = (limit) => {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${userinfo.token}`,
         },
+        params: { limit: limit },
       };
 
-      const response = await fetchMyReviewsAPI(config, limit);
+      const response = await fetchMyReviewsAPI(config);
 
       dispatch({
         type: FETCH_MY_REVIEWS,
@@ -169,6 +171,36 @@ export const loadMoreReviews = (skip, limit) => {
       const { reviews } = response.data;
 
       dispatch({ type: LOAD_MORE_REVIEWS, payload: reviews });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch({ type: SET_REVIEWS_LOADING, payload: false });
+    }
+  };
+};
+
+export const loadMoreMyReviews = (skip, limit) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: FETCH_REVIEWS_REQUEST });
+
+    try {
+      dispatch({ type: SET_REVIEWS_LOADING, payload: true });
+
+      const userinfo = getState().usersSignin.userInfo;
+
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${userinfo.token}`,
+        },
+        params: { skip: skip, limit: limit },
+      };
+
+      const response = await fetchMyReviewsAPI(config);
+
+      console.log("reeeeed", response.data);
+
+      dispatch({ type: MY_REVIEWS_LOAD_MORE_SUCCESS, payload: response.data });
     } catch (error) {
       console.log(error);
     } finally {

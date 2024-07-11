@@ -8,6 +8,7 @@ import {
   updateOrderAPI,
 } from "../api";
 import {
+  MY_ORDERS_LOAD_MORE_SUCCESS,
   ORDER_ALL_LIST_SUCCESS,
   ORDER_ALL_LIST_UPDAT,
   ORDER_ALL_LOAD_MORE_SUCCESS,
@@ -65,7 +66,7 @@ export const updateOrder = (id, updated) => async (dispatch) => {
 };
 
 export const listMyOrders =
-  (limit, filters, sort) => async (dispatch, getState) => {
+  (skip, limit, filters, sort) => async (dispatch, getState) => {
     try {
       dispatch({ type: ORDER_LIST_REQUEST });
 
@@ -76,7 +77,7 @@ export const listMyOrders =
           "Content-Type": "application/json",
           Authorization: `Bearer ${userinfo.token}`,
         },
-        params: { limit: limit, filters: filters, sort: sort },
+        params: { skip: skip, limit: limit, filters: filters, sort: sort },
       };
 
       const { data } = await listUserOrdersAPI(config);
@@ -124,6 +125,35 @@ export const loadMoreOrders =
       const { data } = await listAllOrdersAPI(skip, limit, filters, sort);
 
       dispatch({ type: ORDER_ALL_LOAD_MORE_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: ORDER_LIST_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const loadMoreMyOrders =
+  (skip, limit, filters, sort) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: ORDER_LIST_REQUEST });
+
+      const userinfo = getState().usersSignin.userInfo;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userinfo.token}`,
+        },
+        params: { skip: skip, limit: limit, filters: filters, sort: sort },
+      };
+
+      const { data } = await listUserOrdersAPI(config);
+
+      dispatch({ type: MY_ORDERS_LOAD_MORE_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
         type: ORDER_LIST_FAILURE,

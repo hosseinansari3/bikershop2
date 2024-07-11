@@ -162,9 +162,13 @@ const fetchAllReviews = async (req, res) => {
 
 const fetchMyReviews = async (req, res) => {
   const user = req.user;
+  let skip = req.query.skip ? parseInt(req.query.skip) : 0;
+  console.log("skipskip", skip);
+
   userObjId = mongoose.Types.ObjectId(user.id);
 
   let limit = req.query.limit ? parseInt(req.query.limit) : 100;
+  console.log("limitlimit", limit);
 
   const reviews = await Review.find({
     user: userObjId,
@@ -174,6 +178,7 @@ const fetchMyReviews = async (req, res) => {
       select: "title ",
     })
     .sort("updatedAt")
+    .skip(skip)
     .limit(limit);
   console.log("myReviews:" + JSON.stringify(reviews));
   res.json(reviews);

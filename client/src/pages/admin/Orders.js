@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   listAllOrders,
   listMyOrders,
+  loadMoreMyOrders,
   loadMoreOrders,
   onOrderSearch,
   updateOrder,
@@ -46,17 +47,35 @@ function Orders() {
       );
     } else {
       dispatch(
-        listMyOrders(Limit, { status: status }, { createdAt: dateSort })
+        listMyOrders(0, Limit, { status: status }, { createdAt: dateSort })
       );
     }
   }, [status, dateSort]);
 
   useEffect(() => {
     console.log("skip");
-    !isMount &&
-      dispatch(
-        loadMoreOrders(skip, Limit, { status: status }, { createdAt: dateSort })
-      );
+
+    if (user.role === ROLES.Admin) {
+      !isMount &&
+        dispatch(
+          loadMoreOrders(
+            skip,
+            Limit,
+            { status: status },
+            { createdAt: dateSort }
+          )
+        );
+    } else {
+      !isMount &&
+        dispatch(
+          loadMoreMyOrders(
+            skip,
+            Limit,
+            { status: status },
+            { createdAt: dateSort }
+          )
+        );
+    }
   }, [skipCounter]);
 
   useEffect(() => {
@@ -118,7 +137,10 @@ function Orders() {
               )}
               <div>
                 <select
-                  onChange={(e) => setStatus(e.target.value)}
+                  onChange={(e) => {
+                    setSkipCounter(0);
+                    setStatus(e.target.value);
+                  }}
                   className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
                 >
                   <option value="Status" hidden>
@@ -145,6 +167,7 @@ function Orders() {
               <div>
                 <select
                   onChange={(e) => {
+                    setSkipCounter(0);
                     setDateSort(e.target.value);
                   }}
                   className="block w-full px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 leading-5 border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
@@ -257,13 +280,15 @@ function Orders() {
                 })}
               </tbody>
             </table>
-            {Orders.length >= skip && (
-              <div ref={myDivRef} className="flex justify-center">
+
+            <div ref={myDivRef} className="flex justify-center my-2">
+              {loading && <LoadingIndicator />}
+              {Orders?.length >= skipCounter + 4 && (
                 <button onClick={onLoadMore}>
-                  {loading ? <LoadingIndicator /> : <span>load more</span>}
+                  <span>load more</span>
                 </button>
-              </div>
-            )}
+              )}
+            </div>
 
             {Orders?.length === 0 && (
               <div className="flex justify-center">

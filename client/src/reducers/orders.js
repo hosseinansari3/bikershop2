@@ -1,4 +1,5 @@
 import {
+  MY_ORDERS_LOAD_MORE_SUCCESS,
   ORDER_ALL_LIST_SUCCESS,
   ORDER_ALL_LIST_UPDAT,
   ORDER_ALL_LOAD_MORE_SUCCESS,
@@ -61,6 +62,12 @@ export const orderListUserReducer = (state = { orders: [] }, action) => {
       //console.log("state", state);
       //console.log("action.payload", action.payload);
 
+      return {
+        loading: false,
+        orders: [...state.orders, ...action.payload],
+      };
+
+    case MY_ORDERS_LOAD_MORE_SUCCESS:
       return {
         loading: false,
         orders: [...state.orders, ...action.payload],

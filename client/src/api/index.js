@@ -100,8 +100,8 @@ export const fetchProductReviewsAPI = (slug, filters) =>
     params: { filters: filters },
   });
 
-export const fetchMyReviewsAPI = (config, limit) =>
-  axios.get(`${baseUrl}/review/myReviews?limit=${limit}`, config);
+export const fetchMyReviewsAPI = (config) =>
+  axios.get(`${baseUrl}/review/myReviews/`, config);
 
 export const fetchAllReviewsAPI = (skip, limit) =>
   axios.get(`${baseUrl}/review`, {

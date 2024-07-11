@@ -178,6 +178,8 @@ const GetMyOrders = async (req, res) => {
   userObjId = mongoose.Types.ObjectId(user.id);
   let limit = req.query.limit ? parseInt(req.query.limit) : 0;
 
+  let skip = req.query.skip ? parseInt(req.query.skip) : 0;
+
   const filters = req.query.filters;
   const sort = req.query.sort;
 
@@ -196,6 +198,7 @@ const GetMyOrders = async (req, res) => {
       select: "firstName",
     })
     .sort(sort)
+    .skip(skip)
     .limit(limit);
   res.json(orders);
 };
