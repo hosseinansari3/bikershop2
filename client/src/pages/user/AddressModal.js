@@ -56,9 +56,7 @@ function AddressModal() {
     currentPage == "editeAddress" ? addressToEdite?.postalCode : null
   );
 
-  const addOnSubmit = (e) => {
-    // e.preventDefault();
-
+  const addOnSubmit = () => {
     const address = {
       province: province,
       city: city,
@@ -70,7 +68,7 @@ function AddressModal() {
     handleCloseModal();
   };
 
-  const editeOnSubmit = (addressId) => {
+  const editeOnSubmit = () => {
     const newAddress = {
       province: province,
       city: city,
@@ -78,7 +76,7 @@ function AddressModal() {
       postalCode: postalCode,
     };
 
-    dispatch(editeAddress(addressId, newAddress));
+    dispatch(editeAddress(addressToEdite._id, newAddress));
     handleCloseModal();
   };
 
@@ -150,6 +148,17 @@ function AddressModal() {
       reset({ ...defaultValues });
       setCurrentPage("addresses");
     }, 500);
+  };
+
+  const handleBack = () => {
+    setAddressToEdite({});
+    let defaultValues = {};
+    defaultValues.province = "";
+    defaultValues.city = "";
+    defaultValues.street = "";
+    defaultValues.postalCode = "";
+    reset({ ...defaultValues });
+    goToAddresses();
   };
 
   return (
@@ -276,8 +285,8 @@ function AddressModal() {
                     <input
                       {...register("postalCode", { required: true })}
                       className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
-                      //placeholder="Product Title/Name"
-                      //label="Product Name"
+                      placeholder="Product Title/Name"
+                      label="Product Name"
                       name="postalCode"
                     />
                     {errors.postalCode && (
@@ -299,16 +308,14 @@ function AddressModal() {
           <div>
             <div className="px-6  flex-grow w-full h-full max-h-full">
               <div className="mb-9 items-center flex justify-between">
-                <button onClick={() => goToAddresses()}>
+                <button onClick={() => handleBack()}>
                   <KeyboardBackspaceIcon />
                 </button>
                 <button onClick={handleCloseModal}>
                   <CloseIcon />
                 </button>
               </div>
-              <form
-                onSubmit={() => handleSubmit(editeOnSubmit(addressToEdite._id))}
-              >
+              <form onSubmit={handleSubmit(editeOnSubmit)}>
                 <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <label className="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">
                     Province
@@ -319,6 +326,7 @@ function AddressModal() {
                       className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
                       placeholder="Product Title/Name"
                       label="Product Name"
+                      name="province"
                     />
                     {errors.province && (
                       <p className="text-red-600">province can't be empty</p>
@@ -336,6 +344,7 @@ function AddressModal() {
                       className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
                       placeholder="Product Title/Name"
                       label="Product Name"
+                      name="city"
                     />
                     {errors.city && (
                       <p className="text-red-600">city can't be empty</p>
@@ -353,6 +362,7 @@ function AddressModal() {
                       className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
                       placeholder="Product Title/Name"
                       label="Product Name"
+                      name="street"
                     />
                     {errors.street && (
                       <p className="text-red-600">street can't be empty</p>
@@ -370,6 +380,7 @@ function AddressModal() {
                       className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
                       placeholder="Product Title/Name"
                       label="Product Name"
+                      name="postalCode"
                     />
                     {errors.postalCode && (
                       <p className="text-red-600">postalCode can't be empty</p>
