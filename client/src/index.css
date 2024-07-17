@@ -44,3 +44,14 @@ div,
 a {
   -webkit-tap-highlight-color: transparent;
 }
+
+@media only screen and (max-width: 480px) {
+  .Toastify__toast-container {
+    width: 90vw !important;
+    padding: 0;
+    top: 20px !important;
+    right: 0em !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}

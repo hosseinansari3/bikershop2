@@ -157,3 +157,6 @@ export const HIDE_ORDER_MODAL = "HIDE_ORDER_MODAL";
 
 export const SHOW_ADDRESS_MODAL = "SHOW_ADDRESS_MODAL";
 export const HIDE_ADDRESS_MODAL = "HIDE_ADDRESS_MODAL";
+
+export const SHOW_CART = "SHOW_CART";
+export const HIDE_CART = "HIDE_CART";

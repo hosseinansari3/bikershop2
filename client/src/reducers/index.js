@@ -9,6 +9,7 @@ import reviewReducer from "./reviews";
 import { accountReducer } from "./account";
 import orderModalReducer from "./orderModal";
 import addressModalReducer from "./addressModal";
+import cartDrawerReducer from "./cartDrawer";
 export const reducers = combineReducers({
   products: productReducer,
   ProductDetails: ProductDetailsReducer,
@@ -23,4 +24,5 @@ export const reducers = combineReducers({
   categories: categoriesReducer,
   orderModal: orderModalReducer,
   addressModal: addressModalReducer,
+  cartDrawer: cartDrawerReducer,
 });

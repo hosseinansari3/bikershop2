@@ -289,8 +289,11 @@ function Product() {
                 <div className="flex items-center">
                   <StarRating rateValue={product?.rating} readOnly={true} />
 
-                  <div className="ml-3 hidden md:block">
-                    Assembling | Bulky good
+                  <div className="ml-3 ">
+                    <span className="hidden md:inline">
+                      {" "}
+                      Assembling | Bulky good{" "}
+                    </span>
                     {selectedVarient?.length > 0 &&
                       (selectedVarient[0]?.stock > 0 ? (
                         <span>

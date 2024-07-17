@@ -29,6 +29,7 @@ import OrderSuccess from "./pages/OrderSuccess";
 import OrderModal from "./pages/admin/OrderModal";
 import { fetchProfile } from "./actions/account";
 import LoadingIndicator from "./components/LoadingIndicator/LoadingIndicator";
+import CartDrawer from "./components/Cart/CartDrawer";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
   }, []);
 
   const account = useSelector((state) => state.account);
+  const cartDrawer = useSelector((state) => state.cartDrawer);
 
   const { user, loading } = account;
 
@@ -52,9 +54,13 @@ function App() {
   return (
     <div
       // style={{ minWidth: "450px" }}
-      className={` relative ${isOpen && "overflow-y-hidden h-screen"}`}
+      className={` relative ${
+        (isOpen || cartDrawer.isOpen) && "overflow-y-hidden h-screen"
+      }`}
     >
       <ToastContainer />
+      <CartDrawer />
+
       <AddressModal />
       <OrderModal />
 
@@ -98,6 +104,7 @@ function App() {
       </Routes>
 
       {!window.location.href.includes("panel") &&
+      !loading &&
       window.location.pathname !== "/user" ? (
         <Footer />
       ) : null}

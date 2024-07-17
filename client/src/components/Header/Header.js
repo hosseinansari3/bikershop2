@@ -26,6 +26,7 @@ import {
 } from "../../actions/products";
 import CartDrawer from "../Cart/CartDrawer";
 import { fetchProfile } from "../../actions/account";
+import { hideCartDrawer, showCartDrawer } from "../../actions/cartDrawer";
 
 function Header() {
   const dispatch = useDispatch();
@@ -35,6 +36,9 @@ function Header() {
   const cart = useSelector((state) => state.cart);
   const suggestions = useSelector((state) => state.products.searchSuggestions);
   const searchValue = useSelector((state) => state.products.searchValue);
+  const cartDrawer = useSelector((state) => state.cartDrawer);
+
+  console.log("cartDrawer", cartDrawer);
 
   const [cartIsOpen, setCartIsOpen] = useState(false);
   const [searchIsOpen, setSearchIsOpen] = useState(false);
@@ -141,7 +145,10 @@ function Header() {
       id="Suggestion"
       className=" bg-white flex items-center justify-center  hover:cursor-pointer w-full p-[5px]"
     >
-      <img className=" w-24 h-16 object-contain" src={suggestion?.images[0]} />
+      <img
+        className=" w-24 h-16 object-contain"
+        src={suggestion?.images?.length > 0 ? suggestion?.images[0] : null}
+      />
       <p className="font-bold w-[600px] p-2.5 whitespace-nowrap overflow-hidden text-ellipsis">
         {suggestion?.title}
       </p>
@@ -165,8 +172,6 @@ function Header() {
 
   return (
     <header className="header" style={{ zIndex: "30" }}>
-      <CartDrawer isOpen={cartDrawerisOpen} setOpen={setCartDrawerOpen} />
-
       <div
         className={`${
           searchIsOpen ? "visible opacity-100" : "invisible opacity-0"
@@ -244,7 +249,10 @@ function Header() {
           <div
             className="ShoppingCartIcon"
             onClick={() =>
-              width < breakpoint && setCartDrawerOpen(!cartDrawerisOpen)
+              width < breakpoint &&
+              (cartDrawer.isOpen
+                ? dispatch(hideCartDrawer())
+                : dispatch(showCartDrawer()))
             }
             onMouseEnter={openCart}
             onMouseLeave={closeCart}

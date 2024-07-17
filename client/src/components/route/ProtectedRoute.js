@@ -22,6 +22,8 @@ const ProtectedRoute = ({ destination }) => {
 
   const isMount = useIsMount();
   useEffect(() => {
+    console.log("ddd", !isMount);
+
     if (!isMount) {
       if (!loading) {
         if (!isLoggedIn) {
