@@ -234,7 +234,7 @@ function AddressModal() {
                     <input
                       {...register("province", { required: true })}
                       className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
-                      placeholder="Product Title/Name"
+                      placeholder="Enter province name"
                       label="Product Name"
                     />
                     {errors.province && (
@@ -251,7 +251,7 @@ function AddressModal() {
                     <input
                       {...register("city", { required: true })}
                       className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
-                      placeholder="Product Title/Name"
+                      placeholder="Enter city name"
                       label="Product Name"
                     />
                     {errors.city && (
@@ -268,7 +268,7 @@ function AddressModal() {
                     <input
                       {...register("street", { required: true })}
                       className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
-                      placeholder="Product Title/Name"
+                      placeholder="Enter street name"
                       label="Product Name"
                     />
                     {errors.street && (
@@ -285,7 +285,7 @@ function AddressModal() {
                     <input
                       {...register("postalCode", { required: true })}
                       className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
-                      placeholder="Product Title/Name"
+                      placeholder="Enter postal Code"
                       label="Product Name"
                       name="postalCode"
                     />
@@ -324,7 +324,7 @@ function AddressModal() {
                     <input
                       {...register("province", { required: true })}
                       className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
-                      placeholder="Product Title/Name"
+                      placeholder="Enter province name"
                       label="Product Name"
                       name="province"
                     />
@@ -342,7 +342,7 @@ function AddressModal() {
                     <input
                       {...register("city", { required: true })}
                       className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
-                      placeholder="Product Title/Name"
+                      placeholder="Enter city name"
                       label="Product Name"
                       name="city"
                     />
@@ -360,7 +360,7 @@ function AddressModal() {
                     <input
                       {...register("street", { required: true })}
                       className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
-                      placeholder="Product Title/Name"
+                      placeholder="Enter street name"
                       label="Product Name"
                       name="street"
                     />
@@ -378,7 +378,7 @@ function AddressModal() {
                     <input
                       {...register("postalCode", { required: true })}
                       className="block w-full px-3 py-1 text-sm focus:outline-none dark:text-gray-300 leading-5 rounded-md focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:ring focus:ring-green-300 dark:focus:border-gray-500 dark:focus:ring-gray-300 dark:bg-gray-700 border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
-                      placeholder="Product Title/Name"
+                      placeholder="Enter postal code"
                       label="Product Name"
                       name="postalCode"
                     />

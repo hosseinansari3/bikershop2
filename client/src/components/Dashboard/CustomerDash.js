@@ -17,6 +17,7 @@ import { ORDER_STATUS } from "../../constants/panelConstants";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { fetchWishlist } from "../../actions/wishlist";
+import { Link } from "react-router-dom";
 
 function CustomerDash() {
   const account = useSelector((state) => state.account);
@@ -109,9 +110,11 @@ function CustomerDash() {
               <p className="ml-2">Customer Info</p>
             </div>
             <div>
-              <p className="mr-2">
-                <EditIcon fontSize="small" /> Edit
-              </p>
+              <Link to="account-info">
+                <p className="mr-2">
+                  <EditIcon fontSize="small" /> Edit
+                </p>
+              </Link>
             </div>
           </div>
           <div className="p-2 mt-4">
@@ -208,7 +211,9 @@ function CustomerDash() {
       <div className="bg-white rounded-lg w-full mb-6">
         <div className="border-l-2 border-black flex justify-between p-3">
           <h4>YOUR LATEST ORDER</h4>
-          <span>SHOW ALL</span>
+          <Link to="orders">
+            <span>SHOW ALL</span>
+          </Link>
         </div>
         <table className="w-full whitespace-no-wrap">
           <thead className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">

@@ -262,7 +262,7 @@ function Customers() {
                         </div>
                       </td>
                       <td className="px-4 py-3">
-                        <div className="relative rounded-full inline-block w-8 h-8 hidden p-1 mr-2 md:block bg-gray-50 shadow-none">
+                        <div className="relative rounded-full inline-block w-8 h-8  p-1 mr-2 md:block bg-gray-50 shadow-none">
                           <img
                             src={user.avatar}
                             className="object-cover w-full h-full rounded-full"
