@@ -6,8 +6,11 @@ import StarRating from "../StarRating";
 
 function ProductCart(props) {
   return (
-    <Link to={props.slug ? `/product/${props.slug}` : "#"}>
-      <div className={`product-cart ${props.className}`}>
+    <Link
+      className={`product-cart ${props.className}`}
+      to={props.slug ? `/product/${props.slug}` : "#"}
+    >
+      <div>
         <div>
           <img
             className={
