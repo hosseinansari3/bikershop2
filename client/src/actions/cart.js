@@ -11,14 +11,13 @@ export const addToCard =
     const { data } = await fetchProductById(productId);
 
     try {
-      console.log("cartItems", localStorage.getItem("cartItems"));
       dispatch({
         type: ADD_TO_CARD,
         payload: {
           title: data.title,
           image: data.images[0],
           price: data.price,
-          product: data._id,
+          productId: data._id,
           quantity: qty,
           size: size,
         },
@@ -27,7 +26,6 @@ export const addToCard =
         "cartItems",
         JSON.stringify(getState().cart.cartItems)
       );
-      console.log("getState().cart", getState().cart);
       toast("PRODUCT ADDED TO CART SUCCESSFULLY!");
     } catch (error) {
       console.log(error.message);

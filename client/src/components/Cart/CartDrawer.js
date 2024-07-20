@@ -8,8 +8,21 @@ function CartDrawer() {
   const navigate = useNavigate();
   const savedCartItems = JSON.parse(localStorage.getItem("cartItems"));
   const userInfo = useSelector((state) => state.usersSignin.userInfo);
+  const [total, setTotal] = useState(0);
 
   const cartDrawer = useSelector((state) => state.cartDrawer);
+
+  useEffect(() => {
+    let total = 0.0;
+    savedCartItems?.length > 0 &&
+      savedCartItems?.map((item) => {
+        let itemPrice = parseFloat(item.price);
+        let itemTotal = itemPrice * parseFloat(item.quantity);
+        total = itemTotal + total;
+      });
+
+    setTotal(total);
+  }, [savedCartItems]);
 
   const handleChechout = (e) => {
     e.preventDefault();
@@ -56,6 +69,9 @@ function CartDrawer() {
                 );
               })}
           </ul>
+        </div>
+        <div className="flex justify-center bg-black text-white">
+          <p>TOTAL: ${total}</p>
         </div>
         <div className="flex flex-col justify-center mt-[15vh]">
           <Link

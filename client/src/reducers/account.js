@@ -1,6 +1,6 @@
 import {
   DELET_PROFILE_INFO,
-  FETCH_PROFILE,
+  FETCH_PROFILE_SUCCESS,
   FETCH_PROFILE_REQUEST,
   NOT_AUTHORIZED,
 } from "../constants/actionTypes";
@@ -12,8 +12,7 @@ const initialState = {
 
 export const accountReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_PROFILE:
-      console.log("actionpayload", action.payload);
+    case FETCH_PROFILE_SUCCESS:
       return {
         user: {
           ...action.payload,
@@ -26,7 +25,6 @@ export const accountReducer = (state = initialState, action) => {
         loading: false,
       };
     case NOT_AUTHORIZED:
-      console.log("not auth");
       return {
         loading: false,
       };

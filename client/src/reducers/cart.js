@@ -19,15 +19,15 @@ export const cartReducer = (
   switch (action.type) {
     case ADD_TO_CARD:
       const item = action.payload;
-      // product is product._id defined in cartActions.js
-      console.log("state.cartItems", state.cartItems);
-      const existItem = state.cartItems.find((x) => x.product === item.product);
+      const existItem = state.cartItems.find(
+        (x) => x.productId === item.productId
+      );
       // if the item added to cart already exists, replace existed with item
       if (existItem) {
         return {
           ...state,
           cartItems: state.cartItems.map((x) =>
-            x.product === existItem.product ? item : x
+            x.productId === existItem.productId ? item : x
           ),
         };
       }

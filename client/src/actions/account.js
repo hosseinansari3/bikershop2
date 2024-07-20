@@ -6,7 +6,7 @@ import {
   updateProfileAPI,
 } from "../api";
 import {
-  FETCH_PROFILE,
+  FETCH_PROFILE_SUCCESS,
   FETCH_PROFILE_REQUEST,
   NOT_AUTHORIZED,
 } from "../constants/actionTypes";
@@ -28,7 +28,7 @@ export const updateProfile = (formData) => {
       const response = await updateProfileAPI(formData, config);
       toast("Profile Info Updated!");
 
-      dispatch({ type: FETCH_PROFILE, payload: response.data.user });
+      dispatch({ type: FETCH_PROFILE_SUCCESS, payload: response.data.user });
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +52,7 @@ export const updateUserAddress = (address) => {
       const response = await updateAddressAPI(address, config);
       toast("Adress added");
 
-      dispatch({ type: FETCH_PROFILE, payload: response.data.user });
+      dispatch({ type: FETCH_PROFILE_SUCCESS, payload: response.data.user });
     } catch (error) {
       console.log(error);
     }
@@ -75,9 +75,8 @@ export const editeAddress = (addressId, address) => {
 
       const response = await editeAddressAPI(addressId, address, config);
       toast("Adress edited");
-      console.log("response", response);
 
-      dispatch({ type: FETCH_PROFILE, payload: response.data.user });
+      dispatch({ type: FETCH_PROFILE_SUCCESS, payload: response.data.user });
     } catch (error) {
       console.log(error);
     }
@@ -100,7 +99,7 @@ export const fetchProfile = () => {
 
       const response = await getCurrentUserAPI(config);
 
-      dispatch({ type: FETCH_PROFILE, payload: response.data.user });
+      dispatch({ type: FETCH_PROFILE_SUCCESS, payload: response.data.user });
     } catch (error) {
       console.log(error);
 

@@ -844,14 +844,14 @@ function Product() {
                       return (
                         <Paper className="comment-wrapper" elevation={3}>
                           <div className="review-content">
-                            <div className="grid grid-cols-4">
-                              <div className="review-img me-3 d-none d-lg-block">
+                            <div className="flex">
+                              <div className="max-[334px]:hidden review-img me-3 d-none d-lg-block">
                                 <img
                                   className="w-20 h-20 object-cover"
                                   src={review.user ? review.user.avatar : null}
                                 />
                               </div>
-                              <div className="col-span-3">
+                              <div className="">
                                 <div className="reviewr-name">
                                   {review.user ? review.user.firstName : null}
                                 </div>
@@ -876,7 +876,7 @@ function Product() {
                       </span>
                     )}
                   </div>
-                  <div>
+                  <div className="mt-5">
                     <div class="ratting-form-wrapper ps-5">
                       <h3 className="text-xl font-bold">Add a Review</h3>
                       <div class="ratting-form">
