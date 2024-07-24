@@ -7,17 +7,16 @@
 import {
   ADD_REVIEW,
   FETCH_MY_REVIEWS,
-  FETCH_PRODUCT_REVIEWS,
-  FETCH_REVIEWS,
+  FETCH_PRODUCT_REVIEWS_SUCCESS,
+  FETCH_ALL_REVIEWS_SUCCESS,
   FETCH_REVIEWS_REQUEST,
   LOAD_MORE_REVIEWS,
   MY_REVIEWS_LOAD_MORE_SUCCESS,
   REMOVE_REVIEW,
   RESET_REVIEW,
   REVIEW_CHANGE,
-  SET_REVIEWS_LOADING,
   SET_REVIEW_FORM_ERRORS,
-  UPDATE_REVIEW,
+  UPDATE_REVIEW_SUCCESS,
 } from "../constants/actionTypes";
 
 const initialState = {
@@ -43,7 +42,7 @@ const reviewReducer = (state = initialState, action) => {
         loading: true,
       };
 
-    case FETCH_REVIEWS:
+    case FETCH_ALL_REVIEWS_SUCCESS:
       return {
         ...state,
         reviews: action.payload,
@@ -65,13 +64,13 @@ const reviewReducer = (state = initialState, action) => {
         loading: false,
       };
 
-    case UPDATE_REVIEW:
+    case UPDATE_REVIEW_SUCCESS:
       const updated = state.reviews.map((review) =>
         review._id === action.payload._id ? action.payload : review
       );
       return { loading: false, reviews: updated };
 
-    case FETCH_PRODUCT_REVIEWS:
+    case FETCH_PRODUCT_REVIEWS_SUCCESS:
       return {
         ...state,
         productReviews: action.payload.reviews,

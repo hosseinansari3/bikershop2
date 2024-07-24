@@ -2,14 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Button, Grid } from "@mui/material";
-import axios from "axios";
-import "./addProduct.css";
-import {
-  createProduct,
-  deleteProduct,
-  getProducts,
-  getProductsByFilter,
-} from "../../actions/products";
+import "./AddProduct.css";
+import { createProduct, deleteProduct } from "../../actions/products";
 import { useDispatch, useSelector } from "react-redux";
 
 import { toast } from "react-toastify";

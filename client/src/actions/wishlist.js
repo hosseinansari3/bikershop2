@@ -59,7 +59,6 @@ export const deleteWishlist = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_WISHLIST_REQUEST });
     const { data } = await deleteWishlistAPI(id);
-    console.log("deleted: " + JSON.stringify(data));
 
     dispatch({
       type: DELETE_WISHLIST_SUCCESS,

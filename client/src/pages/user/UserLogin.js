@@ -11,7 +11,6 @@ import { Slide, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
-import { fetchProfile } from "../../actions/account";
 
 function LoginPage(props) {
   const [email, setEmail] = useState("");

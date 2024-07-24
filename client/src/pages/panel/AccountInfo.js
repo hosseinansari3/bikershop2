@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfile, updateProfile } from "../../actions/account";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";

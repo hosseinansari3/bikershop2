@@ -30,7 +30,6 @@ export const getUsers = (page) => async (dispatch) => {
 
   try {
     const response = await api.fetchUsers(page);
-    console.log("data" + JSON.stringify(response.data));
     dispatch({ type: FETCH_ALL_USERS, payload: response.data });
   } catch (error) {
     console.log(error.message);
@@ -182,8 +181,6 @@ export const onUsersSearch = (value, page) => {
           type: USER_SEARCH_SUCCESS,
           payload: response.data,
         });
-
-        console.log("users: " + response.data.users);
       } else if (inputValue === "") {
         dispatch(getUsers());
       }

@@ -1,7 +1,6 @@
 const Mongoose = require("mongoose");
 const { Schema } = Mongoose;
 
-// Category Schema
 const addressSchema = new Schema(
   {
     street: { type: String },

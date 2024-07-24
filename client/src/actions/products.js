@@ -1,6 +1,6 @@
 import {
-  FETCH_ALL_PRODUCTS,
-  CREATE,
+  FETCH_ALL_PRODUCTS_SUCCESS,
+  CREATE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_FAIL,
   DELETE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_REQUEST,
@@ -12,7 +12,7 @@ import {
   PRODUCT_SUGGESTIONS_FETCH_REQUEST,
   PRODUCT_SEARCH_CHANGE,
   PRODUCT_SEARCH_SUCCESS,
-  UPDATE,
+  UPDATE_PRODUCT_SUCCESS,
 } from "../constants/actionTypes";
 import * as api from "../api/index";
 import { toast } from "react-toastify";
@@ -22,7 +22,7 @@ export const getProducts = (page) => async (dispatch) => {
     dispatch({ type: FETCH_ALL_PRODUCTS_REQUEST });
     const response = await api.fetchProducts(page);
 
-    dispatch({ type: FETCH_ALL_PRODUCTS, payload: response.data });
+    dispatch({ type: FETCH_ALL_PRODUCTS_SUCCESS, payload: response.data });
   } catch (error) {
     console.log(error.message);
   }
@@ -32,15 +32,12 @@ export const getProductsByFilter =
   (filters, orders, page) => async (dispatch) => {
     try {
       dispatch({ type: FETCH_ALL_PRODUCTS_REQUEST });
-      console.log("action started");
 
       const response = await api.fetchProductsByFilters(filters, orders, page);
-      console.log("res", response.data);
 
-      dispatch({ type: FETCH_ALL_PRODUCTS, payload: response.data });
+      dispatch({ type: FETCH_ALL_PRODUCTS_SUCCESS, payload: response.data });
     } catch (error) {
       console.log(error.message);
-      console.log("nashod");
     }
   };
 
@@ -63,14 +60,9 @@ export const getProductById = (slug) => async (dispatch, getState) => {
 
 export const createProduct = (product) => async (dispatch) => {
   try {
-    const rules = {
-      email: "required|email",
-      password: "required|min:6",
-    };
-
     const { data } = await api.createProduct(product);
 
-    dispatch({ type: CREATE, payload: data });
+    dispatch({ type: CREATE_PRODUCT_SUCCESS, payload: data });
     toast("product created");
   } catch (error) {
     console.log(error.message);
@@ -80,8 +72,7 @@ export const createProduct = (product) => async (dispatch) => {
 export const updateProduct = (id, formData) => async (dispatch) => {
   try {
     const { data } = await api.updateProduct(id, formData);
-    console.log("update action");
-    dispatch({ type: UPDATE, payload: data });
+    dispatch({ type: UPDATE_PRODUCT_SUCCESS, payload: data });
     toast("product updated");
   } catch (error) {
     console.log(error.message);
@@ -92,7 +83,6 @@ export const deleteProduct = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_PRODUCT_REQUEST });
     const { data } = await api.deleteProductAPI(id);
-    console.log("deleted: " + JSON.stringify(data));
 
     dispatch({
       type: DELETE_PRODUCT_SUCCESS,
@@ -110,8 +100,6 @@ export const onProductSearch = (value, page) => {
     try {
       if (inputValue) {
         const response = await api.searchProductAPI(inputValue, page);
-
-        console.log("response.data", response.data);
 
         dispatch({
           type: PRODUCT_SEARCH_SUCCESS,

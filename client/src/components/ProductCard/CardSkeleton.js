@@ -1,10 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "./ProductCart.css";
-import StarRating from "../StarRating";
+import "./ProductCard.css";
 import Skeleton from "@mui/material/Skeleton";
 
-function CartSkeleton(props) {
+function CardSkeleton(props) {
   return (
     <div className={`product-cart ${props.className}`}>
       <div className="flex justify-center">
@@ -30,4 +28,4 @@ function CartSkeleton(props) {
   );
 }
 
-export default CartSkeleton;
+export default CardSkeleton;

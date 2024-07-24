@@ -1,5 +1,3 @@
-const { Express } = require("express");
-const mongoose = require("mongoose");
 const productModel = require("../models/productModel");
 const categoryModel = require("../models/categoryModel");
 

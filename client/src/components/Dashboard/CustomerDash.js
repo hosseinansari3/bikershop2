@@ -1,9 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { SwiperSlide } from "swiper/react";
-import ProductCart from "../Body/ProductCart";
-import Carousel from "../Carousel/Carousel";
-import img from "../../assets/images/mondraker-01022382-20126475-DUSK-R_300x300@2x.jpg";
-import CartList from "../CartList/CartList";
+
 import EditIcon from "@mui/icons-material/Edit";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,10 +8,9 @@ import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 import { showAddressModal } from "../../actions/addressModal";
-import { listAllOrdersAPI, listUserOrdersAPI } from "../../api";
+import { listUserOrdersAPI } from "../../api";
 import { ORDER_STATUS } from "../../constants/panelConstants";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { fetchWishlist } from "../../actions/wishlist";
 import { Link } from "react-router-dom";
 

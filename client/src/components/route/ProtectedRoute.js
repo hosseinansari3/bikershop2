@@ -1,10 +1,9 @@
 // PrivateRoute.js
 
 import React, { useEffect } from "react";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
-import { fetchProfile } from "../../actions/account";
 import { useIsMount } from "../../hooks/useIsMount";
 
 const ProtectedRoute = ({ destination }) => {
@@ -24,16 +23,14 @@ const ProtectedRoute = ({ destination }) => {
   useEffect(() => {
     console.log("ddd", !isMount);
 
-    if (!isMount) {
-      if (!loading) {
-        if (!isLoggedIn) {
-          navigate("/login", {
-            state: destination ? { destination: destination } : null,
-          });
-        }
+    if (!loading) {
+      if (!isLoggedIn) {
+        navigate("/login", {
+          state: destination ? { destination: destination } : null,
+        });
       }
     }
-  }, [isLoggedIn, isMount, loading]);
+  }, [isLoggedIn, loading]);
 
   useEffect(() => {
     console.log("isMount", isMount);

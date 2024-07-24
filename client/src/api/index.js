@@ -5,6 +5,8 @@ const baseUrl = "http://192.168.1.102:5000";
 export const signIn = (email, password) =>
   axios.post(`${baseUrl}/users/signin`, { email, password });
 
+//USERS
+
 export const registerUser = (
   firstName,
   lastName,
@@ -23,14 +25,18 @@ export const registerUser = (
 export const fetchUsers = (page) => axios.get(`${baseUrl}/users?page=${page}`);
 export const getCurrentUserAPI = (config) =>
   axios.get(`${baseUrl}/users/me`, config);
+export const deleteUser = (id) => axios.delete(`${baseUrl}/users/${id}`);
 
+export const searchUserAPI = (inputValue, page) =>
+  axios.get(`${baseUrl}/users/list/search/${inputValue}?page=${page}`);
+
+//PRODUCTS
 export const fetchProducts = (page) =>
   axios.get(`${baseUrl}/products?page=${page}`);
 export const fetchProductById = (slug) =>
   axios.get(`${baseUrl}/products/${slug}`);
 export const fetchProductBySection = (section) =>
   axios.get(`${baseUrl}/products/sections/${section}`);
-
 export const fetchProductsByFilters = (filters, orders, page) =>
   axios.get(`${baseUrl}/products/getByFilters/`, {
     params: {
@@ -64,11 +70,7 @@ export const searchProductAPI = (inputValue, page) =>
 export const searchOrderAPI = (inputValue) =>
   axios.get(`${baseUrl}/orders/list/search/${inputValue}`);
 
-export const deleteUser = (id) => axios.delete(`${baseUrl}/users/${id}`);
-
-export const searchUserAPI = (inputValue, page) =>
-  axios.get(`${baseUrl}/users/list/search/${inputValue}?page=${page}`);
-
+//ORDERS
 export const createOrderAPI = (order, config) =>
   axios.post(`${baseUrl}/orders`, order, config);
 
@@ -83,6 +85,7 @@ export const listAllOrdersAPI = (skip, limit, filters, sort) =>
     params: { skip: skip, limit: limit, filters: filters, sort: sort },
   });
 
+//WISHLIST
 export const updateWishlistAPI = (item, config) =>
   axios.post(`${baseUrl}/wishlist`, item, config);
 
@@ -92,6 +95,7 @@ export const fetchWishlistAPI = (config) =>
 export const deleteWishlistAPI = (id) =>
   axios.delete(`${baseUrl}/wishlist/${id}`);
 
+//REVIEW
 export const addReviewAPI = (santizedReview, config) =>
   axios.post(`${baseUrl}/review/add`, santizedReview, config);
 
@@ -111,6 +115,7 @@ export const fetchAllReviewsAPI = (skip, limit) =>
 export const updateReviewAPI = (id, updated) =>
   axios.put(`${baseUrl}/review/${id}`, updated);
 
+//PROFILE
 export const updateProfileAPI = (profile, config) =>
   axios.put(`${baseUrl}/users`, profile, config);
 
@@ -124,6 +129,7 @@ export const editeAddressAPI = (addressId, newAddress, config) =>
     config
   );
 
+//CATEGORY
 export const createCategoryAPI = (category) =>
   axios.post(`${baseUrl}/categories/add`, category);
 

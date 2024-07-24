@@ -6,7 +6,6 @@ import {
   loadMoreMyOrders,
   loadMoreOrders,
   onOrderSearch,
-  updateOrder,
 } from "../../actions/orders";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 import { ORDER_STATUS, ROLES } from "../../constants/panelConstants";

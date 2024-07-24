@@ -2,7 +2,6 @@ const Review = require("../models/reviewModel");
 const Product = require("../models/productModel");
 var mongoose = require("mongoose");
 
-// Function to update the product rating
 async function updateProductRating(productId) {
   // Calculate the average rating
   const averageResult = await Review.aggregate([
@@ -128,7 +127,6 @@ const updateReview = async (req, res) => {
   }
 };
 
-// fetch all reviews api
 const fetchAllReviews = async (req, res) => {
   try {
     let limit = req.query.limit ? parseInt(req.query.limit) : 100;

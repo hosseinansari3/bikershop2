@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProfile, updateUserAddress } from "../actions/account";
 import { useForm } from "react-hook-form";
 import { createOrder } from "../actions/orders";
-import AddressModal from "./user/AddressModal";
 import { showAddressModal } from "../actions/addressModal";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
@@ -13,8 +12,7 @@ function Checkout() {
     register,
     handleSubmit,
     watch,
-    setError,
-    clearErrors,
+
     formState: { errors },
   } = useForm();
 

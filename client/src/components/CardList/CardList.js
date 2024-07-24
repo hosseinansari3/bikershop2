@@ -1,7 +1,7 @@
 import React from "react";
-import ProductCart from "../Body/ProductCart";
+import ProductCard from "../ProductCard/ProductCard";
 
-import "./CartList.css";
+import "./CardList.css";
 import Carousel from "../Carousel/Carousel";
 import { SwiperSlide } from "swiper/react";
 import img from "../../assets/images/teammachine-slr-01-three-turquoise-black-1285874.jpg";
@@ -12,7 +12,7 @@ import img4 from "../../assets/images/roadmachine-01-four-coral-red-black-128546
 import { Link } from "react-router-dom";
 import StarRating from "../StarRating";
 
-function CartList(props) {
+function CardList(props) {
   if (props.carousel) {
     return (
       <Carousel
@@ -134,18 +134,18 @@ function CartList(props) {
   }
   return (
     <>
-      <ProductCart
+      <ProductCard
         image={img}
         price=" €39.99"
         title=" Endura Hummvee Cycling Trousers II"
       />
-      <ProductCart image={img1} price="€33.95" title="Radon Skeen Trail 9.0" />
-      <ProductCart
+      <ProductCard image={img1} price="€33.95" title="Radon Skeen Trail 9.0" />
+      <ProductCard
         image={img}
         price="€373.72"
         title="Cube Stereo Hybrid 140 HPC Actionteam"
       />
-      <ProductCart
+      <ProductCard
         image={img}
         price="€883.95"
         title="  Endura Strike Waterproof Long Finger Cycling Gloves"
@@ -154,4 +154,4 @@ function CartList(props) {
   );
 }
 
-export default CartList;
+export default CardList;

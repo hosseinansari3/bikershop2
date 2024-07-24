@@ -4,9 +4,8 @@ import { Button, Grid } from "@mui/material";
 import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
 
-import "./addProduct.css";
+import "./AddProduct.css";
 import {
-  createProduct,
   deleteProduct,
   getProductById,
   getProducts,

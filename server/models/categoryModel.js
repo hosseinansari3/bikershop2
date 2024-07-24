@@ -1,7 +1,6 @@
 const Mongoose = require("mongoose");
 const { Schema } = Mongoose;
 
-// Category Schema
 const categorySchema = new Schema(
   {
     name: {

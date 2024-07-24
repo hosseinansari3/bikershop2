@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import MenuItems from "./MenuItems";
 
 const DropDown = ({ submenus, dropdown, depthLevel, isBurgur }) => {

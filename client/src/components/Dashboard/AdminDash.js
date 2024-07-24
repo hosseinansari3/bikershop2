@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { listAllOrders } from "../../actions/orders";
 import { ORDER_STATUS } from "../../constants/panelConstants";
-import { listAllOrdersAPI } from "../../api";
 
 function AdminDash() {
   const orderList = useSelector((state) => state.orderListUser);

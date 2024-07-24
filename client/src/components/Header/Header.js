@@ -24,8 +24,7 @@ import {
   onProductSuggestionsClearRequested,
   onProductSuggestionsFetchRequested,
 } from "../../actions/products";
-import CartDrawer from "../Cart/CartDrawer";
-import { fetchProfile } from "../../actions/account";
+
 import { hideCartDrawer, showCartDrawer } from "../../actions/cartDrawer";
 
 function Header() {

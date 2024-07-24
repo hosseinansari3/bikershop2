@@ -1,41 +1,19 @@
 import React, { useEffect, useState, useRef } from "react";
 
-import CartList from "../../components/CartList/CartList";
-
 import "./MainPage.css";
 import Carousel from "../../components/Carousel/Carousel";
-import ProductCart from "../../components/Body/ProductCart";
+import ProductCard from "../../components/ProductCard/ProductCard";
 
 import img1 from "../../assets/images/Cross-Bike.jpg";
 import img2 from "../../assets/images/City-Bike.jpg";
 import img3 from "../../assets/images/Mountain-bike.jpg";
 import img4 from "../../assets/images/Road-bike.jpg";
-import img from "../../assets/images/mondraker-01022382-20126475-DUSK-R_300x300@2x.jpg";
 
-import bike1 from "../../assets/images/MTF_Se29ENDC_93622-50-il.jpg";
-import bike2 from "../../assets/images/MTF_Kn39HEICD_KONA-HEI-HEI-CR-DL-GLOSS-METALLIC-GREY-AND-CHARCOAL-00-il.jpg";
-import bike3 from "../../assets/images/MTF_3l.jpg";
-import bike4 from "../../assets/images/MTF_4.jpg";
-import bike5 from "../../assets/images/MTH5.jpg";
-
-import part1 from "../../assets/images/part1.jpg";
-import part2 from "../../assets/images/part2.jpg";
-import part3 from "../../assets/images/part3.jpg";
-import part4 from "../../assets/images/part4.jpg";
-import {
-  ShoppingCart,
-  CardGiftcardOutlined,
-  DirectionsBikeOutlined,
-  StorefrontOutlined,
-} from "@mui/icons-material";
 import { SwiperSlide } from "swiper/react";
 import { fetchProductBySection } from "../../api";
 import { SECTIONS } from "../../constants/panelConstants";
-import { Axios } from "axios";
-import axios from "axios";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
-import Skeleton from "@mui/material/Skeleton";
-import CartSkeleton from "../../components/Body/CartSkeleton";
+import CardSkeleton from "../../components/ProductCard/CardSkeleton";
 
 function MainPage() {
   const [hotDiscount, setHotDiscount] = useState(null);
@@ -216,19 +194,19 @@ function MainPage() {
             </div>
             {hotDiscount == null && (
               <div className="flex justify-center ">
-                <CartSkeleton
+                <CardSkeleton
                   className="ml-4 shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
                   imgClass="w-[180px] h-[110px] md:h-[100px] object-contain"
                 />
-                <CartSkeleton
+                <CardSkeleton
                   className="ml-4 shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
                   imgClass="w-[180px] h-[110px] md:h-[100px] object-contain"
                 />
-                <CartSkeleton
+                <CardSkeleton
                   className="ml-4 shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
                   imgClass="w-[180px] h-[110px] md:h-[100px] object-contain"
                 />
-                <CartSkeleton
+                <CardSkeleton
                   className="ml-4 shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
                   imgClass="w-[180px] h-[110px] md:h-[100px] object-contain"
                 />
@@ -240,7 +218,7 @@ function MainPage() {
             return (
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <ProductCart
+                  <ProductCard
                     className="shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
                     imgClass="w-full h-[110px] md:h-[100px] object-contain"
                     image={product.images[0]}
@@ -279,15 +257,15 @@ function MainPage() {
             </div>
             {hotDiscount == null && (
               <>
-                <CartSkeleton
+                <CardSkeleton
                   className="mr-1.5 shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
                   imgClass="w-[180px] h-[110px] md:h-[100px] object-contain"
                 />
-                <CartSkeleton
+                <CardSkeleton
                   className="mr-1.5 shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
                   imgClass="w-[180px] h-[110px] md:h-[100px] object-contain"
                 />
-                <CartSkeleton
+                <CardSkeleton
                   className="mr-1.5 shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
                   imgClass="w-[180px] h-[110px] md:h-[100px] object-contain"
                 />
@@ -296,7 +274,7 @@ function MainPage() {
             {hotDiscount?.map((product) => {
               return (
                 <div className="flex justify-center">
-                  <ProductCart
+                  <ProductCard
                     className="mr-1.5 shadow-lg hover:shadow-none w-[200px] min-w-[200px] max-w-[200px] "
                     imgClass="w-full h-[110px] md:h-[100px] object-contain"
                     image={product.images[0]}
@@ -358,7 +336,7 @@ function MainPage() {
             <div className="flex justify-center">
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <CartSkeleton
+                  <CardSkeleton
                     imgClass="w-[230px] h-[110px] md:h-[190px]"
                     className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] "
                   />
@@ -366,7 +344,7 @@ function MainPage() {
               </SwiperSlide>
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <CartSkeleton
+                  <CardSkeleton
                     imgClass="w-[230px] h-[110px] md:h-[190px]"
                     className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] "
                   />
@@ -374,7 +352,7 @@ function MainPage() {
               </SwiperSlide>
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <CartSkeleton
+                  <CardSkeleton
                     imgClass="w-[230px] h-[110px] md:h-[190px]"
                     className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] "
                   />
@@ -382,7 +360,7 @@ function MainPage() {
               </SwiperSlide>
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <CartSkeleton
+                  <CardSkeleton
                     imgClass="w-[230px] h-[110px] md:h-[190px]"
                     className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] "
                   />
@@ -394,7 +372,7 @@ function MainPage() {
               return (
                 <SwiperSlide>
                   <div className="flex justify-center">
-                    <ProductCart
+                    <ProductCard
                       className="shadow-lg hover:shadow-none w-[230px]"
                       image={product.images[0]}
                       price={product.price}
@@ -439,7 +417,7 @@ function MainPage() {
             <div className="flex justify-center">
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <CartSkeleton
+                  <CardSkeleton
                     imgClass="w-[230px] h-[110px] md:h-[190px]"
                     className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] "
                   />
@@ -447,7 +425,7 @@ function MainPage() {
               </SwiperSlide>
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <CartSkeleton
+                  <CardSkeleton
                     imgClass="w-[230px] h-[110px] md:h-[190px]"
                     className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] "
                   />
@@ -455,7 +433,7 @@ function MainPage() {
               </SwiperSlide>
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <CartSkeleton
+                  <CardSkeleton
                     imgClass="w-[230px] h-[110px] md:h-[190px]"
                     className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] "
                   />
@@ -463,7 +441,7 @@ function MainPage() {
               </SwiperSlide>
               <SwiperSlide>
                 <div className="flex justify-center">
-                  <CartSkeleton
+                  <CardSkeleton
                     imgClass="w-[230px] h-[110px] md:h-[190px]"
                     className="mx-7 shadow-lg hover:shadow-none w-[230px] min-w-[230px] max-w-[200px] "
                   />
@@ -475,7 +453,7 @@ function MainPage() {
               return (
                 <SwiperSlide>
                   <div className="flex justify-center">
-                    <ProductCart
+                    <ProductCard
                       className="shadow-lg hover:shadow-none w-[230px]"
                       image={product.images[0]}
                       price={product.price}

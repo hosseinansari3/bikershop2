@@ -3,10 +3,6 @@ const productModel = require("../models/productModel");
 
 const mongoose = require("mongoose");
 
-// @desc Create new order
-// @route POST /api/orders
-// @access Private
-
 const addorderitems = async (req, res) => {
   if (req.body.orderItems && req.body.orderItems.length === 0) {
     res.status(400);
@@ -96,9 +92,6 @@ const updateOrder = async (req, res) => {
   }
 };
 
-// @desc get order by id
-// @route GET /api/orders/:id
-// @access Private
 const getOrderById = async (req, res) => {
   const order = await Order.findById(req.params.id).populate(
     "user",
@@ -111,9 +104,6 @@ const getOrderById = async (req, res) => {
     throw new Error("Order Not found");
   }
 };
-// @desc update order to paid
-// @route update /api/orders/:id/pay
-// @access Private
 
 const getOrdersByFilters = async (req, res) => {
   try {
@@ -155,9 +145,6 @@ const updateOrderToPaid = async (req, res) => {
   }
 };
 
-// @desc update order to delivered
-// @route update /api/orders/:id/deliver
-// @access Private
 const updateOrderToDelivered = async (req, res) => {
   const order = await Order.findById(req.params.id);
   if (order) {
@@ -170,9 +157,7 @@ const updateOrderToDelivered = async (req, res) => {
     throw new Error("Order Not found");
   }
 };
-// @desc get logged in user orders
-// @route GET /api/orders/myorders
-// @access Private
+
 const GetMyOrders = async (req, res) => {
   const user = req.user;
   userObjId = mongoose.Types.ObjectId(user.id);
@@ -203,9 +188,6 @@ const GetMyOrders = async (req, res) => {
   res.json(orders);
 };
 
-// @desc get orders
-// @route GET /api/admin/orders
-// @access Private/admin
 const GetOrders = async (req, res) => {
   let limit = req.query.limit ? parseInt(req.query.limit) : 0;
 

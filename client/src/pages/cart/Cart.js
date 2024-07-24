@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createOrder } from "../../actions/orders";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import "./Cart.css";

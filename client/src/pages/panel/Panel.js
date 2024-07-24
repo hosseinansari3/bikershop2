@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 
-import "./AdminPannel.css";
+import "./Panel.css";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import { ROLES } from "../../constants/panelConstants";
@@ -12,11 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import dashboardLinks from "./links.json";
 import { Logout } from "@mui/icons-material";
 import { logout } from "../../actions/users";
-import { fetchProfile } from "../../actions/account";
 import defaultAvatar from "../../assets/images/Circle-icons-profile.svg.png";
-import OrderModal from "./OrderModal";
-import { listAllOrders, listMyOrders } from "../../actions/orders";
-import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
+
 function Panel() {
   const dispatch = useDispatch();
   const navigate = useNavigate();

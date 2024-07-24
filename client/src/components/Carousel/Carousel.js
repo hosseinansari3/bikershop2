@@ -4,11 +4,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Thumbs } from "swiper";
 import { Pagination } from "swiper";
 
-import CrossBike from "../../assets/images/Cross-Bike.jpg";
-import CityBike from "../../assets/images/City-Bike.jpg";
-import MountainBike from "../../assets/images/Mountain-bike.jpg";
-import RoadBike from "../../assets/images/Road-bike.jpg";
-
 import "./Carousel.css";
 
 // Import Swiper styles

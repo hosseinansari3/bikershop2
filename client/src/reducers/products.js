@@ -1,8 +1,8 @@
 import {
-  FETCH_ALL_PRODUCTS,
+  FETCH_ALL_PRODUCTS_SUCCESS,
   FETCH_ALL_PRODUCTS_REQUEST,
-  CREATE,
-  UPDATE,
+  CREATE_PRODUCT_SUCCESS,
+  UPDATE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_SUCCESS,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
@@ -24,7 +24,7 @@ export const productReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_ALL_PRODUCTS_REQUEST:
       return { ...state, loading: true };
-    case FETCH_ALL_PRODUCTS:
+    case FETCH_ALL_PRODUCTS_SUCCESS:
       return {
         loading: false,
         products: [...action.payload.products],
@@ -44,10 +44,10 @@ export const productReducer = (state = initialState, action) => {
         totalProducts: action.payload.totalProducts,
       };
 
-    case CREATE:
+    case CREATE_PRODUCT_SUCCESS:
       console.log("payload", action.payload);
       return { ...state, products: [...state.products, action.payload] };
-    case UPDATE:
+    case UPDATE_PRODUCT_SUCCESS:
       return state.products.map((product) =>
         product._id === action.payload._id ? action.payload : product
       );

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../../actions/products";
-import "./cat.css";
+import "./Categories.css";
 import {
   createCategory,
   deleteCategory,

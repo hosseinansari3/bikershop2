@@ -1,11 +1,7 @@
 const User = require("../models/userModel");
-const { generateToken, isAuth } = require("../utils/util");
 const bcrypt = require("bcryptjs");
-const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-
-// Load input validation
 
 const signIn = async (req, res) => {
   const jwtSecret = process.env.jwt_sec;

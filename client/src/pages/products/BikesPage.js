@@ -1,9 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
 
-import ProductCart from "../../components/Body/ProductCart";
+import ProductCard from "../../components/ProductCard/ProductCard";
 import { useSelector, useDispatch } from "react-redux";
-import { getProducts, getProductsByFilter } from "../../actions/products";
+import { getProductsByFilter } from "../../actions/products";
 
 import Slider from "@mui/material/Slider";
 import FormGroup from "@mui/material/FormGroup";
@@ -20,17 +20,14 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import "./BikesPage.css";
-import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 import Pagination from "../../components/Pagination/Pagination";
-import axios from "axios";
 import { fetchCategories } from "../../actions/categories";
-import CartSkeleton from "../../components/Body/CartSkeleton";
+import CardSkeleton from "../../components/ProductCard/CardSkeleton";
 import SearchOffIcon from "@mui/icons-material/SearchOff";
 import { useIsMount } from "../../hooks/useIsMount";
 
 function BikesPage() {
   const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.usersSignin.userInfo);
 
   const [priceRange, setPriceRange] = React.useState([2000, 5700]);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -486,16 +483,16 @@ function BikesPage() {
         <div className="grid grid-cols-2 md:grid-cols-3 BikesPage">
           {loading ? (
             <>
-              <CartSkeleton imgClass="w-[160px] md:w-[260px] h-[110px] md:h-[190px]" />
-              <CartSkeleton imgClass="w-[160px] md:w-[260px] h-[110px] md:h-[190px]" />
+              <CardSkeleton imgClass="w-[160px] md:w-[260px] h-[110px] md:h-[190px]" />
+              <CardSkeleton imgClass="w-[160px] md:w-[260px] h-[110px] md:h-[190px]" />
 
-              <CartSkeleton imgClass="w-[160px] md:w-[260px] h-[110px] md:h-[190px]" />
-              <CartSkeleton imgClass="w-[160px] md:w-[260px] h-[110px] md:h-[190px]" />
+              <CardSkeleton imgClass="w-[160px] md:w-[260px] h-[110px] md:h-[190px]" />
+              <CardSkeleton imgClass="w-[160px] md:w-[260px] h-[110px] md:h-[190px]" />
             </>
           ) : (
             products.map((p) => {
               return (
-                <ProductCart
+                <ProductCard
                   key={p._id}
                   price={p.price}
                   title={p.title}

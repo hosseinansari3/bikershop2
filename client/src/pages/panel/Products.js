@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteProduct,
-  getProducts,
   getProductsByFilter,
   onProductSearch,
 } from "../../actions/products";
@@ -12,9 +11,7 @@ import { toast } from "react-toastify";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 import { onUsersSearch } from "../../actions/users";
 import Pagination from "../../components/Pagination/Pagination";
-import { ORDER_STATUS } from "../../constants/panelConstants";
 import { fetchCategories } from "../../actions/categories";
-import { fetchProductsByFilters } from "../../api";
 import { useIsMount } from "../../hooks/useIsMount";
 
 function Products() {

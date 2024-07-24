@@ -28,7 +28,6 @@ export const fetchCategories = () => async (dispatch) => {
   try {
     dispatch({ type: CATEGORIES_FETCH_REQUEST });
     const { data } = await api.fetchCategoriesAPI();
-    console.log("CATEGORIES", data);
     dispatch({ type: CATEGORIES_FETCH_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: CATEGORIES_FETCH_FAILURE, payload: error.message });
@@ -39,7 +38,6 @@ export const deleteCategory = (id) => async (dispatch) => {
   try {
     dispatch({ type: CATEGORY_DELETE_REQUEST });
     const { data } = await api.deleteCategoryAPI(id);
-    console.log("deleted: " + JSON.stringify(data));
 
     dispatch({
       type: CATEGORY_DELETE_SUCCESS,
@@ -58,8 +56,6 @@ export const onCategorySearch = (value) => {
     try {
       if (inputValue) {
         const response = await api.searchCategoryAPI(inputValue);
-
-        console.log("response.data", response.data);
 
         dispatch({
           type: CATEGORIES_SEARCH_SUCCESS,

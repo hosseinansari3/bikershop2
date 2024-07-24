@@ -6,7 +6,6 @@ import { addToCard } from "../../actions/cart";
 
 import "./product.css";
 import Carousel from "../../components/Carousel/Carousel";
-import ProductColor from "../../components/ProductColor/ProductColor";
 
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
@@ -16,13 +15,8 @@ import Box from "@mui/material/Box";
 
 import { SwiperSlide } from "swiper/react";
 
-import cross from "../../assets/images/Cross-Bike.jpg";
-import city from "../../assets/images/City-Bike.jpg";
-
-import mountain from "../../assets/images/Mountain-bike.jpg";
-import road from "../../assets/images/Road-bike.jpg";
 import { Paper } from "@mui/material";
-import CartList from "../../components/CartList/CartList";
+import CardList from "../../components/CardList/CardList";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
@@ -30,12 +24,8 @@ import CreditScoreIcon from "@mui/icons-material/CreditScore";
 import EventRepeatIcon from "@mui/icons-material/EventRepeat";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 
-import { ToastContainer, toast } from "react-toastify";
-
 import "react-toastify/dist/ReactToastify.css";
 
-import avatar1 from "../../assets/images/2.jpg";
-import avatar2 from "../../assets/images/1.jpg";
 import { updateWishlist } from "../../actions/wishlist";
 import {
   addProductReview,
@@ -943,7 +933,7 @@ function Product() {
         <div>
           <h3 className="text-center italic font-bold">RELATED PRODUCTS</h3>
         </div>
-        <CartList carousel={true} Title="Apparel" />
+        <CardList carousel={true} Title="Apparel" />
       </div>
     </>
   );

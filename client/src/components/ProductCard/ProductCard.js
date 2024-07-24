@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./ProductCart.css";
+import "./ProductCard.css";
 
 import StarRating from "../StarRating";
 
-function ProductCart(props) {
+function ProductCard(props) {
   return (
     <Link
       className={`product-cart ${props.className}`}
@@ -32,4 +32,4 @@ function ProductCart(props) {
   );
 }
 
-export default ProductCart;
+export default ProductCard;
