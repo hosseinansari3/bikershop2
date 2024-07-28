@@ -50,7 +50,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install-server": "npm install --force",
-    "start-server": "nodemon server.js",
+    "start-server": "node server.js",
     "install-client": "npm install --force",
     "build-client": "npm run build",
     "start-client": "npm run start"
