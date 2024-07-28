@@ -1,3 +1,11 @@
+<h3>ADMIN LOGIN INFO</h3>
+USERNEAME: hosseinansari3@gmail.com <br/>
+PASSWORD: y2u3p7p7
+
+<h3>CUSTOMER LOGIN INFO</h3>
+USERNEAME: pishro@gmail.com <br/>
+PASSWORD: y2u3p7p7
+
 <h3>Description </h3>
 this is a bike selling website that is developed using MERN stack.
 in this project:
@@ -9,12 +17,8 @@ in this project:
 <li>users can update their profile information</li>
 </ul>
 
- [DEMO VIDEO](https://aparat.com/v/Yalch)
 
 
-![homepage](https://github.com/hosseinansari3/bikershop2/blob/master/client/src/assets/images/screen2.jpg)
-
-![adminDashboard](https://github.com/hosseinansari3/bikershop2/blob/master/client/src/assets/images/sreen1.jpg)
 
 <h4>features:</h4>
 <ul> 
