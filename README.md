@@ -1,3 +1,11 @@
+<h3>ADMIN LOGIN INFO</h3>
+USERNEAME: hosseinansari3@gmail.com
+PASSWORD: y2u3p7p7
+
+<h3>CUSTOMER LOGIN INFO</h3>
+USERNEAME: pishro@gmail.com
+PASSWORD: y2u3p7p7
+
 <h3>Description </h3>
 this is a bike selling website that is developed using MERN stack.
 in this project:
