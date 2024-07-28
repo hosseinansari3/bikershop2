@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/static/css/main.a59e5730.css",
+    "main.js": "/static/js/main.9de9c141.js",
+    "static/media/City-Bike.jpg": "/static/media/City-Bike.f212aceabfb2e9bbb3e9.jpg",
+    "static/media/teammachine-slr-01-three-turquoise-black-1285874.jpg": "/static/media/teammachine-slr-01-three-turquoise-black-1285874.820b74bcb33a910b1385.jpg",
+    "static/media/Cross-Bike.jpg": "/static/media/Cross-Bike.e83a8f9e63aca9b0b1cf.jpg",
+    "static/media/roadmachine-01-four-coral-red-black-1285467.jpg": "/static/media/roadmachine-01-four-coral-red-black-1285467.ff5db70506045f0bdce4.jpg",
+    "static/media/cross-race-c68x-te-liquidblue-flashyellow-1422220.jpg": "/static/media/cross-race-c68x-te-liquidblue-flashyellow-1422220.900bbb13ddbe1e7b9021.jpg",
+    "static/media/Road-bike.jpg": "/static/media/Road-bike.e4c7f57b63de0f66bad1.jpg",
+    "static/media/twostroke-01-four-red-blk-blk-1078586.jpg": "/static/media/twostroke-01-four-red-blk-blk-1078586.08abc8a255d8df721844.jpg",
+    "static/media/bmc-teammachine-alr-two-sil-blk-red-1078691.jpg": "/static/media/bmc-teammachine-alr-two-sil-blk-red-1078691.d9dee4f1b21c8b88a25b.jpg",
+    "static/media/MTF_Se29ENDC_93622-50-il.jpg": "/static/media/MTF_Se29ENDC_93622-50-il.b13c27f1ad3bf0e5a1aa.jpg",
+    "static/media/MTF_4.jpg": "/static/media/MTF_4.6519cb11b46f447fdb99.jpg",
+    "static/media/MTF_3l.jpg": "/static/media/MTF_3l.566ce361c575e03b941f.jpg",
+    "static/media/MTF_Kn39HEICD_KONA-HEI-HEI-CR-DL-GLOSS-METALLIC-GREY-AND-CHARCOAL-00-il.jpg": "/static/media/MTF_Kn39HEICD_KONA-HEI-HEI-CR-DL-GLOSS-METALLIC-GREY-AND-CHARCOAL-00-il.5148ce411cb02b87a56e.jpg",
+    "static/media/MTH5.jpg": "/static/media/MTH5.601c5c36611aa417915b.jpg",
+    "static/media/part4.jpg": "/static/media/part4.65308387d2d7f595237a.jpg",
+    "static/media/Mountain-bike.jpg": "/static/media/Mountain-bike.869273b2f73f28df04ce.jpg",
+    "static/media/part1.jpg": "/static/media/part1.4e732a64dd32fbc5836d.jpg",
+    "static/media/part3.jpg": "/static/media/part3.e4533bcbe1e37e7e3ff6.jpg",
+    "static/media/part2.jpg": "/static/media/part2.0065f11f0d80f1a2529e.jpg",
+    "static/media/mondraker-01022382-20126475-DUSK-R_300x300@2x.jpg": "/static/media/mondraker-01022382-20126475-DUSK-R_300x300@2x.e5132ace1487cf92fd49.jpg",
+    "index.html": "/index.html",
+    "main.a59e5730.css.map": "/static/css/main.a59e5730.css.map",
+    "main.9de9c141.js.map": "/static/js/main.9de9c141.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a59e5730.css",
+    "static/js/main.9de9c141.js"
+  ]
+}
