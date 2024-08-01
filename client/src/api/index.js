@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "https://bikershop2.onrender.com";
+const baseUrl = "https://bikershop.liara.run";
 
 export const signIn = (email, password) =>
   axios.post(`${baseUrl}/users/signin`, { email, password });
